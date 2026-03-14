@@ -1,0 +1,119 @@
+{
+  "brand": "Esteban Firpo · Miami Real Estate",
+  "nav": { "home":"Inicio","miami":"Miami","precon":"Preconstrucción","proyectos":"Proyectos","contacto":"Contacto","sobreMi":"Sobre mí","financing": "Financiación" },
+  "cta": { "whatsapp":"WhatsApp","calendly":"Agendar", "projects": "Ver proyectos" },
+  "footer": { "rights":"Todos los derechos reservados." },
+
+  "miami": {
+    "title": "Por qué invertir en Miami",
+    "copy": "Mercado líquido, dolarizado y con demanda global. Beneficios fiscales comparativos y crecimiento sostenido.",
+    "points": [
+      "Demografía y empleo en expansión",
+      "Bajos impuestos estatales",
+      "Liquidez internacional constante",
+      "Infraestructura y conectividad aérea"
+    ],
+    "quote": "No esperes a comprar propiedades, compra propiedades y espera."
+  },
+
+  "precon": {
+    "title": "Ventajas de la preconstrucción",
+    "copy": "Entrada en hitos, valorización durante obra y gestión simple. Ideal para diversificar en USD.",
+    "points": [
+      "Plan de pagos en etapas",
+      "Plusvalía potencial antes del cierre",
+      "Amenities clase A y demanda de alquiler",
+      "Garantías del developer y escrow"
+    ]
+  },
+
+  "about": {
+    "title": "Sobre mí",
+    "subtitle": "Asesoría para inversión inmobiliaria en Miami",
+    "badge": {
+      "role": "REALTOR® Associate",
+      "langs": "Español · Inglés",
+      "license": "Lic. Florida"
+    },
+    "bio": "Acompaño a inversores en todo el proceso: selección, reserva, contrato, due diligence y cierre. Enfoque ROI y preservación de capital.",
+    "points": [
+      "Análisis de renta y salida",
+      "Curaduría de proyectos confiables",
+      "Gestión de proceso y documentación"
+    ],
+    "cta": {
+      "contact": "Contactar",
+      "whatsapp": "Escribir por WhatsApp"
+    }
+  },
+
+  "home": {
+    "hero": {
+      "title": "Invierte en Miami con Esteban Firpo",
+      "subtitle": "Asesoría profesional en preconstrucción y proyectos exclusivos",
+      "ctaProjects": "Ver proyectos",
+      "ctaWhatsapp": "Hablar por WhatsApp"
+    },
+    "miami": {
+      "title": "¿Por qué Miami?",
+      "copy": "Mercado líquido, en dólares, con alta demanda internacional.",
+      "points": [
+        "Demografía creciente",
+        "Entorno fiscal favorable",
+        "Liquidez global",
+        "Conectividad aérea"
+      ]
+    },
+    "precon": {
+      "title": "¿Por qué Preconstrucción?",
+      "copy": "Entrada en etapas, plusvalía durante obra y seguridad legal.",
+      "points": [
+        "Planes de pago flexibles",
+        "Revalorización durante la obra",
+        "Demanda de alquiler premium"
+      ]
+    },
+    "featured": {
+      "title": "Proyectos destacados",
+      "viewAll": "Ver todos"
+    },
+    "band": {
+      "title": "¿Listo para invertir?",
+      "copy": "Agendemos una llamada y revisemos juntos las mejores opciones.",
+      "ctaContact": "Contactar",
+      "ctaCall": "Agendar llamada"
+    }
+  },
+
+  "projects": {
+    "title": "Proyectos",
+    "from": "Desde",
+    "delivery": "Entrega"
+  },
+  "financing": {
+    "title": "Financiación para comprar en Miami",
+    "seo": "Hipotecas para extranjeros en EE. UU.: 30% de downpayment y plazos 15-30 años.",
+    "intro": "Acceda a hipotecas con condiciones competitivas. Como extranjero puede aplicar a préstamos con un 30% de downpayment y plazos de 15 a 30 años.",
+    "benefitsTitle": "Beneficios clave",
+    "benefits": [
+      "Programas de financiación para extranjeros",
+      "Tasas competitivas y asesoramiento en español",
+      "Escritura a nombre personal o corporativo"
+    ],
+    "reqTitle": "Requisitos básicos",
+    "requirements": [
+      "Carta de ingresos (contador o empleador, últimos 2 años).",
+      "Fondos comprobables para downpayment + 6 meses de reserva.",
+      "Carta de referencia bancaria que avale reputación crediticia.",
+      "Pasaporte/visa; y artículos de incorporación si aplica a nombre de empresa."
+    ],
+    "processTitle": "Cómo funciona",
+    "steps": [
+      { "t": "Aplicación", "d": "Reunimos documentos y enviamos la solicitud." },
+      { "t": "Pre-aprobación", "d": "El banco confirma montos y condiciones." },
+      { "t": "Cierre", "d": "Se firma la hipoteca junto con la compra." }
+    ],
+    "ctaLabel": "Consultar financiación por WhatsApp",
+    "ctaHref": "https://wa.me/17542673931"
+  }
+}

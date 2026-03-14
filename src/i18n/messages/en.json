@@ -1,0 +1,119 @@
+{
+  "brand": "Esteban Firpo · Miami Real Estate",
+  "nav": { "home":"Home","miami":"Miami","precon":"Pre-construction","proyectos":"Projects","contacto":"Contact","sobreMi":"About", "financing": "Financing" },
+  "cta": { "whatsapp":"WhatsApp","calendly":"Schedule", "projects": "See projects" },
+  "footer": { "rights":"All rights reserved." },
+
+  "miami": {
+    "title": "Why invest in Miami",
+    "copy": "Liquid USD market with global demand. Favorable tax environment and sustained growth.",
+    "points": [
+      "Population and jobs expanding",
+      "Low state taxes",
+      "Consistent international liquidity",
+      "Infrastructure and air connectivity"
+    ],
+    "quote": "Do not wait to buy properties, buy properties and wait."
+  },
+
+  "precon": {
+    "title": "Pre-construction advantages",
+    "copy": "Milestone deposits, appreciation during construction, and simple management. Strong USD diversification.",
+    "points": [
+      "Staged payment plans",
+      "Potential upside before closing",
+      "Class-A amenities and rental demand",
+      "Developer guarantees and escrow"
+    ]
+  },
+
+  "about": {
+    "title": "About me",
+    "subtitle": "Advisory for Miami real-estate investment",
+    "badge": {
+      "role": "REALTOR® Associate",
+      "langs": "Spanish · English",
+      "license": "Florida License"
+    },
+    "bio": "I guide investors end-to-end: selection, reservation, contract, due diligence, and closing. ROI focus and capital preservation.",
+    "points": [
+      "Yield and exit analysis",
+      "Curated, reliable projects",
+      "Process and documentation management"
+    ],
+    "cta": {
+      "contact": "Get in touch",
+      "whatsapp": "Message on WhatsApp"
+    }
+  },
+
+  "home": {
+    "hero": {
+      "title": "Invest in Miami with Esteban Firpo",
+      "subtitle": "Professional advisory in pre-construction and exclusive projects",
+      "ctaProjects": "See projects",
+      "ctaWhatsapp": "Chat on WhatsApp"
+    },
+    "miami": {
+      "title": "Why Miami?",
+      "copy": "USD-based liquid market with high international demand.",
+      "points": [
+        "Growing demographics",
+        "Favorable tax environment",
+        "Global liquidity",
+        "Air connectivity"
+      ]
+    },
+    "precon": {
+      "title": "Why Pre-construction?",
+      "copy": "Stage deposits, appreciation during construction, legal security.",
+      "points": [
+        "Flexible payment plans",
+        "Value appreciation during works",
+        "Premium rental demand"
+      ]
+    },
+    "featured": {
+      "title": "Featured projects",
+      "viewAll": "View all"
+    },
+    "band": {
+      "title": "Ready to invest?",
+      "copy": "Schedule a call and review the best opportunities together.",
+      "ctaContact": "Contact",
+      "ctaCall": "Schedule a call"
+    }
+  },
+
+  "projects": {
+    "title": "Projects",
+    "from": "From",
+    "delivery": "Completion"
+  },
+  "financing": {
+    "title": "Financing to buy in Miami",
+    "seo": "US mortgages for foreign nationals: 30% down, 15-30 year terms.",
+    "intro": "Access US mortgages with competitive terms. As a foreign national you can qualify with a 30% down payment and 15-30 year amortization.",
+    "benefitsTitle": "Key benefits",
+    "benefits": [
+      "Financing programs for foreign nationals",
+      "Competitive rates and Spanish-speaking advisory",
+      "Title under personal name or corporation"
+    ],
+    "reqTitle": "Basic requirements",
+    "requirements": [
+      "Income letter (CPA or employer, last 2 years).",
+      "Verifiable funds for down payment + 6 months reserves.",
+      "Bank reference letter.",
+      "Passport/visa; corporate docs if applicable."
+    ],
+    "processTitle": "How it works",
+    "steps": [
+      { "t": "Application", "d": "We collect documents and submit." },
+      { "t": "Pre-approval", "d": "Lender confirms amounts and terms." },
+      { "t": "Closing", "d": "Mortgage is signed at purchase." }
+    ],
+    "ctaLabel": "Ask about financing on WhatsApp",
+    "ctaHref": "https://wa.me/17542673931"
+  }
+}

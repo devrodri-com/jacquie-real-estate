@@ -1,0 +1,76 @@
+/* Wrapper para el PhoneInput */
+.phoneWrapper {
+  width: 100%;
+}
+
+/* Estilos globales para react-phone-number-input */
+.phoneWrapper :global(.PhoneInput) {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+}
+
+.phoneWrapper :global(.PhoneInputInput) {
+  flex: 1;
+  height: 44px !important;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  background: white !important;
+  padding: 0 12px !important;
+  color: #0A2540 !important;
+  font-size: 16px !important;
+  outline: none !important;
+  transition: all 0.2s;
+}
+
+.phoneWrapper :global(.PhoneInputInput)::placeholder {
+  color: rgba(0, 0, 0, 0.4) !important;
+}
+
+.phoneWrapper :global(.PhoneInputInput):focus {
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.4) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.phoneWrapper :global(.PhoneInputCountry) {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: 8px;
+  padding-right: 8px;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.phoneWrapper :global(.PhoneInputCountryIcon) {
+  width: 20px;
+  height: 15px;
+  border-radius: 2px;
+  object-fit: cover;
+}
+
+.phoneWrapper :global(.PhoneInputCountrySelect) {
+  height: 44px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: white;
+  padding: 0 24px 0 8px;
+  color: #0A2540;
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%230A2540' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  transition: all 0.2s;
+  min-width: 60px;
+}
+
+.phoneWrapper :global(.PhoneInputCountrySelect):focus {
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.4);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.phoneWrapper :global(.PhoneInputCountrySelectArrow) {
+  display: none;
+}
