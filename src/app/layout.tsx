@@ -4,25 +4,25 @@ import "./globals.css";
 import Script from "next/script";
 
 export const metadata: Metadata = {
-  title: "Esteban Firpo | Real Estate Miami",
+  title: "Jacquie Zarate Realtor | Real Estate Miami",
   description: "Real estate en Miami: preconstrucción, renta corta y compra para vivir o invertir. Asesoría y análisis de proyectos, con financiación para compradores internacionales.",
   icons: {
     apple: "/apple-touch-icon.png",
     shortcut: "/favicon.ico",
   },
   manifest: "/manifest.webmanifest",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.estebanfirpo.com"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.jacquiezaraterealtor.com"),
   openGraph: {
     type: "website",
-    siteName: "Esteban Firpo | Real Estate Miami",
-    title: "Esteban Firpo | Inversiones en Miami",
+    siteName: "Jacquie Zarate Realtor | Real Estate Miami",
+    title: "Jacquie Zarate Realtor | Inversiones en Miami",
     description: "Real estate en Miami: preconstrucción, renta corta y compra para vivir o invertir. Asesoría y análisis de proyectos, con financiación para compradores internacionales.",
     images: ["/opengraph-image.jpg"],
   },
   twitter: {
     card: "summary_large_image",
     images: ["/opengraph-image.jpg"],
-    title: "Esteban Firpo | Inversiones en Miami",
+    title: "Jacquie Zarate Realtor | Inversiones en Miami",
     description: "Real estate en Miami: preconstrucción, renta corta y compra para vivir o invertir. Asesoría y análisis de proyectos, con financiación para compradores internacionales.",
   },
   alternates: { canonical: '/' },

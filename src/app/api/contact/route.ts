@@ -138,7 +138,7 @@ export async function POST(req: Request) {
       : '';
 
     const { error } = await resend.emails.send({
-      from: "Leads Esteban <leads@estebanfirpo.com>",
+      from: "Leads Jacquie <jacqueline@miamiliferealty.com>",
       to: process.env.LEADS_TO!,
             replyTo: email,
       subject: `Nuevo lead: ${nombre}`,

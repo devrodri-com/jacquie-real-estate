@@ -53,7 +53,7 @@ export default function ProjectDrawer({ open, project, onClose }: ProjectDrawerP
       ctas: {
         schedule: isEN ? "Schedule" : "Agendar reunión",
         whatsapp: isEN ? "WhatsApp" : "WhatsApp",
-        email: isEN ? "Email Esteban" : "Email a Esteban",
+        email: isEN ? "Email Jacquie" : "Email a Jacquie",
       },
     }),
     [isEN]
@@ -74,10 +74,10 @@ export default function ProjectDrawer({ open, project, onClose }: ProjectDrawerP
 
   const bookingUrl = "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ21yM5KOsoq2niX4QY7FXyUrFiLuQpLxw9IIzheIYWY1ruSBHG5DUrSzUmGst3Ew4nb8ZKw6ptP";
 
-  const waNumber = "17542673931";
+  const waNumber = "17864072591";
   const waText = isEN
-    ? `Hi Esteban, I'm interested in ${project.name}. Could you please send me more information?`
-    : `Hola Esteban, estoy interesado/a en ${project.name}. ¿Podés enviarme más información?`;
+    ? `Hi Jacquie, I'm interested in ${project.name}. Could you please send me more information?`
+    : `Hola Jacquie, estoy interesado/a en ${project.name}. ¿Podés enviarme más información?`;
   const waHref = `https://wa.me/${waNumber}?text=${encodeURIComponent(waText)}`;
 
   const numberLocale = isEN ? "en-US" : "es-ES";
@@ -267,7 +267,7 @@ export default function ProjectDrawer({ open, project, onClose }: ProjectDrawerP
                 {t.ctas.whatsapp}
               </a>
               <a
-                href={`mailto:esteban@miamiliferealty.com`}
+                href={`mailto:jacqueline@miamiliferealty.com`}
                 className="inline-flex h-11 w-full items-center justify-center rounded-md border border-[#0A2540]/20 px-3 text-sm font-medium text-[#0A2540] hover:bg-[#F9FAFB]"
               >
                 {t.ctas.email}
@@ -300,7 +300,7 @@ export default function ProjectDrawer({ open, project, onClose }: ProjectDrawerP
               {t.ctas.whatsapp}
             </a>
             <a
-              href={`mailto:esteban@miamiliferealty.com`}
+              href={`mailto:jacqueline@miamiliferealty.com`}
               className="inline-flex h-10 flex-1 items-center justify-center rounded-md border border-[#0A2540]/20 px-4 text-sm font-medium text-[#0A2540] hover:bg-[#F9FAFB]"
             >
               {t.ctas.email}

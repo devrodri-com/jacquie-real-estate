@@ -16,7 +16,7 @@ export default function GraciasPage() {
   // Accesibilidad: anuncia el estado
   useEffect(() => {
     const title = isEN ? "Thanks for your message" : "¡Gracias por tu mensaje!";
-    document.title = `${title} · Esteban Firpo`;
+    document.title = `${title} · Jacquie Zarate Realtor`;
   }, [isEN]);
 
   // Track lead thank you page with UTMs from sessionStorage
@@ -72,8 +72,8 @@ export default function GraciasPage() {
   };
 
   const waMsg = isEN
-    ? "Hi Esteban, I just submitted the form. I'd like to talk about opportunities in Miami."
-    : "Hola Esteban, acabo de enviar el formulario. Me gustaría hablar sobre oportunidades en Miami.";
+    ? "Hi Jacquie, I just submitted the form. I'd like to talk about opportunities in Miami."
+    : "Hola Jacquie, acabo de enviar el formulario. Me gustaría hablar sobre oportunidades en Miami.";
 
   return (
     <main className="min-h-[70vh] flex items-center justify-center px-6 py-20">
@@ -104,7 +104,7 @@ export default function GraciasPage() {
             {t.ctaPrimary}
           </a>
           <a
-            href={`https://wa.me/17542673931?text=${encodeURIComponent(waMsg)}`}
+            href={`https://wa.me/17864072591?text=${encodeURIComponent(waMsg)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="group inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-white/20 px-5 text-[14px] font-medium text-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4AF37]"

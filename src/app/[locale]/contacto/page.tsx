@@ -19,8 +19,8 @@ declare global {
 export default function Contacto() {
   const { locale } = useParams() as { locale: 'es' | 'en' };
   const isEN = locale === 'en';
-  const waMsg = isEN ? 'Hi Esteban, I would like to schedule a call to discuss Miami pre-construction opportunities.' : 'Hola Esteban, me gustaría coordinar una llamada para hablar de oportunidades en Miami.';
-  const waHref = `https://wa.me/17542673931?text=${encodeURIComponent(waMsg)}`;
+  const waMsg = isEN ? 'Hi Jacquie, I would like to schedule a call to discuss Miami pre-construction opportunities.' : 'Hola Jacquie, me gustaría coordinar una llamada para hablar de oportunidades en Miami.';
+  const waHref = `https://wa.me/17864072591?text=${encodeURIComponent(waMsg)}`;
 
   const [form, setForm] = useState({ nombre: "", email: "", mensaje: "", telefonoE164: "", country: "" as Country | "" | "INTL" });
   const [companyHoneypot, setCompanyHoneypot] = useState<string>("");

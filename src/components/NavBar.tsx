@@ -40,7 +40,7 @@ export default function NavBar(){
     <header className={"w-full bg-[#0A2540] text-white transition-shadow " + (scrolled ? "border-b border-white/10 shadow-[0_1px_8px_rgba(0,0,0,.08)]" : "border-b border-white/5")}>
       <div className="mx-auto max-w-6xl px-4 h-14 flex items-center justify-between">
         <Link href={base} className="text-sm font-semibold text-white no-underline hover:opacity-90">
-          Esteban Firpo · Miami Real Estate
+          Jacquie Zarate Realtor · Miami Real Estate
         </Link>
 
         <button aria-label="Abrir menú" onClick={()=>setOpen(v=>!v)} className="lg:hidden p-2">
@@ -83,7 +83,7 @@ export default function NavBar(){
             {/* Top bar */}
             <div className="flex items-center justify-between pb-3 border-b border-black/10">
               <Link href={base} onClick={()=>setOpen(false)} className="text-sm font-semibold text-white no-underline hover:opacity-90">
-                Esteban Firpo · Miami Real Estate
+                Jacquie Zarate Realtor · Miami Real Estate
               </Link>
               <button aria-label="Cerrar menú" onClick={()=>setOpen(false)} className="p-2">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

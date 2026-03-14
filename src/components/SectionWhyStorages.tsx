@@ -113,10 +113,10 @@ export default function SectionWhyStorages({ locale = "es" }: Props) {
             {t.ctaPrimary}
           </Link>
           <a
-            href={`https://wa.me/17542673931?text=${encodeURIComponent(
+            href={`https://wa.me/17864072591?text=${encodeURIComponent(
               locale === "en"
-                ? "Hi Esteban, I would like to learn more about storage investments."
-                : "Hola Esteban, me gustaría conocer más sobre inversiones en storages."
+                ? "Hi Jacquie, I would like to learn more about storage investments."
+                : "Hola Jacquie, me gustaría conocer más sobre inversiones en storages."
             )}`}
             target="_blank"
             rel="noopener noreferrer"

@@ -141,7 +141,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     };
   }
 
-  const title = `${p.name} — ${p.city} | Esteban Firpo`;
+  const title = `${p.name} — ${p.city} | Jacquie Zarate Realtor`;
   const desc = isEN
     ? `STR approved, private beach club, ${p.pricePerSfApprox ? `~$${p.pricePerSfApprox}/sf, ` : ""}${p.delivery ? `completion ${p.delivery}, ` : ""}request floor plans and availability.`
     : `Renta corta aprobada, club de playa privado, ${p.pricePerSfApprox ? `~$${p.pricePerSfApprox}/sf, ` : ""}${p.delivery ? `entrega ${p.delivery}, ` : ""}solicitá planos y disponibilidad.`;
@@ -160,7 +160,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       url,
       images: [{ url: image }],
       locale,
-      siteName: "Esteban Firpo — Real Estate",
+      siteName: "Jacquie Zarate Realtor — Real Estate",
       type: "website",
     },
     twitter: {
@@ -202,7 +202,7 @@ export default async function Proyecto({ params }: Params) {
     ctas: {
       schedule: isEN ? "Schedule Meeting" : "Agendar Reunión",
       whatsapp: "WhatsApp",
-      email: isEN ? "Email Esteban" : "Email a Esteban",
+      email: isEN ? "Email Jacquie" : "Email a Jacquie",
     },
   };
 
@@ -212,13 +212,13 @@ export default async function Proyecto({ params }: Params) {
   const mapSrc = hasCoords
     ? `https://www.google.com/maps?q=${p.lat},${p.lng}&hl=${isEN ? "en" : "es"}&z=15&output=embed`
     : `https://www.google.com/maps?q=${encodeURIComponent(addressQuery)}&hl=${isEN ? "en" : "es"}&z=15&output=embed`;
-  const waNumber = "17542673931"; // +1 754 267 3931
+  const waNumber = "17864072591"; // +1 786 407 2591
   const waHref = `https://wa.me/${waNumber}?text=${encodeURIComponent(
     isEN
-      ? `Hi Esteban, I'm interested in ${p.name}. Could you please send me more information?`
-      : `Hola Esteban, estoy interesado/a en ${p.name}. ¿Podés enviarme más información?`
+      ? `Hi Jacquie, I'm interested in ${p.name}. Could you please send me more information?`
+      : `Hola Jacquie, estoy interesado/a en ${p.name}. ¿Podés enviarme más información?`
   )}`;
-  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://www.estebanfirpo.com";
+  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://www.jacquiezaraterealtor.com";
   const shareUrl = `${base}/${locale}/proyectos/${slug}`.replace(/(?<!:)\/\/+/, "/");
 
   // Extra policy chips for mobile only
@@ -347,7 +347,7 @@ export default async function Proyecto({ params }: Params) {
           {t.ctas.whatsapp}
         </a>
         <a
-          href="mailto:info@estebanfirpo.com"
+          href="mailto:jacqueline@miamiliferealty.com"
           className="inline-flex h-10 items-center justify-center rounded-md border border-[#0A2540]/25 px-5 text-sm font-medium text-[#0A2540] hover:bg-[#F9FAFB] focus-visible:ring-2 focus-visible:ring-[#D4AF37]/40"
         >
           {t.ctas.email}
@@ -386,19 +386,19 @@ export default async function Proyecto({ params }: Params) {
 
       {unitMix.length > 0 && (() => {
         const items = (isEN ? p.unitMixEn : p.unitMixEs) ?? [];
-        const mailtoPlans = `mailto:esteban@miamiliferealty.com?subject=${encodeURIComponent(
+        const mailtoPlans = `mailto:jacqueline@miamiliferealty.com?subject=${encodeURIComponent(
           isEN ? `Floor plans (PDF) — ${p.name}` : `Planos (PDF) — ${p.name}`
         )}&body=${encodeURIComponent(
           isEN
-            ? `Hi Esteban,\n\nI’m interested in ${p.name}. Please send me floor plans (PDF).\n\nThanks.`
-            : `Hola Esteban,\n\nEstoy interesado/a en ${p.name}. Por favor envíame los planos (PDF).\n\nGracias.`
+            ? `Hi Jacquie,\n\nI’m interested in ${p.name}. Please send me floor plans (PDF).\n\nThanks.`
+            : `Hola Jacquie,\n\nEstoy interesado/a en ${p.name}. Por favor envíame los planos (PDF).\n\nGracias.`
         )}`;
-        const mailtoAvail = `mailto:esteban@miamiliferealty.com?subject=${encodeURIComponent(
+        const mailtoAvail = `mailto:jacqueline@miamiliferealty.com?subject=${encodeURIComponent(
           isEN ? `Availability by typology — ${p.name}` : `Disponibilidad por tipología — ${p.name}`
         )}&body=${encodeURIComponent(
           isEN
-            ? `Hi Esteban,\n\nI’m interested in ${p.name}. Please send availability by typology (Jr‑1 / 1BR / 2BR / 3BR).\n\nThanks.`
-            : `Hola Esteban,\n\nEstoy interesado/a en ${p.name}. Por favor envíame disponibilidad por tipología (Jr‑1 / 1BR / 2BR / 3BR).\n\nGracias.`
+            ? `Hi Jacquie,\n\nI’m interested in ${p.name}. Please send availability by typology (Jr‑1 / 1BR / 2BR / 3BR).\n\nThanks.`
+            : `Hola Jacquie,\n\nEstoy interesado/a en ${p.name}. Por favor envíame disponibilidad por tipología (Jr‑1 / 1BR / 2BR / 3BR).\n\nGracias.`
         )}`;
         return (
           <section className="mt-8 rounded-[10px] bg-[#0A2540] p-6 sm:p-7 max-w-[1100px] mx-auto ring-1 ring-white/10 text-white relative overflow-hidden">
@@ -434,12 +434,12 @@ export default async function Proyecto({ params }: Params) {
 
       {features.length > 0 && (() => {
         const items = (isEN ? p.featuresEn : p.featuresEs) ?? [];
-        const mailtoMaterials = `mailto:esteban@miamiliferealty.com?subject=${encodeURIComponent(
+        const mailtoMaterials = `mailto:jacqueline@miamiliferealty.com?subject=${encodeURIComponent(
           isEN ? `Materials list (PDF) — ${p.name}` : `Lista de materiales (PDF) — ${p.name}`
         )}&body=${encodeURIComponent(
           isEN
-            ? `Hi Esteban,\n\nI’m interested in ${p.name}. Please send me the materials list (PDF).\n\nThanks.`
-            : `Hola Esteban,\n\nEstoy interesado/a en ${p.name}. Por favor envíame la lista de materiales (PDF).\n\nGracias.`
+            ? `Hi Jacquie,\n\nI’m interested in ${p.name}. Please send me the materials list (PDF).\n\nThanks.`
+            : `Hola Jacquie,\n\nEstoy interesado/a en ${p.name}. Por favor envíame la lista de materiales (PDF).\n\nGracias.`
         )}`;
         return (
           <section className="mt-8 rounded-[10px] bg-[#0A2540] p-6 sm:p-7 max-w-[1100px] mx-auto ring-1 ring-white/10 text-white relative overflow-hidden">
@@ -497,19 +497,19 @@ export default async function Proyecto({ params }: Params) {
       {/* FAQs */}
       {faqs.length > 0 && (() => {
         // Mailto helpers for inline CTAs
-        const mailtoAvail = `mailto:esteban@miamiliferealty.com?subject=${encodeURIComponent(
+        const mailtoAvail = `mailto:jacqueline@miamiliferealty.com?subject=${encodeURIComponent(
           isEN ? `Availability by typology — ${p.name}` : `Disponibilidad por tipología — ${p.name}`
         )}&body=${encodeURIComponent(
           isEN
-            ? `Hi Esteban,\n\nI’m interested in ${p.name}. Please send availability by typology (Jr‑1 / 1BR / 2BR / 3BR).\n\nThanks.`
-            : `Hola Esteban,\n\nEstoy interesado/a en ${p.name}. Por favor envíame disponibilidad por tipología (Jr‑1 / 1BR / 2BR / 3BR).\n\nGracias.`
+            ? `Hi Jacquie,\n\nI’m interested in ${p.name}. Please send availability by typology (Jr‑1 / 1BR / 2BR / 3BR).\n\nThanks.`
+            : `Hola Jacquie,\n\nEstoy interesado/a en ${p.name}. Por favor envíame disponibilidad por tipología (Jr‑1 / 1BR / 2BR / 3BR).\n\nGracias.`
         )}`;
-        const mailtoMaterials = `mailto:esteban@miamiliferealty.com?subject=${encodeURIComponent(
+        const mailtoMaterials = `mailto:jacqueline@miamiliferealty.com?subject=${encodeURIComponent(
           isEN ? `Materials list (PDF) — ${p.name}` : `Lista de materiales (PDF) — ${p.name}`
         )}&body=${encodeURIComponent(
           isEN
-            ? `Hi Esteban,\n\nI’m interested in ${p.name}. Please send me the materials list (PDF).\n\nThanks.`
-            : `Hola Esteban,\n\nEstoy interesado/a en ${p.name}. Por favor envíame la lista de materiales (PDF).\n\nGracias.`
+            ? `Hi Jacquie,\n\nI’m interested in ${p.name}. Please send me the materials list (PDF).\n\nThanks.`
+            : `Hola Jacquie,\n\nEstoy interesado/a en ${p.name}. Por favor envíame la lista de materiales (PDF).\n\nGracias.`
         )}`;
 
         // Rank FAQs by sales impact
@@ -583,7 +583,7 @@ export default async function Proyecto({ params }: Params) {
         <a href={waHref} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto inline-flex h-10 items-center justify-center rounded-md border border-[#0A2540]/20 px-4 text-sm font-medium text-[#0A2540] hover:bg-[#F9FAFB]">
           {t.ctas.whatsapp}
         </a>
-        <a href="mailto:info@estebanfirpo.com" className="w-full sm:w-auto inline-flex h-10 items-center justify-center rounded-md border border-[#0A2540]/20 px-4 text-sm font-medium text-[#0A2540] hover:bg-[#F9FAFB]">
+        <a href="mailto:jacqueline@miamiliferealty.com" className="w-full sm:w-auto inline-flex h-10 items-center justify-center rounded-md border border-[#0A2540]/20 px-4 text-sm font-medium text-[#0A2540] hover:bg-[#F9FAFB]">
           {t.ctas.email}
         </a>
         <ShareButtons

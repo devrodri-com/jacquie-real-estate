@@ -103,10 +103,10 @@ export default async function Home({params}: {params: {locale: string}}) {
               </span>
               <span
                 className="text-[12px] sm:text-xs font-semibold tracking-[0.14em] uppercase"
-                aria-label={params.locale==='en' ? 'Esteban Firpo · REALTOR®' : 'Esteban Firpo · REALTOR®'}
-                title="Esteban Firpo · REALTOR®"
+                aria-label={params.locale==='en' ? 'Jacquie Zarate Realtor · REALTOR®' : 'Jacquie Zarate Realtor · REALTOR®'}
+                title="Jacquie Zarate Realtor · REALTOR®"
               >
-                ESTEBAN FIRPO · REALTOR®
+                JACQUIE ZARATE REALTOR · REALTOR®
               </span>
               <span
                 className="text-[12px] sm:text-xs font-semibold tracking-[0.14em] uppercase"
@@ -117,11 +117,11 @@ export default async function Home({params}: {params: {locale: string}}) {
               </span>
             </div>
           </div>
-          {/* Avatar Esteban centrado */}
+          {/* Avatar realtor centrado */}
           <div className="mt-6 flex justify-center">
             <Image
-              src="/images/Esteban.jpg"
-              alt="Esteban Firpo"
+              src="/images/jacquie-zarate.jpg"
+              alt="Jacquie Zarate Realtor"
               width={384}
               height={384}
               sizes="500px"
@@ -133,10 +133,10 @@ export default async function Home({params}: {params: {locale: string}}) {
           <div id="hero-desc" className="pt-2 text-xs text-[#0A2540]/70 flex items-center justify-center">
             <span className="text-[#0A2540]/60 mr-1 hidden sm:inline">{params.locale === 'en' ? 'Questions?' : '¿Dudas?'}</span>
             <a
-              href="https://wa.me/17542673931?text=Hola%20Esteban,%20quiero%20coordinar%20una%20reuni%C3%B3n."
+              href="https://wa.me/17864072591?text=Hola%20Jacquie,%20quiero%20coordinar%20una%20reuni%C3%B3n."
               target="_blank"
               rel="noreferrer"
-              aria-label="Abrir WhatsApp de Esteban con mensaje prellenado"
+              aria-label="Abrir WhatsApp de Jacquie con mensaje prellenado"
               className="block sm:inline underline decoration-[#0A2540]/30 underline-offset-2 hover:decoration-[#0A2540] sm:ml-2" data-analytics="hero:whatsapp"
             >
               {params.locale === 'en' ? 'Chat on WhatsApp' : 'Hablemos por WhatsApp'}
@@ -201,13 +201,13 @@ export default async function Home({params}: {params: {locale: string}}) {
         </p>
         <div className="mt-4 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <a
-            href={`mailto:esteban@miamiliferealty.com?subject=${encodeURIComponent(params.locale==='en' ? 'Investment inquiry from website' : 'Consulta de inversión desde la web')}`}
+            href={`mailto:jacqueline@miamiliferealty.com?subject=${encodeURIComponent(params.locale==='en' ? 'Investment inquiry from website' : 'Consulta de inversión desde la web')}`}
             className="inline-flex h-10 items-center justify-center rounded-md bg-white/10 px-4 text-sm font-medium text-white no-underline hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-[#D4AF37]/40"
           >
-            {params.locale === 'en' ? 'Email Esteban' : 'Escribir a Esteban'}
+            {params.locale === 'en' ? 'Email Jacquie' : 'Escribir a Jacquie'}
           </a>
           <a
-            href={`https://wa.me/17542673931?text=${encodeURIComponent(params.locale==='en' ? 'Hi Esteban, I would like to schedule a call to discuss investment opportunities.' : 'Hola Esteban, me gustaría agendar una llamada para hablar de oportunidades de inversión.')}`}
+            href={`https://wa.me/17864072591?text=${encodeURIComponent(params.locale==='en' ? 'Hi Jacquie, I would like to schedule a call to discuss investment opportunities.' : 'Hola Jacquie, me gustaría agendar una llamada para hablar de oportunidades de inversión.')}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex h-10 items-center justify-center rounded-md border border-white/25 px-4 text-sm font-medium text-white no-underline hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-[#D4AF37]/40"

@@ -30,7 +30,7 @@ export default async function SobreMi({
           </p>
         </div>
         <div className="relative h-44 w-44 overflow-hidden rounded-xl ring-1 ring-white/20 sm:h-48 sm:w-48">
-          <Image src="/images/Esteban.jpg" alt="Esteban Firpo" fill sizes="160px" className="object-cover" />
+          <Image src="/images/jacquie-zarate.jpg" alt="Jacquie Zarate Realtor" fill sizes="160px" className="object-cover" />
         </div>
         <div className="space-y-4">
           {/* Elegant credentials block */}
@@ -100,16 +100,16 @@ export default async function SobreMi({
       {/* CTA */}
       <section className="mt-6 flex flex-col items-center gap-2 sm:flex-row sm:justify-center">
         <a
-          href="mailto:esteban@miamiliferealty.com"
+          href="mailto:jacqueline@miamiliferealty.com"
           className="inline-flex h-11 items-center justify-center rounded-md bg-[#0A2540] px-5 text-white text-[14px] font-medium hover:opacity-95 focus-visible:ring-2 focus-visible:ring-[#D4AF37]/40"
         >
-          {isEN ? 'Email Esteban' : 'Escribir a Esteban'}
+          {isEN ? 'Email Jacquie' : 'Escribir a Jacquie'}
         </a>
         <a
-          href="https://wa.me/17542673931"
+          href="https://wa.me/17864072591"
           target="_blank"
           rel="noreferrer"
-          title="WhatsApp +1 754 267 3931"
+          title="WhatsApp +1 786 407 2591"
           className="inline-flex h-11 items-center justify-center rounded-md border border-[#0A2540] px-5 text-[#0A2540] text-[14px] font-medium hover:bg-[#0A2540]/10 focus-visible:ring-2 focus-visible:ring-[#D4AF37]/40"
         >
           {isEN ? 'WhatsApp' : 'Hablá por WhatsApp'}

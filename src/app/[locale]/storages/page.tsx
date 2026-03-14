@@ -189,10 +189,10 @@ export default async function StoragesPage({
               {/* CTA específico para Callaway */}
               <div className="mt-3 flex gap-3">
                 <a
-                  href={`https://wa.me/17542673931?text=${encodeURIComponent(
+                  href={`https://wa.me/17864072591?text=${encodeURIComponent(
                     isEN
-                      ? "Hi Esteban, I'd like to see the numbers for Callaway Self Storage."
-                      : "Hola Esteban, quiero ver los números de Callaway Self Storage."
+                      ? "Hi Jacquie, I'd like to see the numbers for Callaway Self Storage."
+                      : "Hola Jacquie, quiero ver los números de Callaway Self Storage."
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -289,10 +289,10 @@ export default async function StoragesPage({
         </h3>
         <div className="mt-4 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <a
-            href={`https://wa.me/17542673931?text=${encodeURIComponent(
+            href={`https://wa.me/17864072591?text=${encodeURIComponent(
               isEN
-                ? 'Hi Esteban, I would like to see eligible storage deals.'
-                : 'Hola Esteban, me gustaría ver storages elegibles.'
+                ? 'Hi Jacquie, I would like to see eligible storage deals.'
+                : 'Hola Jacquie, me gustaría ver storages elegibles.'
             )}`}
             target="_blank"
             rel="noopener noreferrer"

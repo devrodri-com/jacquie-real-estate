@@ -23,7 +23,7 @@ export default function Footer() {
           {/* Brand + tagline */}
           <div className="space-y-3">
             <h3 className="text-xl font-semibold">
-              Esteban Firpo · <span className="font-normal">Miami Real Estate</span>
+              Jacquie Zarate Realtor · <span className="font-normal">Miami Real Estate</span>
             </h3>
             <p className="text-sm opacity-90">
               {isEN
@@ -36,24 +36,24 @@ export default function Footer() {
           <div className="space-y-3">
             <div className="flex items-center gap-3">
               <div className="relative h-12 w-12 overflow-hidden rounded-full border-2" style={{ borderColor: GOLD }}>
-                {/* Coloca tu foto en public/images/esteban.jpg (300×300 aprox). Si no existe, mostramos un fallback. */}
+                {/* Foto realtor: public/images/jacquie-zarate.jpg */}
                 <Image
-                  src="/images/Esteban.jpg"
-                  alt="Foto de Esteban Firpo"
+                  src="/images/jacquie-zarate.jpg"
+                  alt="Foto de Jacquie Zarate Realtor"
                   fill
                   className="object-cover"
                   sizes="150px"
                 />
               </div>
               <div>
-                <p className="text-sm font-medium">Esteban Firpo</p>
+                <p className="text-sm font-medium">Jacquie Zarate Realtor</p>
                 <p className="text-xs opacity-90">REALTOR® Associate</p>
               </div>
             </div>
 
             <div className="mt-2 ml-[60px] flex items-center gap-2">
               <a
-                href="mailto:esteban@miamiliferealty.com"
+                href="mailto:jacqueline@miamiliferealty.com"
                 className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-transparent transition hover:bg-white/10 focus-visible:bg-white/10"
                 style={{ color: SAND }}
                 aria-label={isEN ? "Email" : "Email"}
@@ -62,7 +62,7 @@ export default function Footer() {
               </a>
 
               <a
-                href="tel:+17542673931"
+                href="tel:+17864072591"
                 className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-transparent transition hover:bg-white/10 focus-visible:bg-white/10"
                 style={{ color: SAND }}
                 aria-label={isEN ? "Call" : "Llamar"}
@@ -71,7 +71,7 @@ export default function Footer() {
               </a>
 
               <a
-                href="https://wa.me/17542673931"
+                href="https://wa.me/17864072591"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-transparent transition hover:bg-white/10 focus-visible:bg-white/10"
@@ -158,8 +158,8 @@ export default function Footer() {
             {/* Desktop: una sola línea */}
             <p className="opacity-90 hidden sm:block text-center">
               {isEN
-                ? <>© {year} Esteban Firpo. All rights reserved. · Made with <span aria-hidden>Next.js</span> by{" "}</>
-                : <>© {year} Esteban Firpo. Todos los derechos reservados. · Hecho con <span aria-hidden>Next.js</span> por{" "}</>
+                ? <>© {year} Jacquie Zarate Realtor. All rights reserved. · Made with <span aria-hidden>Next.js</span> by{" "}</>
+                : <>© {year} Jacquie Zarate Realtor. Todos los derechos reservados. · Hecho con <span aria-hidden>Next.js</span> por{" "}</>
               }
               <a
                 href="https://www.devrodri.com"
@@ -175,8 +175,8 @@ export default function Footer() {
             <div className="sm:hidden text-center leading-relaxed">
               <p className="opacity-90">
                 {isEN
-                  ? `© ${year} Esteban Firpo. All rights reserved.`
-                  : `© ${year} Esteban Firpo. Todos los derechos reservados.`}
+                  ? `© ${year} Jacquie Zarate Realtor. All rights reserved.`
+                  : `© ${year} Jacquie Zarate Realtor. Todos los derechos reservados.`}
               </p>
               <p className="opacity-90">
                 {isEN ? "Made with Next.js by " : "Hecho con Next.js por "}
