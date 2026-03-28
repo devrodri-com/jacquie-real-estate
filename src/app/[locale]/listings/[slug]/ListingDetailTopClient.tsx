@@ -265,13 +265,13 @@ export function ListingDetailTopClient({
         >
           <div className="min-h-full flex items-start justify-center p-4 sm:p-6">
             <div
-              className="relative w-full max-w-6xl pt-14 sm:pt-16"
+              className="relative w-full max-w-6xl pt-20 sm:pt-16"
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 type="button"
                 onClick={closeLightbox}
-                className="absolute right-0 top-2 sm:top-0 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20"
+                className="fixed right-[max(1rem,env(safe-area-inset-right,0px))] top-[max(1rem,env(safe-area-inset-top,0px))] z-[110] inline-flex h-10 w-10 items-center justify-center rounded-full bg-black/55 text-white backdrop-blur-sm hover:bg-black/70 sm:absolute sm:right-0 sm:top-0 sm:z-10 sm:bg-white/10 sm:hover:bg-white/20"
                 aria-label={isEN ? "Close gallery" : isFR ? "Fermer la galerie" : "Cerrar galería"}
               >
                 ✕
@@ -281,7 +281,7 @@ export function ListingDetailTopClient({
                 <img
                   src={item.images[lightboxIndex]}
                   alt=""
-                  className="max-h-[68vh] sm:max-h-[78vh] w-full object-contain"
+                  className="max-h-[58vh] sm:max-h-[78vh] w-full object-contain"
                 />
 
                 <div className="absolute bottom-4 right-4 rounded-md bg-black/60 px-3 py-1 text-sm font-medium text-white">
@@ -307,7 +307,7 @@ export function ListingDetailTopClient({
                 </button>
               </div>
 
-              <div className="mt-4 flex gap-2 justify-start overflow-x-auto pb-1 sm:flex-wrap sm:justify-center sm:overflow-visible">
+              <div className="mt-4 flex flex-nowrap gap-2 justify-start overflow-x-auto pb-1 sm:flex-wrap sm:justify-center sm:overflow-visible">
                 {item.images.map((src, index) => (
                   <button
                     key={`${index}-${src}`}
