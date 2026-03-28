@@ -57,28 +57,30 @@ export default async function Home({params}: {params: {locale: string}}) {
         <div className="relative z-10 mx-auto w-full max-w-[1180px] px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-10 md:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.92fr)] lg:gap-14">
             <div className="max-w-[44rem] text-left">
-              <div className="mb-5 inline-flex items-center gap-3 rounded-full bg-white/72 px-3 py-2 ring-1 ring-primary/10 backdrop-blur-sm">
-                <Image
-                  src="/images/jacquie-zarate.jpg"
-                  alt="Jacquie Zarate Realtor"
-                  width={96}
-                  height={96}
-                  sizes="96px"
-                  quality={90}
-                  priority
-                  className="h-11 w-11 rounded-full object-cover ring-1 ring-white/80"
-                />
-                <div className="min-w-0">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-primary/80">
-                    JACQUIE ZARATE · REALTOR®
-                  </p>
-                  <p className="text-[13px] leading-5 text-primary/72">
-                    {locale === 'en'
-                      ? 'Your trusted contact in Miami'
-                      : locale === 'fr'
-                        ? 'Votre personne de confiance à Miami'
-                        : 'Tu persona de confianza en Miami'}
-                  </p>
+              <div className="mb-5 flex justify-center md:justify-start">
+                <div className="inline-flex items-center gap-3 rounded-full bg-white/72 px-3 py-2 ring-1 ring-primary/10 backdrop-blur-sm">
+                  <Image
+                    src="/images/jacquie-zarate.jpg"
+                    alt="Jacquie Zarate Realtor"
+                    width={96}
+                    height={96}
+                    sizes="96px"
+                    quality={90}
+                    priority
+                    className="h-11 w-11 rounded-full object-cover ring-1 ring-white/80"
+                  />
+                  <div className="min-w-0">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-primary/80">
+                      JACQUIE ZARATE · REALTOR®
+                    </p>
+                    <p className="text-[13px] leading-5 text-primary/72">
+                      {locale === 'en'
+                        ? 'Your trusted contact in Miami'
+                        : locale === 'fr'
+                          ? 'Votre personne de confiance à Miami'
+                          : 'Tu persona de confianza en Miami'}
+                    </p>
+                  </div>
                 </div>
               </div>
 
