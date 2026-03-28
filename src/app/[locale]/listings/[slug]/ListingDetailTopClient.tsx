@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 type ListingDetailTopItem = {
   images: string[];
@@ -34,6 +34,7 @@ export function ListingDetailTopClient({
   const [activeImage, setActiveImage] = useState(mainImage);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
+  const lightboxHistoryPushedRef = useRef(false);
 
   const openLightbox = (index: number) => {
     if (item.images.length === 0) return;
@@ -43,9 +44,41 @@ export function ListingDetailTopClient({
     setIsLightboxOpen(true);
   };
 
-  const closeLightbox = () => {
-    setIsLightboxOpen(false);
-  };
+  const closeLightbox = useCallback(() => {
+    if (typeof window !== "undefined" && (window.history.state as { lightbox?: boolean } | null)?.lightbox) {
+      window.history.back();
+    } else {
+      setIsLightboxOpen(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isLightboxOpen) {
+      lightboxHistoryPushedRef.current = false;
+      return;
+    }
+    if (lightboxHistoryPushedRef.current) return;
+    window.history.pushState({ lightbox: true }, "");
+    lightboxHistoryPushedRef.current = true;
+  }, [isLightboxOpen]);
+
+  useEffect(() => {
+    if (!isLightboxOpen) return;
+    const onPopState = () => {
+      setIsLightboxOpen(false);
+    };
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, [isLightboxOpen]);
+
+  useEffect(() => {
+    if (!isLightboxOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [isLightboxOpen]);
 
   const showPrevImage = useCallback(() => {
     setLightboxIndex((current) => {
@@ -74,7 +107,7 @@ export function ListingDetailTopClient({
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        setIsLightboxOpen(false);
+        closeLightbox();
         return;
       }
       if (e.key === "ArrowLeft") {
@@ -90,7 +123,7 @@ export function ListingDetailTopClient({
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [isLightboxOpen, showPrevImage, showNextImage]);
+  }, [isLightboxOpen, closeLightbox, showPrevImage, showNextImage]);
 
   return (
     <>
@@ -227,70 +260,72 @@ export function ListingDetailTopClient({
 
       {isLightboxOpen && (
         <div
-          className="fixed inset-0 z-[100] bg-black/88 backdrop-blur-sm flex items-center justify-center p-4"
+          className="fixed inset-0 z-[100] bg-black/88 backdrop-blur-sm overflow-y-auto"
           onClick={closeLightbox}
         >
-          <div
-            className="relative w-full max-w-6xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              type="button"
-              onClick={closeLightbox}
-              className="absolute right-0 top-[-3rem] inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20"
-              aria-label={isEN ? "Close gallery" : isFR ? "Fermer la galerie" : "Cerrar galería"}
+          <div className="min-h-full flex items-start justify-center p-4 sm:p-6">
+            <div
+              className="relative w-full max-w-6xl pt-14 sm:pt-16"
+              onClick={(e) => e.stopPropagation()}
             >
-              ✕
-            </button>
+              <button
+                type="button"
+                onClick={closeLightbox}
+                className="absolute right-0 top-2 sm:top-0 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20"
+                aria-label={isEN ? "Close gallery" : isFR ? "Fermer la galerie" : "Cerrar galería"}
+              >
+                ✕
+              </button>
 
-            <div className="relative overflow-hidden rounded-[16px] bg-black">
-              <img
-                src={item.images[lightboxIndex]}
-                alt=""
-                className="max-h-[78vh] w-full object-contain"
-              />
+              <div className="relative overflow-hidden rounded-[16px] bg-black">
+                <img
+                  src={item.images[lightboxIndex]}
+                  alt=""
+                  className="max-h-[68vh] sm:max-h-[78vh] w-full object-contain"
+                />
 
-              <div className="absolute bottom-4 right-4 rounded-md bg-black/60 px-3 py-1 text-sm font-medium text-white">
-                {lightboxIndex + 1} / {item.images.length}
+                <div className="absolute bottom-4 right-4 rounded-md bg-black/60 px-3 py-1 text-sm font-medium text-white">
+                  {lightboxIndex + 1} / {item.images.length}
+                </div>
+
+                <button
+                  type="button"
+                  onClick={showPrevImage}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/45 text-white hover:bg-black/65"
+                  aria-label={isEN ? "Previous image" : isFR ? "Image précédente" : "Imagen anterior"}
+                >
+                  ‹
+                </button>
+
+                <button
+                  type="button"
+                  onClick={showNextImage}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/45 text-white hover:bg-black/65"
+                  aria-label={isEN ? "Next image" : isFR ? "Image suivante" : "Imagen siguiente"}
+                >
+                  ›
+                </button>
               </div>
 
-              <button
-                type="button"
-                onClick={showPrevImage}
-                className="absolute left-4 top-1/2 -translate-y-1/2 inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/45 text-white hover:bg-black/65"
-                aria-label={isEN ? "Previous image" : isFR ? "Image précédente" : "Imagen anterior"}
-              >
-                ‹
-              </button>
-
-              <button
-                type="button"
-                onClick={showNextImage}
-                className="absolute right-4 top-1/2 -translate-y-1/2 inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/45 text-white hover:bg-black/65"
-                aria-label={isEN ? "Next image" : isFR ? "Image suivante" : "Imagen siguiente"}
-              >
-                ›
-              </button>
-            </div>
-
-            <div className="mt-4 flex flex-wrap gap-2 justify-center">
-              {item.images.map((src, index) => (
-                <button
-                  key={`${index}-${src}`}
-                  type="button"
-                  onClick={() => {
-                    setLightboxIndex(index);
-                    setActiveImage(src);
-                  }}
-                  className={`h-16 w-20 overflow-hidden rounded-md ring-1 transition ${
-                    index === lightboxIndex
-                      ? "ring-white"
-                      : "ring-white/20 hover:ring-white/50"
-                  }`}
-                >
-                  <img src={src} alt="" className="h-full w-full object-cover" />
-                </button>
-              ))}
+              <div className="mt-4 flex gap-2 justify-start overflow-x-auto pb-1 sm:flex-wrap sm:justify-center sm:overflow-visible">
+                {item.images.map((src, index) => (
+                  <button
+                    key={`${index}-${src}`}
+                    type="button"
+                    onClick={() => {
+                      setLightboxIndex(index);
+                      setActiveImage(src);
+                    }}
+                    className={`shrink-0 h-16 w-20 overflow-hidden rounded-md ring-1 transition ${
+                      index === lightboxIndex
+                        ? "ring-white"
+                        : "ring-white/20 hover:ring-white/50"
+                    }`}
+                  >
+                    <img src={src} alt="" className="h-full w-full object-cover" />
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
