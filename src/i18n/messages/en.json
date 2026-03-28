@@ -1,5 +1,5 @@
 {
-  "brand": "Esteban Firpo · Miami Real Estate",
+  "brand": "Jacquie Zarate Realtor · Miami",
   "nav": { "home":"Home","miami":"Miami","precon":"Pre-construction","proyectos":"Projects","contacto":"Contact","sobreMi":"About", "financing": "Financing" },
   "cta": { "whatsapp":"WhatsApp","calendly":"Schedule", "projects": "See projects" },
   "footer": { "rights":"All rights reserved." },
@@ -49,7 +49,7 @@
 
   "home": {
     "hero": {
-      "title": "Invest in Miami with Esteban Firpo",
+      "title": "Invest in Miami with Jacquie Zarate Realtor",
       "subtitle": "Professional advisory in pre-construction and exclusive projects",
       "ctaProjects": "See projects",
       "ctaWhatsapp": "Chat on WhatsApp"
@@ -114,6 +114,6 @@
       { "t": "Closing", "d": "Mortgage is signed at purchase." }
     ],
     "ctaLabel": "Ask about financing on WhatsApp",
-    "ctaHref": "https://wa.me/17542673931"
+    "ctaHref": "https://wa.me/17864072591"
   }
 }

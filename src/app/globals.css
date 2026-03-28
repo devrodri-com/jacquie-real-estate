@@ -45,19 +45,19 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
+  --background: #F7F6F3;
   --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
+  --card: #F7F6F3;
   --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
+  --popover: #F7F6F3;
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
+  --primary: #1F3A34;
+  --primary-foreground: #FFFFFF;
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
+  --accent: #8FA79B;
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
@@ -115,6 +115,10 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+  }
+  /* Evita scroll horizontal y “franja” a la derecha cuando algún hijo usa 100vw / breakout tipo w-screen + 50vw (p. ej. hero en page.tsx). */
+  html {
+    overflow-x: clip;
   }
   body {
     @apply bg-background text-foreground;

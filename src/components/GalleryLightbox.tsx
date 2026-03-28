@@ -7,7 +7,49 @@ import { useCallback, useEffect, useState } from "react";
 
 type Img = { src: string; alt?: string };
 
-export default function GalleryLightbox({ images, name }: { images: Img[]; name: string }) {
+type GalleryLocale = "en" | "es" | "fr";
+
+function galleryA11y(locale: GalleryLocale) {
+  if (locale === "en") {
+    return {
+      openThumb: (i: number, total: number) => `Open image ${i} of ${total}`,
+      altFallback: (i: number) => `image ${i}`,
+      dialog: (i: number, total: number) => `Image ${i} of ${total}`,
+      prev: "Previous image",
+      next: "Next image",
+      close: "Close lightbox",
+    };
+  }
+  if (locale === "fr") {
+    return {
+      openThumb: (i: number, total: number) => `Ouvrir l'image ${i} sur ${total}`,
+      altFallback: (i: number) => `image ${i}`,
+      dialog: (i: number, total: number) => `Image ${i} sur ${total}`,
+      prev: "Image précédente",
+      next: "Image suivante",
+      close: "Fermer la visionneuse",
+    };
+  }
+  return {
+    openThumb: (i: number, total: number) => `Abrir imagen ${i} de ${total}`,
+    altFallback: (i: number) => `imagen ${i}`,
+    dialog: (i: number, total: number) => `Imagen ${i} de ${total}`,
+    prev: "Imagen anterior",
+    next: "Imagen siguiente",
+    close: "Cerrar galería",
+  };
+}
+
+export default function GalleryLightbox({
+  images,
+  name,
+  locale = "es",
+}: {
+  images: Img[];
+  name: string;
+  locale?: GalleryLocale;
+}) {
+  const L = galleryA11y(locale);
   const [open, setOpen] = useState(false);
   const [idx, setIdx] = useState(0);
 
@@ -54,12 +96,12 @@ export default function GalleryLightbox({ images, name }: { images: Img[]; name:
             key={`${g.src}-${i}`}
             type="button"
             onClick={() => openAt(i)}
-            className="relative aspect-[16/10] overflow-hidden rounded-xl ring-1 ring-white/15 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/40 [@media(hover:hover)]:hover:ring-white/30 transition"
-            aria-label={`Open image ${i + 1} of ${displayImages.length}`}
+            className="relative aspect-[16/10] overflow-hidden rounded-xl ring-1 ring-primary-foreground/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 [@media(hover:hover)]:hover:ring-primary-foreground/30 transition"
+            aria-label={L.openThumb(i + 1, displayImages.length)}
           >
             <Image
               src={g.src}
-              alt={g.alt ?? `${name} image ${i + 1}`}
+              alt={g.alt ?? `${name} — ${L.altFallback(i + 1)}`}
               fill
               className="object-cover"
               sizes="(min-width:1024px) 320px, 50vw"
@@ -78,12 +120,12 @@ export default function GalleryLightbox({ images, name }: { images: Img[]; name:
               <button
                 type="button"
                 onClick={() => openAt(i)}
-                className="relative h-48 w-[85vw] overflow-hidden rounded-xl ring-1 ring-white/15 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/40"
-                aria-label={`Open image ${i + 1} of ${displayImages.length}`}
+                className="relative h-48 w-[85vw] overflow-hidden rounded-xl ring-1 ring-primary-foreground/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+                aria-label={L.openThumb(i + 1, displayImages.length)}
               >
                 <Image
                   src={g.src}
-                  alt={g.alt ?? `${name} image ${i + 1}`}
+                  alt={g.alt ?? `${name} — ${L.altFallback(i + 1)}`}
                   fill
                   sizes="85vw"
                   className="object-cover"
@@ -102,7 +144,7 @@ export default function GalleryLightbox({ images, name }: { images: Img[]; name:
           className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/80"
           aria-modal
           role="dialog"
-          aria-label={`Image ${idx + 1} of ${images.length}`}
+          aria-label={L.dialog(idx + 1, images.length)}
           onClick={close}
         >
           <div
@@ -112,7 +154,7 @@ export default function GalleryLightbox({ images, name }: { images: Img[]; name:
             <div className="relative inline-block max-h-[90vh] max-w-[90vw]">
               <Image
                 src={images[idx].src}
-                alt={images[idx].alt ?? `${name} image ${idx + 1}`}
+                alt={images[idx].alt ?? `${name} — ${L.altFallback(idx + 1)}`}
                 width={1600}
                 height={1000}
                 className="h-auto w-auto max-h-[90vh] max-w-[90vw] rounded-lg object-contain"
@@ -128,8 +170,8 @@ export default function GalleryLightbox({ images, name }: { images: Img[]; name:
                       e.stopPropagation();
                       prev();
                     }}
-                    className="h-9 w-9 rounded-md bg-[#0A2540]/85 text-white hover:bg-[#0A2540] focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/40"
-                    aria-label="Previous image"
+                    className="h-9 w-9 rounded-md bg-primary/85 text-primary-foreground hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+                    aria-label={L.prev}
                   >
                     ‹
                   </button>
@@ -139,8 +181,8 @@ export default function GalleryLightbox({ images, name }: { images: Img[]; name:
                       e.stopPropagation();
                       next();
                     }}
-                    className="h-9 w-9 rounded-md bg-[#0A2540]/85 text-white hover:bg-[#0A2540] focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/40"
-                    aria-label="Next image"
+                    className="h-9 w-9 rounded-md bg-primary/85 text-primary-foreground hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+                    aria-label={L.next}
                   >
                     ›
                   </button>
@@ -153,8 +195,8 @@ export default function GalleryLightbox({ images, name }: { images: Img[]; name:
                   e.stopPropagation();
                   close();
                 }}
-                className="absolute -right-2 -top-2 h-8 w-8 rounded-full bg-[#0A2540]/90 text-white hover:bg-[#0A2540] focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/40"
-                aria-label="Close lightbox"
+                className="absolute -right-2 -top-2 h-8 w-8 rounded-full bg-primary/90 text-primary-foreground hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+                aria-label={L.close}
               >
                 ✕
               </button>
@@ -167,7 +209,7 @@ export default function GalleryLightbox({ images, name }: { images: Img[]; name:
             onClick={(e) => e.stopPropagation()}
             aria-hidden
           >
-            <span className="rounded-full bg-black/60 px-3 py-1 text-sm text-white">
+            <span className="rounded-full bg-primary/85 px-3 py-1 text-sm text-primary-foreground">
               {idx + 1} / {images.length}
             </span>
           </div>

@@ -6,8 +6,6 @@ import { ALL_PROJECTS } from "@/data/projects/index";
 import type { Project } from "@/data/types";
 import GalleryLightbox from "@/components/GalleryLightbox";
 import HighlightsBlock, { type HighlightItem } from "@/components/HighlightsBlock";
-import SpecsBlock from "@/components/SpecsBlock";
-import WhyBlock, { type WhyItem } from "@/components/WhyBlock";
 import FaqsBlock, { type FaqItem } from "@/components/FaqsBlock";
 import PaymentPlan from "@/components/PaymentPlan";
 import { Lock, WashingMachine, Tv, Speaker, PawPrint, Palette, Dumbbell, Briefcase } from "lucide-react";
@@ -22,6 +20,7 @@ import {
   Images as ImagesIcon,
 } from "lucide-react";
 import ShareButtons from "@/components/ShareButtons";
+import { getProjectFrOverlay } from "@/data/projectsFrOverlay";
 function BedIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} {...props}>
@@ -123,28 +122,63 @@ function pickBySlug(slug: string): Project | null {
 }
 
 function fmtUSD(n: number, locale: string) {
-  return new Intl.NumberFormat(locale === "en" ? "en-US" : "es-ES", {
+  const loc = locale === "en" ? "en-US" : locale === "fr" ? "fr-CA" : "es-ES";
+  return new Intl.NumberFormat(loc, {
     style: "currency",
     currency: "USD",
     maximumFractionDigits: 0,
   }).format(n);
 }
 
+function pickFrArrays<T>(
+  overlay: T[] | undefined,
+  en: T[] | undefined,
+  es: T[] | undefined
+): T[] {
+  if (overlay && overlay.length > 0) return overlay;
+  if (en && en.length > 0) return en;
+  return es ?? [];
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }) {
   const { locale, slug } = await params;
   const isEN = locale === "en";
+  const isFR = locale === "fr";
   const p = pickBySlug(slug);
   if (!p) {
     return {
-      title: isEN ? "Project not found" : "Proyecto no encontrado",
+      title: isEN ? "Project not found" : isFR ? "Projet introuvable" : "Proyecto no encontrado",
       robots: { index: false, follow: false },
     };
   }
 
   const title = `${p.name} — ${p.city} | Jacquie Zarate Realtor`;
+  const frOv = isFR ? getProjectFrOverlay(p.slug) : undefined;
+  const deliveryMetaFr = frOv?.deliveryFr ?? p.delivery;
+
   const desc = isEN
     ? `STR approved, private beach club, ${p.pricePerSfApprox ? `~$${p.pricePerSfApprox}/sf, ` : ""}${p.delivery ? `completion ${p.delivery}, ` : ""}request floor plans and availability.`
-    : `Renta corta aprobada, club de playa privado, ${p.pricePerSfApprox ? `~$${p.pricePerSfApprox}/sf, ` : ""}${p.delivery ? `entrega ${p.delivery}, ` : ""}solicitá planos y disponibilidad.`;
+    : isFR
+      ? (() => {
+          const parts: string[] = [];
+          parts.push(`${p.name} — ${p.city}.`);
+          if (typeof p.priceFromUsd === "number") {
+            parts.push(
+              `À partir de ${fmtUSD(p.priceFromUsd, "fr")}.`
+            );
+          }
+          if (typeof p.pricePerSfApprox === "number") {
+            parts.push(`Environ $${p.pricePerSfApprox}/pi².`);
+          }
+          if (deliveryMetaFr) {
+            parts.push(`Livraison prévue : ${deliveryMetaFr}.`);
+          }
+          parts.push(
+            "Plans, disponibilité et accompagnement personnalisé avec Jacquie Zarate Realtor."
+          );
+          return parts.join(" ");
+        })()
+      : `Renta corta aprobada, club de playa privado, ${p.pricePerSfApprox ? `~$${p.pricePerSfApprox}/sf, ` : ""}${p.delivery ? `entrega ${p.delivery}, ` : ""}solicitá planos y disponibilidad.`;
 
   const url = `/${locale}/proyectos/${slug}`;
   const image = p.image || "/images/og-default.jpg";
@@ -175,58 +209,198 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 export default async function Proyecto({ params }: Params) {
   const { locale, slug } = await params;
   const isEN = locale === "en";
+  const isFR = locale === "fr";
   const p = pickBySlug(slug);
   if (!p) notFound();
 
+  const o = isFR ? getProjectFrOverlay(p.slug) : undefined;
+  const legacyRental = p.rentalPolicy != null ? String(p.rentalPolicy) : undefined;
+
   const policy = isEN
-    ? ((p as any).rentalPolicyEn ?? (p as any).rentalPolicy ?? undefined)
-    : ((p as any).rentalPolicyEs ?? (p as any).rentalPolicy ?? undefined);
+    ? (p.rentalPolicyEn ?? legacyRental)
+    : isFR
+      ? (o?.rentalPolicyFr ??
+          p.rentalPolicyEn ??
+          p.rentalPolicyEs ??
+          legacyRental)
+      : (p.rentalPolicyEs ?? legacyRental);
 
-  const payment = (isEN ? p.paymentPlanEn : p.paymentPlanEs) ?? [];
-  const faqs = (isEN ? p.faqsEn : p.faqsEs) ?? [];
-  const unitMix = (isEN ? p.unitMixEn : p.unitMixEs) ?? [];
-  const features = (isEN ? p.featuresEn : p.featuresEs) ?? [];
+  const payment = isEN
+    ? (p.paymentPlanEn ?? [])
+    : isFR
+      ? pickFrArrays(o?.paymentPlanFr, p.paymentPlanEn, p.paymentPlanEs)
+      : (p.paymentPlanEs ?? []);
 
-  const t = {
-    breadcrumb: isEN ? "Projects" : "Proyectos",
-    from: isEN ? "From" : "Desde",
-    delivery: isEN ? "Completion" : "Entrega",
-    rental: isEN ? "Rental policy" : "Política de renta",
-    gallery: isEN ? "Gallery" : "Galería",
-    highlights: isEN ? "Highlights" : "Destacados",
-    mix: isEN ? "Unit mix" : "Tipologías",
-    features: isEN ? "Features" : "Características",
-    payments: isEN ? "Payment plan" : "Plan de pagos",
-    faqsTitle: isEN ? "FAQs" : "Preguntas frecuentes",
-    brochure: isEN ? "Download brochure" : "Descargar brochure",
-    ctas: {
-      schedule: isEN ? "Schedule Meeting" : "Agendar Reunión",
-      whatsapp: "WhatsApp",
-      email: isEN ? "Email Jacquie" : "Email a Jacquie",
-    },
-  };
+  const faqs = isEN
+    ? (p.faqsEn ?? [])
+    : isFR
+      ? pickFrArrays(o?.faqsFr, p.faqsEn, p.faqsEs)
+      : (p.faqsEs ?? []);
+
+  const unitMix = isEN
+    ? (p.unitMixEn ?? [])
+    : isFR
+      ? pickFrArrays(o?.unitMixFr, p.unitMixEn, p.unitMixEs)
+      : (p.unitMixEs ?? []);
+
+  const features = isEN
+    ? (p.featuresEn ?? [])
+    : isFR
+      ? pickFrArrays(o?.featuresFr, p.featuresEn, p.featuresEs)
+      : (p.featuresEs ?? []);
+
+  const t = isEN
+    ? {
+        breadcrumb: "Projects",
+        from: "From",
+        inquire: "Inquire",
+        delivery: "Completion",
+        rental: "Rental policy",
+        gallery: "Gallery",
+        highlights: "Highlights",
+        mix: "Unit mix",
+        features: "Features",
+        payments: "Payment plan",
+        faqsTitle: "FAQs",
+        brochure: "Download brochure",
+        location: "Location",
+        why: (name: string) => `Why ${name}?`,
+        furnished: "Furnished",
+        unfurnished: "Unfurnished",
+        ctas: {
+          schedule: "Schedule Meeting",
+          whatsapp: "WhatsApp",
+          email: "Email Jacquie",
+        },
+        requestPlans: "Request floor plans (PDF)",
+        checkAvail: "Check availability by typology",
+        requestMaterials: "Request materials (PDF)",
+        faqAvailLink: "Check availability by typology",
+        faqMatLink: "Request materials (PDF)",
+        faqMapLink: "See map",
+        shareLocale: "en" as const,
+        galleryLocale: "en" as const,
+        paymentLocale: "en" as const,
+        mailtoPlansSubject: (name: string) => `Floor plans (PDF) — ${name}`,
+        mailtoPlansBody: (name: string) =>
+          `Hi Jacquie,\n\nI'm interested in ${name}. Please send me floor plans (PDF).\n\nThanks.`,
+        mailtoAvailSubject: (name: string) => `Availability by typology — ${name}`,
+        mailtoAvailBody: (name: string) =>
+          `Hi Jacquie,\n\nI'm interested in ${name}. Please send availability by typology (Jr‑1 / 1BR / 2BR / 3BR).\n\nThanks.`,
+        mailtoMatSubject: (name: string) => `Materials list (PDF) — ${name}`,
+        mailtoMatBody: (name: string) =>
+          `Hi Jacquie,\n\nI'm interested in ${name}. Please send me the materials list (PDF).\n\nThanks.`,
+      }
+    : isFR
+      ? {
+          breadcrumb: "Projets",
+          from: "À partir de",
+          inquire: "Nous consulter",
+          delivery: "Livraison",
+          rental: "Politique de location",
+          gallery: "Galerie",
+          highlights: "Points forts",
+          mix: "Typologies",
+          features: "Caractéristiques",
+          payments: "Calendrier de paiement",
+          faqsTitle: "Questions fréquentes",
+          brochure: "Télécharger la brochure",
+          location: "Emplacement",
+          why: (name: string) => `Pourquoi ${name} ?`,
+          furnished: "Meublé",
+          unfurnished: "Non meublé",
+          ctas: {
+            schedule: "Planifier un rendez-vous",
+            whatsapp: "WhatsApp",
+            email: "Écrire à Jacquie",
+          },
+          requestPlans: "Demander les plans (PDF)",
+          checkAvail: "Disponibilité par typologie",
+          requestMaterials: "Demander la liste des matériaux (PDF)",
+          faqAvailLink: "Voir la disponibilité par typologie",
+          faqMatLink: "Demander la liste des matériaux (PDF)",
+          faqMapLink: "Voir la carte",
+          shareLocale: "fr" as const,
+          galleryLocale: "fr" as const,
+          paymentLocale: "fr" as const,
+          mailtoPlansSubject: (name: string) => `Plans (PDF) — ${name}`,
+          mailtoPlansBody: (name: string) =>
+            `Bonjour Jacquie,\n\nJe suis intéressé(e) par ${name}. Pourriez-vous m'envoyer les plans (PDF) ?\n\nMerci.`,
+          mailtoAvailSubject: (name: string) => `Disponibilité par typologie — ${name}`,
+          mailtoAvailBody: (name: string) =>
+            `Bonjour Jacquie,\n\nJe suis intéressé(e) par ${name}. Pourriez-vous m'indiquer la disponibilité par typologie (Jr‑1 / 1BR / 2BR / 3BR) ?\n\nMerci.`,
+          mailtoMatSubject: (name: string) => `Liste des matériaux (PDF) — ${name}`,
+          mailtoMatBody: (name: string) =>
+            `Bonjour Jacquie,\n\nJe suis intéressé(e) par ${name}. Pourriez-vous m'envoyer la liste des matériaux (PDF) ?\n\nMerci.`,
+        }
+      : {
+          breadcrumb: "Proyectos",
+          from: "Desde",
+          inquire: "Consultar",
+          delivery: "Entrega",
+          rental: "Política de renta",
+          gallery: "Galería",
+          highlights: "Destacados",
+          mix: "Tipologías",
+          features: "Características",
+          payments: "Plan de pagos",
+          faqsTitle: "Preguntas frecuentes",
+          brochure: "Descargar brochure",
+          location: "Ubicación",
+          why: (name: string) => `¿Por qué ${name}?`,
+          furnished: "Amueblado",
+          unfurnished: "Sin amueblar",
+          ctas: {
+            schedule: "Agendar Reunión",
+            whatsapp: "WhatsApp",
+            email: "Email a Jacquie",
+          },
+          requestPlans: "Solicitar planos (PDF)",
+          checkAvail: "Ver disponibilidad por tipología",
+          requestMaterials: "Solicitar materiales (PDF)",
+          faqAvailLink: "Ver disponibilidad por tipología",
+          faqMatLink: "Solicitar materiales (PDF)",
+          faqMapLink: "Ver mapa",
+          shareLocale: "es" as const,
+          galleryLocale: "es" as const,
+          paymentLocale: "es" as const,
+          mailtoPlansSubject: (name: string) => `Planos (PDF) — ${name}`,
+          mailtoPlansBody: (name: string) =>
+            `Hola Jacquie,\n\nEstoy interesado/a en ${name}. Por favor envíame los planos (PDF).\n\nGracias.`,
+          mailtoAvailSubject: (name: string) => `Disponibilidad por tipología — ${name}`,
+          mailtoAvailBody: (name: string) =>
+            `Hola Jacquie,\n\nEstoy interesado/a en ${name}. Por favor envíame disponibilidad por tipología (Jr‑1 / 1BR / 2BR / 3BR).\n\nGracias.`,
+          mailtoMatSubject: (name: string) => `Lista de materiales (PDF) — ${name}`,
+          mailtoMatBody: (name: string) =>
+            `Hola Jacquie,\n\nEstoy interesado/a en ${name}. Por favor envíame la lista de materiales (PDF).\n\nGracias.`,
+        };
 
   const bookingUrl = process.env.NEXT_PUBLIC_CALENDAR_URL || `/${locale}/agendar`;
   const hasCoords = typeof (p as Project).lat === "number" && typeof (p as Project).lng === "number";
   const addressQuery = p.city && /\d/.test(p.city) ? p.city : `${p.name} ${p.city}`;
+  const mapHl = isEN ? "en" : isFR ? "fr" : "es";
   const mapSrc = hasCoords
-    ? `https://www.google.com/maps?q=${p.lat},${p.lng}&hl=${isEN ? "en" : "es"}&z=15&output=embed`
-    : `https://www.google.com/maps?q=${encodeURIComponent(addressQuery)}&hl=${isEN ? "en" : "es"}&z=15&output=embed`;
-  const waNumber = "17864072591"; // +1 786 407 2591
+    ? `https://www.google.com/maps?q=${p.lat},${p.lng}&hl=${mapHl}&z=15&output=embed`
+    : `https://www.google.com/maps?q=${encodeURIComponent(addressQuery)}&hl=${mapHl}&z=15&output=embed`;
+  const waNumber = "17864072591";
   const waHref = `https://wa.me/${waNumber}?text=${encodeURIComponent(
     isEN
       ? `Hi Jacquie, I'm interested in ${p.name}. Could you please send me more information?`
-      : `Hola Jacquie, estoy interesado/a en ${p.name}. ¿Podés enviarme más información?`
+      : isFR
+        ? `Bonjour Jacquie, je suis intéressé(e) par ${p.name}. Pourriez-vous m'envoyer plus d'informations ?`
+        : `Hola Jacquie, estoy interesado/a en ${p.name}. ¿Podés enviarme más información?`
   )}`;
   const base = process.env.NEXT_PUBLIC_SITE_URL || "https://www.jacquiezaraterealtor.com";
   const shareUrl = `${base}/${locale}/proyectos/${slug}`.replace(/(?<!:)\/\/+/, "/");
 
-  // Extra policy chips for mobile only
+  const deliveryShown = isFR ? (o?.deliveryFr ?? p.delivery) : p.delivery;
+  const priceSfSuffix = isFR ? "/pi²" : "/sf";
+
   const policyChips = [
     ...(policy ? [policy] : []),
     ...(p.hoa ? [`HOA ${p.hoa}`] : []),
     ...(typeof p.furnished === "boolean"
-      ? [isEN ? (p.furnished ? "Furnished" : "Unfurnished") : (p.furnished ? "Amueblado" : "Sin amueblar")]
+      ? [p.furnished ? t.furnished : t.unfurnished]
       : []),
   ];
 
@@ -240,38 +414,38 @@ export default async function Proyecto({ params }: Params) {
       </div>
 
       {/* Title + meta */}
-      <h1 className="mt-2 sm:mt-0 text-3xl sm:text-4xl font-semibold tracking-tight text-[#0A2540]">{p.name}</h1>
+      <h1 className="mt-2 sm:mt-0 text-3xl sm:text-4xl font-semibold tracking-tight text-primary">{p.name}</h1>
       {/* Meta — mobile condensed */}
-      <p className="mt-1 text-sm text-[#0A2540]/70 sm:hidden">
+      <p className="mt-1 text-sm text-foreground/70 sm:hidden">
         {typeof p.priceFromUsd === "number" ? (
           <>
             {t.from} {fmtUSD(p.priceFromUsd, locale)}
             {typeof p.pricePerSfApprox === "number" && (
-              <span className="opacity-60"> · ~${p.pricePerSfApprox}/sf</span>
+              <span className="opacity-60"> · ~${p.pricePerSfApprox}{priceSfSuffix}</span>
             )}
           </>
         ) : (
-          isEN ? "Inquire" : "Consultar"
+          t.inquire
         )}
-        {p.delivery ? <span className="opacity-60"> · {t.delivery} {p.delivery}</span> : null}
+        {deliveryShown ? <span className="opacity-60"> · {t.delivery} {deliveryShown}</span> : null}
       </p>
       {/* Meta — desktop/full */}
-      <p className="hidden sm:block mt-2 text-base text-[#0A2540]/70">
+      <p className="hidden sm:block mt-2 text-base text-foreground/70">
         {typeof p.priceFromUsd === "number" ? (
           <>
             {t.from} {fmtUSD(p.priceFromUsd, locale)}
             {typeof p.pricePerSfApprox === "number" && (
-              <span className="opacity-60"> · ~${p.pricePerSfApprox}/sf</span>
+              <span className="opacity-60"> · ~${p.pricePerSfApprox}{priceSfSuffix}</span>
             )}
           </>
         ) : (
-          isEN ? "Inquire" : "Consultar"
+          t.inquire
         )}
-        {p.delivery ? <> · {t.delivery} {p.delivery}</> : null}
+        {deliveryShown ? <> · {t.delivery} {deliveryShown}</> : null}
         {policy ? <> · {t.rental} {policy}</> : null}
         {p.hoa ? <> · HOA {p.hoa}</> : null}
         {typeof p.furnished === "boolean" ? (
-          <> · {isEN ? (p.furnished ? "Furnished" : "Unfurnished") : (p.furnished ? "amueblado" : "Sin amueblar")}</>
+          <> · {p.furnished ? t.furnished : t.unfurnished}</>
         ) : null}
       </p>
 
@@ -280,12 +454,16 @@ export default async function Proyecto({ params }: Params) {
       {(() => {
         type WithClaims = Project & { microClaimsEs?: string[]; microClaimsEn?: string[] };
         const pp = p as WithClaims;
-        const claims = (isEN ? pp.microClaimsEn : pp.microClaimsEs) ?? [];
+        const claims = isEN
+          ? (pp.microClaimsEn ?? [])
+          : isFR
+            ? (o?.microClaimsFr ?? pp.microClaimsEn ?? pp.microClaimsEs ?? [])
+            : (pp.microClaimsEs ?? []);
         if (!Array.isArray(claims) || claims.length === 0) return null;
 
         // Desktop (wrap) + Mobile (horizontal scroll)
         const Chip = ({ children }: { children: React.ReactNode }) => (
-          <span className="inline-flex items-center rounded-full bg-white text-[#0A2540] ring-1 ring-[#0A2540]/15 px-3 py-[6px] text-[12.5px] font-medium leading-tight whitespace-nowrap">
+          <span className="inline-flex items-center rounded-full bg-white text-primary ring-1 ring-primary/15 px-3 py-[6px] text-[12.5px] font-medium leading-tight whitespace-nowrap">
             {children}
           </span>
         );
@@ -334,7 +512,7 @@ export default async function Proyecto({ params }: Params) {
       <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-start">
         <Link
           href={bookingUrl}
-          className="inline-flex h-10 items-center justify-center rounded-md bg-[#0A2540] px-5 text-sm font-medium text-white hover:opacity-95 focus-visible:ring-2 focus-visible:ring-[#D4AF37]/40"
+          className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-5 text-sm font-medium text-primary-foreground hover:opacity-95 focus-visible:ring-2 focus-visible:ring-accent/40"
         >
           {t.ctas.schedule}
         </Link>
@@ -342,40 +520,44 @@ export default async function Proyecto({ params }: Params) {
           href={waHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex h-10 items-center justify-center rounded-md border border-[#0A2540]/25 px-5 text-sm font-medium text-[#0A2540] hover:bg-[#F9FAFB] focus-visible:ring-2 focus-visible:ring-[#D4AF37]/40"
+          className="inline-flex h-10 items-center justify-center rounded-md border border-primary/25 px-5 text-sm font-medium text-primary hover:bg-muted focus-visible:ring-2 focus-visible:ring-accent/40"
         >
           {t.ctas.whatsapp}
         </a>
         <a
           href="mailto:jacqueline@miamiliferealty.com"
-          className="inline-flex h-10 items-center justify-center rounded-md border border-[#0A2540]/25 px-5 text-sm font-medium text-[#0A2540] hover:bg-[#F9FAFB] focus-visible:ring-2 focus-visible:ring-[#D4AF37]/40"
+          className="inline-flex h-10 items-center justify-center rounded-md border border-primary/25 px-5 text-sm font-medium text-primary hover:bg-muted focus-visible:ring-2 focus-visible:ring-accent/40"
         >
           {t.ctas.email}
         </a>
         <ShareButtons
           url={shareUrl}
           text={p.name}
-          locale={isEN ? "en" : "es"}
+          locale={t.shareLocale}
           variant="light"
           iconSrc="/icons/whatsapp.svg"
-          buttonClassName="inline-flex h-10 items-center justify-center rounded-md border border-[#0A2540]/25 px-5 text-sm font-medium text-[#0A2540] hover:bg-[#F9FAFB] focus-visible:ring-2 focus-visible:ring-[#D4AF37]/40 w-full sm:w-auto"
+          buttonClassName="inline-flex h-10 items-center justify-center rounded-md border border-primary/25 px-5 text-sm font-medium text-primary hover:bg-muted focus-visible:ring-2 focus-visible:ring-accent/40 w-full sm:w-auto"
         />
       </div>
 
       {/* Gallery */}
       {Array.isArray(p.images) && p.images.length > 0 && (
-        <section className="mt-8 rounded-[10px] bg-[#0A2540] p-6 sm:p-7 max-w-[1100px] mx-auto ring-1 ring-white/10 text-white relative overflow-hidden">
-          <div className="pointer-events-none absolute inset-x-5 sm:inset-x-6 top-0 h-[1.5px] rounded-full" style={{background:'linear-gradient(90deg, rgba(212,175,55,0), rgba(212,175,55,.25), rgba(212,175,55,0))'}} />
+        <section className="mt-8 rounded-[10px] bg-primary p-6 sm:p-7 max-w-[1100px] mx-auto ring-1 ring-primary-foreground/10 text-primary-foreground relative overflow-hidden">
+          <div className="pointer-events-none absolute inset-x-5 sm:inset-x-6 top-0 h-[1.5px] rounded-full bg-gradient-to-r from-transparent via-accent/25 to-transparent" />
           <div className="mb-2.5 flex items-center gap-2">
-            <ImagesIcon className="h-5 w-5 text-white stroke-[1.5]" aria-hidden />
-            <h2 className="text-[16px] sm:text-[17px] font-semibold tracking-tight text-white">{t.gallery}</h2>
+            <ImagesIcon className="h-5 w-5 text-primary-foreground stroke-[1.5]" aria-hidden />
+            <h2 className="text-[16px] sm:text-[17px] font-semibold tracking-tight text-primary-foreground">{t.gallery}</h2>
           </div>
-          <GalleryLightbox images={p.images} name={p.name} />
+          <GalleryLightbox images={p.images} name={p.name} locale={t.galleryLocale} />
         </section>
       )}
 
       {(() => {
-        const lines = (isEN ? p.highlightsEn : p.highlights) ?? [];
+        const lines = isEN
+          ? (p.highlightsEn ?? p.highlights ?? [])
+          : isFR
+            ? (o?.highlightsFr ?? p.highlightsEn ?? p.highlights ?? [])
+            : (p.highlights ?? []);
         if (!Array.isArray(lines) || lines.length === 0) return null;
         const items: HighlightItem[] = lines.map((line: string) => ({ title: line }));
         return (
@@ -385,27 +567,19 @@ export default async function Proyecto({ params }: Params) {
 
 
       {unitMix.length > 0 && (() => {
-        const items = (isEN ? p.unitMixEn : p.unitMixEs) ?? [];
+        const items = unitMix;
         const mailtoPlans = `mailto:jacqueline@miamiliferealty.com?subject=${encodeURIComponent(
-          isEN ? `Floor plans (PDF) — ${p.name}` : `Planos (PDF) — ${p.name}`
-        )}&body=${encodeURIComponent(
-          isEN
-            ? `Hi Jacquie,\n\nI’m interested in ${p.name}. Please send me floor plans (PDF).\n\nThanks.`
-            : `Hola Jacquie,\n\nEstoy interesado/a en ${p.name}. Por favor envíame los planos (PDF).\n\nGracias.`
-        )}`;
+          t.mailtoPlansSubject(p.name)
+        )}&body=${encodeURIComponent(t.mailtoPlansBody(p.name))}`;
         const mailtoAvail = `mailto:jacqueline@miamiliferealty.com?subject=${encodeURIComponent(
-          isEN ? `Availability by typology — ${p.name}` : `Disponibilidad por tipología — ${p.name}`
-        )}&body=${encodeURIComponent(
-          isEN
-            ? `Hi Jacquie,\n\nI’m interested in ${p.name}. Please send availability by typology (Jr‑1 / 1BR / 2BR / 3BR).\n\nThanks.`
-            : `Hola Jacquie,\n\nEstoy interesado/a en ${p.name}. Por favor envíame disponibilidad por tipología (Jr‑1 / 1BR / 2BR / 3BR).\n\nGracias.`
-        )}`;
+          t.mailtoAvailSubject(p.name)
+        )}&body=${encodeURIComponent(t.mailtoAvailBody(p.name))}`;
         return (
-          <section className="mt-8 rounded-[10px] bg-[#0A2540] p-6 sm:p-7 max-w-[1100px] mx-auto ring-1 ring-white/10 text-white relative overflow-hidden">
-            <div className="pointer-events-none absolute inset-x-5 sm:inset-x-6 top-0 h-[1.5px] rounded-full" style={{background:'linear-gradient(90deg, rgba(212,175,55,0), rgba(212,175,55,.25), rgba(212,175,55,0))'}} />
+          <section className="mt-8 rounded-[10px] bg-primary p-6 sm:p-7 max-w-[1100px] mx-auto ring-1 ring-primary-foreground/10 text-primary-foreground relative overflow-hidden">
+            <div className="pointer-events-none absolute inset-x-5 sm:inset-x-6 top-0 h-[1.5px] rounded-full bg-gradient-to-r from-transparent via-accent/25 to-transparent" />
             <div className="mb-2.5 flex items-center gap-2">
-              <LayoutGrid className="h-5 w-5 text-white stroke-[1.5]" aria-hidden />
-              <h2 className="text-[16px] sm:text-[17px] font-semibold tracking-tight text-white">{t.mix}</h2>
+              <LayoutGrid className="h-5 w-5 text-primary-foreground stroke-[1.5]" aria-hidden />
+              <h2 className="text-[16px] sm:text-[17px] font-semibold tracking-tight text-primary-foreground">{t.mix}</h2>
             </div>
             <ul className="mt-2 sm:mt-3 space-y-[11px] max-w-[1000px] lg:max-w-[960px] mx-auto" role="list">
               {items.map((line: any, i: number) => {
@@ -413,19 +587,19 @@ export default async function Proyecto({ params }: Params) {
                 if (!label) return null;
                 return (
                   <li key={`mix-${i}`} role="listitem" className="flex items-start gap-3">
-                    <span className="relative top-[9px] inline-block h-[6px] w-[6px] sm:h-[7px] sm:w-[7px] rounded-full bg-[#D4AF37] flex-shrink-0" aria-hidden />
-                    <p className="text-[16px] leading-[26px] text-white/95">{label}</p>
+                    <span className="relative top-[9px] inline-block h-[6px] w-[6px] sm:h-[7px] sm:w-[7px] rounded-full bg-accent flex-shrink-0" aria-hidden />
+                    <p className="text-[16px] leading-[26px] text-primary-foreground/95">{label}</p>
                   </li>
                 );
               })}
             </ul>
             {/* CTAs */}
             <div className="mt-4 flex flex-col gap-2 sm:flex-row">
-              <a href={mailtoPlans} className="inline-flex h-10 items-center justify-center rounded-md border border-white/20 px-4 text-sm font-medium text-white hover:bg-white/10">
-                {isEN ? 'Request floor plans (PDF)' : 'Solicitar planos (PDF)'}
+              <a href={mailtoPlans} className="inline-flex h-10 items-center justify-center rounded-md border border-primary-foreground/20 px-4 text-sm font-medium text-primary-foreground hover:bg-primary-foreground/10">
+                {t.requestPlans}
               </a>
-              <a href={mailtoAvail} className="inline-flex h-10 items-center justify-center rounded-md border border-white/20 px-4 text-sm font-medium text-white hover:bg-white/10">
-                {isEN ? 'Check availability by typology' : 'Ver disponibilidad por tipología'}
+              <a href={mailtoAvail} className="inline-flex h-10 items-center justify-center rounded-md border border-primary-foreground/20 px-4 text-sm font-medium text-primary-foreground hover:bg-primary-foreground/10">
+                {t.checkAvail}
               </a>
             </div>
           </section>
@@ -433,20 +607,16 @@ export default async function Proyecto({ params }: Params) {
       })()}
 
       {features.length > 0 && (() => {
-        const items = (isEN ? p.featuresEn : p.featuresEs) ?? [];
+        const items = features;
         const mailtoMaterials = `mailto:jacqueline@miamiliferealty.com?subject=${encodeURIComponent(
-          isEN ? `Materials list (PDF) — ${p.name}` : `Lista de materiales (PDF) — ${p.name}`
-        )}&body=${encodeURIComponent(
-          isEN
-            ? `Hi Jacquie,\n\nI’m interested in ${p.name}. Please send me the materials list (PDF).\n\nThanks.`
-            : `Hola Jacquie,\n\nEstoy interesado/a en ${p.name}. Por favor envíame la lista de materiales (PDF).\n\nGracias.`
-        )}`;
+          t.mailtoMatSubject(p.name)
+        )}&body=${encodeURIComponent(t.mailtoMatBody(p.name))}`;
         return (
-          <section className="mt-8 rounded-[10px] bg-[#0A2540] p-6 sm:p-7 max-w-[1100px] mx-auto ring-1 ring-white/10 text-white relative overflow-hidden">
-            <div className="pointer-events-none absolute inset-x-5 sm:inset-x-6 top-0 h-[1.5px] rounded-full" style={{background:'linear-gradient(90deg, rgba(212,175,55,0), rgba(212,175,55,.25), rgba(212,175,55,0))'}} />
+          <section className="mt-8 rounded-[10px] bg-primary p-6 sm:p-7 max-w-[1100px] mx-auto ring-1 ring-primary-foreground/10 text-primary-foreground relative overflow-hidden">
+            <div className="pointer-events-none absolute inset-x-5 sm:inset-x-6 top-0 h-[1.5px] rounded-full bg-gradient-to-r from-transparent via-accent/25 to-transparent" />
             <div className="mb-2.5 flex items-center gap-2">
-              <ListChecks className="h-5 w-5 text-white stroke-[1.5]" aria-hidden />
-              <h2 className="text-[16px] sm:text-[17px] font-semibold tracking-tight text-white">{t.features}</h2>
+              <ListChecks className="h-5 w-5 text-primary-foreground stroke-[1.5]" aria-hidden />
+              <h2 className="text-[16px] sm:text-[17px] font-semibold tracking-tight text-primary-foreground">{t.features}</h2>
             </div>
             <ul className="mt-2 sm:mt-3 space-y-[11px] max-w-[1000px] lg:max-w-[960px] mx-auto" role="list">
               {items.map((line: any, i: number) => {
@@ -454,15 +624,15 @@ export default async function Proyecto({ params }: Params) {
                 if (!label) return null;
                 return (
                   <li key={`feat-${i}`} role="listitem" className="flex items-start gap-3">
-                    <span className="relative top-[9px] inline-block h-[6px] w-[6px] sm:h-[7px] sm:w-[7px] rounded-full bg-[#D4AF37] flex-shrink-0" aria-hidden />
-                    <p className="text-[16px] leading-[26px] text-white/95">{label}</p>
+                    <span className="relative top-[9px] inline-block h-[6px] w-[6px] sm:h-[7px] sm:w-[7px] rounded-full bg-accent flex-shrink-0" aria-hidden />
+                    <p className="text-[16px] leading-[26px] text-primary-foreground/95">{label}</p>
                   </li>
                 );
               })}
             </ul>
             <div className="mt-4">
-              <a href={mailtoMaterials} className="inline-flex h-10 items-center justify-center rounded-md border border-white/20 px-4 text-sm font-medium text-white hover:bg-white/10">
-                {isEN ? 'Request materials (PDF)' : 'Solicitar materiales (PDF)'}
+              <a href={mailtoMaterials} className="inline-flex h-10 items-center justify-center rounded-md border border-primary-foreground/20 px-4 text-sm font-medium text-primary-foreground hover:bg-primary-foreground/10">
+                {t.requestMaterials}
               </a>
             </div>
           </section>
@@ -473,20 +643,24 @@ export default async function Proyecto({ params }: Params) {
       {(() => {
         type WithClaims = Project & { microClaimsEs?: string[]; microClaimsEn?: string[] };
         const pp = p as WithClaims;
-        const whyClaims = (isEN ? pp.microClaimsEn : pp.microClaimsEs) ?? [];
+        const whyClaims = isEN
+          ? (pp.microClaimsEn ?? [])
+          : isFR
+            ? (o?.microClaimsFr ?? pp.microClaimsEn ?? pp.microClaimsEs ?? [])
+            : (pp.microClaimsEs ?? []);
         if (!Array.isArray(whyClaims) || whyClaims.length === 0) return null;
         return (
-          <section className="mt-8 rounded-[10px] bg-[#0A2540] p-6 sm:p-7 max-w-[1100px] mx-auto ring-1 ring-white/10 text-white relative overflow-hidden">
-            <div className="pointer-events-none absolute inset-x-5 sm:inset-x-6 top-0 h-[1.5px] rounded-full" style={{background:'linear-gradient(90deg, rgba(212,175,55,0), rgba(212,175,55,.25), rgba(212,175,55,0))'}} />
+          <section className="mt-8 rounded-[10px] bg-primary p-6 sm:p-7 max-w-[1100px] mx-auto ring-1 ring-primary-foreground/10 text-primary-foreground relative overflow-hidden">
+            <div className="pointer-events-none absolute inset-x-5 sm:inset-x-6 top-0 h-[1.5px] rounded-full bg-gradient-to-r from-transparent via-accent/25 to-transparent" />
             <div className="mb-2.5 flex items-center gap-2">
-              <Sparkles className="h-5 w-5 text-white stroke-[1.5]" aria-hidden />
-              <h2 className="text-[16px] sm:text-[17px] font-semibold tracking-tight text-white">{isEN ? `Why ${p.name}?` : `¿Por qué ${p.name}?`}</h2>
+              <Sparkles className="h-5 w-5 text-primary-foreground stroke-[1.5]" aria-hidden />
+              <h2 className="text-[16px] sm:text-[17px] font-semibold tracking-tight text-primary-foreground">{t.why(p.name)}</h2>
             </div>
             <ul className="mt-2 sm:mt-3 space-y-[11px] max-w-[1000px] lg:max-w-[960px] mx-auto" role="list">
               {whyClaims.map((c, i) => (
                 <li key={`why-${i}`} role="listitem" className="flex items-start gap-3">
-                  <span className="relative top-[9px] inline-block h-[6px] w-[6px] sm:h-[7px] sm:w-[7px] rounded-full bg-[#D4AF37] flex-shrink-0" aria-hidden />
-                  <p className="text-[16px] leading-[26px] text-white/95">{c}</p>
+                  <span className="relative top-[9px] inline-block h-[6px] w-[6px] sm:h-[7px] sm:w-[7px] rounded-full bg-accent flex-shrink-0" aria-hidden />
+                  <p className="text-[16px] leading-[26px] text-primary-foreground/95">{c}</p>
                 </li>
               ))}
             </ul>
@@ -496,34 +670,31 @@ export default async function Proyecto({ params }: Params) {
 
       {/* FAQs */}
       {faqs.length > 0 && (() => {
-        // Mailto helpers for inline CTAs
         const mailtoAvail = `mailto:jacqueline@miamiliferealty.com?subject=${encodeURIComponent(
-          isEN ? `Availability by typology — ${p.name}` : `Disponibilidad por tipología — ${p.name}`
-        )}&body=${encodeURIComponent(
-          isEN
-            ? `Hi Jacquie,\n\nI’m interested in ${p.name}. Please send availability by typology (Jr‑1 / 1BR / 2BR / 3BR).\n\nThanks.`
-            : `Hola Jacquie,\n\nEstoy interesado/a en ${p.name}. Por favor envíame disponibilidad por tipología (Jr‑1 / 1BR / 2BR / 3BR).\n\nGracias.`
-        )}`;
+          t.mailtoAvailSubject(p.name)
+        )}&body=${encodeURIComponent(t.mailtoAvailBody(p.name))}`;
         const mailtoMaterials = `mailto:jacqueline@miamiliferealty.com?subject=${encodeURIComponent(
-          isEN ? `Materials list (PDF) — ${p.name}` : `Lista de materiales (PDF) — ${p.name}`
-        )}&body=${encodeURIComponent(
-          isEN
-            ? `Hi Jacquie,\n\nI’m interested in ${p.name}. Please send me the materials list (PDF).\n\nThanks.`
-            : `Hola Jacquie,\n\nEstoy interesado/a en ${p.name}. Por favor envíame la lista de materiales (PDF).\n\nGracias.`
-        )}`;
+          t.mailtoMatSubject(p.name)
+        )}&body=${encodeURIComponent(t.mailtoMatBody(p.name))}`;
 
-        // Rank FAQs by sales impact
         const rank = (q: string) => {
           const s = q.toLowerCase();
-          if (s.includes("renta") || s.includes("short")) return 0; // STR
-          if (s.includes("playa") || s.includes("beach")) return 1; // beach club
-          if (s.includes("amoblad") || s.includes("furnish")) return 2; // furnished
-          if (s.includes("ubic") || s.includes("where")) return 3; // location
-          if (s.includes("entreg") || s.includes("deliver")) return 4; // delivery
+          if (
+            s.includes("renta") ||
+            s.includes("short") ||
+            s.includes("location") ||
+            s.includes("courte durée") ||
+            s.includes("corta")
+          )
+            return 0;
+          if (s.includes("playa") || s.includes("beach") || s.includes("plage")) return 1;
+          if (s.includes("amoblad") || s.includes("furnish") || s.includes("meubl")) return 2;
+          if (s.includes("ubic") || s.includes("where") || s.includes("où") || s.includes("dónde")) return 3;
+          if (s.includes("entreg") || s.includes("deliver") || s.includes("livraison")) return 4;
           if (s.includes("cowork")) return 5;
-          if (s.includes("mascota") || s.includes("pets")) return 6;
+          if (s.includes("mascota") || s.includes("pets") || s.includes("animaux")) return 6;
           if (s.includes("certific") || s.includes("leed")) return 7;
-          if (s.includes("diferenc") || s.includes("differ")) return 8;
+          if (s.includes("diferenc") || s.includes("differ") || s.includes("différen")) return 8;
           return 99;
         };
 
@@ -533,32 +704,38 @@ export default async function Proyecto({ params }: Params) {
           const ql = f.q.toLowerCase();
           let answer: React.ReactNode = <span>{f.a}</span>;
           // Inject inline CTAs in critical answers
-          if (ql.includes("renta") || ql.includes("short")) {
+          if (
+            ql.includes("renta") ||
+            ql.includes("short") ||
+            ql.includes("location") ||
+            ql.includes("courte") ||
+            ql.includes("corta")
+          ) {
             answer = (
               <span>
                 {f.a}{" "}
-                <a href={mailtoAvail} className="underline">{isEN ? "Check availability by typology" : "Ver disponibilidad por tipología"}</a>
+                <a href={mailtoAvail} className="underline">{t.faqAvailLink}</a>
               </span>
             );
-          } else if (ql.includes("playa") || ql.includes("beach")) {
+          } else if (ql.includes("playa") || ql.includes("beach") || ql.includes("plage")) {
             answer = (
               <span>
                 {f.a}{" "}
-                <a href={mailtoAvail} className="underline">{isEN ? "Check availability by typology" : "Ver disponibilidad por tipología"}</a>
+                <a href={mailtoAvail} className="underline">{t.faqAvailLink}</a>
               </span>
             );
-          } else if (ql.includes("amoblad") || ql.includes("furnish")) {
+          } else if (ql.includes("amoblad") || ql.includes("furnish") || ql.includes("meubl")) {
             answer = (
               <span>
                 {f.a}{" "}
-                <a href={mailtoMaterials} className="underline">{isEN ? "Request materials (PDF)" : "Solicitar materiales (PDF)"}</a>
+                <a href={mailtoMaterials} className="underline">{t.faqMatLink}</a>
               </span>
             );
-          } else if (ql.includes("ubic") || ql.includes("where")) {
+          } else if (ql.includes("ubic") || ql.includes("where") || ql.includes("où") || ql.includes("dónde")) {
             answer = (
               <span>
                 {f.a}{" "}
-                <a href="#ubicacion" className="underline">{isEN ? "See map" : "Ver mapa"}</a>
+                <a href="#ubicacion" className="underline">{t.faqMapLink}</a>
               </span>
             );
           }
@@ -577,22 +754,22 @@ export default async function Proyecto({ params }: Params) {
 
       {/* CTAs */}
       <section className="mt-10 flex flex-col gap-3 sm:flex-row">
-        <Link href={bookingUrl} className="w-full sm:w-auto inline-flex h-10 items-center justify-center rounded-md bg-[#0A2540] px-4 text-sm font-medium text-white hover:opacity-95">
+        <Link href={bookingUrl} className="w-full sm:w-auto inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:opacity-95">
           {t.ctas.schedule}
         </Link>
-        <a href={waHref} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto inline-flex h-10 items-center justify-center rounded-md border border-[#0A2540]/20 px-4 text-sm font-medium text-[#0A2540] hover:bg-[#F9FAFB]">
+        <a href={waHref} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto inline-flex h-10 items-center justify-center rounded-md border border-primary/20 px-4 text-sm font-medium text-primary hover:bg-muted">
           {t.ctas.whatsapp}
         </a>
-        <a href="mailto:jacqueline@miamiliferealty.com" className="w-full sm:w-auto inline-flex h-10 items-center justify-center rounded-md border border-[#0A2540]/20 px-4 text-sm font-medium text-[#0A2540] hover:bg-[#F9FAFB]">
+        <a href="mailto:jacqueline@miamiliferealty.com" className="w-full sm:w-auto inline-flex h-10 items-center justify-center rounded-md border border-primary/20 px-4 text-sm font-medium text-primary hover:bg-muted">
           {t.ctas.email}
         </a>
         <ShareButtons
           url={shareUrl}
           text={p.name}
-          locale={isEN ? "en" : "es"}
+          locale={t.shareLocale}
           variant="light"
           iconSrc="/icons/whatsapp.svg"
-          buttonClassName="inline-flex h-10 items-center justify-center rounded-md border border-[#0A2540]/20 px-4 text-sm font-medium text-[#0A2540] hover:bg-[#F9FAFB] w-full sm:w-auto"
+          buttonClassName="inline-flex h-10 items-center justify-center rounded-md border border-primary/20 px-4 text-sm font-medium text-primary hover:bg-muted w-full sm:w-auto"
         />
       </section>
 
@@ -601,18 +778,18 @@ export default async function Proyecto({ params }: Params) {
         title={t.payments}
         steps={payment.map((label: string) => ({ label }))}
         project={p.name}
-        locale={locale === "en" ? "en" : "es"}
+        locale={t.paymentLocale}
         className="mt-8"
       />
 
       {/* Location */}
-      <section id="ubicacion" className="mt-8 rounded-[10px] bg-[#0A2540] p-6 sm:p-7 max-w-[1100px] mx-auto ring-1 ring-white/10 text-white relative overflow-hidden">
-        <div className="pointer-events-none absolute inset-x-5 sm:inset-x-6 top-0 h-[1.5px] rounded-full" style={{background:'linear-gradient(90deg, rgba(212,175,55,0), rgba(212,175,55,.25), rgba(212,175,55,0))'}} />
+      <section id="ubicacion" className="mt-8 rounded-[10px] bg-primary p-6 sm:p-7 max-w-[1100px] mx-auto ring-1 ring-primary-foreground/10 text-primary-foreground relative overflow-hidden">
+        <div className="pointer-events-none absolute inset-x-5 sm:inset-x-6 top-0 h-[1.5px] rounded-full bg-gradient-to-r from-transparent via-accent/25 to-transparent" />
         <div className="mb-2.5 flex items-center gap-2">
-          <MapPin className="h-5 w-5 text-white stroke-[1.5]" aria-hidden />
-          <h2 className="text-[16px] sm:text-[17px] font-semibold tracking-tight text-white">{isEN ? 'Location' : 'Ubicación'}</h2>
+          <MapPin className="h-5 w-5 text-primary-foreground stroke-[1.5]" aria-hidden />
+          <h2 className="text-[16px] sm:text-[17px] font-semibold tracking-tight text-primary-foreground">{t.location}</h2>
         </div>
-        <div className="overflow-hidden rounded-2xl ring-1 ring-white/10">
+        <div className="overflow-hidden rounded-2xl ring-1 ring-primary-foreground/10">
           <iframe
             src={mapSrc}
             width="100%"

@@ -1,18 +1,35 @@
 // src/app/[locale]/page.tsx
 import Link from 'next/link';
 import Image from 'next/image';
-import SectionWhyMiami from '@/components/SectionWhyMiami';
+import SectionAboutJacquieHome from '@/components/SectionAboutJacquieHome';
+import SectionAccommodationHome from '@/components/SectionAccommodationHome';
+import SectionHowItWorks from '@/components/SectionHowItWorks';
+import SectionListingsHome from '@/components/SectionListingsHome';
+import SectionPropertyManagementHome from '@/components/SectionPropertyManagementHome';
+import SectionServices from '@/components/SectionServices';
 import SectionWhyPrecon from '@/components/SectionWhyPrecon';
-import FeaturedProjects from '@/components/FeaturedProjects';
-import SectionWhyStorages from '@/components/SectionWhyStorages';
 
+type HomeLocale = "es" | "en" | "fr";
 export default async function Home({params}: {params: {locale: string}}) {
+  const locale: HomeLocale = params.locale === "en" ? "en" : params.locale === "fr" ? "fr" : "es";
+  const whatsappMessage =
+    locale === "en"
+      ? "Hi Jacquie, I’d like to talk with you about an opportunity in Miami."
+      : locale === "fr"
+        ? "Bonjour Jacquie, j’aimerais vous parler d’une opportunité à Miami."
+        : "Hola Jacquie, quiero hablar con vos sobre una oportunidad en Miami.";
+  const whatsAppHref = `https://wa.me/17864072591?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
     <div className="space-y-20 pt-0 pb-12">
       {/* HERO */}
-      <section role="region" aria-labelledby="hero-title" aria-describedby="hero-desc" className="relative overflow-hidden w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-[#F9FAFB] pt-[88px] pb-20 md:pt-[104px] md:pb-24 flex justify-center items-center min-h-[600px]">
-        
+      <section
+        role="region"
+        aria-labelledby="hero-title"
+        aria-describedby="hero-desc"
+        className="relative left-1/2 -translate-x-1/2 overflow-hidden bg-[#F9FAFB] flex flex-col min-h-[600px] w-[100dvw] max-w-[100dvw]"
+      >
+        <div className="relative flex min-h-[600px] items-start justify-center px-4 pt-[88px] pb-28 sm:px-0 md:pt-[104px] md:pb-28">
         {/* Background media (SORA-ready) */}
         <div aria-hidden className="absolute inset-0 pointer-events-none">
           {/* Desktop/Tablet: video de fondo */}
@@ -34,185 +51,253 @@ export default async function Home({params}: {params: {locale: string}}) {
             <Image src="/images/hero-fallback-mobile.jpg" alt="" fill priority className="object-cover" />
           </div>
           {/* Overlay claro para legibilidad sobre texto oscuro */}
-          <div className="absolute inset-0 bg-white/75" />
+          <div className="absolute inset-0 bg-white/62 md:bg-gradient-to-r md:from-white/86 md:via-white/68 md:to-white/28" />
         </div>
 
-        <div className="space-y-8 sm:space-y-12 relative max-w-3xl md:max-w-4xl xl:max-w-[50rem] mx-auto text-center px-4 sm:px-0">
+        <div className="relative z-10 mx-auto w-full max-w-[1180px] px-4 sm:px-6 lg:px-8">
+          <div className="grid items-center gap-10 md:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.92fr)] lg:gap-14">
+            <div className="max-w-[44rem] text-left">
+              <div className="mb-5 inline-flex items-center gap-3 rounded-full bg-white/72 px-3 py-2 ring-1 ring-primary/10 backdrop-blur-sm">
+                <Image
+                  src="/images/jacquie-zarate.jpg"
+                  alt="Jacquie Zarate Realtor"
+                  width={96}
+                  height={96}
+                  sizes="96px"
+                  quality={90}
+                  priority
+                  className="h-11 w-11 rounded-full object-cover ring-1 ring-white/80"
+                />
+                <div className="min-w-0">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-primary/80">
+                    JACQUIE ZARATE · REALTOR®
+                  </p>
+                  <p className="text-[13px] leading-5 text-primary/72">
+                    {locale === 'en'
+                      ? 'Your trusted contact in Miami'
+                      : locale === 'fr'
+                        ? 'Votre personne de confiance à Miami'
+                        : 'Tu persona de confianza en Miami'}
+                  </p>
+                </div>
+              </div>
 
-          {/* Eyebrow */}
-          <p className="text-[12px] tracking-[0.12em] uppercase text-[#0A2540]/85 mb-1">
-            {params.locale === 'en' ? 'Catalog reviewed · flexible payment options' : 'Catálogo revisado · opciones de pago flexibles'}
-          </p>
+              <div className="mb-3 text-[12px] uppercase tracking-[0.12em] text-primary/78 text-center md:text-left">
+                <div className="md:hidden leading-[1.5]">
+                  {locale === 'en' ? (
+                    <>
+                      <div>MIAMI · INVESTMENT</div>
+                      <div>PERSONAL SUPPORT</div>
+                    </>
+                  ) : locale === 'fr' ? (
+                    <>
+                      <div>MIAMI · INVESTISSEMENT</div>
+                      <div>ACCOMPAGNEMENT PERSONNALISÉ</div>
+                    </>
+                  ) : (
+                    <>
+                      <div>MIAMI · INVERSIÓN</div>
+                      <div>ACOMPAÑAMIENTO PERSONAL</div>
+                    </>
+                  )}
+                </div>
 
-          <h1 id="hero-title" className="text-4xl sm:text-5xl md:text-6xl lg:text-[56px] xl:text-[58px] font-bold leading-[1.1] tracking-[-0.01em] text-[#0A2540] text-balance max-w-[50rem] mx-auto">
-            {params.locale === 'en' ? 'Invest in high-performing pre-construction in Miami.' : 'Invierte en preconstrucción de alto rendimiento en Miami.'}
-          </h1>
-          <p className="max-w-2xl mx-auto text-[18px] leading-8 text-[#0D1521]/85 font-medium">
-            {params.locale === 'en' ? (
-              <>
-                <span className="block">Florida-licensed Realtor®.</span>
-                <span className="block">I advise investors in pre-construction with a focus on ROI and exit.</span>
-              </>
-            ) : (
-              <>
-                <span className="block">Realtor® licenciado en Florida.</span>
-                <span className="block">Asesoro a inversores en preconstrucción con foco en ROI y salida.</span>
-              </>
-            )}
-          </p>
+                <p className="hidden md:block">
+                  {locale === 'en'
+                    ? 'MIAMI · INVESTMENT · PERSONAL SUPPORT'
+                    : locale === 'fr'
+                      ? 'MIAMI · INVESTISSEMENT · ACCOMPAGNEMENT PERSONNALISÉ'
+                      : 'MIAMI · INVERSIÓN · ACOMPAÑAMIENTO PERSONAL'}
+                </p>
+              </div>
 
-          <div className="flex flex-col gap-2 sm:gap-3 sm:flex-row justify-center items-center">
-            <Link
-              href={`/${params.locale}/proyectos`}
-              prefetch
-              data-analytics="hero:cta_projects"
-              aria-describedby="cta-note"
-              className="inline-flex h-11 items-center justify-center rounded-lg bg-[#0A2540] px-6 text-sm font-medium text-white transition-opacity transition-colors hover:opacity-90 active:opacity-90 min-w-[176px] w-full sm:w-auto focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#0A2540] focus-visible:ring-2 focus-visible:ring-[#0A2540]/45 transition-transform hover:-translate-y-[1px] hover:shadow-[0_4px_12px_rgba(10,37,64,.08)]"
-            >
-              {params.locale === 'en' ? 'See projects' : 'Ver proyectos'}
-            </Link>
-            <a
-              href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ21yM5KOsoq2niX4QY7FXyUrFiLuQpLxw9IIzheIYWY1ruSBHG5DUrSzUmGst3Ew4nb8ZKw6ptP"
-              target="_blank"
-              rel="noreferrer noopener"
-              data-analytics="hero:cta_meeting"
-              title={params.locale === 'en' ? 'Open Google Calendar' : 'Abrir Google Calendar'}
-              aria-label={params.locale === 'en' ? 'Schedule a meeting on Google Calendar' : 'Agendar reunión en Google Calendar'}
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border-[1.5px] border-[#0A2540] px-6 text-sm font-semibold text-[#0A2540] hover:bg-[#0A2540] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0A2540] focus-visible:ring-2 focus-visible:ring-[#0A2540]/30 min-w-[176px] md:min-w-0 w-full sm:w-auto transition-colors"
-            >
-              <span aria-hidden className="h-4 w-4">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
-                  <rect x="3" y="5" width="18" height="16" rx="2" ry="2"></rect>
-                  <line x1="16" y1="3" x2="16" y2="7"></line>
-                  <line x1="8" y1="3" x2="8" y2="7"></line>
-                  <line x1="3" y1="11" x2="21" y2="11"></line>
-                </svg>
-              </span>
-              {params.locale === 'en' ? 'Schedule a meeting' : 'Agendar reunión'}
-            </a>
-          </div>
-          {/* TRUST ROW (wordmarks monocromo, reales) */}
-          <div className="mt-6 sm:mt-8">
-            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-[#0A2540]/60">
-              <span
-                className="text-[12px] sm:text-xs font-semibold tracking-[0.14em] uppercase"
-                aria-label="Miami Life Realty"
-                title="Miami Life Realty"
+              <h1
+                id="hero-title"
+                className="max-w-[14ch] text-4xl font-bold leading-[1.05] tracking-[-0.02em] text-primary sm:text-5xl md:text-[54px] lg:text-[58px]"
               >
-                MIAMI LIFE REALTY
-              </span>
-              <span
-                className="text-[12px] sm:text-xs font-semibold tracking-[0.14em] uppercase"
-                aria-label={params.locale==='en' ? 'Jacquie Zarate Realtor · REALTOR®' : 'Jacquie Zarate Realtor · REALTOR®'}
-                title="Jacquie Zarate Realtor · REALTOR®"
-              >
-                JACQUIE ZARATE REALTOR · REALTOR®
-              </span>
-              <span
-                className="text-[12px] sm:text-xs font-semibold tracking-[0.14em] uppercase"
-                aria-label={params.locale==='en' ? 'NAR · REALTOR®' : 'NAR · REALTOR®'}
-                title="NAR · REALTOR®"
-              >
-                NAR · REALTOR®
-              </span>
+                {locale === 'en'
+                  ? 'I help you invest in Miami with hands-on support throughout the entire process.'
+                  : locale === 'fr'
+                    ? 'Je vous accompagne pour investir à Miami avec un suivi réel à chaque étape.'
+                    : 'Te ayudo a invertir en Miami con acompañamiento real en todo el proceso.'}
+              </h1>
+
+              <p className="mt-5 max-w-[68ch] text-[18px] font-medium leading-8 text-foreground/85">
+                {locale === 'en'
+                  ? "From finding the right property to managing it, I personally guide you so you can invest with clarity, confidence, and ongoing support — even if you’re not in Miami."
+                  : locale === 'fr'
+                    ? "De l’achat à la gestion de votre bien, je vous accompagne personnellement pour investir avec clarté, sécurité et tranquillité d’esprit, même à distance."
+                    : "Desde la compra hasta la gestión de tu propiedad, te acompaño personalmente para que inviertas con claridad, seguridad y seguimiento real, incluso si no estás en Miami."}
+              </p>
+
+              <div className="mt-8 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+                <a
+                  href={whatsAppHref}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="inline-flex h-11 min-w-[176px] w-full items-center justify-center rounded-lg bg-primary px-6 text-sm font-medium text-primary-foreground transition-opacity transition-colors transition-transform hover:-translate-y-[1px] hover:opacity-90 hover:shadow-md active:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary focus-visible:ring-2 focus-visible:ring-accent/45 sm:w-auto"
+                >
+                  {locale === 'en' ? 'Chat on WhatsApp' : locale === 'fr' ? 'Écrire sur WhatsApp' : 'Hablar por WhatsApp'}
+                </a>
+                <Link
+                  href={`/${locale}/listings`}
+                  className="inline-flex h-11 min-w-[176px] w-full items-center justify-center gap-2 rounded-lg border-[1.5px] border-primary px-6 text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-primary-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary focus-visible:ring-2 focus-visible:ring-accent/30 sm:w-auto md:min-w-0"
+                >
+                  {locale === 'en' ? 'View opportunities' : locale === 'fr' ? 'Voir les opportunités' : 'Ver oportunidades'}
+                </Link>
+              </div>
+
+              <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 text-primary/58">
+                <span
+                  className="text-[11px] font-semibold uppercase tracking-[0.14em] sm:text-xs"
+                  aria-label="Miami Life Realty"
+                  title="Miami Life Realty"
+                >
+                  MIAMI LIFE REALTY
+                </span>
+                <span
+                  className="text-[11px] font-semibold uppercase tracking-[0.14em] sm:text-xs"
+                  aria-label="NAR · REALTOR®"
+                  title="NAR · REALTOR®"
+                >
+                  NAR · REALTOR®
+                </span>
+              </div>
+
+              <div id="hero-desc" className="flex items-center justify-center md:justify-start pt-4 pb-10 md:pb-0 text-xs text-primary/70 text-center md:text-left">
+                <span className="mr-1 hidden text-primary/60 sm:inline">
+                  {locale === 'en' ? 'Questions?' : locale === 'fr' ? 'Des questions?' : '¿Dudas?'}
+                </span>
+                <a
+                  href={whatsAppHref}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Abrir WhatsApp de Jacquie con mensaje prellenado"
+                  className="block underline decoration-primary/30 underline-offset-2 hover:decoration-primary sm:ml-2 sm:inline"
+                  data-analytics="hero:whatsapp"
+                >
+                  {locale === 'en' ? 'Chat on WhatsApp' : locale === 'fr' ? 'Écrire sur WhatsApp' : 'Hablemos por WhatsApp'}
+                </a>
+              </div>
+            </div>
+
+            <div className="relative hidden md:flex justify-end">
+              <div className="relative w-full max-w-[420px]">
+                <div className="absolute -inset-4 rounded-[32px] bg-white/40 blur-2xl" />
+                <div className="relative overflow-hidden rounded-[28px] border border-white/60 bg-white/35 p-3 shadow-[0_20px_60px_rgba(31,58,52,0.16)] backdrop-blur-sm">
+                  <div className="relative aspect-[4/5] overflow-hidden rounded-[22px]">
+                    <Image
+                      src="/images/jacquie-zarate.jpg"
+                      alt="Jacquie Zarate Realtor"
+                      fill
+                      sizes="(min-width: 768px) 420px, 0px"
+                      quality={92}
+                      className="object-cover object-center"
+                    />
+                  </div>
+                  <div className="px-2 pb-1 pt-4">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-primary/62">
+                      {locale === 'en'
+                        ? 'Direct support in Miami'
+                        : locale === 'fr'
+                          ? 'Présence directe à Miami'
+                          : 'Acompañamiento directo en Miami'}
+                    </p>
+                    <p className="mt-2 text-[22px] font-semibold leading-[1.2] tracking-tight text-primary">
+                      {locale === 'en'
+                        ? 'Personal guidance from search to management.'
+                        : locale === 'fr'
+                          ? 'Un accompagnement personnel, de la recherche à la gestion.'
+                          : 'Acompañamiento personal desde la búsqueda hasta la gestión.'}
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          {/* Avatar realtor centrado */}
-          <div className="mt-6 flex justify-center">
-            <Image
-              src="/images/jacquie-zarate.jpg"
-              alt="Jacquie Zarate Realtor"
-              width={384}
-              height={384}
-              sizes="500px"
-              quality={90}
-              priority
-              className="h-28 w-28 sm:h-32 sm:w-32 rounded-full object-cover ring-2 ring-white/70 shadow-md"
-            />
-          </div>
-          <div id="hero-desc" className="pt-2 text-xs text-[#0A2540]/70 flex items-center justify-center">
-            <span className="text-[#0A2540]/60 mr-1 hidden sm:inline">{params.locale === 'en' ? 'Questions?' : '¿Dudas?'}</span>
-            <a
-              href="https://wa.me/17864072591?text=Hola%20Jacquie,%20quiero%20coordinar%20una%20reuni%C3%B3n."
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Abrir WhatsApp de Jacquie con mensaje prellenado"
-              className="block sm:inline underline decoration-[#0A2540]/30 underline-offset-2 hover:decoration-[#0A2540] sm:ml-2" data-analytics="hero:whatsapp"
-            >
-              {params.locale === 'en' ? 'Chat on WhatsApp' : 'Hablemos por WhatsApp'}
-            </a>
+        </div>
+        </div>
+        {/* Banda de transición — remate inferior del Hero (anclada al pie de la imagen) */}
+        <div className="absolute bottom-0 left-0 right-0 w-full bg-primary text-primary-foreground py-5 px-4" role="region" aria-label={locale === 'en' ? 'What we offer' : locale === 'fr' ? 'Ce que nous offrons' : 'Qué ofrecemos'}>
+          <div className="mx-auto max-w-5xl flex flex-col items-center justify-center gap-3 text-center text-sm font-medium sm:flex-row sm:flex-wrap sm:justify-center sm:gap-6">
+            <span className="text-primary-foreground/95">
+              {locale === 'en'
+                ? 'Personalized support'
+                : locale === 'fr'
+                  ? 'Accompagnement personnalisé'
+                  : 'Acompañamiento personalizado'}
+            </span>
+            <span className="hidden sm:inline text-primary-foreground/35" aria-hidden>·</span>
+            <span className="text-primary-foreground/95">
+              {locale === 'en'
+                ? 'Invest and manage with clarity'
+                : locale === 'fr'
+                  ? 'Investir et gérer avec clarté'
+                  : 'Invertí y gestioná con claridad'}
+            </span>
+            <span className="hidden sm:inline text-primary-foreground/35" aria-hidden>·</span>
+            <span className="text-primary-foreground/95">
+              {locale === 'en'
+                ? 'Your trusted contact in Miami'
+                : locale === 'fr'
+                  ? 'Votre personne de confiance à Miami'
+                  : 'Tu persona de confianza en Miami'}
+            </span>
           </div>
         </div>
       </section>
 
-      {/* RIBBON — resumen bajo el hero (oscura) */}
-<section aria-label="resumen sitio"
-  className="relative w-screen left-1/2 -ml-[50vw] -mr-[50vw] bg-[#0B1F3A] border-y border-[#D4AF37]/30 -mt-20">
-  <div className="mx-auto max-w-6xl px-4">
-    <ul className="flex flex-wrap items-center justify-center gap-x-10 gap-y-2 py-3 text-sm text-white">
-      <li className="flex items-center gap-2">
-        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <rect x="2" y="7" width="20" height="14" rx="2"/><line x1="2" y1="11" x2="22" y2="11"/>
-        </svg>
-        {params.locale==='en' ? 'Closing financing (foreign buyers)' : 'Financiación al cierre (extranjeros)'}
-      </li>
-      <li className="hidden sm:flex items-center gap-2">
-        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <rect x="3" y="5" width="18" height="16" rx="2"/><line x1="16" y1="3" x2="16" y2="7"/><line x1="8" y1="3" x2="8" y2="7"/>
-        </svg>
-        {params.locale==='en' ? 'Deliveries 2025-2028' : 'Entregas 2025-2028'}
-      </li>
-      <li className="flex items-center gap-2">
-        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M20 6L9 17l-5-5"/>
-        </svg>
-        {params.locale==='en' ? 'Inventory verified weekly' : 'Inventario verificado semanal'}
-      </li>
-    </ul>
-  </div>
-</section>
+      <div className="bg-surface">
+        <SectionPropertyManagementHome locale={locale} />
+      </div>
 
-      <SectionWhyMiami />
+      <SectionHowItWorks locale={locale} />
+
+      <SectionListingsHome locale={locale} />
+
       <SectionWhyPrecon
         heroImageSrc="/images/precon-hero.jpg"
-        heroImageAlt={params.locale === 'en' ? 'Pre-construction in Miami at sunset' : 'Preconstrucción en Miami al atardecer'}
+        heroImageAlt={locale === 'en' ? 'Pre-construction in Miami at sunset' : locale === 'fr' ? 'Préconstruction à Miami au coucher du soleil' : 'Preconstrucción en Miami al atardecer'}
       />
 
-      {/* PROYECTOS DESTACADOS */}
-      <div className="max-w-[1100px] mx-auto">
-        <FeaturedProjects />
+      <div className="bg-surface">
+        <SectionAboutJacquieHome locale={locale} />
       </div>
-      {/* STORAGES SECTION (aligned to same container as featured projects) */}
-      <div className="max-w-[1100px] mx-auto">
-        <SectionWhyStorages locale={params.locale === 'en' ? 'en' : 'es'} />
+
+      <SectionAccommodationHome locale={locale} />
+
+      <div className="bg-surface">
+        <SectionServices locale={locale} />
       </div>
 
       {/* BANDA CTA — premium */}
-      <section className="mt-6 rounded-[10px] bg-[#0A2540] p-6 sm:p-7 ring-1 ring-white/10 text-white text-center relative overflow-hidden max-w-[1100px] mx-auto">
-        <div className="pointer-events-none absolute inset-x-5 sm:inset-x-6 top-0 h-[1.5px] rounded-full" style={{background:'linear-gradient(90deg, rgba(212,175,55,0), rgba(212,175,55,.25), rgba(212,175,55,0))'}} />
-        <div className="mx-auto mb-3 h-[2px] w-24 rounded-full" style={{background:'linear-gradient(90deg, rgba(212,175,55,.0), rgba(212,175,55,.6), rgba(212,175,55,.0))'}} />
-        <h3 className="text-xl sm:text-2xl font-semibold tracking-tight text-white">
-          {params.locale === 'en' ? 'Ready to invest?' : '¿Listo para invertir?'}
+      <section className="mt-6 rounded-[10px] bg-primary p-6 sm:p-7 ring-1 ring-primary-foreground/10 text-primary-foreground text-center relative overflow-hidden max-w-[1100px] mx-auto">
+        <div className="pointer-events-none absolute inset-x-5 sm:inset-x-6 top-0 h-[1.5px] rounded-full bg-gradient-to-r from-transparent via-accent/25 to-transparent" />
+        <div className="mx-auto mb-3 h-[2px] w-24 rounded-full bg-gradient-to-r from-transparent via-accent/60 to-transparent" />
+        <h3 className="text-xl sm:text-2xl font-semibold tracking-tight text-primary-foreground">
+          {locale === 'en' ? "Tell me what you're looking for in Miami" : locale === 'fr' ? "Dites-moi ce que vous cherchez à Miami" : 'Contame qué estás buscando en Miami'}
         </h3>
-        <p className="mt-2 text-[14px] text-white/80">
-          {params.locale === 'en'
-            ? 'Let’s connect and review the best opportunities together.'
-            : 'Conversemos y revisemos las mejores oportunidades.'}
+        <p className="mt-2 text-[14px] text-primary-foreground/80">
+          {locale === 'en'
+            ? "I can help you find an opportunity aligned with your goal, whether it's investing, buying, managing a property, or planning your stay."
+            : locale === 'fr'
+              ? "Je peux vous aider à trouver une opportunité alignée avec votre objectif : investir, acheter, gérer un bien ou planifier votre séjour."
+              : 'Puedo ayudarte a encontrar una oportunidad alineada con tu objetivo, ya sea invertir, comprar, administrar o planificar tu estadía.'}
         </p>
         <div className="mt-4 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <a
-            href={`mailto:jacqueline@miamiliferealty.com?subject=${encodeURIComponent(params.locale==='en' ? 'Investment inquiry from website' : 'Consulta de inversión desde la web')}`}
-            className="inline-flex h-10 items-center justify-center rounded-md bg-white/10 px-4 text-sm font-medium text-white no-underline hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-[#D4AF37]/40"
+            href={`mailto:jacqueline@miamiliferealty.com?subject=${encodeURIComponent(locale === 'en' ? 'Investment inquiry from website' : locale === 'fr' ? 'Demande d\'information depuis le site' : 'Consulta de inversión desde la web')}`}
+            className="inline-flex h-10 items-center justify-center rounded-md bg-primary-foreground/10 px-4 text-sm font-medium text-primary-foreground no-underline hover:bg-primary-foreground/20 focus-visible:ring-2 focus-visible:ring-accent/40"
           >
-            {params.locale === 'en' ? 'Email Jacquie' : 'Escribir a Jacquie'}
+            {locale === 'en' ? 'Email Jacquie' : locale === 'fr' ? 'Écrire à Jacquie' : 'Escribir a Jacquie'}
           </a>
           <a
-            href={`https://wa.me/17864072591?text=${encodeURIComponent(params.locale==='en' ? 'Hi Jacquie, I would like to schedule a call to discuss investment opportunities.' : 'Hola Jacquie, me gustaría agendar una llamada para hablar de oportunidades de inversión.')}`}
+            href={`https://wa.me/17864072591?text=${encodeURIComponent(locale === 'en' ? 'Hi Jacquie, I would like to schedule a call to discuss investment opportunities.' : locale === 'fr' ? 'Bonjour Jacquie, j\'aimerais prendre rendez-vous pour discuter d\'opportunités d\'investissement.' : 'Hola Jacquie, me gustaría agendar una llamada para hablar de oportunidades de inversión.')}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-10 items-center justify-center rounded-md border border-white/25 px-4 text-sm font-medium text-white no-underline hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-[#D4AF37]/40"
+            className="inline-flex h-10 items-center justify-center rounded-md border border-primary-foreground/25 px-4 text-sm font-medium text-primary-foreground no-underline hover:bg-primary-foreground/10 focus-visible:ring-2 focus-visible:ring-accent/40"
           >
-            {params.locale === 'en' ? 'WhatsApp' : 'WhatsApp'}
+            {locale === 'en' ? 'WhatsApp' : locale === 'fr' ? 'WhatsApp' : 'WhatsApp'}
           </a>
         </div>
       </section>

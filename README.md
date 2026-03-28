@@ -1,139 +1,216 @@
-# 🏙️ Esteban Firpo Real Estate - Web
+# 🏙️ Jacquie Zarate Real Estate - Web
 
 ## Overview
-A professional real‑estate website built with **Next.js (App Router)** focused on **Miami pre‑construction** and related investment verticals (financing and storages). The design language is **minimal, Apple‑inspired**, with strong hierarchy, accessibility and performance to convert leads.
+A professional real estate website built with **Next.js (App Router)** focused on:
+
+- Property Management (short-term rentals)
+- Active Listings (resale)
+- Pre-construction projects
+- Investment advisory in Miami
+
+The site is designed for **international investors and buyers**, with a clean, premium, Apple-inspired design focused on clarity, trust, and conversion.
 
 ---
 
 ## 🔧 Tech Stack
+
 - **Framework:** Next.js 15 (App Router)
 - **Language:** TypeScript
 - **Styling:** Tailwind CSS
-- **i18n:** `next-intl` (ES / EN)
+- **i18n:** Custom + next-intl (ES / EN / FR-CA)
 - **Deploy:** Vercel
-- **UI Pattern:** Reusable React components with a brand system (Navy + Gold)
+- **UI Pattern:** Reusable components + token-based design system
+
+---
+
+## 🌐 Core Features
+
+- Multilanguage: Spanish / English / French (Canada)
+- Listings system with individual property pages
+- Property Management service page
+- Pre-construction projects catalog
+- WhatsApp + contact lead capture
+- SEO-ready structure (metadata + OpenGraph)
 
 ---
 
 ## 📁 Project Structure
 
 ### Pages
+
 | Route | Description |
-| --- | --- |
-| `/[locale]` | Home (multilingual: ES / EN) |
-| `/[locale]/proyectos` | Projects listing |
-| `/[locale]/proyectos/[slug]` | Individual project page |
-| `/[locale]/miami` | *Why invest in Miami?* |
-| `/[locale]/precon` | *Why pre‑construction?* |
-| `/[locale]/financiacion` | Financing section |
-| `/[locale]/storages` | Self‑storage investment section |
-| `/[locale]/sobre-mi` | About Esteban Firpo |
+|------|-------------|
+| `/[locale]` | Home |
+| `/[locale]/listings` | Active listings |
+| `/[locale]/listings/[slug]` | Listing detail |
+| `/[locale]/proyectos` | Pre-construction projects |
+| `/[locale]/proyectos/[slug]` | Project detail |
+| `/[locale]/property-management` | Property Management service |
+| `/[locale]/sobre-mi` | About Jacquie |
+| `/[locale]/contacto` | Contact page |
+
+---
 
 ### Core Components
-- **NavBar.tsx** — Responsive top navigation with ES/EN switch and gold active underline.
-- **Footer.tsx** — Global footer with brand links and contact.
-- **FeaturedProjects.tsx** — Curated projects band.
-- **SectionWhyMiami.tsx** — “Why Miami” insights.
-- **SectionWhyPrecon.tsx** — “Why Pre‑construction” module.
-- **SectionWhyStorages.tsx** — Storages rationale and CTAs.
-- **HighlightsBlock.tsx** — Key highlights as compact list/cards.
-- **PaymentPlan.tsx** — Editorial payment plan with numbered steps.
-- **FaqsBlock.tsx** — Accessible accordion for FAQs.
-- **ProjectsFilters.tsx** — Filters + sort (A→Z, Z→A, price), mobile‑friendly.
 
-### Data
-- Each project lives in `/src/data/projects/` as a typed module (`*.ts`).
-  - `unitMix*`, `features*`, `paymentPlan*`, `highlights*`, `faqs*`, `rentalPolicy*`, pricing, hero + gallery URLs, map metadata, etc.
-- Storages data: `/src/data/storages/` (e.g., **Callaway** case).
+- `NavBar.tsx` — Navigation + language switch
+- `Footer.tsx` — Contact + navigation
 
-### SEO & Social
-- Every project page exports `generateMetadata` (ES/EN): dynamic `title/description`, **Open Graph** images, **Twitter card**, and **canonical alternates** to guarantee correct previews across WhatsApp/Instagram/LinkedIn.
+### Home Sections
+
+- `SectionServices.tsx` — Main services overview
+- `SectionListingsHome.tsx` — Featured listings
+- `SectionPropertyManagementHome.tsx` — Management teaser
+- `SectionAccommodationHome.tsx` — Rental assistance
+- `SectionWhyPrecon.tsx` — Pre-construction bridge
+- `SectionAboutJacquieHome.tsx` — Personal branding block
+
+### Property Management Page
+
+- `SectionPropertyManagementHome.tsx`
+- `SectionPropertyManagementIncluded.tsx`
+- `SectionPropertyManagementTrust.tsx`
+
+### Listings
+
+- `ProjectCard.tsx`
+- `GalleryLightbox.tsx`
+- Listing detail with:
+  - gallery
+  - specs
+  - map
+  - SEO schema
 
 ---
 
 ## 🎨 Brand System
 
-**Palette**
+### Palette
 
-| Role | Name | Hex |
-|---|---|---|
-| Primary | Navy | `#0A2540` |
-| Accent | Gold | `#D4AF37` |
-| Soft background | Sand | `#F9FAFB` |
-| Text | Ink | `#0E1624` |
+| Role | Hex |
+|------|-----|
+| Primary | #1F3A34 |
+| Accent | #8FA79B |
+| Surface | #F7F6F3 |
+| Text | #2B2B2B |
+| White | #FFFFFF |
 
-**Guidelines**
-- Minimal, content‑first; consistent spacing and typographic rhythm.
-- **Navy cards** with a subtle **gold hairline** act as premium anchors.
-- **Solid** buttons for primary actions and **ghost/outline** for secondary.
-- Mobile‑first; accessible focus states and ARIA labels.
+### Guidelines
 
----
-
-## 🧱 Folder Map
-```
-src/
- ├─ app/
- │   ├─ [locale]/
- │   │   ├─ page.tsx            # Home
- │   │   ├─ proyectos/
- │   │   ├─ proyectos/[slug]/
- │   │   ├─ miami/
- │   │   ├─ precon/
- │   │   ├─ financiacion/
- │   │   ├─ storages/
- │   │   └─ sobre-mi/
- │
- ├─ components/
- │   ├─ NavBar.tsx
- │   ├─ Footer.tsx
- │   ├─ FeaturedProjects.tsx
- │   ├─ SectionWhyMiami.tsx
- │   ├─ SectionWhyPrecon.tsx
- │   ├─ SectionWhyStorages.tsx
- │   ├─ HighlightsBlock.tsx
- │   ├─ PaymentPlan.tsx
- │   ├─ FaqsBlock.tsx
- │   └─ ProjectsFilters.tsx
- │
- └─ data/
-     ├─ projects/
-     └─ storages/
-```
+- Minimal, premium, editorial style
+- Strong typography hierarchy
+- Dark cards (primary) over light backgrounds
+- Subtle motion (hover, elevation)
+- No visual noise or clutter
 
 ---
 
-## ✅ Authoring Guide (projects)
-1. **Create** `src/data/projects/<slug>.ts` using the typed template.
-2. **Fill** basics: `id/slug/name/city` (prefer full address for accurate map) and optional `lat/lng`.
-3. **Pricing**: `priceFromUsd`, `pricePerSfApprox`, `hoa`, `delivery` (**ES:** Entrega · **EN:** Completion), `furnished`.
-4. **Rental policy** (ES/EN): include **Certificate of Use / Certificado de Uso**, **DBPR**, tourist taxes when STR applies.
-5. **Images**: 1 hero + ~8 gallery images (ImageKit URLs recommended).
-6. **Short copy**: two `microClaims*` max; keep to one line on mobile.
-7. **Content**: `highlights*`, `unitMix*`, `features*`, `paymentPlan*` (must add up to **100%**; fixed reservation is **not** an extra %), and `faqs*` (3-6).
-8. **Register** in `src/data/projects/index.ts` (import and append to `INCOMING`).
-9. **Build & QA**: `npm run build && npm run start`. Check cards, map, OG preview.
+## 🧠 Product Strategy
 
-**Common pitfalls**
-- **Hydration mismatch**: do not branch on `window` during SSR; prefer CSS media queries or `useEffect`.
-- **Terminology**: *Completion* in EN, *Entrega* in ES (don’t mix).
-- **Plan de pagos**: reservation amounts should be described, not added to the % total.
+### Core positioning
 
----
+Jacquie is not just a realtor.
 
-## 🧪 Accessibility & Performance
-- Semantic HTML, labeled controls, and visible focus rings.
-- Image weight discipline and accurate `sizes` attributes.
-- Avoid long truncations in mobile cards; keep bullets to one line.
+She is positioned as:
+
+> "Your trusted person in Miami"
+
+Key pillars:
+
+- Personalized service
+- End-to-end follow-up
+- Short-term rental expertise
+- International client focus
 
 ---
 
-## 📣 Credits
-- **Design & Engineering:** Rodrigo Opalo — [devrodri.com](https://www.devrodri.com)
-- **Client:** Esteban Firpo · Miami Real Estate — [estebanfirpo.com](https://www.estebanfirpo.com)
+## 🧱 Content Architecture
+
+### Home
+
+1. Hero
+2. Services (4 entry points)
+3. Listings
+4. Property Management
+5. Accommodation
+6. Pre-construction
+7. About
+8. CTA
+
+---
+
+### Property Management
+
+Focus on:
+
+- Airbnb / short-term rental
+- Guest selection
+- Personalized check-in
+- Property care
+- Full management
+
+---
+
+### About Page
+
+Focus on:
+
+- Personal brand
+- Trust
+- Miami expertise
+- International clients
+- Personalized approach
+
+---
+
+## 🌍 i18n Strategy
+
+- `/es` → Spanish (default)
+- `/en` → English
+- `/fr` → French (Canada)
+
+Translation approach:
+
+- Inline conditional logic (no heavy abstraction)
+- Consistent structure across pages
+- Future-ready for scaling
+
+---
+
+## ⚙️ Development Notes
+
+- All colors controlled via tokens (`primary`, `accent`, etc.)
+- Easy palette swap without refactor
+- Components built for reuse and scalability
+- No unnecessary abstraction
+
+---
+
+## 🚀 Roadmap (next steps)
+
+- Improve listings filtering UX
+- Add CRM integration
+- Add analytics / tracking
+- Refine SEO per page
+- Add testimonials section
+
+---
+
+## 👨‍💻 Author
+
+Rodrigo Opalo
+
+- devrodri.com
+- Product Owner / Creative Director
 
 ---
 
 ## 📬 Contact
-**Esteban Firpo · Miami Real Estate**  
-Miami, FL — 📧 [esteban@miamiliferealty.com](mailto:esteban@miamiliferealty.com)
+
+Jacquie Zarate
+
+📍 Miami, FL  
+📧 jacqueline@miamiliferealty.com  
+📱 +1 786 407 2591
+
+---

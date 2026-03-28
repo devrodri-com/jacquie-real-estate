@@ -4,18 +4,20 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Paleta base
-        primary: '#0A2540',   // azul marino
-        accent:  '#D4AF37',   // dorado
-        ink:     '#0A0A0A',   // negro
-        paper:   '#FFFFFF',   // blanco
-        muted:   '#F5F5F5',   // neutro claro
-        // Alias "brand" para compatibilidad
+        // Paleta de marca
+        primary: '#1F3A34',
+        accent:  '#8FA79B',
+        ink:     '#2F2F2F',
+        paper:   '#FFFFFF',
+        surface: '#F7F6F3',
+        placeholder: '#E5E7EB',
         brand: {
-          navy: '#0A2540',
-          gold: '#D4AF37',
-          ink:  '#0A0A0A',
-          sand: '#F5F5F5'
+          primary: '#1F3A34',
+          accent: '#8FA79B',
+          ink: '#2F2F2F',
+          paper: '#FFFFFF',
+          surface: '#F7F6F3',
+          placeholder: '#E5E7EB'
         }
       },
       borderRadius: { xl: '1rem' }

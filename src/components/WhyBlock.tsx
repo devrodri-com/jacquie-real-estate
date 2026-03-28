@@ -34,7 +34,7 @@ export default function WhyBlock({
   return (
     <section id={id} className={"mt-12 " + className}>
       {title ? (
-        <HeadingTag className="mb-3 sm:mb-4 text-xl font-medium text-[#0A2540]">{title}</HeadingTag>
+        <HeadingTag className="mb-3 sm:mb-4 text-xl font-medium text-primary">{title}</HeadingTag>
       ) : null}
 
       <ul className={gridClassName}>
@@ -53,33 +53,27 @@ function WhyCard({ icon, iconKey, heading, text, href, analytics }: WhyItem) {
     icon ?? (
       <span
         aria-hidden
-        className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#0A2540]/5 text-[#0A2540]"
+        className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary/5 text-primary ring-1 ring-primary/10"
       >
         <AutoIcon keyName={iconKey} text={heading} />
       </span>
     );
 
   const content = (
-    <div className="relative overflow-hidden rounded-lg border border-primary/15 bg-white p-4 shadow-[0_1px_2px_rgba(0,0,0,.03)] transition-colors hover:bg-[#F9FAFB]">
-      {/* hairline dorada sutil y recortada por el borde */}
-      <div
-        className="mb-2 h-px w-full"
-        style={{
-          background:
-            "linear-gradient(90deg, rgba(212,175,55,.0), rgba(212,175,55,.22), rgba(212,175,55,.05))",
-        }}
-      />
+    <div className="relative overflow-hidden rounded-lg border border-primary/15 bg-white p-4 shadow-[0_1px_2px_rgba(0,0,0,.03)] transition-colors hover:bg-muted">
+      {/* hairline acento */}
+      <div className="mb-2 h-px w-full bg-gradient-to-r from-transparent via-accent/25 to-transparent" />
       <div className="flex items-center gap-3">
         {typeof icon === "string" ? (
-          <span aria-hidden className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#0A2540]/5 text-lg">
+          <span aria-hidden className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary/5 text-lg">
             {icon}
           </span>
         ) : (
           badge
         )}
         <div>
-          <p className="text-[13px] font-medium text-[#0A2540]">{heading}</p>
-          {text ? <p className="mt-0.5 text-[12.5px] text-[#0A2540]/80">{text}</p> : null}
+          <p className="text-[13px] font-medium text-primary">{heading}</p>
+          {text ? <p className="mt-0.5 text-[12.5px] text-foreground/80">{text}</p> : null}
         </div>
       </div>
     </div>
@@ -105,7 +99,7 @@ function WhyCard({ icon, iconKey, heading, text, href, analytics }: WhyItem) {
         href={href}
         target={target}
         rel={rel}
-        className="block focus:outline-none focus:ring-2 focus:ring-[#0A2540]/20 rounded-xl"
+        className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 rounded-xl"
         {...aria}
         {...dataAttrs}
       >
@@ -117,7 +111,7 @@ function WhyCard({ icon, iconKey, heading, text, href, analytics }: WhyItem) {
   return (
     <Link
       href={href}
-      className="block focus:outline-none focus:ring-2 focus:ring-[#0A2540]/20 rounded-xl"
+      className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 rounded-xl"
       {...aria}
       {...dataAttrs}
     >
@@ -129,7 +123,7 @@ function WhyCard({ icon, iconKey, heading, text, href, analytics }: WhyItem) {
 /** Ícono automático por clave o por heurística ES/EN */
 function AutoIcon({ keyName, text }: { keyName?: IconKey; text: string }) {
   const key = keyName ?? guessIconKey(text);
-  const stroke = "#0A2540";
+  const stroke = "currentColor";
   switch (key) {
     case "shield":
       return (

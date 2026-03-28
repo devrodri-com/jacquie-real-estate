@@ -5,13 +5,15 @@
 
 /* Estilos globales para react-phone-number-input */
 .phoneWrapper :global(.PhoneInput) {
-  display: flex;
   width: 100%;
+  min-width: 0;
+  display: flex;
   align-items: stretch;
 }
 
 .phoneWrapper :global(.PhoneInputInput) {
-  flex: 1;
+  min-width: 0;
+  flex: 1 1 auto;
   height: 44px !important;
   border-radius: 6px;
   border: 1px solid rgba(255, 255, 255, 0.2) !important;
@@ -33,6 +35,9 @@
 }
 
 .phoneWrapper :global(.PhoneInputCountry) {
+  min-width: 0;
+  max-width: 12rem;
+  flex: 0 1 auto;
   display: flex;
   align-items: center;
   gap: 6px;

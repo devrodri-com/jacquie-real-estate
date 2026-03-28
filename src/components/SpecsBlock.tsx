@@ -81,9 +81,9 @@ export default function SpecsBlock({
 
   return (
     <section id={id} className={"mt-10 " + className}>
-      {title ? <HeadingTag className="text-xl font-medium text-[#0A2540]">{title}</HeadingTag> : null}
+      {title ? <HeadingTag className="text-xl font-medium text-primary">{title}</HeadingTag> : null}
 
-      {subhead ? <p className="mt-1 text-[12.5px] font-medium text-[#0A2540]/80">{subhead}</p> : null}
+      {subhead ? <p className="mt-1 text-[12.5px] font-medium text-foreground/80">{subhead}</p> : null}
 
       <ul className={gridClassName}>
         {normalized.map((it, i) => (
@@ -108,23 +108,17 @@ export default function SpecsBlock({
 
 function SpecCard({ icon, iconKey, label, subLabel, href }: SpecItem) {
   const content = (
-    <div className="relative rounded-lg border border-primary/15 bg-white p-3 shadow-[0_1px_2px_rgba(0,0,0,.03)] transition-colors hover:bg-[#F9FAFB]">
-      {/* hairline dorada sutil */}
-      <div
-        className="mb-2 h-[2px] w-full rounded-full"
-        style={{
-          background:
-            "linear-gradient(90deg, rgba(212,175,55,.0), rgba(212,175,55,.35), rgba(212,175,55,.0))",
-        }}
-      />
-      <div className="flex items-center gap-2 w-full text-[14px] text-[#0A2540]">
-        <span className="inline-flex h-4 w-4 items-center justify-center text-[#0A2540]" aria-hidden>
+    <div className="relative rounded-lg border border-primary/15 bg-white p-3 shadow-[0_1px_2px_rgba(0,0,0,.03)] transition-colors hover:bg-muted">
+      {/* hairline acento */}
+      <div className="mb-2 h-[2px] w-full rounded-full bg-gradient-to-r from-transparent via-accent/35 to-transparent" />
+      <div className="flex items-center gap-2 w-full text-[14px] text-primary">
+        <span className="inline-flex h-4 w-4 items-center justify-center text-primary" aria-hidden>
           {icon ? icon : <AutoIcon keyName={iconKey} text={label} />}
         </span>
         <div className="min-w-0">
           <span className="block truncate" title={label}>{label}</span>
           {subLabel ? (
-            <span className="block text-[12px] text-[#0A2540]/70 truncate" title={subLabel}>
+            <span className="block text-[12px] text-foreground/70 truncate" title={subLabel}>
               {subLabel}
             </span>
           ) : null}
@@ -146,7 +140,7 @@ function SpecCard({ icon, iconKey, label, subLabel, href }: SpecItem) {
         href={href}
         target={target}
         rel={rel}
-        className="block focus:outline-none focus:ring-2 focus:ring-[#0A2540]/20 rounded-xl"
+        className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 rounded-xl"
         aria-label={label}
       >
         {content}
@@ -156,7 +150,7 @@ function SpecCard({ icon, iconKey, label, subLabel, href }: SpecItem) {
   return li(
     <Link
       href={href}
-      className="block focus:outline-none focus:ring-2 focus:ring-[#0A2540]/20 rounded-xl"
+      className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 rounded-xl"
       aria-label={label}
     >
       {content}
@@ -167,11 +161,11 @@ function SpecCard({ icon, iconKey, label, subLabel, href }: SpecItem) {
 /** Botón con foco visible y aria-label */
 function CtaButton({ label, href, variant = "ghost", ariaLabel }: SpecCta) {
   const base =
-    "inline-flex h-9 items-center justify-center rounded-md px-3 text-xs sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#0A2540]/20";
+    "inline-flex h-9 items-center justify-center rounded-md px-3 text-xs sm:text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40";
   const styles =
     variant === "solid"
-      ? " bg-[#0A2540] text-white hover:opacity-95"
-      : " border border-[#0A2540]/20 text-[#0A2540] hover:bg-[#F9FAFB]";
+      ? " bg-primary text-primary-foreground hover:opacity-95"
+      : " border border-primary/25 text-primary hover:bg-muted";
 
   const computedAria = ariaLabel ?? label;
 
@@ -198,21 +192,21 @@ function AutoIcon({ keyName, text }: { keyName?: IconKey; text: string }) {
   switch (key) {
     case "bed":
       return (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A2540" strokeWidth="1.6">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
           <path d="M3 7h6a3 3 0 0 1 3 3v2H3V7z" />
           <path d="M21 12H12M3 21v-9M21 21v-9" />
         </svg>
       );
     case "area":
       return (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A2540" strokeWidth="1.6">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
           <rect x="4" y="4" width="16" height="16" rx="1" />
           <path d="M8 8h8v8H8z" />
         </svg>
       );
     case "balcony":
       return (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A2540" strokeWidth="1.6">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
           <path d="M4 10h16v8H4z" />
           <path d="M4 10l4-4h8l4 4" />
           <path d="M7 14v4M12 14v4M17 14v4" />
@@ -220,7 +214,7 @@ function AutoIcon({ keyName, text }: { keyName?: IconKey; text: string }) {
       );
     case "beach":
       return (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A2540" strokeWidth="1.6">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
           <path d="M2 21h20" />
           <path d="M6 21c1.5-3 4.5-3 6 0" />
           <path d="M12 8a4 4 0 0 1 8 0v1H12z" />
@@ -230,14 +224,14 @@ function AutoIcon({ keyName, text }: { keyName?: IconKey; text: string }) {
       );
     case "height":
       return (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A2540" strokeWidth="1.6">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
           <path d="M12 3v18" />
           <path d="M9 6l3-3 3 3M9 18l3 3 3-3" />
         </svg>
       );
     case "pool":
       return (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A2540" strokeWidth="1.6">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
           <path d="M3 16c2 1.5 4 1.5 6 0 2 1.5 4 1.5 6 0 2 1.5 4 1.5 6 0" />
           <path d="M8 12V7a2 2 0 0 1 4 0v5" />
           <path d="M12 12V7a2 2 0 0 1 4 0v5" />
@@ -245,7 +239,7 @@ function AutoIcon({ keyName, text }: { keyName?: IconKey; text: string }) {
       );
     case "spa":
       return (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A2540" strokeWidth="1.6">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
           <path d="M8 13c0-2 2-3 2-5S8 5 8 3" />
           <path d="M12 13c0-2 2-3 2-5s-2-3-2-5" />
           <path d="M5 19h14" />
@@ -253,14 +247,14 @@ function AutoIcon({ keyName, text }: { keyName?: IconKey; text: string }) {
       );
     case "yoga":
       return (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A2540" strokeWidth="1.6">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
           <circle cx="12" cy="5" r="2" />
           <path d="M12 7v6l-4 4M12 13l4 4" />
         </svg>
       );
     case "paddle":
       return (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A2540" strokeWidth="1.6">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
           <circle cx="16" cy="8" r="3" />
           <path d="M7 17l6-6" />
           <path d="M5 19l2-2" />
@@ -268,35 +262,35 @@ function AutoIcon({ keyName, text }: { keyName?: IconKey; text: string }) {
       );
     case "work":
       return (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A2540" strokeWidth="1.6">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
           <rect x="3" y="7" width="18" height="12" rx="2" />
           <path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" />
         </svg>
       );
     case "garage":
       return (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A2540" strokeWidth="1.6">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
           <path d="M3 10l9-5 9 5v9H3z" />
           <path d="M7 19v-5h10v5" />
         </svg>
       );
     case "kitchen":
       return (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A2540" strokeWidth="1.6">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
           <rect x="4" y="6" width="16" height="12" rx="1" />
           <path d="M8 6v12M16 6v12" />
         </svg>
       );
     case "package":
       return (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A2540" strokeWidth="1.6">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
           <path d="M3 7l9-4 9 4-9 4-9-4z" />
           <path d="M3 7v10l9 4 9-4V7" />
         </svg>
       );
     case "bike":
       return (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A2540" strokeWidth="1.6">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
           <circle cx="7" cy="17" r="3" />
           <circle cx="17" cy="17" r="3" />
           <path d="M7 17l5-9 3 6h-5" />
@@ -304,21 +298,21 @@ function AutoIcon({ keyName, text }: { keyName?: IconKey; text: string }) {
       );
     case "security":
       return (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A2540" strokeWidth="1.6">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
           <path d="M12 3l8 3v6c0 4-3 7-8 9-5-2-8-5-8-9V6l8-3z" />
           <path d="M9 12l2 2 4-4" />
         </svg>
       );
     case "store":
       return (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A2540" strokeWidth="1.6">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
           <path d="M4 7h16l-1 3H5L4 7z" />
           <path d="M5 10v7h14v-7" />
         </svg>
       );
     case "coffee":
       return (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A2540" strokeWidth="1.6">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
           <path d="M4 8h12v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8z" />
           <path d="M16 8h3a2 2 0 1 1 0 4h-3" />
           <path d="M6 3c1 1 1 2 0 3M10 3c1 1 1 2 0 3M14 3c1 1 1 2 0 3" />
@@ -326,20 +320,20 @@ function AutoIcon({ keyName, text }: { keyName?: IconKey; text: string }) {
       );
     case "sparkles":
       return (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A2540" strokeWidth="1.6">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
           <path d="M12 3l2.2 4.5L19 9l-4.8 1.5L12 15l-2.2-4.5L5 9l4.8-1.5L12 3z" />
         </svg>
       );
     case "dumbbell":
       return (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A2540" strokeWidth="1.6">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
           <path d="M3 9h3v6H3zM18 9h3v6h-3z" />
           <path d="M6 12h12" />
         </svg>
       );
     case "dock":
       return (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A2540" strokeWidth="1.6">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
           <path d="M3 20h18" />
           <path d="M6 20V9h12v11" />
           <path d="M10 13h4" />
@@ -347,21 +341,21 @@ function AutoIcon({ keyName, text }: { keyName?: IconKey; text: string }) {
       );
     case "book":
       return (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A2540" strokeWidth="1.6">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
           <path d="M4 5a2 2 0 0 1 2-2h10v16H6a2 2 0 0 0-2 2V5z" />
           <path d="M16 19h2a2 2 0 0 0 2-2V3h-2" />
         </svg>
       );
     case "kid":
       return (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A2540" strokeWidth="1.6">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
           <circle cx="12" cy="8" r="3" />
           <path d="M5 20c1.5-3 5-5 7-5s5.5 2 7 5" />
         </svg>
       );
     case "laundry":
       return (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A2540" strokeWidth="1.6">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
           <rect x="4" y="3" width="16" height="18" rx="2" />
           <circle cx="12" cy="13" r="4" />
           <path d="M8 6h8M8 9h2M14 9h2" />
@@ -369,7 +363,7 @@ function AutoIcon({ keyName, text }: { keyName?: IconKey; text: string }) {
       );
     case "ac":
       return (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A2540" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
           <circle cx="12" cy="12" r="2.2" />
           <path d="M12 4c2.2 0 4 1.8 4 4 0 .7-.2 1.3-.5 1.9l-2.9-.9" />
           <path d="M20 12c0 2.2-1.8 4-4 4-.7 0-1.3-.2-1.9-.5l.9-2.9" />
@@ -378,7 +372,7 @@ function AutoIcon({ keyName, text }: { keyName?: IconKey; text: string }) {
       );
     case "wifi":
       return (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A2540" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
           <path d="M5 12a11 11 0 0 1 14 0" />
           <path d="M7.5 14.5a7 7 0 0 1 9 0" />
           <path d="M10 17a3 3 0 0 1 4 0" />
@@ -387,7 +381,7 @@ function AutoIcon({ keyName, text }: { keyName?: IconKey; text: string }) {
       );
     case "elevator":
       return (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A2540" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
           <rect x="5" y="4" width="14" height="16" rx="1" />
           <path d="M9 9l2-2 2 2" />
           <path d="M9 15l2 2 2-2" />

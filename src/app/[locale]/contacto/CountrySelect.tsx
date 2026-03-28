@@ -20,6 +20,7 @@ interface CustomCountrySelectProps {
   labels?: CountryLabel;
   countries?: readonly Country[];
   isEN: boolean;
+  isFR?: boolean;
   className?: string;
   disabled?: boolean;
 }
@@ -31,6 +32,7 @@ export default function CountrySelect({
   labels,
   countries,
   isEN,
+  isFR = false,
   ...props
 }: CustomCountrySelectProps) {
   const [open, setOpen] = useState(false);
@@ -71,11 +73,12 @@ export default function CountrySelect({
 
   // Lista completa de opciones: International (index 0) + filteredOptions (index 1+)
   const allOptions = useMemo(() => {
+    const intlLabel = isEN ? "International" : isFR ? "International" : "Internacional";
     return [
-      { value: undefined, label: isEN ? "International" : "Internacional", isInternational: true },
+      { value: undefined, label: intlLabel, isInternational: true },
       ...filteredOptions,
     ];
-  }, [filteredOptions, isEN]);
+  }, [filteredOptions, isEN, isFR]);
 
   // Inicializar activeIndex al abrir
   useEffect(() => {
@@ -188,38 +191,46 @@ export default function CountrySelect({
   const activeOptionId = activeOption ? getOptionId(activeOption.value) : undefined;
 
   // Opción International
-  const internationalLabel = isEN ? "International" : "Internacional";
+  const internationalLabel = isEN ? "International" : isFR ? "International" : "Internacional";
+  const searchPlaceholder = isEN ? "Search country..." : isFR ? "Rechercher un pays..." : "Buscar país...";
+  const manualEntryLabel = isEN ? "Manual entry" : isFR ? "Saisie manuelle" : "Ingreso manual";
+  const noCountriesLabel = isEN ? "No countries found" : isFR ? "Aucun pays trouvé" : "No se encontraron países";
+  const selectCountryAria = isEN ? "Select country" : isFR ? "Sélectionner un pays" : "Seleccionar país";
   
   // ID del listbox
   const listboxId = "country-listbox";
 
   return (
-    <div ref={containerRef} className={`relative ${props.className || ""}`}>
+    <div ref={containerRef} className={`relative min-w-0 ${props.className || ""}`}>
       {/* Botón selector */}
       <button
         type="button"
         onClick={() => setOpen(!open)}
         disabled={props.disabled}
-        className="flex items-center gap-2 h-11 px-3 rounded-md border border-white/20 bg-white text-[#0A2540] text-sm font-medium hover:bg-white/95 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/40 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-        aria-label={isEN ? "Select country" : "Seleccionar país"}
+        className="flex min-w-0 items-center gap-2 h-11 px-3 rounded-md border border-primary-foreground/20 bg-white text-primary text-sm font-medium hover:bg-white/95 focus:outline-none focus:ring-2 focus:ring-accent/40 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        aria-label={selectCountryAria}
         aria-expanded={open}
         aria-haspopup="listbox"
       >
         {value ? (
           <>
-            <span className="text-xl">{getCountryEmoji(value)}</span>
-            <span className="hidden sm:inline">{(labels?.[value] ?? value)}</span>
-            <span className="text-[#0A2540]/60">+{getCountryCallingCode(value)}</span>
+            <span className="shrink-0 text-xl">{getCountryEmoji(value)}</span>
+            <span className="hidden min-w-0 flex-1 truncate sm:inline">
+              {labels?.[value] ?? value}
+            </span>
+            <span className="shrink-0 text-primary/60">+{getCountryCallingCode(value)}</span>
           </>
         ) : (
           <>
-            <span className="text-xl">🌐</span>
-            <span className="hidden sm:inline">{internationalLabel}</span>
-            <span className="text-[#0A2540]/60">+</span>
+            <span className="shrink-0 text-xl">🌐</span>
+            <span className="hidden min-w-0 flex-1 truncate sm:inline">
+              {internationalLabel}
+            </span>
+            <span className="shrink-0 text-primary/60">+</span>
           </>
         )}
         <svg
-          className={`w-4 h-4 ml-auto transition-transform ${open ? "rotate-180" : ""}`}
+          className={`w-4 h-4 shrink-0 ml-auto transition-transform ${open ? "rotate-180" : ""}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -230,17 +241,17 @@ export default function CountrySelect({
 
       {/* Popover */}
       {open && (
-        <div className="absolute z-50 top-full left-0 mt-1 w-[280px] sm:w-[320px] bg-white rounded-md border border-white/20 shadow-xl ring-1 ring-black/5 max-h-[320px] flex flex-col">
+        <div className="absolute z-50 top-full left-0 mt-1 w-[280px] sm:w-[320px] bg-white rounded-md border border-primary/10 shadow-xl ring-1 ring-black/5 max-h-[320px] flex flex-col">
           {/* Búsqueda */}
-          <div className="p-2 border-b border-white/10">
+          <div className="p-2 border-b border-primary/10">
             <input
               ref={inputRef}
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder={isEN ? "Search country..." : "Buscar país..."}
-              className="w-full h-9 px-3 rounded-md border border-white/20 bg-white text-[#0A2540] text-sm placeholder-[#0A2540]/40 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/40"
+              placeholder={searchPlaceholder}
+              className="w-full h-9 px-3 rounded-md border border-primary/10 bg-white text-primary text-sm placeholder-primary/40 focus:outline-none focus:ring-2 focus:ring-accent/40"
               aria-controls={listboxId}
               aria-activedescendant={activeOptionId}
               aria-autocomplete="list"
@@ -264,21 +275,21 @@ export default function CountrySelect({
               type="button"
               id={getOptionId(undefined)}
               onClick={() => handleSelect(undefined)}
-              className={`w-full flex items-center gap-3 px-3 py-2 text-left text-sm hover:bg-[#0A2540]/5 transition-colors ${
-                value === undefined ? "bg-[#D4AF37]/10 font-medium" : ""
-              } ${activeIndex === 0 ? "bg-[#D4AF37]/20" : ""}`}
+              className={`w-full flex items-center gap-3 px-3 py-2 text-left text-sm hover:bg-primary/5 transition-colors ${
+                value === undefined ? "bg-accent/10 font-medium" : ""
+              } ${activeIndex === 0 ? "bg-accent/20" : ""}`}
               role="option"
               aria-selected={value === undefined}
             >
               <span className="text-xl">🌐</span>
               <div className="flex-1 min-w-0">
-                <div className="font-medium text-[#0A2540]">{internationalLabel}</div>
-                <div className="text-xs text-[#0A2540]/60">{isEN ? "Manual entry" : "Ingreso manual"}</div>
+                <div className="font-medium text-primary">{internationalLabel}</div>
+                <div className="text-xs text-primary/60">{manualEntryLabel}</div>
               </div>
             </button>
 
             {/* Divider */}
-            {filteredOptions.length > 0 && <div className="h-px bg-white/10 my-1" />}
+            {filteredOptions.length > 0 && <div className="h-px bg-primary/10 my-1" />}
 
             {/* Países filtrados */}
             {filteredOptions.map((option, index) => {
@@ -301,24 +312,24 @@ export default function CountrySelect({
                   type="button"
                   id={optionId}
                   onClick={() => handleSelect(country)}
-                  className={`w-full flex items-center gap-3 px-3 py-2 text-left text-sm hover:bg-[#0A2540]/5 transition-colors ${
-                    isSelected ? "bg-[#D4AF37]/10 font-medium" : ""
-                  } ${isActive ? "bg-[#D4AF37]/20" : ""}`}
+                  className={`w-full flex items-center gap-3 px-3 py-2 text-left text-sm hover:bg-primary/5 transition-colors ${
+                    isSelected ? "bg-accent/10 font-medium" : ""
+                  } ${isActive ? "bg-accent/20" : ""}`}
                   role="option"
                   aria-selected={isSelected}
                 >
                   <span className="text-xl flex-shrink-0">{getCountryEmoji(country)}</span>
                   <div className="flex-1 min-w-0">
-                    <div className="font-medium text-[#0A2540] truncate">{label}</div>
+                    <div className="font-medium text-primary truncate">{label}</div>
                   </div>
-                  <span className="text-xs text-[#0A2540]/60 flex-shrink-0">+{callingCode}</span>
+                  <span className="text-xs text-primary/60 flex-shrink-0">+{callingCode}</span>
                 </button>
               );
             })}
             
             {filteredOptions.length === 0 && (
-              <div className="px-3 py-4 text-center text-sm text-[#0A2540]/60">
-                {isEN ? "No countries found" : "No se encontraron países"}
+              <div className="px-3 py-4 text-center text-sm text-primary/60">
+                {noCountriesLabel}
               </div>
             )}
           </div>

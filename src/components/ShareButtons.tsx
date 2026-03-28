@@ -7,7 +7,7 @@ import Image from "next/image";
 type Props = {
   url: string; // absolute URL to share
   text?: string; // optional message/caption
-  locale?: "es" | "en";
+  locale?: "es" | "en" | "fr";
   label?: string; // override button label
   iconSrc?: string;
   className?: string;
@@ -36,8 +36,19 @@ export default function ShareButtons({
     ? "h-10 items-center justify-center gap-2 rounded-md border border-white/40 px-4 text-sm font-medium text-white hover:bg-white/10 w-full sm:w-auto"
     : "h-10 items-center justify-center gap-2 rounded-md border border-[#0A2540]/20 px-4 text-sm font-medium text-[#0A2540] hover:bg-[#F9FAFB] w-full sm:w-auto";
 
-  const title = locale === "en" ? "Share via WhatsApp" : "Compartir por WhatsApp";
-  const btnText = label ?? (locale === "en" ? "Share via WhatsApp" : "Compartir por WhatsApp");
+  const title =
+    locale === "en"
+      ? "Share via WhatsApp"
+      : locale === "fr"
+        ? "Partager via WhatsApp"
+        : "Compartir por WhatsApp";
+  const btnText =
+    label ??
+    (locale === "en"
+      ? "Share via WhatsApp"
+      : locale === "fr"
+        ? "Partager via WhatsApp"
+        : "Compartir por WhatsApp");
 
   const [canSystemShare, setCanSystemShare] = React.useState(false);
   React.useEffect(() => {
@@ -87,11 +98,15 @@ export default function ShareButtons({
         type="button"
         onClick={() => (navigator as any).share?.({ title: text || document.title, url }).catch(() => {})}
         className={`inline-flex ${btn}`}
-        aria-label={locale === "en" ? "Share" : "Compartir"}
+        aria-label={
+          locale === "en" ? "Share" : locale === "fr" ? "Partager" : "Compartir"
+        }
         style={{ display: isDesktop ? (canSystemShare ? undefined : 'none') : undefined }}
       >
         <SystemShareIcon />
-        <span className="leading-none">{locale === "en" ? "Share" : "Compartir"}</span>
+        <span className="leading-none">
+          {locale === "en" ? "Share" : locale === "fr" ? "Partager" : "Compartir"}
+        </span>
       </button>
     </div>
   );

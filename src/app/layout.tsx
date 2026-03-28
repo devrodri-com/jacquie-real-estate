@@ -1,36 +1,25 @@
 // src/app/layout.tsx
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import "./globals.css";
 import Script from "next/script";
 
 export const metadata: Metadata = {
-  title: "Jacquie Zarate Realtor | Real Estate Miami",
-  description: "Real estate en Miami: preconstrucción, renta corta y compra para vivir o invertir. Asesoría y análisis de proyectos, con financiación para compradores internacionales.",
   icons: {
+    icon: "/favicon.ico",
     apple: "/apple-touch-icon.png",
     shortcut: "/favicon.ico",
   },
   manifest: "/manifest.webmanifest",
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.jacquiezaraterealtor.com"),
-  openGraph: {
-    type: "website",
-    siteName: "Jacquie Zarate Realtor | Real Estate Miami",
-    title: "Jacquie Zarate Realtor | Inversiones en Miami",
-    description: "Real estate en Miami: preconstrucción, renta corta y compra para vivir o invertir. Asesoría y análisis de proyectos, con financiación para compradores internacionales.",
-    images: ["/opengraph-image.jpg"],
-  },
-  twitter: {
-    card: "summary_large_image",
-    images: ["/opengraph-image.jpg"],
-    title: "Jacquie Zarate Realtor | Inversiones en Miami",
-    description: "Real estate en Miami: preconstrucción, renta corta y compra para vivir o invertir. Asesoría y análisis de proyectos, con financiación para compradores internacionales.",
-  },
-  alternates: { canonical: '/' },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const h = await headers();
+  const lang = h.get("x-locale") ?? "es";
+
   return (
-    <html lang="es" suppressHydrationWarning>
+    <html lang={lang} suppressHydrationWarning>
       <head>
         <Script
           async

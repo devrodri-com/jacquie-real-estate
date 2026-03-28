@@ -88,43 +88,43 @@ export default function ProjectCard({ p, showMonthlyEstimate = false, variant = 
           decoding="async"
         />
         {p.delivery && (
-          <span className="absolute left-2 top-2 text-[11px] px-2 py-0.5 rounded-full bg-white/80 text-[#0A2540] backdrop-blur-[2px]">
+          <span className="absolute left-2 top-2 text-[11px] px-2 py-0.5 rounded-full bg-primary-foreground/85 text-primary backdrop-blur-[2px]">
             {p.delivery}
           </span>
         )}
       </div>
       <div className="p-3.5 flex flex-col h-full min-h-[180px]">
-        <h3 className="text-[15px] md:text-[16px] font-semibold tracking-tight text-[#0A2540] line-clamp-1">{p.name}</h3>
-        <p className="mt-1 text-[12px] text-[#0A2540]/70 line-clamp-1">
+        <h3 className="text-[15px] md:text-[16px] font-semibold tracking-tight text-primary line-clamp-1">{p.name}</h3>
+        <p className="mt-1 text-[12px] text-foreground/70 line-clamp-1">
           {p.city} · {trPolicy(p.rentalPolicy)}
         </p>
-        <div className="mt-2 text-[14px] font-semibold text-[#0A2540]">
+        <div className="mt-2 text-[14px] font-semibold text-primary">
           {typeof p.priceFromUsd === "number"
             ? (isEN ? `From USD ${fmt(p.priceFromUsd)}` : `Desde USD ${fmt(p.priceFromUsd)}`)
             : (isEN ? "Inquire" : "Consultar")}
           {p.pricePerSfApprox ? (
-            <span className="ml-1 text-[12px] font-normal text-[#0A2540]/50"> · ~${p.pricePerSfApprox}/sf</span>
+            <span className="ml-1 text-[12px] font-normal text-foreground/50"> · ~${p.pricePerSfApprox}/sf</span>
           ) : null}
           {monthly > 0 ? (
-            <span className="ml-1 text-[12px] font-normal text-[#0A2540]/60"> · {isEN ? `Est. ${fmt(monthly)}/mo*` : `Cuota estimada ${fmt(monthly)}/mes*`}</span>
+            <span className="ml-1 text-[12px] font-normal text-foreground/60"> · {isEN ? `Est. ${fmt(monthly)}/mo*` : `Cuota estimada ${fmt(monthly)}/mes*`}</span>
           ) : null}
         </div>
         <div className="mt-2 flex items-center justify-between gap-1.5">
           {cappedBadges.map((label, i) => (
             <span
               key={i}
-              className="text-[11px] px-2 py-0.5 rounded-full bg-[#0A2540]/5 text-[#0A2540] whitespace-nowrap max-w-[48%] truncate"
+              className="text-[11px] px-2 py-0.5 rounded-full bg-primary/5 text-primary ring-1 ring-primary/15 whitespace-nowrap max-w-[48%] truncate"
             >
               {label}
             </span>
           ))}
         </div>
-        <p className={`mt-1 text-[11px] ${monthly > 0 ? "text-[#0A2540]/50" : "invisible"}`}>
+        <p className={`mt-1 text-[11px] ${monthly > 0 ? "text-foreground/50" : "invisible"}`}>
           {isEN ? "*30% down, 6.5% APR, 30y." : "*30% anticipo, 6.5% APR, 30 años."}
         </p>
         <Link
           href={p.slug}
-          className="mt-auto inline-flex h-9 w-full items-center justify-center rounded-md border border-[#0A2540]/20 px-3 text-sm font-medium text-[#0A2540] hover:bg-[#F9FAFB] focus:outline-none focus:ring-2 focus:ring-[#0A2540] focus:ring-offset-2"
+          className="mt-auto inline-flex h-9 w-full items-center justify-center rounded-md border border-primary/25 px-3 text-sm font-medium text-primary hover:bg-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2"
         >
           {isEN ? "View details" : "Ver ficha"}
         </Link>
