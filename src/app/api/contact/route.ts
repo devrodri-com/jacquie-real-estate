@@ -1,10 +1,7 @@
 // src/app/api/contact/route.ts
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
 
 export const runtime = "nodejs";
-
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Rate limit in-memory map
 // NOTE: This is a best-effort solution for serverless environments.
@@ -85,6 +82,7 @@ function checkRateLimit(ip: string): boolean {
   return true;
 }
 
+// TEMP: Email sending disabled until Resend is configured with Jacquie's domain
 export async function POST(req: Request) {
   try {
     const { 
@@ -117,47 +115,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: false, error: "Missing fields" }, { status: 400 });
     }
 
-    const phoneDisplay = telefonoE164 || 'N/A';
-    const countryDisplay = country || 'INTL';
-
-    // Construir sección de tracking solo si hay UTMs
-    const trackingSection = utm_source || utm_medium || utm_campaign || utm_content || utm_term
-      ? `\n\n--- Tracking ---\n${utm_source ? `Source: ${utm_source}\n` : ''}${utm_medium ? `Medium: ${utm_medium}\n` : ''}${utm_campaign ? `Campaign: ${utm_campaign}\n` : ''}${utm_content ? `Content: ${utm_content}\n` : ''}${utm_term ? `Term: ${utm_term}\n` : ''}`
-      : '';
-
-    const trackingHtml = utm_source || utm_medium || utm_campaign || utm_content || utm_term
-      ? `
-        <hr style="margin: 20px 0; border: none; border-top: 1px solid #e0e0e0;" />
-        <h3 style="margin-top: 20px; margin-bottom: 10px; font-size: 14px; font-weight: 600; color: #666;">Tracking</h3>
-        ${utm_source ? `<p style="margin: 5px 0;"><strong>Source:</strong> ${utm_source}</p>` : ''}
-        ${utm_medium ? `<p style="margin: 5px 0;"><strong>Medium:</strong> ${utm_medium}</p>` : ''}
-        ${utm_campaign ? `<p style="margin: 5px 0;"><strong>Campaign:</strong> ${utm_campaign}</p>` : ''}
-        ${utm_content ? `<p style="margin: 5px 0;"><strong>Content:</strong> ${utm_content}</p>` : ''}
-        ${utm_term ? `<p style="margin: 5px 0;"><strong>Term:</strong> ${utm_term}</p>` : ''}
-      `
-      : '';
-
-    const { error } = await resend.emails.send({
-      from: "Leads Jacquie <jacqueline@miamiliferealty.com>",
-      to: process.env.LEADS_TO!,
-            replyTo: email,
-      subject: `Nuevo lead: ${nombre}`,
-      text: `Nombre: ${nombre}\nEmail: ${email}\nTeléfono: ${phoneDisplay} (${countryDisplay})\nMensaje:\n${mensaje}${trackingSection}`,
-      html: `
-        <h2>Nuevo lead</h2>
-        <p><strong>Nombre:</strong> ${nombre}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Teléfono:</strong> ${phoneDisplay} <small>(${countryDisplay})</small></p>
-        <p><strong>Mensaje:</strong><br/>${mensaje.replace(/\n/g, "<br/>")}</p>
-        ${trackingHtml}
-      `,
-    });
-
-    if (error != null) {
-      return NextResponse.json({ ok: false, error: error.message ?? "Send failed" }, { status: 500 });
-    }
-
-    return NextResponse.json({ ok: true });
+    return Response.json({ ok: true });
   } catch (err: any) {
     return NextResponse.json({ ok: false, error: err?.message ?? "Unexpected error" }, { status: 500 });
   }
