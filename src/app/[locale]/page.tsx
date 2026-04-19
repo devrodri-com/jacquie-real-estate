@@ -27,7 +27,7 @@ export default async function Home({params}: {params: {locale: string}}) {
         role="region"
         aria-labelledby="hero-title"
         aria-describedby="hero-desc"
-        className="relative left-1/2 -translate-x-1/2 overflow-hidden bg-[#F9FAFB] flex flex-col min-h-[600px] w-[100dvw] max-w-[100dvw]"
+        className="relative left-1/2 -translate-x-1/2 overflow-hidden bg-[#FFFFFF] flex flex-col min-h-[600px] w-[100dvw] max-w-[100dvw]"
       >
         <div className="relative flex min-h-[600px] items-start justify-center px-4 pt-[88px] pb-28 sm:px-0 md:pt-[104px] md:pb-28">
         {/* Background media (SORA-ready) */}
@@ -58,7 +58,7 @@ export default async function Home({params}: {params: {locale: string}}) {
           <div className="grid items-center gap-10 md:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.92fr)] lg:gap-14">
             <div className="max-w-[44rem] text-left">
               <div className="mb-5 flex justify-center md:justify-start">
-                <div className="inline-flex items-center gap-3 rounded-full bg-white/72 px-3 py-2 ring-1 ring-primary/10 backdrop-blur-sm">
+                <div className="inline-flex items-center gap-3 rounded-full bg-white/72 px-3 py-2 ring-1 ring-[#9C8FD6]/18 backdrop-blur-sm">
                   <Image
                     src="/images/jacquie-zarate.jpg"
                     alt="Jacquie Zarate Realtor"
@@ -70,10 +70,10 @@ export default async function Home({params}: {params: {locale: string}}) {
                     className="h-11 w-11 rounded-full object-cover ring-1 ring-white/80"
                   />
                   <div className="min-w-0">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-primary/80">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#2B2B2B]/80">
                       JACQUIE ZARATE · REALTOR®
                     </p>
-                    <p className="text-[13px] leading-5 text-primary/72">
+                    <p className="text-[13px] leading-5 text-[#2B2B2B]/72">
                       {locale === 'en'
                         ? 'Your trusted contact in Miami'
                         : locale === 'fr'
@@ -84,7 +84,7 @@ export default async function Home({params}: {params: {locale: string}}) {
                 </div>
               </div>
 
-              <div className="mb-3 text-[12px] uppercase tracking-[0.12em] text-primary/78 text-center md:text-left">
+              <div className="mb-3 text-[12px] uppercase tracking-[0.12em] text-[#2B2B2B]/70 text-center md:text-left">
                 <div className="md:hidden leading-[1.5]">
                   {locale === 'en' ? (
                     <>
@@ -115,7 +115,7 @@ export default async function Home({params}: {params: {locale: string}}) {
 
               <h1
                 id="hero-title"
-                className="max-w-[14ch] text-4xl font-bold leading-[1.05] tracking-[-0.02em] text-primary sm:text-5xl md:text-[54px] lg:text-[58px]"
+                className="max-w-[14ch] text-4xl font-bold leading-[1.05] tracking-[-0.02em] text-[#2B2B2B] sm:text-5xl md:text-[54px] lg:text-[58px]"
               >
                 {locale === 'en'
                   ? 'I help you invest in Miami with hands-on support throughout the entire process.'
@@ -124,7 +124,7 @@ export default async function Home({params}: {params: {locale: string}}) {
                     : 'Te ayudo a invertir en Miami con acompañamiento real en todo el proceso.'}
               </h1>
 
-              <p className="mt-5 max-w-[68ch] text-[18px] font-medium leading-8 text-foreground/85">
+              <p className="mt-5 max-w-[68ch] text-[18px] font-medium leading-8 text-[#2B2B2B]/80">
                 {locale === 'en'
                   ? "From finding the right property to managing it, I personally guide you so you can invest with clarity, confidence, and ongoing support — even if you’re not in Miami."
                   : locale === 'fr'
@@ -137,19 +137,19 @@ export default async function Home({params}: {params: {locale: string}}) {
                   href={whatsAppHref}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="inline-flex h-11 min-w-[176px] w-full items-center justify-center rounded-lg bg-primary px-6 text-sm font-medium text-primary-foreground transition-opacity transition-colors transition-transform hover:-translate-y-[1px] hover:opacity-90 hover:shadow-md active:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary focus-visible:ring-2 focus-visible:ring-accent/45 sm:w-auto"
+                  className="inline-flex h-11 min-w-[176px] w-full items-center justify-center rounded-lg bg-[#9C8FD6] px-6 text-sm font-medium text-white transition-opacity transition-colors transition-transform hover:-translate-y-[1px] hover:opacity-90 hover:shadow-md active:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#9C8FD6] focus-visible:ring-2 focus-visible:ring-[#9C8FD6]/40 sm:w-auto"
                 >
                   {locale === 'en' ? 'Chat on WhatsApp' : locale === 'fr' ? 'Écrire sur WhatsApp' : 'Hablar por WhatsApp'}
                 </a>
                 <Link
                   href={`/${locale}/listings`}
-                  className="inline-flex h-11 min-w-[176px] w-full items-center justify-center gap-2 rounded-lg border-[1.5px] border-primary px-6 text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-primary-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary focus-visible:ring-2 focus-visible:ring-accent/30 sm:w-auto md:min-w-0"
+                  className="inline-flex h-11 min-w-[176px] w-full items-center justify-center gap-2 rounded-lg border-[1.5px] border-[#9C8FD6] px-6 text-sm font-semibold text-[#9C8FD6] transition-colors hover:bg-[#9C8FD6] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9C8FD6] focus-visible:ring-2 focus-visible:ring-[#9C8FD6]/40 sm:w-auto md:min-w-0"
                 >
                   {locale === 'en' ? 'View opportunities' : locale === 'fr' ? 'Voir les opportunités' : 'Ver oportunidades'}
                 </Link>
               </div>
 
-              <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 text-primary/58">
+              <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 text-[#2B2B2B]/58">
                 <span
                   className="text-[11px] font-semibold uppercase tracking-[0.14em] sm:text-xs"
                   aria-label="Miami Life Realty"
@@ -166,8 +166,8 @@ export default async function Home({params}: {params: {locale: string}}) {
                 </span>
               </div>
 
-              <div id="hero-desc" className="flex items-center justify-center md:justify-start pt-4 pb-10 md:pb-0 text-xs text-primary/70 text-center md:text-left">
-                <span className="mr-1 hidden text-primary/60 sm:inline">
+              <div id="hero-desc" className="flex items-center justify-center md:justify-start pt-4 pb-10 md:pb-0 text-xs text-[#2B2B2B]/70 text-center md:text-left">
+                <span className="mr-1 hidden text-[#2B2B2B]/60 sm:inline">
                   {locale === 'en' ? 'Questions?' : locale === 'fr' ? 'Des questions?' : '¿Dudas?'}
                 </span>
                 <a
@@ -175,7 +175,7 @@ export default async function Home({params}: {params: {locale: string}}) {
                   target="_blank"
                   rel="noreferrer"
                   aria-label="Abrir WhatsApp de Jacquie con mensaje prellenado"
-                  className="block underline decoration-primary/30 underline-offset-2 hover:decoration-primary sm:ml-2 sm:inline"
+                  className="block underline decoration-[#9C8FD6]/40 underline-offset-2 hover:decoration-[#9C8FD6] sm:ml-2 sm:inline"
                   data-analytics="hero:whatsapp"
                 >
                   {locale === 'en' ? 'Chat on WhatsApp' : locale === 'fr' ? 'Écrire sur WhatsApp' : 'Hablemos por WhatsApp'}
@@ -186,7 +186,7 @@ export default async function Home({params}: {params: {locale: string}}) {
             <div className="relative hidden md:flex justify-end">
               <div className="relative w-full max-w-[420px]">
                 <div className="absolute -inset-4 rounded-[32px] bg-white/40 blur-2xl" />
-                <div className="relative overflow-hidden rounded-[28px] border border-white/60 bg-white/35 p-3 shadow-[0_20px_60px_rgba(31,58,52,0.16)] backdrop-blur-sm">
+                <div className="relative overflow-hidden rounded-[28px] border border-white/60 bg-[#F7F6F3]/80 p-3 ring-1 ring-[#9C8FD6]/18 shadow-[0_20px_60px_rgba(43,43,43,0.08)] backdrop-blur-sm">
                   <div className="relative aspect-[4/5] overflow-hidden rounded-[22px]">
                     <Image
                       src="/images/jacquie-zarate.jpg"
@@ -198,14 +198,14 @@ export default async function Home({params}: {params: {locale: string}}) {
                     />
                   </div>
                   <div className="px-2 pb-1 pt-4">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-primary/62">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#2B2B2B]/60">
                       {locale === 'en'
                         ? 'Direct support in Miami'
                         : locale === 'fr'
                           ? 'Présence directe à Miami'
                           : 'Acompañamiento directo en Miami'}
                     </p>
-                    <p className="mt-2 text-[22px] font-semibold leading-[1.2] tracking-tight text-primary">
+                    <p className="mt-2 text-[22px] font-semibold leading-[1.2] tracking-tight text-[#2B2B2B]">
                       {locale === 'en'
                         ? 'Personal guidance from search to management.'
                         : locale === 'fr'
@@ -220,7 +220,7 @@ export default async function Home({params}: {params: {locale: string}}) {
         </div>
         </div>
         {/* Banda de transición — remate inferior del Hero (anclada al pie de la imagen) */}
-        <div className="absolute bottom-0 left-0 right-0 w-full bg-primary text-primary-foreground py-5 px-4" role="region" aria-label={locale === 'en' ? 'What we offer' : locale === 'fr' ? 'Ce que nous offrons' : 'Qué ofrecemos'}>
+        <div className="absolute bottom-0 left-0 right-0 w-full bg-[#2B2B2B] text-primary-foreground py-5 px-4" role="region" aria-label={locale === 'en' ? 'What we offer' : locale === 'fr' ? 'Ce que nous offrons' : 'Qué ofrecemos'}>
           <div className="mx-auto max-w-5xl flex flex-col items-center justify-center gap-3 text-center text-sm font-medium sm:flex-row sm:flex-wrap sm:justify-center sm:gap-6">
             <span className="text-primary-foreground/95">
               {locale === 'en'

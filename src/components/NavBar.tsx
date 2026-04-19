@@ -48,7 +48,7 @@ export default function NavBar(){
   ];
 
   return (
-    <header className={"w-full bg-primary text-primary-foreground transition-shadow " + (scrolled ? "border-b border-paper/10 shadow-[0_1px_8px_rgba(0,0,0,.08)]" : "border-b border-paper/5")}>
+    <header className={"w-full bg-[#2B2B2B] text-primary-foreground transition-shadow " + (scrolled ? "border-b border-paper/10 shadow-[0_1px_8px_rgba(0,0,0,.08)]" : "border-b border-paper/5")}>
       <div className="mx-auto max-w-6xl px-4 h-14 flex items-center justify-between">
         <Link href={base} className="text-sm font-semibold text-primary-foreground no-underline hover:opacity-90">
           Jacquie Zarate Realtor
@@ -71,7 +71,7 @@ export default function NavBar(){
                 key={it.href}
                 href={it.href}
                 aria-current={isActive ? 'page' : undefined}
-                className={`no-underline text-primary-foreground/85 hover:text-primary-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent focus-visible:ring-2 focus-visible:ring-accent/30 underline-offset-10 xl:underline-offset-12 transition-colors ${isActive ? 'text-primary-foreground underline decoration-2 xl:decoration-1 decoration-accent' : ''}`}
+                className={`no-underline text-primary-foreground/85 hover:text-primary-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-foreground/50 focus-visible:ring-2 focus-visible:ring-primary-foreground/25 underline-offset-10 xl:underline-offset-12 transition-colors ${isActive ? 'text-primary-foreground underline decoration-2 xl:decoration-1 decoration-primary-foreground/55' : ''}`}
               >
                 {it.label}
               </Link>
@@ -94,7 +94,7 @@ export default function NavBar(){
                   href={`/${code}${pathWithoutLocale}`}
                   title={title}
                   aria-label={aria}
-                  className="inline-flex h-8 w-12 items-center justify-center rounded-full border border-paper/25 text-primary-foreground text-xs font-semibold no-underline hover:bg-paper/10 focus-visible:ring-2 focus-visible:ring-accent/40"
+                  className="inline-flex h-8 w-12 items-center justify-center rounded-full border border-paper/25 text-primary-foreground text-xs font-semibold no-underline hover:bg-paper/10 focus-visible:ring-2 focus-visible:ring-primary-foreground/30"
                 >
                   {label}
                 </Link>
@@ -105,7 +105,7 @@ export default function NavBar(){
       </div>
 
       {open && (
-        <nav className="lg:hidden fixed inset-0 z-50 bg-primary/95 text-primary-foreground backdrop-blur-sm">
+        <nav className="lg:hidden fixed inset-0 z-50 bg-[#2B2B2B]/95 text-primary-foreground backdrop-blur-sm">
           <div className="mx-auto max-w-6xl px-4 py-4 flex flex-col h-full">
             {/* Top bar */}
             <div className="flex items-center justify-between pb-3 border-b border-black/10">
@@ -132,7 +132,7 @@ export default function NavBar(){
                       href={it.href}
                       aria-current={isActive ? 'page' : undefined}
                       onClick={()=>setOpen(false)}
-                      className={`block py-3.5 text-lg no-underline transition-colors ${isActive ? 'text-primary-foreground underline decoration-2 underline-offset-[6px] decoration-accent' : 'text-primary-foreground/85 hover:text-primary-foreground'}`}
+                      className={`block py-3.5 text-lg no-underline transition-colors ${isActive ? 'text-primary-foreground underline decoration-2 underline-offset-[6px] decoration-primary-foreground/55' : 'text-primary-foreground/85 hover:text-primary-foreground'}`}
                     >
                       {it.label}
                     </Link>
@@ -157,7 +157,7 @@ export default function NavBar(){
                       onClick={()=>setOpen(false)}
                       title={title}
                       aria-label={aria}
-                      className="inline-flex h-11 flex-1 items-center justify-center rounded-md border border-paper/25 text-primary-foreground px-3 text-sm font-semibold no-underline hover:bg-paper/10 focus-visible:ring-2 focus-visible:ring-accent/40"
+                      className="inline-flex h-11 flex-1 items-center justify-center rounded-md border border-paper/25 text-primary-foreground px-3 text-sm font-semibold no-underline hover:bg-paper/10 focus-visible:ring-2 focus-visible:ring-primary-foreground/30"
                     >
                       {label}
                     </Link>
