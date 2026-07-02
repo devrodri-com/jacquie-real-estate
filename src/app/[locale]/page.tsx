@@ -160,7 +160,7 @@ export default async function Home({params}: {params: Promise<{locale: string}>}
                     ? "Invest in Miami with clear guidance from a trusted local advisor."
                     : locale === "fr"
                       ? "Investir à Miami avec clarté et une personne de confiance sur place."
-                      : "Invertí en Miami con claridad y una persona de confianza en el proceso."}
+                      : "Invierte en Miami con claridad, estrategia y una persona de confianza en el proceso."}
                 </h1>
 
                 <p className="mt-5 max-w-[68ch] text-[18px] font-medium leading-8 text-foreground/80">
