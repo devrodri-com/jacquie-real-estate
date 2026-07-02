@@ -49,8 +49,8 @@
 
   "home": {
     "hero": {
-      "title": "Invest in Miami with Jacquie Zarate Realtor",
-      "subtitle": "Professional advisory in pre-construction and exclusive projects",
+      "title": "Invest in Miami with clear guidance from a trusted local advisor",
+      "subtitle": "Personal support to evaluate purchases, available properties, pre-construction projects, and financing.",
       "ctaProjects": "See projects",
       "ctaWhatsapp": "Chat on WhatsApp"
     },
@@ -78,8 +78,8 @@
       "viewAll": "View all"
     },
     "band": {
-      "title": "Ready to invest?",
-      "copy": "Schedule a call and review the best opportunities together.",
+      "title": "Want to move forward in Miami?",
+      "copy": "Send me the context and we can review the next step together.",
       "ctaContact": "Contact",
       "ctaCall": "Schedule a call"
     }
@@ -91,29 +91,39 @@
     "delivery": "Completion"
   },
   "financing": {
-    "title": "Financing to buy in Miami",
-    "seo": "US mortgages for foreign nationals: 30% down, 15-30 year terms.",
-    "intro": "Access US mortgages with competitive terms. As a foreign national you can qualify with a 30% down payment and 15-30 year amortization.",
-    "benefitsTitle": "Key benefits",
-    "benefits": [
-      "Financing programs for foreign nationals",
-      "Competitive rates and Spanish-speaking advisory",
-      "Title under personal name or corporation"
-    ],
-    "reqTitle": "Basic requirements",
+    "title": "Financing to buy in Miami with a more complete perspective",
+    "seo": "Financing for Miami buyers and investors with financial judgment. Options from 25% down payment are subject to review and approval.",
+    "intro": "Before choosing a property, we review your goal, profile, and documentation to understand which financing options may apply and how they can impact your purchase decision.",
+    "primaryCta": "Evaluate my case",
+    "secondaryCta": "View properties",
+    "judgmentTitle": "It is not just about getting a loan. It is about buying with judgment.",
+    "judgmentText": "Financing can help you access a Miami property without using all your available capital. But every case should be reviewed carefully: property type, buyer profile, reserves, documentation, purchase structure, and investment goal.",
+    "programsTitle": "Programs that may start from 25% down payment",
+    "programsText": "In some cases, foreign buyers may access financing alternatives from 25% down payment. Availability depends on the buyer profile, property type, documentation submitted, and financial institution approval.",
+    "programsNote": "25% is not a guarantee. It is an initial reference to evaluate possibilities.",
+    "reviewTitle": "What is usually reviewed before moving forward",
     "requirements": [
-      "Income letter (CPA or employer, last 2 years).",
-      "Verifiable funds for down payment + 6 months reserves.",
-      "Bank reference letter.",
-      "Passport/visa; corporate docs if applicable."
+      "Purchase goal: investment, personal use, or rental.",
+      "Estimated budget and available capital.",
+      "Funds for down payment and reserves.",
+      "Verifiable income or financial support.",
+      "Bank history or bank reference.",
+      "Property type and building conditions.",
+      "Purchase under a personal name or corporate structure."
     ],
-    "processTitle": "How it works",
+    "processTitle": "A simple process to make better decisions",
     "steps": [
-      { "t": "Application", "d": "We collect documents and submit." },
-      { "t": "Pre-approval", "d": "Lender confirms amounts and terms." },
-      { "t": "Closing", "d": "Mortgage is signed at purchase." }
+      { "t": "We understand your goal", "d": "We define whether you want to invest, buy for personal use, or evaluate a specific opportunity." },
+      { "t": "We review the financial scenario", "d": "We analyze available capital, documentation, and possible financing paths." },
+      { "t": "We connect with suitable options", "d": "Depending on your profile, alternatives are reviewed with the corresponding professionals or financial institutions." },
+      { "t": "We support the purchase", "d": "If you move forward, financing is coordinated alongside the search, offer, contract, and closing." }
     ],
-    "ctaLabel": "Ask about financing on WhatsApp",
+    "experienceTitle": "Real estate experience with financial judgment",
+    "experienceText": "Jacquie combines her work as a Miami Realtor with more than 15 years of Finance experience in S&P 500 companies.",
+    "ctaTitle": "Want to know if financing may apply to your purchase?",
+    "ctaCopy": "Tell me what type of property you are looking for and we can review the best path for your case.",
+    "ctaLabel": "Ask on WhatsApp",
+    "disclaimer": "This information is for guidance only. All financing is subject to review, documentation, financial institution approval, property type, and conditions in effect at the time of application.",
     "ctaHref": "https://wa.me/17864072591"
   }
 }

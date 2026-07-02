@@ -43,8 +43,8 @@ export default function ProjectCard({ p, showMonthlyEstimate = false, variant = 
   const trPolicy = (s: string) => (isEN ? (RENTAL_MAP_EN[s] ?? s) : (RENTAL_MAP_ES[s] ?? s));
   const trHighlight = (s: string) => (isEN ? (HIGHLIGHT_MAP_EN[s] ?? s) : (HIGHLIGHT_MAP_ES[s] ?? s));
 
-  // Simple monthly estimate: assumes 30% down, fixed rate 6.5% APR, 30 years
-  const DOWN_PCT = 0.30;
+  // Simple monthly estimate: assumes 25% down payment, fixed rate 6.5% APR, 30 years.
+  const DOWN_PCT = 0.25;
   const RATE_ANNUAL = 0.065;
   const TERM_YEARS = 30;
   const monthlyPayment = (price: number) => {
@@ -120,7 +120,7 @@ export default function ProjectCard({ p, showMonthlyEstimate = false, variant = 
           ))}
         </div>
         <p className={`mt-1 text-[11px] ${monthly > 0 ? "text-foreground/50" : "invisible"}`}>
-          {isEN ? "*30% down, 6.5% APR, 30y." : "*30% anticipo, 6.5% APR, 30 años."}
+          {isEN ? "*25% down payment, 6.5% APR, 30y." : "*25% anticipo, 6.5% APR, 30 años."}
         </p>
         <Link
           href={p.slug}

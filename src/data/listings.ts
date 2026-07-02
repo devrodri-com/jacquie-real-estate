@@ -4,7 +4,7 @@ export const LISTINGS = [
     slug: "tides-hollywood-2c",
     title: "3801 S Ocean Dr #2C",
     city: "Hollywood Beach",
-    price: 489000,
+    price: 459000,
     beds: 2,
     baths: 2,
     size: 874,
@@ -34,14 +34,14 @@ export const LISTINGS = [
     amenities_es: [
       "Piscina climatizada",
       "Gimnasio equipado",
-      "Business center",
+      "Centro de negocios",
       "Seguridad 24 horas",
       "Cable, internet y agua caliente incluidos"
     ],
     descriptionLong_en:
       "Partial oceanfront unit at The Tides on Hollywood Beach. The building allows daily rentals and is ideal for short-term rental use, generating excellent rental income year after year. Resort-style amenities include a fully equipped gym, heated pool, business center, and 24-hour security.",
     descriptionLong_es:
-      "Unidad con vista parcial al océano en The Tides on Hollywood Beach. El edificio permite alquileres diarios y es ideal para renta corta, con excelente potencial de ingreso. Ofrece amenities tipo resort como gimnasio equipado, piscina climatizada, business center y seguridad las 24 horas.",
+      "Unidad con vista parcial al océano en The Tides on Hollywood Beach. El edificio permite alquileres diarios y es ideal para renta corta, con excelente potencial de ingreso. Ofrece comodidades tipo resort como gimnasio equipado, piscina climatizada, centro de negocios y seguridad las 24 horas.",
     images: [
       "https://ik.imagekit.io/devrodri/MLS/3801%20S%20Ocean%20Dr%20_2C%20Hollywood,%20FL%2033019-2902%20-%20MLS%20_A11955684/GetMedia.jpeg",
       "https://ik.imagekit.io/devrodri/MLS/3801%20S%20Ocean%20Dr%20_2C%20Hollywood,%20FL%2033019-2902%20-%20MLS%20_A11955684/GetMedia%20(1).jpeg",
@@ -65,7 +65,7 @@ export const LISTINGS = [
     slug: "le-frontenac-505",
     title: "17801 N Bay Rd #505",
     city: "Sunny Isles Beach",
-    price: 465000,
+    price: 455000,
     beds: 2,
     baths: 2,
     size: 1330,

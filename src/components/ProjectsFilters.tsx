@@ -26,11 +26,11 @@ export function ProjectsFilters({
       locale === "en"
         ? {
             title: "Filters",
-            search: "Search projects",
-            rental: "Rental policy",
+            search: "Search by project or area",
+            rental: "Rental flexibility",
             any: "Any",
-            priceFrom: "Min price",
-            priceTo: "Max price",
+            priceFrom: "Minimum budget",
+            priceTo: "Maximum budget",
             sort: "Sort by",
             reset: "Reset",
             priceHint: "Prices in thousands (500 = 500,000 USD)",
@@ -54,11 +54,11 @@ export function ProjectsFilters({
         : locale === "fr"
           ? {
               title: "Filtres",
-              search: "Rechercher des projets",
-              rental: "Politique de location",
+              search: "Rechercher par projet ou secteur",
+              rental: "Flexibilité locative",
               any: "Toutes",
-              priceFrom: "Prix min.",
-              priceTo: "Prix max.",
+              priceFrom: "Budget minimum",
+              priceTo: "Budget maximum",
               sort: "Trier par",
               reset: "Réinitialiser",
               priceHint: "Prix en milliers (500 = 500 000 USD)",
@@ -81,11 +81,11 @@ export function ProjectsFilters({
             }
           : {
               title: "Filtros",
-              search: "Buscar proyectos",
-              rental: "Política de renta",
+              search: "Buscar por proyecto o zona",
+              rental: "Renta permitida",
               any: "Todas",
-              priceFrom: "Precio mín.",
-              priceTo: "Precio máx.",
+              priceFrom: "Presupuesto mínimo",
+              priceTo: "Presupuesto máximo",
               sort: "Ordenar por",
               reset: "Reiniciar",
               priceHint: "Precios en miles (500 = 500.000 USD)",
@@ -188,22 +188,22 @@ export function ProjectsFilters({
   }, [value.sort]);
 
   return (
-    <aside aria-label={t.title} className="rounded-[10px] bg-primary p-4 sm:p-5 ring-1 ring-primary-foreground/10 text-primary-foreground relative max-w-[1100px] mx-auto">
-      <div className="mb-2 h-[2px] w-full rounded-full bg-gradient-to-r from-transparent via-accent/45 to-transparent" />
+    <aside aria-label={t.title} className="relative mx-auto max-w-[1100px] rounded-[12px] bg-paper p-4 text-primary ring-1 ring-primary/10 shadow-sm sm:p-4 sm:ring-primary/5 sm:shadow-none">
+      <div className="mb-2 h-[2px] w-full rounded-full bg-gradient-to-r from-transparent via-accent/35 to-transparent sm:via-accent/20" />
       <div className="flex items-center justify-between">
-        <p className="text-[13px] font-semibold text-primary-foreground">{t.title}</p>
+        <p className="text-[13px] font-semibold text-primary">{t.title}</p>
         {onReset ? (
           <button
             type="button"
             onClick={onReset}
-            className="inline-flex h-8 items-center justify-center rounded-md border border-primary-foreground/25 bg-transparent px-2 text-[12px] text-primary-foreground hover:bg-primary-foreground/10 focus-visible:ring-2 focus-visible:ring-accent/40"
+            className="inline-flex h-8 items-center justify-center rounded-md border border-primary/20 bg-transparent px-2 text-[12px] text-primary hover:bg-surface focus-visible:ring-2 focus-visible:ring-accent/40"
           >
             {t.reset}
           </button>
         ) : null}
       </div>
       {/* Search */}
-      <label className="block text-[12px] font-medium text-primary-foreground/90">
+      <label className="block text-[12px] font-medium text-primary/78">
         {t.search}
         <div className="relative mt-1">
           <input
@@ -211,7 +211,7 @@ export function ProjectsFilters({
             value={value.q}
             onChange={(e) => onChange({ ...value, q: e.target.value })}
             placeholder={t.search}
-            className="block w-full rounded-md border border-primary-foreground/20 bg-white px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-accent/40 transition"
+            className="block w-full rounded-md border border-primary/15 bg-white px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none transition focus:ring-2 focus:ring-accent/40"
           />
           <svg
             aria-hidden
@@ -224,7 +224,7 @@ export function ProjectsFilters({
       </label>
 
       {/* Rental policy */}
-      <label className="mt-3 block text-[12px] font-medium text-primary-foreground/90">
+      <label className="mt-3 block text-[12px] font-medium text-primary/78">
         {t.rental}
         <div className="relative mt-1">
           <button
@@ -233,7 +233,7 @@ export function ProjectsFilters({
             onClick={toggle}
             aria-haspopup="listbox"
             aria-expanded={open}
-            className="flex w-full items-center justify-between rounded-md border border-primary-foreground/20 bg-white px-3 py-2 text-left text-sm text-foreground outline-none focus:ring-2 focus:ring-accent/40 transition"
+            className="flex w-full items-center justify-between rounded-md border border-primary/15 bg-white px-3 py-2 text-left text-sm text-foreground outline-none transition focus:ring-2 focus:ring-accent/40"
           >
             <span>{t.rentalLabel(value.rental)}</span>
             <svg className={`h-4 w-4 text-muted-foreground transition-transform ${open ? "rotate-180" : ""}`} viewBox="0 0 20 20" fill="currentColor" aria-hidden>
@@ -268,7 +268,7 @@ export function ProjectsFilters({
       </label>
 
       {/* Sort by */}
-      <label className="mt-3 block text-[12px] font-medium text-primary-foreground/90">
+      <label className="mt-3 block text-[12px] font-medium text-primary/78">
         {t.sort}
         <div className="relative mt-1">
           <button
@@ -277,7 +277,7 @@ export function ProjectsFilters({
             onClick={toggleSort}
             aria-haspopup="listbox"
             aria-expanded={openSort}
-            className="flex w-full items-center justify-between rounded-md border border-primary-foreground/20 bg-white px-3 py-2 text-left text-sm text-foreground outline-none focus:ring-2 focus:ring-accent/40 transition"
+            className="flex w-full items-center justify-between rounded-md border border-primary/15 bg-white px-3 py-2 text-left text-sm text-foreground outline-none transition focus:ring-2 focus:ring-accent/40"
           >
             <span>{t.sortLabel(value.sort)}</span>
             <svg className={`h-4 w-4 text-muted-foreground transition-transform ${openSort ? "rotate-180" : ""}`} viewBox="0 0 20 20" fill="currentColor" aria-hidden>
@@ -313,7 +313,7 @@ export function ProjectsFilters({
 
       {/* Price range */}
       <div className="mt-3 grid grid-cols-2 gap-2">
-        <label className="block text-[12px] font-medium text-primary-foreground/90">
+        <label className="block text-[12px] font-medium text-primary/78">
           {t.priceFrom}
           <div className="relative mt-1">
             <input
@@ -326,11 +326,11 @@ export function ProjectsFilters({
                 const raw = e.target.value.replace(/\D/g, "");
                 onChange({ ...value, min: raw ? Number(raw) * 1000 : undefined });
               }}
-              className="block w-full rounded-md border border-primary-foreground/20 bg-white px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-accent/40 transition"
+              className="block w-full rounded-md border border-primary/15 bg-white px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none transition focus:ring-2 focus:ring-accent/40"
             />
           </div>
         </label>
-        <label className="block text-[12px] font-medium text-primary-foreground/90">
+        <label className="block text-[12px] font-medium text-primary/78">
           {t.priceTo}
           <div className="relative mt-1">
             <input
@@ -343,12 +343,12 @@ export function ProjectsFilters({
                 const raw = e.target.value.replace(/\D/g, "");
                 onChange({ ...value, max: raw ? Number(raw) * 1000 : undefined });
               }}
-              className="block w-full rounded-md border border-primary-foreground/20 bg-white px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-accent/40 transition"
+              className="block w-full rounded-md border border-primary/15 bg-white px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none transition focus:ring-2 focus:ring-accent/40"
             />
           </div>
         </label>
       </div>
-      <p className="mt-2 text-[11px] text-primary-foreground/40">
+      <p className="mt-2 text-[11px] text-foreground/50">
         {t.priceHint}
       </p>
 

@@ -19,6 +19,9 @@ export default function Footer() {
   const locale = (pathname?.split("/")[1] || "es") as "es" | "en" | "fr";
   const isEN = locale === "en";
   const isFR = locale === "fr";
+  const isLetsGoMiami = /^\/(es|en|fr)\/lets-go-miami(?:\/|$)/.test(pathname ?? "");
+
+  if (isLetsGoMiami) return null;
 
   return (
     <footer className="mt-16 bg-primary text-primary-foreground">
@@ -135,12 +138,12 @@ export default function Footer() {
               </li>
               <li>
                 <Link href={`/${locale}/listings`} className="text-primary-foreground hover:opacity-90">
-                  {isEN ? "Listings" : isFR ? "Annonces" : "Listings"}
+                  {isEN ? "Properties" : isFR ? "Propriétés" : "Propiedades"}
                 </Link>
               </li>
               <li>
-                <Link href={`/${locale}/property-management`} className="text-primary-foreground hover:opacity-90">
-                  {isEN ? "Property Management" : isFR ? "Gestion de propriétés" : "Gestión de propiedades"}
+                <Link href={`/${locale}/lets-go-miami`} className="text-primary-foreground hover:opacity-90">
+                  Let’s Go Miami
                 </Link>
               </li>
               <li>

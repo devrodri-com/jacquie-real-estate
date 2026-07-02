@@ -5,9 +5,9 @@ import Link from "next/link";
 export default async function SobreMi({
   params,
 }: {
-  params: { locale: "es" | "en" | "fr" };
+  params: Promise<{ locale: "es" | "en" | "fr" }>;
 }) {
-  const locale = params?.locale || "es";
+  const { locale = "es" } = await params;
   const isEN = locale === "en";
   const isFR = locale === "fr";
 
@@ -19,69 +19,74 @@ export default async function SobreMi({
   const subtitle = isEN
     ? "I support buyers, investors, and property owners with a close, clear, and personalized approach at every stage of the process."
     : isFR
-      ? "J'accompagne les acheteurs, investisseurs et propriétaires avec une approche proche, claire et personnalisée à chaque étape du processus."
+      ? "J’accompagne les acheteurs, investisseurs et propriétaires avec une approche proche, claire et personnalisée à chaque étape du processus."
       : "Acompaño a compradores, inversores y propietarios con una mirada cercana, clara y personalizada en cada etapa del proceso.";
   const p1 = isEN
-    ? "I'm originally from Argentina, I speak Spanish and English, and I know Miami, Sunny Isles, and different areas of South Florida closely. I work with people who want to invest, buy, or manage a property with someone who is truly present and involved from beginning to end."
+    ? "I'm Jacquie Zárate, a realtor in Miami. I was born in Buenos Aires, Argentina, and I work with people who want to buy, invest, or manage a property in Miami with someone who can guide the process from start to finish."
     : isFR
-      ? "Je suis originaire d'Argentine, je parle espagnol et anglais, et je connais bien Miami, Sunny Isles et différentes zones du sud de la Floride. Je travaille avec des personnes qui souhaitent investir, acheter ou gérer un bien avec quelqu'un de réellement présent et impliqué du début à la fin."
-      : "Soy argentina, hablo español e inglés, y conozco de cerca Miami, Sunny Isles y distintas zonas del sur de Florida. Trabajo con personas que quieren invertir, comprar o gestionar una propiedad con alguien que realmente esté presente y acompañe el proceso de principio a fin.";
+      ? "Je suis Jacquie Zárate, realtor à Miami. Je suis née à Buenos Aires, en Argentine, et je travaille avec des personnes qui souhaitent acheter, investir ou gérer une propriété à Miami avec quelqu’un qui peut les accompagner du début à la fin."
+      : "Soy Jacquie Zárate, realtor en Miami. Nací en Buenos Aires, Argentina, y trabajo con personas que buscan comprar, invertir o gestionar una propiedad en Miami con alguien que pueda acompañar el proceso de principio a fin.";
   const p2 = isEN
-    ? "What sets me apart is personalized attention, real follow-through, and trust. Whether it's evaluating an opportunity, buying a property, or supporting its short-term rental management, my goal is to give you clarity, sound judgment, and a carefully guided experience in every decision."
+    ? "I bring more than 15 years of Finance experience working with S&P 500 companies. That background helps me look at each opportunity not only through the property itself, but also through the numbers, structure, and investment objective."
     : isFR
-      ? "Ce qui me distingue, c'est l'attention personnalisée, le vrai suivi et la confiance. Que ce soit pour évaluer une opportunité, acheter un bien ou accompagner sa gestion en location courte durée, mon objectif est de vous offrir clarté, discernement et une expérience soignée à chaque décision."
-      : "Mi diferencial está en el trato personalizado, el seguimiento real y la confianza. Ya sea para evaluar una oportunidad, comprar una propiedad o acompañar su gestión en renta corta, mi objetivo es darte claridad, criterio y una experiencia cuidada en cada decisión.";
+      ? "Je compte plus de 15 ans d’expérience en finances au sein d’entreprises du S&P 500. Cette expérience me permet d’évaluer chaque occasion non seulement à partir de la propriété, mais aussi des chiffres, de la structure et de l’objectif d’investissement."
+      : "Cuento con más de 15 años de experiencia en Finanzas trabajando en empresas S&P 500. Esa formación me permite mirar cada oportunidad no solo desde la propiedad, sino también desde los números, la estructura y el objetivo de inversión.";
+  const p3 = isEN
+    ? "Since 2023, I have worked in Miami in Real Estate and Property Management, supporting buyers, investors, and property owners who want a clear, personalized, and well-managed experience."
+    : isFR
+      ? "Depuis 2023, je travaille à Miami dans l’immobilier et la gestion immobilière, auprès d’acheteurs, d’investisseurs et de propriétaires qui recherchent une expérience claire, personnalisée et bien gérée."
+      : "Desde 2023 trabajo en Miami en el área de Real Estate y Property Management, acompañando a compradores, inversores y propietarios que buscan una experiencia clara, personalizada y bien gestionada.";
   const blocks = isEN
     ? [
         {
-          title: "Hands-on guidance",
+          title: "More than 15 years in Finance",
           description:
-            "I don't work from an impersonal approach. I stay involved so you have follow-through, sound judgment, and clarity at every step.",
+            "Experience with S&P 500 companies, focused on analysis, processes, and decision-making.",
         },
         {
-          title: "Local expertise with an international perspective",
+          title: "Realtor in Miami",
           description:
-            "I know the Miami market well, and I also understand the questions that often come up when someone is buying or investing from abroad.",
+            "I support purchases, investments, and real estate opportunities in Miami and South Florida.",
         },
         {
-          title: "Confidence to make better decisions",
+          title: "Management and real follow-through",
           description:
-            "My goal is for every real estate decision to be made with support, good information, and a carefully guided experience from start to finish.",
+            "I work closely with buyers, investors, and property owners so every stage feels clear and organized.",
         },
       ]
     : isFR
       ? [
           {
-            title: "Un accompagnement réel",
+            title: "Plus de 15 ans en finances",
             description:
-              "Je ne travaille pas avec une logique impersonnelle. Je m'implique dans chaque processus pour vous apporter suivi, discernement et clarté à chaque étape.",
+              "Expérience au sein d’entreprises du S&P 500, avec un focus sur l’analyse, les processus et la prise de décision.",
           },
           {
-            title: "Une expertise locale avec une perspective internationale",
+            title: "Realtor à Miami",
             description:
-              "Je connais bien le marché de Miami et je comprends aussi les questions que se posent souvent ceux qui achètent ou investissent depuis l'étranger.",
+              "J’accompagne les achats, les investissements et les occasions immobilières à Miami et dans le sud de la Floride.",
           },
           {
-            title: "La confiance pour mieux décider",
+            title: "Gestion et suivi réel",
             description:
-              "Mon objectif est que chaque décision immobilière soit prise avec soutien, bonne information et une expérience soignée du début à la fin.",
+              "Je travaille de près avec les acheteurs, investisseurs et propriétaires pour que chaque étape soit claire et structurée.",
           },
         ]
       : [
           {
-            title: "Acompañamiento real",
+            title: "Más de 15 años en Finanzas",
             description:
-              "No trabajo desde una lógica impersonal. Me involucro en cada proceso para que tengas seguimiento, criterio y claridad en cada paso.",
+              "Experiencia en empresas S&P 500, con foco en análisis, procesos y toma de decisiones.",
           },
           {
-            title: "Experiencia local con mirada internacional",
+            title: "Realtor en Miami",
             description:
-              "Conozco el mercado de Miami y también las dudas que suelen tener quienes invierten o compran desde afuera.",
+              "Acompaño compras, inversiones y oportunidades inmobiliarias en Miami y South Florida.",
           },
           {
-            title: "Confianza para decidir mejor",
+            title: "Gestión y seguimiento real",
             description:
-              "Busco que cada decisión inmobiliaria se tome con respaldo, buena información y una experiencia cuidada de inicio a fin.",
+              "Trabajo de cerca con compradores, inversores y propietarios para que cada etapa sea clara y ordenada.",
           },
         ];
   const ctaTitle = isEN
@@ -101,11 +106,11 @@ export default async function SobreMi({
 
   return (
     <div className="mx-auto max-w-[1100px] px-4 py-16 space-y-12">
-      <section aria-labelledby="sobre-mi-title" className="text-center max-w-[60ch] mx-auto">
-        <h1 id="sobre-mi-title" className="text-2xl sm:text-3xl font-semibold tracking-tight text-primary">
+      <section aria-labelledby="sobre-mi-title" className="mx-auto max-w-[60ch] text-center lg:max-w-[1000px]">
+        <h1 id="sobre-mi-title" className="font-display text-4xl font-medium leading-[1.05] tracking-normal text-primary sm:text-5xl lg:whitespace-nowrap">
           {title}
         </h1>
-        <p className="mt-3 text-[15px] leading-[1.7] text-foreground/90">
+        <p className="mx-auto mt-3 max-w-[60ch] text-[15px] leading-[1.7] text-foreground/90">
           {subtitle}
         </p>
       </section>
@@ -121,6 +126,9 @@ export default async function SobreMi({
           <p className="text-[15px] leading-[1.7] text-foreground/90">
             {p2}
           </p>
+          <p className="text-[15px] leading-[1.7] text-foreground/90">
+            {p3}
+          </p>
         </div>
       </section>
 
@@ -130,7 +138,7 @@ export default async function SobreMi({
             key={b.title}
             className="rounded-[16px] ring-1 ring-primary-foreground/10 bg-primary p-5 text-primary-foreground shadow-sm hover:shadow-lg transition-all"
           >
-            <h3 className="text-sm font-semibold text-primary-foreground">
+            <h3 className="font-display text-[21px] font-medium leading-[1.08] tracking-normal text-primary-foreground">
               {b.title}
             </h3>
             <p className="mt-2 text-sm text-primary-foreground/80">
@@ -141,7 +149,7 @@ export default async function SobreMi({
       </section>
 
       <section className="rounded-[12px] bg-primary p-6 sm:p-7 ring-1 ring-primary-foreground/10 text-primary-foreground text-center max-w-2xl mx-auto">
-        <h2 className="text-xl sm:text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-medium leading-[1.08] tracking-normal sm:text-3xl">
           {ctaTitle}
         </h2>
         <div className="mt-4 flex flex-col items-center justify-center gap-3 sm:flex-row">

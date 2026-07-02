@@ -15,16 +15,16 @@ export async function generateMetadata({
   const locale = raw === "en" ? "en" : raw === "fr" ? "fr" : "es";
   const title =
     locale === "en"
-      ? "Active listings | Jacquie Zarate Realtor"
+      ? "Available Properties | Jacquie Zarate Realtor"
       : locale === "fr"
-        ? "Annonces actives | Jacquie Zarate Realtor"
-        : "Propiedades activas | Jacquie Zarate Realtor";
+        ? "Propriétés disponibles | Jacquie Zarate Realtor"
+        : "Propiedades disponibles | Jacquie Zarate Realtor";
   const description =
     locale === "en"
-      ? "Selected Miami properties with investment and rental potential."
+      ? "Active properties available for purchase in Miami and South Florida, based on location, budget, and investment goals."
       : locale === "fr"
-        ? "Propriétés sélectionnées à Miami avec potentiel d'investissement et de location."
-        : "Propiedades seleccionadas en Miami con potencial de inversión y renta.";
+        ? "Propriétés actives disponibles à l’achat à Miami et dans le sud de la Floride, selon l’emplacement, le budget et l’objectif d’investissement."
+        : "Propiedades activas disponibles para compra en Miami y South Florida, según ubicación, presupuesto y objetivo de inversión.";
 
   return {
     title,
@@ -72,43 +72,45 @@ export default async function ListingsPage({
   const isFR = locale === "fr";
 
   return (
-    <main className="mx-auto max-w-5xl px-4 py-12 text-foreground">
+    <main className="px-4 py-10 text-foreground sm:py-14">
       {/* Hero */}
-      <header className="mb-8 space-y-2">
-        <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-primary">
-          {isEN ? "Active Listings" : isFR ? "Annonces actives" : "Propiedades activas"}
+      <header className="mb-8 max-w-none">
+        <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-primary/62">
+          {isEN ? "MIAMI PROPERTIES" : isFR ? "PROPRIÉTÉS À MIAMI" : "PROPIEDADES EN MIAMI"}
+        </p>
+        <h1 className="mt-2 font-display text-[42px] font-medium leading-[0.98] tracking-normal text-primary sm:text-[56px]">
+          {isEN ? "Available Properties" : isFR ? "Propriétés disponibles" : "Propiedades disponibles"}
         </h1>
-        <div className="h-[2px] w-24 rounded-full bg-gradient-to-r from-transparent via-accent/60 to-transparent" />
-        <p className="max-w-[60ch] text-[15px] leading-[1.75] text-foreground">
+        <p className="mt-4 max-w-[72ch] text-[16px] leading-[1.75] text-foreground/80">
           {isEN
-            ? "Selected properties with investment and rental potential in Miami."
+            ? "Explore active properties available for purchase in Miami and South Florida, based on location, budget, and investment goals."
             : isFR
-              ? "Propriétés sélectionnées à fort potentiel d'investissement et de location à Miami."
-              : "Propiedades seleccionadas con potencial de inversión y renta en Miami."}
+              ? "Explorez des propriétés actives disponibles à l’achat à Miami et dans le sud de la Floride, selon l’emplacement, le budget et l’objectif d’investissement."
+              : "Explorá propiedades activas disponibles para compra en Miami y South Florida, según ubicación, presupuesto y objetivo de inversión."}
         </p>
       </header>
 
       {/* Intro */}
       <section className="mb-8">
-        <p className="text-[15px] leading-[1.7] text-foreground max-w-[65ch]">
+        <p className="max-w-[65ch] text-[15px] leading-[1.7] text-foreground/72">
           {isEN
-            ? "Below you will find a selection of active resale properties. For more options or to schedule a visit, get in touch."
+            ? "This is an initial selection. If you are comparing areas, buildings, rental rules, or financing scenarios, we can narrow the search together."
             : isFR
-              ? "Vous trouverez ci-dessous une sélection de propriétés actives en revente. Pour plus d'options ou planifier une visite, contactez-moi."
-              : "A continuación una selección de propiedades activas en resale. Para más opciones o agendar una visita, contactame."}
+              ? "Il s’agit d’une première sélection. Si vous comparez des secteurs, immeubles, règles locatives ou scénarios de financement, nous pouvons affiner la recherche ensemble."
+              : "Esta es una selección inicial. Si estás comparando zonas, edificios, reglas de renta o escenarios de financiación, podemos afinar la búsqueda juntos."}
         </p>
       </section>
 
       {/* Listings grid */}
       <section
         className="mb-12"
-        aria-label={isEN ? "Active listings" : isFR ? "Annonces actives" : "Propiedades activas"}
+        aria-label={isEN ? "Available properties in Miami" : isFR ? "Propriétés disponibles à Miami" : "Propiedades disponibles en Miami"}
       >
         <div className="grid gap-6 sm:grid-cols-2">
           {LISTINGS.map((item) => (
             <article
               key={item.id}
-              className="group relative overflow-hidden rounded-[12px] ring-1 ring-black/10 bg-white shadow-[0_1px_3px_rgba(0,0,0,.06)] transition-shadow hover:shadow-[0_8px_24px_rgba(0,0,0,.08)]"
+              className="group relative overflow-hidden rounded-[14px] bg-paper ring-1 ring-primary/10 shadow-sm transition hover:-translate-y-[2px] hover:shadow-[0_14px_34px_rgba(43,37,48,0.10)]"
             >
               <Link
                 href={`/${locale}/listings/${item.slug}`}
@@ -129,32 +131,36 @@ export default async function ListingsPage({
                       : `Ver detalles de ${item.title}`}
                 </span>
               </Link>
-              <div className="h-48 w-full overflow-hidden bg-placeholder">
+              <div className="h-52 w-full overflow-hidden bg-placeholder">
                 <img
                   src={item.images[0]}
                   alt=""
                   className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                 />
               </div>
-              <div className="relative z-20 p-4 sm:p-5">
-                <h2 className="text-lg font-semibold tracking-tight text-primary">
+              <div className="relative z-20 p-5">
+                <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-primary/55">{item.city}</p>
+                <h2 className="mt-2 font-display text-[25px] font-medium leading-[1.08] tracking-normal text-primary">
                   <Link
                     href={`/${locale}/listings/${item.slug}`}
-                    className="no-underline text-primary hover:underline"
+                    className="text-primary no-underline hover:underline underline-offset-4 decoration-primary/25"
                   >
                     {item.title}
                   </Link>
                 </h2>
-                <p className="mt-1 text-[13px] text-primary/70">{item.city}</p>
-                <p className="mt-2 text-[15px] font-medium text-primary">
+                <p className="mt-3 text-[15px] font-semibold text-primary">
                   ${item.price.toLocaleString("en-US")}
                 </p>
-                <p className="mt-1 text-[13px] text-primary/70">
+                <p className="mt-1 text-[13px] text-primary/65">
                   {item.beds} {isEN ? "beds" : isFR ? "ch." : "hab"} · {item.baths}{" "}
-                  {isEN ? "baths" : isFR ? "sdb" : "baños"} · {item.size.toLocaleString("en-US")}{" "}
-                  {isFR ? "pi²" : "sqft"}
+                  {isEN ? "baths" : isFR ? "sdb" : "baños"} ·{" "}
+                  {isEN
+                    ? `${item.size.toLocaleString("en-US")} sq ft`
+                    : isFR
+                      ? `${item.size.toLocaleString("fr-CA")} pi²`
+                      : `Superficie ${item.size.toLocaleString("en-US")} ft²`}
                 </p>
-                <p className="mt-2 text-[14px] leading-[1.5] text-foreground/85">
+                <p className="mt-3 text-[14px] leading-[1.55] text-foreground/78">
                   {cardDescription(locale, item)}
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
@@ -191,24 +197,24 @@ export default async function ListingsPage({
         <div className="mx-auto mb-3 h-[2px] w-24 rounded-full bg-gradient-to-r from-transparent via-accent/60 to-transparent" />
         <h3 className="text-xl sm:text-2xl font-semibold tracking-tight text-primary-foreground text-center">
           {isEN
-            ? "Want to receive active opportunities?"
+            ? "Want to evaluate properties according to your goal?"
             : isFR
-              ? "Souhaitez-vous recevoir des opportunités actives ?"
-              : "¿Querés recibir oportunidades activas?"}
+              ? "Souhaitez-vous évaluer des propriétés selon votre objectif ?"
+              : "¿Querés evaluar propiedades según tu objetivo?"}
         </h3>
         <p className="mt-2 text-center text-[14px] text-primary-foreground/80">
           {isEN
-            ? "Leave your details and we'll send you new listings that match your criteria."
+            ? "Tell me what you are looking for and I will help you compare the right options."
             : isFR
-              ? "Laissez vos coordonnées et nous vous enverrons de nouvelles annonces correspondant à vos critères."
-              : "Dejá tus datos y te enviamos nuevos listados que se ajusten a tu búsqueda."}
+              ? "Dites-moi ce que vous recherchez et je vous aide à comparer les bonnes options."
+              : "Contame qué estás buscando y te ayudo a comparar opciones alineadas con tu objetivo."}
         </p>
         <div className="mt-4 flex justify-center">
           <Link
             href={`/${locale}/contacto`}
             className="inline-flex h-11 items-center justify-center rounded-md bg-primary-foreground/10 px-5 text-sm font-medium text-primary-foreground no-underline hover:bg-primary-foreground/20 focus-visible:ring-2 focus-visible:ring-accent/40"
           >
-            {isEN ? "Contact" : isFR ? "Aller au contact" : "Ir a contacto"}
+            {isEN ? "Send my search" : isFR ? "Envoyer ma recherche" : "Enviar mi búsqueda"}
           </Link>
         </div>
       </section>

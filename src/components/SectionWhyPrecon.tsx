@@ -19,6 +19,7 @@ export function SectionWhyPrecon({ heroImageSrc, heroImageAlt }: SectionWhyPreco
   const isEN = locale === "en";
   const isFR = locale === "fr";
 
+  const eyebrow = isEN ? "MIAMI PRECONSTRUCTION" : isFR ? "PRÉCONSTRUCTION À MIAMI" : "PRECONSTRUCCIÓN EN MIAMI";
   const title = isEN ? "Pre-construction projects" : isFR ? "Projets en préconstruction" : "Proyectos de preconstrucción";
   const copy = isEN
     ? "If you want to evaluate pre-construction projects in Miami, I can help you identify selected opportunities from the brokerage with strong appreciation potential."
@@ -49,16 +50,16 @@ export function SectionWhyPrecon({ heroImageSrc, heroImageAlt }: SectionWhyPreco
   const preconHref = `/${locale}/proyectos`;
 
   return (
-    <section aria-labelledby="why-precon" className="mt-12">
+    <section aria-labelledby="why-precon" className="max-w-[1100px] mx-auto px-4 mt-12">
       {heroImageSrc ? (
         <figure className="mb-3">
-          <div className="relative w-full h-[96px] sm:h-[112px] md:h-[120px] lg:h-[128px] overflow-hidden rounded-lg border border-black/10 bg-white">
+          <div className="relative w-full h-[96px] sm:h-[112px] md:h-[220px] lg:h-[280px] overflow-hidden rounded-lg border border-black/10 bg-white">
             <Image
               src={heroImageSrc}
               alt={heroImageAlt ?? (isEN ? "Pre-construction in Miami" : isFR ? "Préconstruction à Miami" : "Preconstrucción en Miami")}
               fill
               sizes="(min-width: 1024px) 992px, 100vw"
-              className="object-cover contrast-110 saturate-95 brightness-95"
+              className="object-cover object-[center_44%] contrast-110 saturate-95 brightness-95"
               loading="lazy"
               decoding="async"
             />
@@ -67,7 +68,10 @@ export function SectionWhyPrecon({ heroImageSrc, heroImageAlt }: SectionWhyPreco
         </figure>
       ) : null}
       <div className="max-w-3xl">
-        <h2 id="why-precon" className="text-2xl sm:text-3xl font-semibold tracking-tight text-primary">{title}</h2>
+        <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-primary/62">
+          {eyebrow}
+        </p>
+        <h2 id="why-precon" className="font-display text-3xl font-medium leading-[1.05] tracking-normal text-primary sm:text-4xl">{title}</h2>
         <p className="mt-2 text-sm text-foreground max-w-2xl">{copy}</p>
       </div>
 

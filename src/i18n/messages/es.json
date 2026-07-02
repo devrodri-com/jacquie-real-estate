@@ -49,8 +49,8 @@
 
   "home": {
     "hero": {
-      "title": "Invierte en Miami con Jacquie Zarate Realtor",
-      "subtitle": "Asesoría profesional en preconstrucción y proyectos exclusivos",
+      "title": "Invertí en Miami con claridad y una persona de confianza en el proceso",
+      "subtitle": "Acompañamiento personalizado para evaluar compras, propiedades disponibles, preconstrucción y financiación.",
       "ctaProjects": "Ver proyectos",
       "ctaWhatsapp": "Hablar por WhatsApp"
     },
@@ -78,8 +78,8 @@
       "viewAll": "Ver todos"
     },
     "band": {
-      "title": "¿Listo para invertir?",
-      "copy": "Agendemos una llamada y revisemos juntos las mejores opciones.",
+      "title": "¿Querés avanzar en Miami?",
+      "copy": "Mandame el contexto y revisamos juntos el próximo paso.",
       "ctaContact": "Contactar",
       "ctaCall": "Agendar llamada"
     }
@@ -91,29 +91,39 @@
     "delivery": "Entrega"
   },
   "financing": {
-    "title": "Financiación para comprar en Miami",
-    "seo": "Hipotecas para extranjeros en EE. UU.: 30% de downpayment y plazos 15-30 años.",
-    "intro": "Acceda a hipotecas con condiciones competitivas. Como extranjero puede aplicar a préstamos con un 30% de downpayment y plazos de 15 a 30 años.",
-    "benefitsTitle": "Beneficios clave",
-    "benefits": [
-      "Programas de financiación para extranjeros",
-      "Tasas competitivas y asesoramiento en español",
-      "Escritura a nombre personal o corporativo"
-    ],
-    "reqTitle": "Requisitos básicos",
+    "title": "Financiación para comprar en Miami con una mirada más completa",
+    "seo": "Financiación para compradores e inversores en Miami con criterio financiero. Opciones desde 25% de down payment sujetas a evaluación y aprobación.",
+    "intro": "Antes de elegir una propiedad, revisamos tu objetivo, perfil y documentación para entender qué opciones de financiación podrían aplicar y cómo impactan en tu decisión de compra.",
+    "primaryCta": "Evaluar mi caso",
+    "secondaryCta": "Ver propiedades",
+    "judgmentTitle": "No se trata solo de conseguir un préstamo. Se trata de comprar con criterio.",
+    "judgmentText": "La financiación puede ayudarte a acceder a una propiedad en Miami sin usar todo tu capital disponible. Pero cada caso debe evaluarse con cuidado: tipo de propiedad, perfil del comprador, reservas, documentación, estructura de compra y objetivo de inversión.",
+    "programsTitle": "Programas que pueden comenzar desde 25% de down payment",
+    "programsText": "En algunos casos, compradores extranjeros pueden acceder a alternativas de financiación desde 25% de down payment. La disponibilidad depende del perfil del comprador, el tipo de propiedad, la documentación presentada y la aprobación de la entidad financiera.",
+    "programsNote": "El 25% no es una garantía. Es una referencia inicial para evaluar posibilidades.",
+    "reviewTitle": "Qué se suele revisar antes de avanzar",
     "requirements": [
-      "Carta de ingresos (contador o empleador, últimos 2 años).",
-      "Fondos comprobables para downpayment + 6 meses de reserva.",
-      "Carta de referencia bancaria que avale reputación crediticia.",
-      "Pasaporte/visa; y artículos de incorporación si aplica a nombre de empresa."
+      "Objetivo de compra: inversión, uso personal o renta.",
+      "Presupuesto estimado y capital disponible.",
+      "Fondos para down payment y reservas.",
+      "Ingresos o respaldo financiero comprobable.",
+      "Historial o referencia bancaria.",
+      "Tipo de propiedad y condiciones del edificio.",
+      "Compra a nombre personal o estructura corporativa."
     ],
-    "processTitle": "Cómo funciona",
+    "processTitle": "Un proceso simple para tomar mejores decisiones",
     "steps": [
-      { "t": "Aplicación", "d": "Reunimos documentos y enviamos la solicitud." },
-      { "t": "Pre-aprobación", "d": "El banco confirma montos y condiciones." },
-      { "t": "Cierre", "d": "Se firma la hipoteca junto con la compra." }
+      { "t": "Entendemos tu objetivo", "d": "Definimos si buscás invertir, comprar para uso propio o evaluar una oportunidad puntual." },
+      { "t": "Revisamos el escenario financiero", "d": "Analizamos capital disponible, documentación y posibles caminos de financiación." },
+      { "t": "Conectamos con opciones adecuadas", "d": "Según tu perfil, se revisan alternativas con profesionales o entidades financieras correspondientes." },
+      { "t": "Acompañamos la compra", "d": "Si avanzás, la financiación se coordina junto con la búsqueda, oferta, contrato y cierre." }
     ],
-    "ctaLabel": "Consultar financiación por WhatsApp",
+    "experienceTitle": "Experiencia inmobiliaria con criterio financiero",
+    "experienceText": "Jacquie combina su trabajo como realtor en Miami con más de 15 años de experiencia en Finanzas en empresas S&P 500.",
+    "ctaTitle": "¿Querés saber si la financiación puede aplicar a tu compra?",
+    "ctaCopy": "Contame qué tipo de propiedad estás buscando y revisamos el mejor camino para tu caso.",
+    "ctaLabel": "Consultar por WhatsApp",
+    "disclaimer": "La información es orientativa. Toda financiación está sujeta a evaluación, documentación, aprobación de la entidad financiera, tipo de propiedad y condiciones vigentes al momento de aplicar.",
     "ctaHref": "https://wa.me/17864072591"
   }
 }

@@ -51,7 +51,7 @@ const PaymentPlan: React.FC<PaymentPlanProps> = ({
     >
       <div className="pointer-events-none absolute inset-x-5 sm:inset-x-6 top-0 h-[1.5px] rounded-full bg-gradient-to-r from-transparent via-accent/25 to-transparent" />
       {title ? (
-        <Heading className="mb-2.5 text-[16px] sm:text-[17px] font-semibold tracking-tight text-primary-foreground">{title}</Heading>
+        <Heading className="mb-2.5 font-display text-[16px] font-medium leading-[1.08] tracking-normal text-primary-foreground sm:text-[17px]">{title}</Heading>
       ) : null}
 
       <ol className="flex flex-col space-y-[11px] mt-2 sm:mt-3">

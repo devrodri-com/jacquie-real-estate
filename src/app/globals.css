@@ -6,8 +6,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -37,6 +38,10 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-placeholder: var(--placeholder);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -45,20 +50,24 @@
 
 :root {
   --radius: 0.625rem;
-  --background: #F7F6F3;
-  --foreground: oklch(0.145 0 0);
-  --card: #F7F6F3;
-  --card-foreground: oklch(0.145 0 0);
-  --popover: #F7F6F3;
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: #1F3A34;
+  --background: #F8F5FA;
+  --foreground: #2B2530;
+  --paper: #FFFFFF;
+  --surface: #F8F5FA;
+  --ink: #2B2530;
+  --placeholder: #E5E7EB;
+  --card: #FFFFFF;
+  --card-foreground: #2B2530;
+  --popover: #FFFFFF;
+  --popover-foreground: #2B2530;
+  --primary: #3B274A;
   --primary-foreground: #FFFFFF;
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
-  --accent: #8FA79B;
-  --accent-foreground: oklch(0.205 0 0);
+  --accent: #A98BB8;
+  --accent-foreground: #2B2530;
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
@@ -121,6 +130,6 @@
     overflow-x: clip;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
   }
 }

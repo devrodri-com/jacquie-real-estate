@@ -16,12 +16,12 @@ export default function SectionServices({ locale }: Props) {
 
   const cards = [
     {
-      title: isEN ? "Active Listings" : isFR ? "Annonces actives" : "Listings activos",
+      title: isEN ? "Available Properties" : isFR ? "Propriétés disponibles" : "Propiedades disponibles",
       description: isEN
-        ? "I help you find selected properties with strong investment and rental potential in Miami."
+        ? "I help you find selected properties available for purchase with strong investment and rental potential in Miami."
         : isFR
-          ? "Je vous aide à identifier des propriétés sélectionnées à fort potentiel d'investissement et de location à Miami."
-          : "Te ayudo a identificar propiedades seleccionadas con potencial de inversión y renta en Miami.",
+          ? "Je vous aide à identifier des propriétés sélectionnées disponibles à l’achat avec un fort potentiel d'investissement et de location à Miami."
+          : "Te ayudo a identificar propiedades seleccionadas disponibles para compra con potencial de inversión y renta en Miami.",
       href: `/${locale}/listings`,
     },
     {

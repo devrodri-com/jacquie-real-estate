@@ -1,119 +1,129 @@
 {
   "brand": "Jacquie Zarate Realtor · Miami",
-  "nav": { "home":"Home","miami":"Miami","precon":"Pre-construction","proyectos":"Projects","contacto":"Contact","sobreMi":"About", "financing": "Financing" },
-  "cta": { "whatsapp":"WhatsApp","calendly":"Schedule", "projects": "See projects" },
-  "footer": { "rights":"All rights reserved." },
+  "nav": { "home":"Accueil","miami":"Miami","precon":"Préconstruction","proyectos":"Projets","contacto":"Contact","sobreMi":"À propos", "financing": "Financement" },
+  "cta": { "whatsapp":"WhatsApp","calendly":"Planifier", "projects": "Voir les projets" },
+  "footer": { "rights":"Tous droits réservés." },
 
   "miami": {
-    "title": "Why invest in Miami",
-    "copy": "Liquid USD market with global demand. Favorable tax environment and sustained growth.",
+    "title": "Pourquoi investir à Miami",
+    "copy": "Un marché liquide en dollars américains, avec une demande internationale et une croissance soutenue.",
     "points": [
-      "Population and jobs expanding",
-      "Low state taxes",
-      "Consistent international liquidity",
-      "Infrastructure and air connectivity"
+      "Population et emplois en croissance",
+      "Fiscalité d’État avantageuse",
+      "Liquidité internationale constante",
+      "Infrastructures et connectivité aérienne"
     ],
-    "quote": "Do not wait to buy properties, buy properties and wait."
+    "quote": "N’attendez pas pour acheter une propriété, achetez une propriété et attendez."
   },
 
   "precon": {
-    "title": "Pre-construction advantages",
-    "copy": "Milestone deposits, appreciation during construction, and simple management. Strong USD diversification.",
+    "title": "Avantages de la préconstruction",
+    "copy": "Paiements par étapes, valorisation pendant la construction et gestion plus simple. Une stratégie de diversification en dollars américains.",
     "points": [
-      "Staged payment plans",
-      "Potential upside before closing",
-      "Class-A amenities and rental demand",
-      "Developer guarantees and escrow"
+      "Plans de paiement par étapes",
+      "Potentiel de valorisation avant la clôture",
+      "Commodités haut de gamme et demande locative",
+      "Garanties du développeur et fonds en fiducie"
     ]
   },
 
   "about": {
-    "title": "About me",
-    "subtitle": "Advisory for Miami real-estate investment",
+    "title": "À propos",
+    "subtitle": "Conseil pour investir en immobilier à Miami",
     "badge": {
       "role": "REALTOR® Associate",
-      "langs": "Spanish · English",
-      "license": "Florida License"
+      "langs": "Espagnol · Anglais",
+      "license": "Licence de Floride"
     },
-    "bio": "I guide investors end-to-end: selection, reservation, contract, due diligence, and closing. ROI focus and capital preservation.",
+    "bio": "J’accompagne les investisseurs de bout en bout : sélection, réservation, contrat, vérifications et clôture. L’objectif est d’avancer avec clarté et de protéger le capital.",
     "points": [
-      "Yield and exit analysis",
-      "Curated, reliable projects",
-      "Process and documentation management"
+      "Analyse du rendement et de la stratégie de sortie",
+      "Projets sélectionnés et fiables",
+      "Suivi du processus et des documents"
     ],
     "cta": {
-      "contact": "Get in touch",
-      "whatsapp": "Message on WhatsApp"
+      "contact": "Me contacter",
+      "whatsapp": "Écrire sur WhatsApp"
     }
   },
 
   "home": {
     "hero": {
-      "title": "Investir à Miami avec Jacquie Zarate Realtor",
-      "subtitle": "Professional advisory in pre-construction and exclusive projects",
-      "ctaProjects": "See projects",
-      "ctaWhatsapp": "Chat on WhatsApp"
+      "title": "Investir à Miami avec clarté et une personne de confiance sur place",
+      "subtitle": "Un accompagnement personnalisé pour évaluer achat, propriétés disponibles, préconstruction et financement.",
+      "ctaProjects": "Voir les projets",
+      "ctaWhatsapp": "Écrire sur WhatsApp"
     },
     "miami": {
-      "title": "Why Miami?",
-      "copy": "USD-based liquid market with high international demand.",
+      "title": "Pourquoi Miami ?",
+      "copy": "Un marché liquide en dollars, avec une forte demande internationale.",
       "points": [
-        "Growing demographics",
-        "Favorable tax environment",
-        "Global liquidity",
-        "Air connectivity"
+        "Démographie en croissance",
+        "Environnement fiscal favorable",
+        "Liquidité internationale",
+        "Connectivité aérienne"
       ]
     },
     "precon": {
-      "title": "Why Pre-construction?",
-      "copy": "Stage deposits, appreciation during construction, legal security.",
+      "title": "Pourquoi la préconstruction ?",
+      "copy": "Paiements par étapes, valorisation pendant la construction et cadre légal clair.",
       "points": [
-        "Flexible payment plans",
-        "Value appreciation during works",
-        "Premium rental demand"
+        "Plans de paiement flexibles",
+        "Valorisation pendant les travaux",
+        "Demande locative premium"
       ]
     },
     "featured": {
-      "title": "Featured projects",
-      "viewAll": "View all"
+      "title": "Projets sélectionnés",
+      "viewAll": "Voir tout"
     },
     "band": {
-      "title": "Ready to invest?",
-      "copy": "Schedule a call and review the best opportunities together.",
+      "title": "Vous souhaitez avancer à Miami ?",
+      "copy": "Envoyez-moi le contexte et nous voyons ensemble la prochaine étape.",
       "ctaContact": "Contact",
-      "ctaCall": "Schedule a call"
+      "ctaCall": "Planifier un appel"
     }
   },
 
   "projects": {
-    "title": "Projects",
-    "from": "From",
-    "delivery": "Completion"
+    "title": "Projets",
+    "from": "À partir de",
+    "delivery": "Livraison"
   },
   "financing": {
-    "title": "Financing to buy in Miami",
-    "seo": "US mortgages for foreign nationals: 30% down, 15-30 year terms.",
-    "intro": "Access US mortgages with competitive terms. As a foreign national you can qualify with a 30% down payment and 15-30 year amortization.",
-    "benefitsTitle": "Key benefits",
-    "benefits": [
-      "Financing programs for foreign nationals",
-      "Competitive rates and Spanish-speaking advisory",
-      "Title under personal name or corporation"
-    ],
-    "reqTitle": "Basic requirements",
+    "title": "Financement pour acheter à Miami avec une vision plus complète",
+    "seo": "Financement pour acheteurs et investisseurs à Miami avec discernement financier. Les options à partir de 25% de mise de fonds sont soumises à évaluation et approbation.",
+    "intro": "Avant de choisir une propriété, nous revoyons votre objectif, votre profil et vos documents afin de comprendre quelles options de financement pourraient s’appliquer et comment elles peuvent influencer votre décision d’achat.",
+    "primaryCta": "Évaluer mon cas",
+    "secondaryCta": "Voir les propriétés",
+    "judgmentTitle": "Il ne s’agit pas seulement d’obtenir un prêt. Il s’agit d’acheter avec discernement.",
+    "judgmentText": "Le financement peut vous aider à accéder à une propriété à Miami sans utiliser tout votre capital disponible. Mais chaque cas doit être évalué avec soin : type de propriété, profil de l’acheteur, réserves, documents, structure d’achat et objectif d’investissement.",
+    "programsTitle": "Des programmes qui peuvent commencer à 25% de mise de fonds",
+    "programsText": "Dans certains cas, des acheteurs étrangers peuvent accéder à des options de financement à partir de 25% de mise de fonds. La disponibilité dépend du profil de l’acheteur, du type de propriété, des documents fournis et de l’approbation de l’institution financière.",
+    "programsNote": "Le 25% n’est pas une garantie. C’est une référence initiale pour évaluer les possibilités.",
+    "reviewTitle": "Ce qui est habituellement revu avant d’avancer",
     "requirements": [
-      "Income letter (CPA or employer, last 2 years).",
-      "Verifiable funds for down payment + 6 months reserves.",
-      "Bank reference letter.",
-      "Passport/visa; corporate docs if applicable."
+      "Objectif d’achat : investissement, usage personnel ou location.",
+      "Budget estimé et capital disponible.",
+      "Fonds pour la mise de fonds et les réserves.",
+      "Revenus ou soutien financier vérifiable.",
+      "Historique ou référence bancaire.",
+      "Type de propriété et conditions de l’immeuble.",
+      "Achat à titre personnel ou structure corporative."
     ],
-    "processTitle": "How it works",
+    "processTitle": "Un processus simple pour prendre de meilleures décisions",
     "steps": [
-      { "t": "Application", "d": "We collect documents and submit." },
-      { "t": "Pre-approval", "d": "Lender confirms amounts and terms." },
-      { "t": "Closing", "d": "Mortgage is signed at purchase." }
+      { "t": "Nous comprenons votre objectif", "d": "Nous définissons si vous cherchez à investir, acheter pour usage personnel ou évaluer une occasion précise." },
+      { "t": "Nous revoyons le scénario financier", "d": "Nous analysons le capital disponible, les documents et les chemins de financement possibles." },
+      { "t": "Nous connectons avec les options adéquates", "d": "Selon votre profil, les alternatives sont revues avec les professionnels ou les institutions financières appropriées." },
+      { "t": "Nous accompagnons l’achat", "d": "Si vous avancez, le financement se coordonne avec la recherche, l’offre, le contrat et la clôture." }
     ],
-    "ctaLabel": "Ask about financing on WhatsApp",
+    "experienceTitle": "Expérience immobilière avec discernement financier",
+    "experienceText": "Jacquie combine son travail comme Realtor à Miami avec plus de 15 ans d’expérience en Finance dans des entreprises du S&P 500.",
+    "ctaTitle": "Voulez-vous savoir si le financement peut s’appliquer à votre achat ?",
+    "ctaCopy": "Dites-moi quel type de propriété vous cherchez et nous revoyons le meilleur chemin pour votre cas.",
+    "ctaLabel": "Consulter par WhatsApp",
+    "disclaimer": "L’information est fournie à titre indicatif. Tout financement est soumis à l’évaluation, aux documents, à l’approbation de l’institution financière, au type de propriété et aux conditions en vigueur au moment de la demande.",
     "ctaHref": "https://wa.me/17864072591"
   }
 }

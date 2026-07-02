@@ -8,14 +8,11 @@ import GalleryLightbox from "@/components/GalleryLightbox";
 import HighlightsBlock, { type HighlightItem } from "@/components/HighlightsBlock";
 import FaqsBlock, { type FaqItem } from "@/components/FaqsBlock";
 import PaymentPlan from "@/components/PaymentPlan";
-import { Lock, WashingMachine, Tv, Speaker, PawPrint, Palette, Dumbbell, Briefcase } from "lucide-react";
+import { Lock, WashingMachine, Tv, PawPrint, Palette, Dumbbell, Briefcase } from "lucide-react";
 import {
   Sparkles,
   LayoutGrid,
   ListChecks,
-  PackageOpen,
-  CalendarClock,
-  CircleHelp,
   MapPin,
   Images as ImagesIcon,
 } from "lucide-react";
@@ -113,6 +110,7 @@ function featureIconFor(label: string) {
 
 
 type Params = { params: Promise<{ locale: string; slug: string }> };
+type LabelLine = string | { label?: string };
 
 
 function pickBySlug(slug: string): Project | null {
@@ -178,10 +176,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
           );
           return parts.join(" ");
         })()
-      : `Renta corta aprobada, club de playa privado, ${p.pricePerSfApprox ? `~$${p.pricePerSfApprox}/sf, ` : ""}${p.delivery ? `entrega ${p.delivery}, ` : ""}solicitá planos y disponibilidad.`;
+    : `Renta corta aprobada, club de playa privado, ${p.pricePerSfApprox ? `~$${p.pricePerSfApprox}/ft², ` : ""}${p.delivery ? `entrega ${p.delivery}, ` : ""}solicitá planos y disponibilidad.`;
 
   const url = `/${locale}/proyectos/${slug}`;
-  const image = p.image || "/images/og-default.jpg";
+  const image = p.image || "/og-image.jpg";
 
   return {
     title,
@@ -268,9 +266,9 @@ export default async function Proyecto({ params }: Params) {
         furnished: "Furnished",
         unfurnished: "Unfurnished",
         ctas: {
-          schedule: "Schedule Meeting",
+          schedule: "Schedule a conversation",
           whatsapp: "WhatsApp",
-          email: "Email Jacquie",
+          email: "Write by email",
         },
         requestPlans: "Request floor plans (PDF)",
         checkAvail: "Check availability by typology",
@@ -310,9 +308,9 @@ export default async function Proyecto({ params }: Params) {
           furnished: "Meublé",
           unfurnished: "Non meublé",
           ctas: {
-            schedule: "Planifier un rendez-vous",
+            schedule: "Planifier une conversation",
             whatsapp: "WhatsApp",
-            email: "Écrire à Jacquie",
+            email: "Écrire par courriel",
           },
           requestPlans: "Demander les plans (PDF)",
           checkAvail: "Disponibilité par typologie",
@@ -351,9 +349,9 @@ export default async function Proyecto({ params }: Params) {
           furnished: "Amueblado",
           unfurnished: "Sin amueblar",
           ctas: {
-            schedule: "Agendar Reunión",
+            schedule: "Agendar una conversación",
             whatsapp: "WhatsApp",
-            email: "Email a Jacquie",
+            email: "Escribir por email",
           },
           requestPlans: "Solicitar planos (PDF)",
           checkAvail: "Ver disponibilidad por tipología",
@@ -394,7 +392,16 @@ export default async function Proyecto({ params }: Params) {
   const shareUrl = `${base}/${locale}/proyectos/${slug}`.replace(/(?<!:)\/\/+/, "/");
 
   const deliveryShown = isFR ? (o?.deliveryFr ?? p.delivery) : p.delivery;
-  const priceSfSuffix = isFR ? "/pi²" : "/sf";
+  const priceSfSuffix = isFR ? "/pi²" : isEN ? "/sf" : "/ft²";
+  const lightSectionClass = "mt-8 rounded-[10px] bg-surface p-6 sm:p-7 max-w-[1100px] mx-auto ring-1 ring-primary/10 text-foreground relative overflow-hidden";
+  const lightTopLineClass = "pointer-events-none absolute inset-x-5 sm:inset-x-6 top-0 h-[1.5px] rounded-full bg-gradient-to-r from-transparent via-accent/35 to-transparent";
+  const lightHeadingClass = "font-display text-[16px] font-medium leading-[1.08] tracking-normal text-primary sm:text-[17px]";
+  const lightIconClass = "h-4 w-4 shrink-0 text-primary/70 stroke-[1.5]";
+  const typologyIconClass = `${lightIconClass} -translate-y-[2px]`;
+  const raisedLightIconClass = `${lightIconClass} -translate-y-px`;
+  const lightBulletClass = "relative top-[9px] inline-block h-[6px] w-[6px] sm:h-[7px] sm:w-[7px] rounded-full bg-accent flex-shrink-0";
+  const lightBodyClass = "text-[16px] leading-[26px] text-foreground/85";
+  const secondaryLightButtonClass = "inline-flex h-10 items-center justify-center rounded-md border border-primary/15 bg-white/70 px-4 text-sm font-medium text-primary hover:bg-white focus-visible:ring-2 focus-visible:ring-accent/40";
 
   const policyChips = [
     ...(policy ? [policy] : []),
@@ -405,16 +412,21 @@ export default async function Proyecto({ params }: Params) {
   ];
 
   return (
-    <main className="mx-auto max-w-5xl px-4 py-12">
+    <main className="mx-auto max-w-[1100px] px-4 py-12">
       {/* Breadcrumb */}
-      <div className="mb-3 sm:mb-6 text-sm text-neutral-500">
-        <Link href={`/${locale}/proyectos`} className="underline">{t.breadcrumb}</Link>
-        <span className="mx-1">/</span>
-        <span className="text-neutral-700">{p.name}</span>
+      <div className="mb-6">
+        <Link
+          href={`/${locale}/proyectos`}
+          className="text-[14px] text-foreground/70 no-underline hover:underline"
+        >
+          &larr; {t.breadcrumb}
+        </Link>
       </div>
 
       {/* Title + meta */}
-      <h1 className="mt-2 sm:mt-0 text-3xl sm:text-4xl font-semibold tracking-tight text-primary">{p.name}</h1>
+      <h1 className="font-display text-[36px] font-medium leading-[1.02] tracking-normal text-primary sm:text-[48px]">
+        {p.name}
+      </h1>
       {/* Meta — mobile condensed */}
       <p className="mt-1 text-sm text-foreground/70 sm:hidden">
         {typeof p.priceFromUsd === "number" ? (
@@ -510,33 +522,29 @@ export default async function Proyecto({ params }: Params) {
 
       {/* Sticky CTA */}
       <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-start">
-        <Link
-          href={bookingUrl}
-          className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-5 text-sm font-medium text-primary-foreground hover:opacity-95 focus-visible:ring-2 focus-visible:ring-accent/40"
-        >
-          {t.ctas.schedule}
-        </Link>
         <a
           href={waHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex h-10 items-center justify-center rounded-md border border-primary/25 px-5 text-sm font-medium text-primary hover:bg-muted focus-visible:ring-2 focus-visible:ring-accent/40"
+          className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-5 text-sm font-medium text-primary-foreground hover:opacity-95 focus-visible:ring-2 focus-visible:ring-accent/40"
         >
           {t.ctas.whatsapp}
         </a>
-        <a
-          href="mailto:jacqueline@miamiliferealty.com"
+        <Link
+          href={bookingUrl}
           className="inline-flex h-10 items-center justify-center rounded-md border border-primary/25 px-5 text-sm font-medium text-primary hover:bg-muted focus-visible:ring-2 focus-visible:ring-accent/40"
         >
-          {t.ctas.email}
-        </a>
+          {t.ctas.schedule}
+        </Link>
         <ShareButtons
           url={shareUrl}
           text={p.name}
           locale={t.shareLocale}
           variant="light"
           iconSrc="/icons/whatsapp.svg"
-          buttonClassName="inline-flex h-10 items-center justify-center rounded-md border border-primary/25 px-5 text-sm font-medium text-primary hover:bg-muted focus-visible:ring-2 focus-visible:ring-accent/40 w-full sm:w-auto"
+          label={isEN ? "Share" : isFR ? "Partager" : "Compartir"}
+          className="self-start sm:self-auto"
+          buttonClassName="h-9 w-auto rounded-md border border-transparent px-2.5 text-sm font-medium text-primary/55 shadow-none hover:bg-transparent hover:text-primary focus-visible:ring-2 focus-visible:ring-accent/30 sm:h-10 sm:px-3"
         />
       </div>
 
@@ -545,8 +553,8 @@ export default async function Proyecto({ params }: Params) {
         <section className="mt-8 rounded-[10px] bg-primary p-6 sm:p-7 max-w-[1100px] mx-auto ring-1 ring-primary-foreground/10 text-primary-foreground relative overflow-hidden">
           <div className="pointer-events-none absolute inset-x-5 sm:inset-x-6 top-0 h-[1.5px] rounded-full bg-gradient-to-r from-transparent via-accent/25 to-transparent" />
           <div className="mb-2.5 flex items-center gap-2">
-            <ImagesIcon className="h-5 w-5 text-primary-foreground stroke-[1.5]" aria-hidden />
-            <h2 className="text-[16px] sm:text-[17px] font-semibold tracking-tight text-primary-foreground">{t.gallery}</h2>
+            <ImagesIcon className="h-4 w-4 shrink-0 text-primary-foreground/85 stroke-[1.5]" aria-hidden />
+            <h2 className="font-display text-[16px] font-medium leading-[1.08] tracking-normal text-primary-foreground sm:text-[17px]">{t.gallery}</h2>
           </div>
           <GalleryLightbox images={p.images} name={p.name} locale={t.galleryLocale} />
         </section>
@@ -575,30 +583,30 @@ export default async function Proyecto({ params }: Params) {
           t.mailtoAvailSubject(p.name)
         )}&body=${encodeURIComponent(t.mailtoAvailBody(p.name))}`;
         return (
-          <section className="mt-8 rounded-[10px] bg-primary p-6 sm:p-7 max-w-[1100px] mx-auto ring-1 ring-primary-foreground/10 text-primary-foreground relative overflow-hidden">
-            <div className="pointer-events-none absolute inset-x-5 sm:inset-x-6 top-0 h-[1.5px] rounded-full bg-gradient-to-r from-transparent via-accent/25 to-transparent" />
+          <section className={lightSectionClass}>
+            <div className={lightTopLineClass} />
             <div className="mb-2.5 flex items-center gap-2">
-              <LayoutGrid className="h-5 w-5 text-primary-foreground stroke-[1.5]" aria-hidden />
-              <h2 className="text-[16px] sm:text-[17px] font-semibold tracking-tight text-primary-foreground">{t.mix}</h2>
+              <LayoutGrid className={typologyIconClass} aria-hidden />
+              <h2 className={lightHeadingClass}>{t.mix}</h2>
             </div>
             <ul className="mt-2 sm:mt-3 space-y-[11px] max-w-[1000px] lg:max-w-[960px] mx-auto" role="list">
-              {items.map((line: any, i: number) => {
+              {items.map((line: LabelLine, i: number) => {
                 const label = typeof line === 'string' ? line : line?.label;
                 if (!label) return null;
                 return (
                   <li key={`mix-${i}`} role="listitem" className="flex items-start gap-3">
-                    <span className="relative top-[9px] inline-block h-[6px] w-[6px] sm:h-[7px] sm:w-[7px] rounded-full bg-accent flex-shrink-0" aria-hidden />
-                    <p className="text-[16px] leading-[26px] text-primary-foreground/95">{label}</p>
+                    <span className={lightBulletClass} aria-hidden />
+                    <p className={lightBodyClass}>{label}</p>
                   </li>
                 );
               })}
             </ul>
             {/* CTAs */}
             <div className="mt-4 flex flex-col gap-2 sm:flex-row">
-              <a href={mailtoPlans} className="inline-flex h-10 items-center justify-center rounded-md border border-primary-foreground/20 px-4 text-sm font-medium text-primary-foreground hover:bg-primary-foreground/10">
+              <a href={mailtoPlans} className={secondaryLightButtonClass}>
                 {t.requestPlans}
               </a>
-              <a href={mailtoAvail} className="inline-flex h-10 items-center justify-center rounded-md border border-primary-foreground/20 px-4 text-sm font-medium text-primary-foreground hover:bg-primary-foreground/10">
+              <a href={mailtoAvail} className={secondaryLightButtonClass}>
                 {t.checkAvail}
               </a>
             </div>
@@ -612,26 +620,26 @@ export default async function Proyecto({ params }: Params) {
           t.mailtoMatSubject(p.name)
         )}&body=${encodeURIComponent(t.mailtoMatBody(p.name))}`;
         return (
-          <section className="mt-8 rounded-[10px] bg-primary p-6 sm:p-7 max-w-[1100px] mx-auto ring-1 ring-primary-foreground/10 text-primary-foreground relative overflow-hidden">
-            <div className="pointer-events-none absolute inset-x-5 sm:inset-x-6 top-0 h-[1.5px] rounded-full bg-gradient-to-r from-transparent via-accent/25 to-transparent" />
+          <section className={lightSectionClass}>
+            <div className={lightTopLineClass} />
             <div className="mb-2.5 flex items-center gap-2">
-              <ListChecks className="h-5 w-5 text-primary-foreground stroke-[1.5]" aria-hidden />
-              <h2 className="text-[16px] sm:text-[17px] font-semibold tracking-tight text-primary-foreground">{t.features}</h2>
+              <ListChecks className={lightIconClass} aria-hidden />
+              <h2 className={lightHeadingClass}>{t.features}</h2>
             </div>
             <ul className="mt-2 sm:mt-3 space-y-[11px] max-w-[1000px] lg:max-w-[960px] mx-auto" role="list">
-              {items.map((line: any, i: number) => {
+              {items.map((line: LabelLine, i: number) => {
                 const label = typeof line === 'string' ? line : line?.label;
                 if (!label) return null;
                 return (
                   <li key={`feat-${i}`} role="listitem" className="flex items-start gap-3">
-                    <span className="relative top-[9px] inline-block h-[6px] w-[6px] sm:h-[7px] sm:w-[7px] rounded-full bg-accent flex-shrink-0" aria-hidden />
-                    <p className="text-[16px] leading-[26px] text-primary-foreground/95">{label}</p>
+                    <span className={lightBulletClass} aria-hidden />
+                    <p className={lightBodyClass}>{label}</p>
                   </li>
                 );
               })}
             </ul>
             <div className="mt-4">
-              <a href={mailtoMaterials} className="inline-flex h-10 items-center justify-center rounded-md border border-primary-foreground/20 px-4 text-sm font-medium text-primary-foreground hover:bg-primary-foreground/10">
+              <a href={mailtoMaterials} className={secondaryLightButtonClass}>
                 {t.requestMaterials}
               </a>
             </div>
@@ -650,17 +658,17 @@ export default async function Proyecto({ params }: Params) {
             : (pp.microClaimsEs ?? []);
         if (!Array.isArray(whyClaims) || whyClaims.length === 0) return null;
         return (
-          <section className="mt-8 rounded-[10px] bg-primary p-6 sm:p-7 max-w-[1100px] mx-auto ring-1 ring-primary-foreground/10 text-primary-foreground relative overflow-hidden">
-            <div className="pointer-events-none absolute inset-x-5 sm:inset-x-6 top-0 h-[1.5px] rounded-full bg-gradient-to-r from-transparent via-accent/25 to-transparent" />
+          <section className={lightSectionClass}>
+            <div className={lightTopLineClass} />
             <div className="mb-2.5 flex items-center gap-2">
-              <Sparkles className="h-5 w-5 text-primary-foreground stroke-[1.5]" aria-hidden />
-              <h2 className="text-[16px] sm:text-[17px] font-semibold tracking-tight text-primary-foreground">{t.why(p.name)}</h2>
+              <Sparkles className={lightIconClass} aria-hidden />
+              <h2 className={lightHeadingClass}>{t.why(p.name)}</h2>
             </div>
             <ul className="mt-2 sm:mt-3 space-y-[11px] max-w-[1000px] lg:max-w-[960px] mx-auto" role="list">
               {whyClaims.map((c, i) => (
                 <li key={`why-${i}`} role="listitem" className="flex items-start gap-3">
-                  <span className="relative top-[9px] inline-block h-[6px] w-[6px] sm:h-[7px] sm:w-[7px] rounded-full bg-accent flex-shrink-0" aria-hidden />
-                  <p className="text-[16px] leading-[26px] text-primary-foreground/95">{c}</p>
+                  <span className={lightBulletClass} aria-hidden />
+                  <p className={lightBodyClass}>{c}</p>
                 </li>
               ))}
             </ul>
@@ -753,24 +761,13 @@ export default async function Proyecto({ params }: Params) {
       })()}
 
       {/* CTAs */}
-      <section className="mt-10 flex flex-col gap-3 sm:flex-row">
-        <Link href={bookingUrl} className="w-full sm:w-auto inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:opacity-95">
-          {t.ctas.schedule}
-        </Link>
-        <a href={waHref} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto inline-flex h-10 items-center justify-center rounded-md border border-primary/20 px-4 text-sm font-medium text-primary hover:bg-muted">
+      <section className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
+        <a href={waHref} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:opacity-95">
           {t.ctas.whatsapp}
         </a>
-        <a href="mailto:jacqueline@miamiliferealty.com" className="w-full sm:w-auto inline-flex h-10 items-center justify-center rounded-md border border-primary/20 px-4 text-sm font-medium text-primary hover:bg-muted">
-          {t.ctas.email}
-        </a>
-        <ShareButtons
-          url={shareUrl}
-          text={p.name}
-          locale={t.shareLocale}
-          variant="light"
-          iconSrc="/icons/whatsapp.svg"
-          buttonClassName="inline-flex h-10 items-center justify-center rounded-md border border-primary/20 px-4 text-sm font-medium text-primary hover:bg-muted w-full sm:w-auto"
-        />
+        <Link href={bookingUrl} className="w-full sm:w-auto inline-flex h-10 items-center justify-center rounded-md border border-primary/20 px-4 text-sm font-medium text-primary hover:bg-muted">
+          {t.ctas.schedule}
+        </Link>
       </section>
 
       {/* Payment plan */}
@@ -783,13 +780,13 @@ export default async function Proyecto({ params }: Params) {
       />
 
       {/* Location */}
-      <section id="ubicacion" className="mt-8 rounded-[10px] bg-primary p-6 sm:p-7 max-w-[1100px] mx-auto ring-1 ring-primary-foreground/10 text-primary-foreground relative overflow-hidden">
-        <div className="pointer-events-none absolute inset-x-5 sm:inset-x-6 top-0 h-[1.5px] rounded-full bg-gradient-to-r from-transparent via-accent/25 to-transparent" />
+      <section id="ubicacion" className={lightSectionClass}>
+        <div className={lightTopLineClass} />
         <div className="mb-2.5 flex items-center gap-2">
-          <MapPin className="h-5 w-5 text-primary-foreground stroke-[1.5]" aria-hidden />
-          <h2 className="text-[16px] sm:text-[17px] font-semibold tracking-tight text-primary-foreground">{t.location}</h2>
+          <MapPin className={raisedLightIconClass} aria-hidden />
+          <h2 className={lightHeadingClass}>{t.location}</h2>
         </div>
-        <div className="overflow-hidden rounded-2xl ring-1 ring-primary-foreground/10">
+        <div className="overflow-hidden rounded-2xl bg-white ring-1 ring-primary/10">
           <iframe
             src={mapSrc}
             width="100%"

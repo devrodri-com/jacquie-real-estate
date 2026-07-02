@@ -26,7 +26,7 @@ export default function ProyectosPageClient() {
         }).format(n)
       : undefined;
 
-  const priceSfSuffix = isFr ? "/pi²" : "/sf";
+  const priceSfSuffix = isFr ? "/pi²" : isEn ? "/sf" : "/ft²";
 
   const [filters, setFilters] = useState<Filters>({ q: "", rental: "all", min: undefined, max: undefined, sort: 'alpha-asc' });
 
@@ -81,16 +81,32 @@ export default function ProyectosPageClient() {
   }, [filtered, filters.sort]);
 
   return (
-    <main className="px-4 py-8 sm:py-12">
-      <div className="flex flex-col gap-4 sm:gap-5">
-        <div className="flex items-center justify-between">
-          <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-primary">
-            {isEn ? "Projects" : isFr ? "Projets" : "Proyectos"}
-          </h1>
+    <main className="px-4 py-10 text-foreground sm:py-14">
+      <div className="flex flex-col gap-5 sm:gap-6">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div className="max-w-none">
+            <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-primary/62">
+              {isEn ? "PRECONSTRUCTION" : isFr ? "PRÉCONSTRUCTION" : "PRECONSTRUCCIÓN"}
+            </p>
+            <h1 className="mt-2 font-display text-[42px] font-medium leading-[0.98] tracking-normal text-primary sm:text-[56px] lg:whitespace-nowrap">
+              {isEn
+                ? "Preconstruction projects"
+                : isFr
+                  ? "Projets en préconstruction"
+                  : "Proyectos de preconstrucción"}
+            </h1>
+            <p className="mt-4 max-w-[72ch] text-[16px] leading-[1.75] text-foreground/78">
+              {isEn
+                ? "Compare selected projects in Miami, Orlando, and other Florida markets, with a focus on location, delivery timing, rental flexibility, and investment criteria."
+                : isFr
+                  ? "Comparez des projets sélectionnés à Miami, Orlando et dans d’autres secteurs de la Floride, selon l’emplacement, la livraison, la flexibilité locative et les critères d’investissement."
+                  : "Compará proyectos seleccionados en Miami, Orlando y distintas zonas de Florida, con foco en ubicación, entrega, flexibilidad de renta y criterio de inversión."}
+            </p>
+          </div>
           <button
             type="button"
             onClick={openDrawer}
-            className="sm:hidden inline-flex h-10 items-center justify-center rounded-md border border-black/10 bg-white px-3 text-sm text-primary hover:bg-muted"
+            className="inline-flex h-10 items-center justify-center rounded-md border border-primary/15 bg-white px-3 text-sm font-medium text-primary hover:bg-surface sm:hidden"
             aria-haspopup="dialog"
             aria-expanded={open}
             aria-controls="filters-drawer"
@@ -154,7 +170,7 @@ export default function ProyectosPageClient() {
         </div>
       )}
 
-      <div className="mt-6 grid grid-cols-1 gap-4 md:mt-8 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
+      <div className="mt-8 grid grid-cols-1 gap-5 md:mt-10 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
         {sorted.map((p) => {
           const frOverlay = isFr ? getProjectFrOverlay(p.slug) : undefined;
 
@@ -182,37 +198,39 @@ export default function ProyectosPageClient() {
             locale === "fr" ? (frOverlay?.deliveryFr ?? p.delivery) : p.delivery;
 
           return (
-          <div
-            key={p.slug}
-            className="rounded-[14px] ring-1 ring-primary-foreground/10 bg-primary text-primary-foreground overflow-hidden transition hover:shadow-sm hover:-translate-y-[1px]"
-          >
-            <Link href={`/${locale}${p.slug}`}>
+            <article
+              key={p.slug}
+              className="group flex h-full flex-col overflow-hidden rounded-[14px] bg-paper text-foreground ring-1 ring-primary/10 shadow-sm transition hover:-translate-y-[2px] hover:shadow-[0_14px_34px_rgba(43,37,48,0.10)]"
+            >
+            <Link href={`/${locale}${p.slug}`} className="block no-underline">
               <div className="relative aspect-[3/2] w-full overflow-hidden">
                 <Image
                   src={p.image}
                   alt={p.name}
                   fill
-                  className="object-cover"
+                  className="object-cover transition-transform duration-300 group-hover:scale-[1.025]"
                   sizes="(min-width:1024px) 33vw, 100vw"
                   loading="lazy"
                   decoding="async"
                 />
                 {deliveryLabel && (
-                  <span className="absolute left-2 top-2 text-[11px] px-2 py-0.5 rounded-full bg-primary-foreground/85 text-primary">
+                  <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-medium text-primary ring-1 ring-primary/10 backdrop-blur-sm">
                     {deliveryLabel}
                   </span>
                 )}
               </div>
             </Link>
 
-            <div className="p-4 flex flex-col h-[220px]">
-              <h3 className="text-[15px] md:text-[16px] font-semibold tracking-tight text-primary-foreground line-clamp-1">
-                <Link href={`/${locale}${p.slug}`}>{p.name}</Link>
+            <div className="flex flex-1 flex-col p-5">
+              <h3 className="min-h-[52px] font-display text-[24px] font-medium leading-[1.08] tracking-normal text-primary line-clamp-2">
+                <Link href={`/${locale}${p.slug}`} className="text-primary no-underline hover:underline underline-offset-4 decoration-primary/25">
+                  {p.name}
+                </Link>
               </h3>
-              <p className="mt-1 text-[12px] text-primary-foreground/70 line-clamp-1">
+              <p className="mt-2 h-[18px] truncate text-[12px] font-medium uppercase tracking-[0.12em] text-primary/55">
                 {p.city} · {rentalDisplay}
               </p>
-              <div className="mt-2 text-[14px] font-semibold text-primary-foreground">
+              <div className="mt-3 h-[22px] truncate text-[15px] font-semibold text-primary">
                 {typeof p.priceFromUsd === "number"
                   ? (locale === "en"
                       ? `From ${fmt(p.priceFromUsd)}`
@@ -225,28 +243,25 @@ export default function ProyectosPageClient() {
                       ? "Consulter"
                       : "Consultar"}
                 {typeof p.pricePerSfApprox === "number" ? (
-                  <span className="ml-1 text-[12px] font-normal text-primary-foreground/70"> · ~${p.pricePerSfApprox}{priceSfSuffix}</span>
+                  <span className="ml-1 text-[12px] font-normal text-foreground/55"> · ~${p.pricePerSfApprox}{priceSfSuffix}</span>
                 ) : null}
               </div>
-              {(() => {
-                return caps && caps.length ? (
-                  <div className="mt-2 flex flex-col gap-1.5">
-  {caps.slice(0, 2).map((h: string, i: number) => (
-    <span
-      key={i}
-      className="text-[11px] px-2 py-0.5 rounded-full bg-primary-foreground text-primary ring-1 ring-primary/15 whitespace-nowrap"
-    >
-      {h}
-    </span>
-  ))}
-</div>
-                ) : null;
-              })()}
+              <div className="mt-4 grid h-[58px] grid-rows-2 content-start gap-2 overflow-hidden">
+                {caps?.slice(0, 2).map((h: string, i: number) => (
+                    <span
+                      key={i}
+                      title={h}
+                      className="block max-w-full truncate whitespace-nowrap rounded-full bg-surface px-2.5 py-1 text-[11px] font-medium text-primary ring-1 ring-primary/10"
+                    >
+                      {h}
+                    </span>
+                ))}
+              </div>
 
               <div className="flex-1" />
               <Link
                 href={`/${locale}${p.slug}`}
-                className="mt-3 inline-flex h-9 w-full items-center justify-center rounded-md border border-primary-foreground/25 px-3 text-sm font-medium text-primary-foreground hover:bg-primary-foreground/10 focus-visible:ring-2 focus-visible:ring-accent/40"
+                className="mt-5 inline-flex h-10 w-full items-center justify-center rounded-md border border-primary bg-primary px-3 text-sm font-medium text-primary-foreground no-underline shadow-[0_8px_18px_rgba(59,39,74,0.14)] transition hover:bg-primary/90 hover:shadow-[0_10px_22px_rgba(59,39,74,0.18)] focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2"
               >
                 {locale === "en"
                   ? "View details"
@@ -255,7 +270,7 @@ export default function ProyectosPageClient() {
                     : "Ver más detalles"}
               </Link>
             </div>
-          </div>
+            </article>
           );
         })}
       </div>

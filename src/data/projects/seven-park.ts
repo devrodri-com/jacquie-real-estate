@@ -92,7 +92,7 @@ export const pSevenPark: Project = {
     },
     {
       q: "¿Prestamista preferido e incentivos?",
-      a: "QKapital. Beneficios reportados: hasta US$20,000 a costos de cierre y descuento de tasa para quienes financien con el preferred lender."
+      a: "QKapital. Beneficios reportados: hasta US$20,000 para costos de cierre y descuento de tasa para quienes financien con la entidad financiera preferida."
     }
   ],
   faqsEn: [

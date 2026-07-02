@@ -17,6 +17,7 @@ type ListingDetailTopItem = {
 
 export function ListingDetailTopClient({
   addressDisplay,
+  listingDisplayTitle,
   city,
   item,
   locale,
@@ -24,6 +25,7 @@ export function ListingDetailTopClient({
   isFR,
 }: {
   addressDisplay: string;
+  listingDisplayTitle: string;
   city: string;
   item: ListingDetailTopItem;
   locale: string;
@@ -129,9 +131,10 @@ export function ListingDetailTopClient({
     <>
       {/* Compact header */}
       <section className="mb-3">
-        <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-primary">
-          {addressDisplay}
+        <h1 className="font-display text-[36px] font-medium leading-[1.02] tracking-normal text-primary sm:text-[48px]">
+          {listingDisplayTitle}
         </h1>
+        <p className="mt-2 text-[15px] text-foreground/70">{addressDisplay}</p>
         <p className="mt-1 text-[15px] text-foreground/70">{city}</p>
 
         <p className="mt-1 text-xl font-medium text-primary">
@@ -141,7 +144,11 @@ export function ListingDetailTopClient({
         <p className="mt-1 text-[14px] text-foreground/70">
           {item.beds} {isEN ? "beds" : isFR ? "chambres" : "hab"} ·{" "}
           {item.baths} {isEN ? "baths" : isFR ? "salles de bain" : "baños"} ·{" "}
-          {item.size.toLocaleString("en-US")} sqft · {item.type}
+          {isEN
+            ? `${item.size.toLocaleString("en-US")} sq ft`
+            : isFR
+              ? `${item.size.toLocaleString("fr-CA")} pi²`
+              : `Superficie ${item.size.toLocaleString("en-US")} ft²`} · {item.type}
         </p>
 
         <p className="mt-1 text-[13px] text-foreground/60">
@@ -207,9 +214,9 @@ export function ListingDetailTopClient({
           )}
         </div>
 
-        <div className="lg:sticky lg:top-24 h-fit rounded-[12px] ring-1 ring-black/10 bg-white p-6 sm:p-7 shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
+        <div className="lg:sticky lg:top-24 h-fit rounded-[10px] bg-surface p-6 ring-1 ring-primary/10 shadow-[0_10px_30px_rgba(59,39,74,0.06)] sm:p-7">
           <p className="text-[12px] uppercase tracking-wide text-primary/70">
-            {isEN ? "Active listing" : isFR ? "Annonce active" : "Propiedad activa"}
+            {isEN ? "Selected property" : isFR ? "Propriété sélectionnée" : "Propiedad seleccionada"}
           </p>
 
           <p className="mt-1 text-xl font-semibold text-primary">
@@ -222,14 +229,19 @@ export function ListingDetailTopClient({
 
           <p className="mt-2 text-[14px] text-foreground/70">
             {isEN
-              ? "I can help you evaluate this property and answer your questions."
+              ? "We review numbers, building conditions, and next steps together before moving forward."
               : isFR
-                ? "Je peux vous aider à évaluer ce bien et répondre à vos questions."
-                : "Te acompaño a evaluar esta propiedad y resolver tus dudas."}
+                ? "Nous révisons ensemble les chiffres, l’immeuble, les conditions et les prochaines étapes avant d’avancer."
+                : "Revisamos juntos números, edificio, condiciones y próximos pasos antes de avanzar."}
           </p>
 
           <p className="mt-2 text-[14px] text-foreground/70">
-            {item.beds} · {item.baths} · {item.size.toLocaleString("en-US")} sqft
+            {item.beds} · {item.baths} ·{" "}
+            {isEN
+              ? `${item.size.toLocaleString("en-US")} sq ft`
+              : isFR
+                ? `${item.size.toLocaleString("fr-CA")} pi²`
+                : `Superficie ${item.size.toLocaleString("en-US")} ft²`}
           </p>
 
           <div className="mt-4 flex flex-col gap-2">

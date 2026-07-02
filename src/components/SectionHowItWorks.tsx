@@ -5,34 +5,33 @@ export default function SectionHowItWorks({ locale }: Props) {
   const isEN = locale === "en";
   const isFR = locale === "fr";
 
-  const title = isEN ? "How it works" : isFR ? "Comment ça fonctionne" : "Cómo funciona";
-  const intro = isEN
-    ? "Whether you’re considering investing or already own a property, I guide you through the entire process."
+  const title = isEN
+    ? "How we work together"
     : isFR
-      ? "Que vous envisagiez d’investir ou que vous possédiez déjà un bien, je vous accompagne tout au long du processus."
-      : "Ya sea que estés evaluando invertir o ya tengas una propiedad, te acompaño en todo el proceso.";
-
-  const stepLabel = isEN ? "Step" : isFR ? "Étape" : "Paso";
+      ? "Comment on travaille ensemble"
+      : "Cómo trabajamos juntos";
+  const intro = isEN
+    ? "Everything stays simple: clear communication, consistent follow-up, and someone you can trust on the ground in Miami."
+    : isFR
+      ? "L’idée est simple : de la clarté, un suivi constant et une personne de confiance sur place à Miami."
+      : "La idea es simple: claridad, seguimiento constante y alguien de confianza en Miami, sin complicarte.";
 
   const steps = isEN
     ? [
-        "You tell me where you are in the process and what you’re looking for.",
-        "I guide you so you can make clear decisions, whether you’re buying or getting ready to rent.",
-        "We get your property set up for short-term rentals, optimizing occupancy and performance.",
-        "I handle the day-to-day management so everything runs smoothly without hassle.",
+        "You share your property details and what you want to achieve.",
+        "Together, we define the best way to protect it and keep it running smoothly.",
+        "I take care of the follow-up and day-to-day management in Miami.",
       ]
     : isFR
       ? [
-          "Vous me dites où vous en êtes et ce que vous recherchez.",
-          "Je vous conseille pour prendre des décisions claires, que ce soit pour acheter ou commencer à louer.",
-          "Nous mettons votre bien en location courte durée en optimisant l’occupation et le rendement.",
-          "Je m’occupe de la gestion quotidienne pour que tout fonctionne parfaitement, sans complications.",
+          "Vous me parlez de votre propriété et de votre objectif.",
+          "On définit ensemble la meilleure façon de la protéger et de bien la faire fonctionner.",
+          "Je prends en charge le suivi et la gestion au quotidien à Miami.",
         ]
       : [
-          "Me contás en qué etapa estás y qué estás buscando.",
-          "Te asesoro para tomar decisiones claras, ya sea para comprar o empezar a rentar.",
-          "Ponemos la propiedad a trabajar con renta corta, optimizando ocupación y rendimiento.",
-          "Me encargo del día a día para que todo funcione bien y sin complicaciones.",
+          "Me contás tu propiedad y qué querés lograr.",
+          "Definimos juntos la mejor forma de cuidarla y que funcione bien.",
+          "Yo me ocupo del seguimiento y la gestión diaria en Miami.",
         ];
 
   return (
@@ -46,14 +45,14 @@ export default function SectionHowItWorks({ locale }: Props) {
         </p>
       </div>
 
-      <ol className="mt-10 grid gap-5 sm:grid-cols-2">
+      <ol className="mt-10 grid gap-5 md:grid-cols-3">
         {steps.map((step, idx) => (
           <li
             key={step}
             className="rounded-[14px] border border-primary/10 bg-primary/[0.03] p-5 shadow-sm"
           >
-            <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/70">
-              {stepLabel} {idx + 1}
+            <span className="inline-flex h-6 min-w-6 items-center justify-center rounded-full bg-primary/10 px-2 text-[11px] font-semibold text-primary/75">
+              {idx + 1}
             </span>
             <p className="mt-3 text-[18px] leading-[1.55] font-medium tracking-tight text-primary">
               {step}

@@ -15,7 +15,27 @@ import styles from "./ContactoPhone.module.css";
 import CountrySelect from "./CountrySelect";
 
 declare global {
-  interface Window { gtag?: (...args: any[]) => void }
+  interface Window { gtag?: (...args: unknown[]) => void }
+}
+
+type ContactApiResponse = {
+  ok?: boolean;
+  error?: string;
+};
+
+function parseContactApiResponse(raw: string): ContactApiResponse {
+  try {
+    const parsed: unknown = JSON.parse(raw);
+    if (!parsed || typeof parsed !== "object") return {};
+
+    const record = parsed as Record<string, unknown>;
+    return {
+      ok: typeof record.ok === "boolean" ? record.ok : undefined,
+      error: typeof record.error === "string" ? record.error : undefined,
+    };
+  } catch {
+    return {};
+  }
 }
 
 export default function Contacto() {
@@ -24,6 +44,13 @@ export default function Contacto() {
   const isFR = locale === 'fr';
   const waMsg = isEN ? 'Hi Jacquie, I would like to schedule a call to discuss Miami pre-construction opportunities.' : isFR ? 'Bonjour Jacquie, je souhaiterais prendre rendez-vous pour discuter d\'opportunités en préconstruction à Miami.' : 'Hola Jacquie, me gustaría coordinar una llamada para hablar de oportunidades en Miami.';
   const waHref = `https://wa.me/17864072591?text=${encodeURIComponent(waMsg)}`;
+  const contactEmail = "jacqueline@miamiliferealty.com";
+  const emailHref = `mailto:${contactEmail}`;
+  const emailNotConfiguredText = isEN
+    ? "Automatic form delivery will be enabled once the final domain/email setup is configured. In the meantime, you can contact me by WhatsApp or email."
+    : isFR
+      ? "L’envoi automatique du formulaire sera activé lorsque le domaine/courriel final sera configuré. Entre-temps, vous pouvez me contacter par WhatsApp ou par courriel."
+      : "El envío automático del formulario quedará activo cuando se configure el dominio/correo final. Mientras tanto, podés escribirme por WhatsApp o email.";
 
   const [form, setForm] = useState({ nombre: "", email: "", mensaje: "", telefonoE164: "", country: "" as Country | "" | "INTL" });
   const [companyHoneypot, setCompanyHoneypot] = useState<string>("");
@@ -32,7 +59,7 @@ export default function Contacto() {
   const ignoreNextPhoneChange = useRef(false);
   const [phoneError, setPhoneError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
-  const [notice, setNotice] = useState<null | { type: 'success' | 'error'; text: string }>(null);
+  const [notice, setNotice] = useState<null | { type: 'success' | 'error' | 'info'; text: string }>(null);
   const [utms, setUtms] = useState<{
     utm_source?: string;
     utm_medium?: string;
@@ -105,7 +132,7 @@ export default function Contacto() {
         }
         setForm(prev => ({ ...prev, telefonoE164: "", country: "" }));
       }
-    } catch (err) {
+    } catch {
       // Solo mostrar error si el usuario está escribiendo (más de 3 caracteres)
       if (newValue.length > 3) {
         setPhoneError(isEN ? "Invalid phone number" : isFR ? "Numéro de téléphone invalide" : "Número de teléfono inválido");
@@ -147,17 +174,30 @@ export default function Contacto() {
       const r = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, ...utms, company: companyHoneypot }),
+        body: JSON.stringify({
+          ...form,
+          ...utms,
+          company: companyHoneypot,
+          locale,
+          sourcePath: window.location.pathname,
+        }),
       });
       const raw = await r.text();
-      let data: any = {};
-      try { data = JSON.parse(raw); } catch {}
+      const data = parseContactApiResponse(raw);
       
       // Handle rate limiting specifically
       if (r.status === 429 || data?.error === "rate_limited") {
         setNotice({ 
           type: 'error', 
           text: isEN ? 'Too many attempts. Please try again in a few minutes.' : isFR ? 'Trop de tentatives. Réessayez dans quelques minutes.' : 'Demasiados intentos. Probá de nuevo en unos minutos.' 
+        });
+        return;
+      }
+
+      if (data?.error === "email_not_configured") {
+        setNotice({
+          type: "info",
+          text: emailNotConfiguredText,
         });
         return;
       }
@@ -178,9 +218,8 @@ export default function Contacto() {
       });
       
       setTimeout(() => router.push(`/${locale}/gracias`), 400);
-    } catch (err) {
+    } catch {
       setNotice({ type: 'error', text: isEN ? 'Could not send the message. Try again.' : isFR ? 'Impossible d\'envoyer le message. Réessayez.' : 'No se pudo enviar. Intenta de nuevo.' });
-      console.error("contact api error:", err);
     } finally {
       setSending(false);
     }
@@ -194,27 +233,27 @@ export default function Contacto() {
   };
 
   return (
-    <div className="w-full bg-surface">
-      <div className="mx-auto w-full max-w-[980px] px-4 py-16">
-        <header className="mb-10 max-w-[42rem] text-left">
-          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-primary">
+    <div className="w-full bg-white">
+      <div className="mx-auto w-full max-w-[1100px] px-4 py-14 sm:py-16 lg:py-20">
+        <header className="mb-10 max-w-[52rem] text-left">
+          <h1 className="font-display text-[36px] font-medium leading-[1.02] tracking-normal text-primary sm:text-[48px]">
             {isEN
-              ? "Tell me what you're looking for in Miami"
+              ? "Let’s talk about your next investment or stay in Miami"
               : isFR
-                ? "Dites-moi ce que vous recherchez à Miami"
-                : "Contame qué estás buscando en Miami"}
+                ? "Parlons de votre prochain investissement ou séjour à Miami"
+                : "Hablemos de tu próxima inversión o estadía en Miami"}
           </h1>
           <p className="mt-3 text-[15px] leading-[1.7] text-foreground/80">
             {isEN
-              ? "You can reach me on WhatsApp or leave your inquiry here, and I'll personally get back to you."
+              ? "Tell me what you're looking for and I'll respond with clear guidance on how to move forward."
               : isFR
-                ? "Vous pouvez m'écrire sur WhatsApp ou laisser votre demande ici, et je vous répondrai personnellement."
-                : "Podés escribirme por WhatsApp o dejarme tu consulta y te voy a responder personalmente."}
+                ? "Dites-moi ce que vous recherchez et je vous répondrai avec une orientation claire pour avancer."
+                : "Contame qué estás buscando y te respondo con una orientación clara para avanzar."}
           </p>
         </header>
 
-        <div className="grid w-full min-w-0 items-start gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-10">
-          <aside className="min-w-0 space-y-5 lg:pt-1">
+        <div className="grid w-full min-w-0 items-start gap-9 lg:grid-cols-[0.82fr_1.18fr] lg:gap-12">
+          <aside className="min-w-0 space-y-5 lg:pt-2">
             <div className="flex items-start gap-4">
               <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl ring-1 ring-primary/10">
                 <Image
@@ -244,44 +283,62 @@ export default function Contacto() {
                   ? "Je peux vous aider à évaluer un bien, répondre à vos questions et vous accompagner dans le processus."
                   : "Puedo ayudarte a evaluar una propiedad, resolver dudas y acompañarte en el proceso."}
             </p>
-            <a
-              href={waHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={handleWhatsApp}
-              className="group inline-flex w-full sm:w-auto items-center justify-center gap-2 h-11 rounded-lg border border-primary/25 bg-white px-5 text-primary text-[14px] font-medium shadow-sm transition-all duration-200 hover:bg-primary/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
-              aria-label={isEN ? "Chat on WhatsApp" : isFR ? "Contacter par WhatsApp" : "Contactar por WhatsApp"}
-            >
-              <svg aria-hidden viewBox="0 0 24 24" className="h-4 w-4 opacity-90 transition-transform group-hover:scale-110" fill="currentColor"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.04 0C5.5 0 .2 5.3.2 11.84c0 2.08.54 4.1 1.57 5.89L0 24l6.42-1.67a11.75 11.75 0 0 0 5.62 1.43h.01c6.54 0 11.85-5.3 11.85-11.84 0-3.16-1.23-6.14-3.38-8.44ZM12.05 21.4a9.55 9.55 0 0 1-4.86-1.33l-.35-.2-3.81 1 1.02-3.71-.23-.38a9.65 9.65 0 0 1-1.49-5.2c0-5.32 4.33-9.64 9.66-9.64 2.58 0 5 1 6.82 2.82a9.6 9.6 0 0 1 2.83 6.8c0 5.32-4.33 9.64-9.59 9.64Zm5.46-7.17c-.3-.15-1.77-.87-2.05-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.65.08-.3-.15-1.26-.46-2.4-1.47-.89-.78-1.49-1.73-1.66-2.02-.17-.3-.02-.46.13-.6.13-.12.3-.32.44-.48.15-.16.2-.27.3-.45.1-.2.05-.36-.02-.5-.07-.15-.66-1.6-.9-2.2-.24-.57-.48-.5-.66-.5h-.56c-.2 0-.5.07-.76.36-.26.3-1 1-1 2.42s1.02 2.8 1.17 3c.15.2 2.02 3.08 4.92 4.33.69.3 1.24.48 1.66.6.7.22 1.35.19 1.86.12.57-.08 1.77-.72 2.03-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.36Z"/></svg>
-              <span className="relative">
-                {isEN ? "Contact via WhatsApp" : isFR ? "Contacter par WhatsApp" : "Contactar por WhatsApp"}
-                <span className="absolute -bottom-1 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent" />
-              </span>
-            </a>
+            <div className="flex min-w-0 flex-col items-start gap-3">
+              <a
+                href={waHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={handleWhatsApp}
+                className="group inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-primary px-5 text-[14px] font-medium text-white shadow-sm transition-all duration-200 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 sm:w-auto"
+                aria-label={isEN ? "Chat on WhatsApp" : isFR ? "Contacter par WhatsApp" : "Contactar por WhatsApp"}
+              >
+                <svg aria-hidden viewBox="0 0 24 24" className="h-4 w-4 opacity-90 transition-transform group-hover:scale-110" fill="currentColor"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.04 0C5.5 0 .2 5.3.2 11.84c0 2.08.54 4.1 1.57 5.89L0 24l6.42-1.67a11.75 11.75 0 0 0 5.62 1.43h.01c6.54 0 11.85-5.3 11.85-11.84 0-3.16-1.23-6.14-3.38-8.44ZM12.05 21.4a9.55 9.55 0 0 1-4.86-1.33l-.35-.2-3.81 1 1.02-3.71-.23-.38a9.65 9.65 0 0 1-1.49-5.2c0-5.32 4.33-9.64 9.66-9.64 2.58 0 5 1 6.82 2.82a9.6 9.6 0 0 1 2.83 6.8c0 5.32-4.33 9.64-9.59 9.64Zm5.46-7.17c-.3-.15-1.77-.87-2.05-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.65.08-.3-.15-1.26-.46-2.4-1.47-.89-.78-1.49-1.73-1.66-2.02-.17-.3-.02-.46.13-.6.13-.12.3-.32.44-.48.15-.16.2-.27.3-.45.1-.2.05-.36-.02-.5-.07-.15-.66-1.6-.9-2.2-.24-.57-.48-.5-.66-.5h-.56c-.2 0-.5.07-.76.36-.26.3-1 1-1 2.42s1.02 2.8 1.17 3c.15.2 2.02 3.08 4.92 4.33.69.3 1.24.48 1.66.6.7.22 1.35.19 1.86.12.57-.08 1.77-.72 2.03-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.36Z"/></svg>
+                <span className="relative">
+                  {isEN ? "Write on WhatsApp" : isFR ? "Écrire sur WhatsApp" : "Escribir por WhatsApp"}
+                  <span className="absolute -bottom-1 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent" />
+                </span>
+              </a>
+              <a
+                href={emailHref}
+                className="max-w-full break-words text-sm font-medium text-primary/70 underline decoration-primary/20 underline-offset-4 transition-colors hover:text-primary"
+              >
+                {contactEmail}
+              </a>
+            </div>
           </aside>
 
-          <section className="relative z-10 min-w-0 rounded-[12px] bg-primary p-6 sm:p-7 ring-1 ring-primary-foreground/10 text-primary-foreground">
-        <div className="pointer-events-none absolute inset-x-5 sm:inset-x-6 top-0 h-[1.5px] rounded-full bg-gradient-to-r from-transparent via-accent/25 to-transparent" />
+          <section className="relative z-10 min-w-0 rounded-[12px] bg-surface/70 p-6 text-foreground shadow-sm ring-1 ring-primary/10 sm:p-7">
+        <div className="pointer-events-none absolute inset-x-5 sm:inset-x-6 top-0 h-[1.5px] rounded-full bg-gradient-to-r from-transparent via-accent/40 to-transparent" />
 
         <header className="mb-4">
-          <h2 className="text-[22px] sm:text-[24px] font-semibold tracking-tight">
+          <h2 className="font-display text-[26px] font-medium leading-[1.05] tracking-normal text-primary sm:text-[30px]">
             {isEN ? "Leave your inquiry" : isFR ? "Laissez votre demande" : "Dejame tu consulta"}
           </h2>
-          <p className="mt-1 text-primary-foreground/85 leading-relaxed">
+          <p className="mt-2 text-[15px] leading-[1.7] text-foreground/75">
             {isEN
-              ? "Fill out the form and I'll get back to you shortly."
+              ? "You can also write on WhatsApp for a more direct response."
               : isFR
-                ? "Remplissez le formulaire et je vous répondrai rapidement."
-                : "Completá el formulario y te responderé a la brevedad."}
+                ? "Vous pouvez aussi m’écrire sur WhatsApp pour une réponse plus directe."
+              : "También podés escribirme por WhatsApp para una respuesta más directa."}
           </p>
         </header>
+
+        {notice?.type === "info" && (
+          <div
+            role="status"
+            aria-live="polite"
+            className="mb-4 rounded-lg border border-primary/10 bg-white/75 px-4 py-3 text-sm leading-6 text-primary/75"
+          >
+            {notice.text}
+          </div>
+        )}
 
         <form className="mt-2 grid min-w-0 gap-3" onSubmit={(e)=>{e.preventDefault(); handleSubmit();}}>
           <label className="block">
             <span className="sr-only">{isEN ? 'Name' : isFR ? 'Nom' : 'Nombre'}</span>
             <input
               name="nombre"
-              className="h-11 w-full rounded-md border border-primary-foreground/20 bg-white px-3 text-primary placeholder-black/40 outline-none focus:ring-2 focus:ring-accent/40"
+              className="h-11 w-full rounded-md border border-primary/10 bg-white px-3 text-foreground placeholder-foreground/40 outline-none transition focus:border-primary/20 focus:ring-2 focus:ring-accent/35"
               placeholder={isEN ? 'Name' : isFR ? 'Nom' : 'Nombre'}
               required
               onChange={handleChange}
@@ -291,7 +348,7 @@ export default function Contacto() {
             <span className="sr-only">{isEN ? 'Email' : isFR ? 'Courriel' : 'Email'}</span>
             <input
               name="email"
-              className="h-11 w-full rounded-md border border-primary-foreground/20 bg-white px-3 text-primary placeholder-black/40 outline-none focus:ring-2 focus:ring-accent/40"
+              className="h-11 w-full rounded-md border border-primary/10 bg-white px-3 text-foreground placeholder-foreground/40 outline-none transition focus:border-primary/20 focus:ring-2 focus:ring-accent/35"
               placeholder={isEN ? 'Email' : isFR ? 'Courriel' : 'Email'}
               type="email"
               required
@@ -325,7 +382,7 @@ export default function Contacto() {
               </div>
             </label>
             {phoneError && (
-              <p className="mt-1 text-sm text-red-400" role="alert">
+              <p className="mt-1 text-sm text-red-600" role="alert">
                 {phoneError}
               </p>
             )}
@@ -334,7 +391,7 @@ export default function Contacto() {
             <span className="sr-only">{isEN ? 'Message' : isFR ? 'Message' : 'Mensaje'}</span>
             <textarea
               name="mensaje"
-              className="min-h-32 w-full rounded-md border border-primary-foreground/20 bg-white p-3 text-primary placeholder-black/40 outline-none focus:ring-2 focus:ring-accent/40"
+              className="min-h-32 w-full rounded-md border border-primary/10 bg-white p-3 text-foreground placeholder-foreground/40 outline-none transition focus:border-primary/20 focus:ring-2 focus:ring-accent/35"
               placeholder={isEN ? 'Your message' : isFR ? 'Votre message' : 'Tu consulta'}
               required
               onChange={handleChange}
@@ -357,17 +414,17 @@ export default function Contacto() {
           <button
             type="submit"
             disabled={sending}
-            className={`mt-1 h-11 rounded-md px-4 text-primary-foreground text-[14px] font-medium focus-visible:ring-2 focus-visible:ring-accent/40 transition-colors ${sending ? 'bg-primary-foreground/10 opacity-70 cursor-not-allowed' : 'bg-primary-foreground/10 hover:bg-primary-foreground/20'}`}
+            className={`mt-1 h-11 rounded-md px-4 text-white text-[14px] font-medium focus-visible:ring-2 focus-visible:ring-accent/40 transition-colors ${sending ? 'bg-primary/70 opacity-70 cursor-not-allowed' : 'bg-primary hover:bg-primary/90'}`}
             aria-label={isEN ? 'Send inquiry' : isFR ? 'Envoyer la demande' : 'Enviar consulta'}
           >
-            {isEN ? 'Send' : isFR ? 'Envoyer' : 'Enviar'}
+            {isEN ? 'Send inquiry' : isFR ? 'Envoyer la demande' : 'Enviar consulta'}
           </button>
         </form>
           </section>
         </div>
 
       {/* Toast */}
-      {notice && (
+      {notice && notice.type !== "info" && (
         <div
           role="status"
           aria-live="polite"

@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { FileText, ListChecks, MapPin } from "lucide-react";
 import { LISTINGS } from "@/data/listings";
 import { getListingFrOverlay } from "@/data/listingsFrOverlay";
 import { ListingDetailTopClient } from "./ListingDetailTopClient";
@@ -90,6 +91,11 @@ export default async function ListingDetailPage({
   const frOverlay = isFR ? getListingFrOverlay(item.slug) : null;
 
   const addressDisplay = (item as { addressFull?: string; title: string }).addressFull ?? (item as { title: string }).title;
+  const listingDisplayTitle = isEN
+    ? `Selected property in ${item.city}`
+    : isFR
+      ? `Propriété sélectionnée à ${item.city}`
+      : `Propiedad seleccionada en ${item.city}`;
   const descriptionText = isEN
     ? ((item as { descriptionLong_en?: string; description_en: string }).descriptionLong_en ?? item.description_en)
     : isFR
@@ -100,6 +106,11 @@ export default async function ListingDetailPage({
     : isFR
       ? (frOverlay?.amenities ?? [])
       : ((item as { amenities_es?: string[] }).amenities_es ?? []);
+  const sectionCardClass = "mb-8 rounded-[10px] bg-surface p-5 ring-1 ring-primary/10 sm:p-6";
+  const sectionHeadingClass = "mb-3 flex items-center gap-2 font-display text-[20px] font-medium leading-[1.08] tracking-normal text-primary sm:text-[22px]";
+  const sectionIconClass = "h-4 w-4 shrink-0 text-primary/70 stroke-[1.5]";
+  const descriptionIconClass = `${sectionIconClass} -translate-y-[3px]`;
+  const locationIconClass = `${sectionIconClass} -translate-y-[3px]`;
 
   const translateType = (value?: string) => {
     if (!value) return value;
@@ -265,13 +276,14 @@ export default async function ListingDetailPage({
           href={`/${locale}/listings`}
           className="text-[14px] text-foreground/70 no-underline hover:underline"
         >
-          {isEN ? "← Active listings" : isFR ? "← Annonces actives" : "← Propiedades activas"}
+          {isEN ? "← Available properties" : isFR ? "← Propriétés disponibles" : "← Propiedades disponibles"}
         </Link>
       </div>
 
       <ListingDetailTopClient
         key={item.slug}
         addressDisplay={addressDisplay}
+        listingDisplayTitle={listingDisplayTitle}
         city={item.city}
         item={{
           images: item.images,
@@ -290,8 +302,9 @@ export default async function ListingDetailPage({
       />
 
       {/* Description */}
-      <section className="mb-8 rounded-[12px] ring-1 ring-black/10 bg-white p-5 sm:p-6">
-        <h2 className="text-lg font-semibold tracking-tight text-primary mb-3">
+      <section className={sectionCardClass}>
+        <h2 className={sectionHeadingClass}>
+          <FileText className={descriptionIconClass} aria-hidden />
           {isEN ? "Description" : isFR ? "Description" : "Descripción"}
         </h2>
         <p className="text-[15px] leading-[1.7] text-foreground/90">
@@ -301,8 +314,9 @@ export default async function ListingDetailPage({
 
       {/* Amenities */}
       {amenitiesList.length > 0 && (
-        <section className="mb-8 rounded-[12px] ring-1 ring-black/10 bg-white p-5 sm:p-6">
-          <h2 className="text-lg font-semibold tracking-tight text-primary mb-3">
+        <section className={sectionCardClass}>
+          <h2 className={sectionHeadingClass}>
+            <ListChecks className={sectionIconClass} aria-hidden />
             {isEN ? "Amenities and details" : isFR ? "Commodités et détails" : "Comodidades y detalles"}
           </h2>
           <ul className="list-disc list-inside text-[15px] leading-[1.7] text-foreground/90 space-y-1">
@@ -313,8 +327,8 @@ export default async function ListingDetailPage({
         </section>
       )}
 
-      {/* Specs: beds, baths, sqft, type, MLS + optional year, HOA, view, rentals, pets, parking, waterfront, furnished */}
-      <section className="mb-8 rounded-[12px] ring-1 ring-black/10 bg-white p-5 sm:p-6">
+      {/* Specs: beds, baths, area, type, MLS + optional year, HOA, view, rentals, pets, parking, waterfront, furnished */}
+      <section className={sectionCardClass}>
         <dl className="grid gap-2 sm:grid-cols-2 text-[15px]">
           <div>
             <dt className="text-foreground/70">{isEN ? "Bedrooms" : isFR ? "Chambres" : "Dormitorios"}</dt>
@@ -325,8 +339,14 @@ export default async function ListingDetailPage({
             <dd className="font-medium text-primary">{item.baths}</dd>
           </div>
           <div>
-            <dt className="text-foreground/70">{isFR ? "Pi²" : "Sqft"}</dt>
-            <dd className="font-medium text-primary">{item.size.toLocaleString("en-US")}</dd>
+            <dt className="text-foreground/70">{isEN ? "Area" : isFR ? "Superficie" : "Superficie"}</dt>
+            <dd className="font-medium text-primary">
+              {isEN
+                ? `${item.size.toLocaleString("en-US")} sq ft`
+                : isFR
+                  ? `${item.size.toLocaleString("fr-CA")} pi²`
+                  : `${item.size.toLocaleString("en-US")} ft²`}
+            </dd>
           </div>
           <div>
             <dt className="text-foreground/70">{isEN ? "Type" : isFR ? "Type" : "Tipo"}</dt>
@@ -368,7 +388,7 @@ export default async function ListingDetailPage({
           )}
           {"parking" in item && item.parking && (
             <div>
-              <dt className="text-foreground/70">Parking</dt>
+              <dt className="text-foreground/70">{isEN ? "Parking" : isFR ? "Stationnement" : "Estacionamiento"}</dt>
               <dd className="font-medium text-primary">{translateParking(item.parking)}</dd>
             </div>
           )}
@@ -389,9 +409,10 @@ export default async function ListingDetailPage({
 
       {/* Location */}
       {"latitude" in item && "longitude" in item && item.latitude != null && item.longitude != null && (
-        <section className="mb-8 rounded-[12px] ring-1 ring-black/10 bg-white overflow-hidden">
-          <div className="p-4 sm:p-5 border-b border-black/10">
-            <h2 className="text-lg font-semibold tracking-tight text-primary">
+        <section className="mb-8 overflow-hidden rounded-[10px] bg-surface ring-1 ring-primary/10">
+          <div className="p-4 sm:p-5 border-b border-primary/10">
+            <h2 className={sectionHeadingClass}>
+              <MapPin className={locationIconClass} aria-hidden />
               {isEN ? "Location" : isFR ? "Emplacement" : "Ubicación"}
             </h2>
             {addressDisplay && (
@@ -413,12 +434,6 @@ export default async function ListingDetailPage({
 
       {/* CTAs */}
       <section className="flex flex-wrap gap-3">
-        <Link
-          href={`/${locale}/contacto`}
-          className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-5 text-sm font-medium text-primary-foreground no-underline hover:opacity-95 focus-visible:ring-2 focus-visible:ring-accent/40"
-        >
-          {isEN ? "Contact" : isFR ? "Contact" : "Contactar"}
-        </Link>
         <a
           href={`https://wa.me/17864072591?text=${encodeURIComponent(
             isEN
@@ -429,10 +444,16 @@ export default async function ListingDetailPage({
           )}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex h-10 items-center justify-center rounded-md border border-primary/25 px-5 text-sm font-medium text-primary no-underline hover:bg-primary/5 focus-visible:ring-2 focus-visible:ring-accent/40"
+          className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-5 text-sm font-medium text-primary-foreground no-underline hover:opacity-95 focus-visible:ring-2 focus-visible:ring-accent/40"
         >
           WhatsApp
         </a>
+        <Link
+          href={`/${locale}/contacto`}
+          className="inline-flex h-10 items-center justify-center rounded-md border border-primary/25 px-5 text-sm font-medium text-primary no-underline hover:bg-primary/5 focus-visible:ring-2 focus-visible:ring-accent/40"
+        >
+          {isEN ? "Contact" : isFR ? "Contact" : "Contactar"}
+        </Link>
       </section>
     </main>
   );

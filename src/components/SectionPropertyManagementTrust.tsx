@@ -6,59 +6,59 @@ export default function SectionPropertyManagementTrust({ locale }: Props) {
   const isFR = locale === "fr";
 
   const title = isEN
-    ? "Why work with me"
+    ? "Why trust me to manage your property"
     : isFR
-      ? "Pourquoi travailler avec moi"
-      : "Por qué trabajar conmigo";
+      ? "Pourquoi me confier la gestion de votre propriété"
+      : "Por qué confiar en mí para gestionar tu propiedad";
 
   const intro = isEN
-    ? "I don’t offer an impersonal management service. I get involved in each property with criteria, attention, and direct follow-up."
+    ? "Real follow-up, good judgment, and local presence. I take care of your place with the same attention I’d want for my own."
     : isFR
-      ? "Je ne propose pas une gestion impersonnelle. Je m'implique dans chaque propriété avec discernement, attention et suivi direct."
-      : "No ofrezco una gestión impersonal. Me involucro en cada propiedad con criterio, atención y seguimiento directo.";
+      ? "Un suivi réel, du discernement et une présence locale. Je prends soin de votre propriété avec l’attention que j’aimerais pour la mienne."
+      : "Seguimiento real, criterio y presencia local. Cuido tu propiedad con la misma atención que me gustaría para la mía.";
 
   const items = isEN
     ? [
         {
-          title: "Personalized attention",
-          text: "Each property and every guest receive direct, close follow-up.",
+          title: "Personal attention",
+          text: "You’re not one more unit. You get direct communication and steady follow-up.",
         },
         {
-          title: "Careful guest selection",
-          text: "I prioritize calm profiles, families, and referrals to take care of your unit.",
+          title: "Good judgment to protect your home",
+          text: "I prioritize calm, respectful stays and decisions that preserve your property.",
         },
         {
-          title: "Your trusted person in Miami",
-          text: "I am in Miami to solve issues, coordinate, and take care of your property as if it were my own.",
+          title: "Real presence in Miami",
+          text: "I’m here to check in, coordinate, and respond quickly when something matters.",
         },
       ]
     : isFR
       ? [
           {
             title: "Attention personnalisée",
-            text: "Chaque propriété et chaque invité bénéficient d'un suivi direct et rapproché.",
+            text: "Vous n’êtes pas un dossier de plus. Communication directe et suivi constant.",
           },
           {
-            title: "Sélection soigneuse des invités",
-            text: "Je privilégie les profils calmes, les familles et les personnes recommandées pour protéger votre unité.",
+            title: "Du discernement pour protéger votre bien",
+            text: "Je privilégie des séjours sereins et des décisions qui préservent votre propriété.",
           },
           {
-            title: "Votre personne de confiance à Miami",
-            text: "Je suis à Miami pour résoudre, coordonner et prendre soin de votre propriété comme si c'était la mienne.",
+            title: "Une présence réelle à Miami",
+            text: "Je suis sur place pour vérifier, coordonner et réagir vite quand il le faut.",
           },
         ]
       : [
           {
             title: "Atención personalizada",
-            text: "Cada propiedad y cada huésped reciben seguimiento directo y cercano.",
+            text: "No sos un caso más. Comunicación directa y seguimiento constante.",
           },
           {
-            title: "Selección cuidadosa de huéspedes",
-            text: "Priorizo perfiles tranquilos, familias y referidos para cuidar tu unidad.",
+            title: "Criterio para cuidar tu propiedad",
+            text: "Priorizo estadías tranquilas y decisiones que protegen tu unidad y tu tranquilidad.",
           },
           {
-            title: "Tu persona de confianza en Miami",
-            text: "Estoy en Miami para resolver, coordinar y cuidar tu propiedad como si fuera propia.",
+            title: "Presencia real en Miami",
+            text: "Estoy en Miami para supervisar, coordinar y responder rápido cuando importa.",
           },
         ];
 

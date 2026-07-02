@@ -9,19 +9,19 @@ const proyectosMeta: Record<
   { title: string; description: string }
 > = {
   es: {
-    title: "Proyectos en Miami | Jacquie Zarate Realtor",
+    title: "Proyectos de preconstrucción | Jacquie Zarate Realtor",
     description:
-      "Explorá proyectos de preconstrucción y oportunidades inmobiliarias en Miami con acompañamiento personalizado.",
+      "Explorá proyectos de preconstrucción en Miami, Orlando y distintas zonas de Florida con foco en ubicación, entrega, renta permitida y criterio de inversión.",
   },
   en: {
-    title: "Miami Projects | Jacquie Zarate Realtor",
+    title: "Preconstruction projects | Jacquie Zarate Realtor",
     description:
-      "Explore pre-construction projects and real estate opportunities in Miami with personalized guidance.",
+      "Explore selected preconstruction projects in Miami, Orlando, and other Florida markets with guidance on location, delivery timing, rental flexibility, and investment criteria.",
   },
   fr: {
-    title: "Projets à Miami | Jacquie Zarate Realtor",
+    title: "Projets en préconstruction | Jacquie Zarate Realtor",
     description:
-      "Découvrez des projets de préconstruction et des opportunités immobilières à Miami avec un accompagnement personnalisé.",
+      "Découvrez des projets en préconstruction à Miami, Orlando et dans d’autres secteurs de la Floride, avec un accompagnement sur l’emplacement, la livraison, la flexibilité locative et les critères d’investissement.",
   },
 };
 

@@ -3,7 +3,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 type Img = { src: string; alt?: string };
 
@@ -52,6 +52,7 @@ export default function GalleryLightbox({
   const L = galleryA11y(locale);
   const [open, setOpen] = useState(false);
   const [idx, setIdx] = useState(0);
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
 
   const openAt = useCallback((i: number) => {
     setIdx(i);
@@ -62,6 +63,30 @@ export default function GalleryLightbox({
 
   const prev = useCallback(() => setIdx((i) => (i - 1 + images.length) % images.length), [images.length]);
   const next = useCallback(() => setIdx((i) => (i + 1) % images.length), [images.length]);
+
+  const handleTouchStart = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    const touch = e.touches[0];
+    if (!touch) return;
+    touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+  }, []);
+
+  const handleTouchEnd = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    const start = touchStartRef.current;
+    const touch = e.changedTouches[0];
+    touchStartRef.current = null;
+    if (!start || !touch || images.length <= 1) return;
+
+    const dx = touch.clientX - start.x;
+    const dy = touch.clientY - start.y;
+    const isHorizontalSwipe = Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.2;
+    if (!isHorizontalSwipe) return;
+
+    if (dx < 0) {
+      next();
+    } else {
+      prev();
+    }
+  }, [images.length, next, prev]);
 
   // Close on ESC, navigate with arrows
   useEffect(() => {
@@ -151,43 +176,20 @@ export default function GalleryLightbox({
             className="relative flex max-h-[90%] max-w-[90%] flex-1 items-center justify-center"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative inline-block max-h-[90vh] max-w-[90vw]">
+            <div
+              className="relative inline-block max-h-[90vh] max-w-[92vw] touch-pan-y select-none sm:max-h-[86vh] sm:max-w-[calc(100vw-10rem)]"
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+            >
               <Image
                 src={images[idx].src}
                 alt={images[idx].alt ?? `${name} — ${L.altFallback(idx + 1)}`}
                 width={1600}
                 height={1000}
-                className="h-auto w-auto max-h-[90vh] max-w-[90vw] rounded-lg object-contain"
+                className="h-auto w-auto max-h-[90vh] max-w-[92vw] rounded-lg object-contain sm:max-h-[86vh] sm:max-w-[calc(100vw-10rem)]"
+                draggable={false}
                 priority
               />
-
-              {/* Controls */}
-              {images.length > 1 && (
-                <div className="absolute inset-x-0 top-1/2 flex -translate-y-1/2 justify-between px-3">
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      prev();
-                    }}
-                    className="h-9 w-9 rounded-md bg-primary/85 text-primary-foreground hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
-                    aria-label={L.prev}
-                  >
-                    ‹
-                  </button>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      next();
-                    }}
-                    className="h-9 w-9 rounded-md bg-primary/85 text-primary-foreground hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
-                    aria-label={L.next}
-                  >
-                    ›
-                  </button>
-                </div>
-              )}
 
               <button
                 type="button"
@@ -200,6 +202,34 @@ export default function GalleryLightbox({
               >
                 ✕
               </button>
+
+              {/* Desktop controls stay outside the image but close to its visual frame. */}
+              {images.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      prev();
+                    }}
+                    className="absolute top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-primary/80 text-2xl leading-none text-primary-foreground shadow-lg backdrop-blur-sm hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 sm:-left-14 sm:flex lg:-left-16"
+                    aria-label={L.prev}
+                  >
+                    ‹
+                  </button>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      next();
+                    }}
+                    className="absolute top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-primary/80 text-2xl leading-none text-primary-foreground shadow-lg backdrop-blur-sm hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 sm:-right-14 sm:flex lg:-right-16"
+                    aria-label={L.next}
+                  >
+                    ›
+                  </button>
+                </>
+              )}
             </div>
           </div>
 

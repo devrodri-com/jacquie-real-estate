@@ -29,9 +29,26 @@ Always preserve these truths unless explicitly told otherwise:
 - Jacquie’s positioning:
   > "Your trusted person in Miami"
 - Business priority:
-  1. Property Management
-  2. Listings
-  3. Pre-construction
+  1. Sale / real estate investment
+  2. Pre-construction + resale listings
+  3. Financing
+  4. Let’s Go Miami as a separated short-rental / Vacation Condo Management experience
+  5. Property Management as a secondary investor support service
+- Let’s Go Miami positioning:
+  - Brand: Let’s Go Miami
+  - Associated company: Jacna Services LLC
+  - Service: Vacation Condo Management / short rental
+  - Email: jacnaservices@gmail.com
+  - Phone: same phone as Jacquie
+- Let’s Go Miami must not use Miami Life Realty as its brand, broker, or main footer identity.
+- Miami Life Realty may remain on the main Jacquie Real Estate/Realtor site, but not inside Let’s Go Miami sections or future landing pages.
+- Do not create a listing or detail page for “unit 403”.
+- Do not show unit number, exact address, nightly price, or availability claims for Let’s Go Miami stays.
+- Photos from unit 403 may only be used as representative visuals for the type of condos available.
+- Let’s Go Miami inquiries should go through WhatsApp and `jacnaservices@gmail.com`.
+- Allowed Let’s Go Miami stay facts: Sunny Isles as a general area, minimum stays from 6 nights, general amenities such as pool, spa, gym, and covered patio, and variable rates/availability by season, dates, and guest count.
+- Let’s Go Miami pages must use their own footer identity: Let’s Go Miami, by Jacna Services LLC, Vacation Condo Management, `jacnaservices@gmail.com`, and Jacquie’s WhatsApp number.
+- Let’s Go Miami pages must not inherit or display the main Miami Life Realty footer.
 - Home is not a neutral hub and not a marketplace.
 - Home should act like a **trust-led landing with secondary exploration**.
 - The user is often:

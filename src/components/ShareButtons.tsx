@@ -3,6 +3,7 @@
 
 import * as React from "react";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 type Props = {
   url: string; // absolute URL to share
@@ -33,8 +34,9 @@ export default function ShareButtons({
 
   const isDark = variant === "dark";
   const btn = isDark
-    ? "h-10 items-center justify-center gap-2 rounded-md border border-white/40 px-4 text-sm font-medium text-white hover:bg-white/10 w-full sm:w-auto"
-    : "h-10 items-center justify-center gap-2 rounded-md border border-[#0A2540]/20 px-4 text-sm font-medium text-[#0A2540] hover:bg-[#F9FAFB] w-full sm:w-auto";
+    ? "inline-flex h-10 items-center justify-center gap-2 rounded-md border border-white/40 px-4 text-sm font-medium text-white hover:bg-white/10 w-full sm:w-auto"
+    : "inline-flex h-10 items-center justify-center gap-2 rounded-md border border-[#0A2540]/20 px-4 text-sm font-medium text-[#0A2540] hover:bg-[#F9FAFB] w-full sm:w-auto";
+  const btnClassName = cn(btn, buttonClassName);
 
   const title =
     locale === "en"
@@ -50,64 +52,59 @@ export default function ShareButtons({
         ? "Partager via WhatsApp"
         : "Compartir por WhatsApp");
 
+  const getSystemShare = React.useCallback(() => {
+    if (!showSystemShare || typeof navigator === "undefined") return null;
+    return typeof navigator.share === "function" ? navigator.share.bind(navigator) : null;
+  }, [showSystemShare]);
+
+  const shareWithSystem = React.useCallback(() => {
+    const share = getSystemShare();
+    if (!share) return;
+    void share({ title: text || document.title, url }).catch(() => {});
+  }, [getSystemShare, text, url]);
+
   const [canSystemShare, setCanSystemShare] = React.useState(false);
   React.useEffect(() => {
-    if (typeof navigator !== "undefined" && (navigator as any).share) setCanSystemShare(true);
-  }, []);
+    setCanSystemShare(Boolean(getSystemShare()));
+  }, [getSystemShare]);
 
-  // Desktop media query flag
-  const [isDesktop, setIsDesktop] = React.useState(false);
-  React.useEffect(() => {
-    if (typeof window !== "undefined") {
-      const mq = window.matchMedia("(min-width: 640px)");
-      const apply = () => setIsDesktop(mq.matches);
-      apply();
-      mq.addEventListener?.("change", apply);
-      return () => mq.removeEventListener?.("change", apply);
-    }
-  }, []);
-
-  const onClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (!isDesktop && typeof navigator !== "undefined" && (navigator as any).share) {
-      e.preventDefault();
-      (navigator as any).share({ title: text || document.title, url }).catch(() => {});
-    }
-  };
+  const showNativeShare = showSystemShare && canSystemShare;
 
   return (
     <div className={`flex items-center gap-2 ${className}`} aria-label={title}>
-      <a
-        href={wa}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={title}
-        className={`${btn} ${buttonClassName ?? ""} sm:inline-flex hidden`}
-        onClick={onClick}
-        style={{ display: isDesktop ? undefined : 'none' }}
-      >
-        {
-          iconSrc ? (
-            <Image src={iconSrc} alt="" width={16} height={16} className="h-4 w-4" />
-          ) : (
-            <WhatsAppIcon />
-          )
-        }
-        <span className="leading-none">{btnText}</span>
-      </a>
-      <button
-        type="button"
-        onClick={() => (navigator as any).share?.({ title: text || document.title, url }).catch(() => {})}
-        className={`inline-flex ${btn}`}
-        aria-label={
-          locale === "en" ? "Share" : locale === "fr" ? "Partager" : "Compartir"
-        }
-        style={{ display: isDesktop ? (canSystemShare ? undefined : 'none') : undefined }}
-      >
-        <SystemShareIcon />
-        <span className="leading-none">
-          {locale === "en" ? "Share" : locale === "fr" ? "Partager" : "Compartir"}
-        </span>
-      </button>
+      {!showNativeShare && (
+        <a
+          href={wa}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={title}
+          className={btnClassName}
+        >
+          {
+            iconSrc ? (
+              <Image src={iconSrc} alt="" width={16} height={16} className="h-4 w-4" />
+            ) : (
+              <WhatsAppIcon />
+            )
+          }
+          <span className="leading-none">{btnText}</span>
+        </a>
+      )}
+      {showNativeShare && (
+        <button
+          type="button"
+          onClick={shareWithSystem}
+          className={btnClassName}
+          aria-label={
+            locale === "en" ? "Share" : locale === "fr" ? "Partager" : "Compartir"
+          }
+        >
+          <SystemShareIcon />
+          <span className="leading-none">
+            {locale === "en" ? "Share" : locale === "fr" ? "Partager" : "Compartir"}
+          </span>
+        </button>
+      )}
     </div>
   );
 }

@@ -5,20 +5,24 @@ module.exports = {
     extend: {
       colors: {
         // Paleta de marca
-        primary: '#1F3A34',
-        accent:  '#8FA79B',
-        ink:     '#2F2F2F',
+        primary: '#3B274A',
+        accent:  '#A98BB8',
+        ink:     '#2B2530',
         paper:   '#FFFFFF',
-        surface: '#F7F6F3',
+        surface: '#F8F5FA',
         placeholder: '#E5E7EB',
         brand: {
-          primary: '#1F3A34',
-          accent: '#8FA79B',
-          ink: '#2F2F2F',
+          primary: '#3B274A',
+          accent: '#A98BB8',
+          ink: '#2B2530',
           paper: '#FFFFFF',
-          surface: '#F7F6F3',
+          surface: '#F8F5FA',
           placeholder: '#E5E7EB'
         }
+      },
+      fontFamily: {
+        sans: ['var(--font-inter)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        display: ['var(--font-newsreader)', 'Georgia', 'Times New Roman', 'serif']
       },
       borderRadius: { xl: '1rem' }
     }

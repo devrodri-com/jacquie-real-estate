@@ -8,18 +8,22 @@ export default function SectionListingsHome({ locale }: Props) {
   const isEN = locale === "en";
   const isFR = locale === "fr";
 
-  const title = isEN ? "Active Listings" : isFR ? "Annonces actives" : "Listings activos";
+  const eyebrow = isEN ? "ACTIVE PROPERTIES" : isFR ? "PROPRIÉTÉS ACTIVES" : "PROPIEDADES ACTIVAS";
+  const title = isEN ? "Available Properties" : isFR ? "Propriétés disponibles" : "Propiedades disponibles";
   const intro = isEN
-    ? "I help you identify active properties in Miami with strong investment, rental, and appreciation potential."
+    ? "Explore active properties already available in Miami and South Florida, ideal for buyers looking for a move-in-ready unit, rental potential, or an investment opportunity."
     : isFR
-      ? "Je vous aide à identifier des propriétés actives à Miami avec un fort potentiel d'investissement, de location et de valorisation."
-      : "Te ayudo a identificar propiedades activas en Miami con potencial de inversión, renta y valorización.";
+      ? "Explorez des propriétés actives déjà disponibles à Miami et dans le sud de la Floride, idéales pour les acheteurs qui recherchent une unité prête à utiliser, un potentiel locatif ou une occasion d’investissement."
+      : "Explorá propiedades activas ya disponibles en Miami y South Florida, ideales para quienes buscan comprar una unidad lista para usar, alquilar o evaluar como inversión.";
 
   const listings = LISTINGS.slice(0, 2);
 
   return (
-    <section aria-labelledby="listings-home-title" className="max-w-[1100px] mx-auto px-4">
-      <h2 id="listings-home-title" className="text-2xl sm:text-3xl font-semibold tracking-tight text-primary">
+    <section aria-labelledby="listings-home-title" className="max-w-[1100px] mx-auto px-4 pt-4 md:pt-6">
+      <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-primary/62">
+        {eyebrow}
+      </p>
+      <h2 id="listings-home-title" className="font-display text-3xl font-medium leading-[1.05] tracking-normal text-primary sm:text-4xl">
         {title}
       </h2>
       <p className="mt-2 max-w-[60ch] text-[15px] leading-[1.7] text-foreground/85">
@@ -30,10 +34,10 @@ export default function SectionListingsHome({ locale }: Props) {
           const addressDisplay = (item as { addressFull?: string }).addressFull ?? item.title;
           const listingHref = `/${locale}/listings/${item.slug}`;
           const specsText = isEN
-            ? `${item.beds} beds • ${item.baths} baths • ${item.size.toLocaleString("en-US")} sqft`
+            ? `${item.beds} beds • ${item.baths} baths • ${item.size.toLocaleString("en-US")} sq ft`
             : isFR
               ? `${item.beds} ch. • ${item.baths} sdb • ${item.size.toLocaleString("en-US")} pi²`
-              : `${item.beds} hab • ${item.baths} baños • ${item.size.toLocaleString("en-US")} sqft`;
+              : `${item.beds} hab • ${item.baths} baños • Superficie ${item.size.toLocaleString("en-US")} ft²`;
           return (
             <div
               key={item.id}
@@ -50,7 +54,7 @@ export default function SectionListingsHome({ locale }: Props) {
                 />
               </Link>
               <div className="flex flex-col flex-1 min-h-0 p-5 bg-primary text-primary-foreground">
-                <h3 className="text-[17px] font-semibold tracking-tight text-primary-foreground">
+                <h3 className="font-display text-[21px] font-medium leading-[1.08] tracking-normal text-primary-foreground">
                   <Link
                     href={listingHref}
                     className="no-underline hover:underline underline-offset-4 decoration-primary-foreground/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 text-primary-foreground"
@@ -94,18 +98,18 @@ export default function SectionListingsHome({ locale }: Props) {
           );
         })}
       </div>
-      <div className="mt-6 flex flex-wrap gap-3">
+      <div className="mt-6 flex flex-wrap justify-center gap-3 md:justify-start">
         <Link
           href={`/${locale}/listings`}
           className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-5 text-sm font-medium text-primary-foreground no-underline hover:opacity-95 focus-visible:ring-2 focus-visible:ring-accent/40"
         >
-          {isEN ? "See listings" : isFR ? "Voir les annonces" : "Ver listings"}
+          {isEN ? "View available properties" : isFR ? "Voir les propriétés disponibles" : "Ver propiedades disponibles"}
         </Link>
         <Link
           href={`/${locale}/contacto`}
           className="inline-flex h-10 items-center justify-center rounded-md border border-primary/25 px-5 text-sm font-medium text-primary no-underline hover:bg-primary/5 focus-visible:ring-2 focus-visible:ring-accent/40"
         >
-          {isEN ? "Ask about active opportunities" : isFR ? "Consulter les opportunités actives" : "Consultar por oportunidades activas"}
+          {isEN ? "Ask about available opportunities" : isFR ? "Consulter les opportunités disponibles" : "Consultar por oportunidades disponibles"}
         </Link>
       </div>
     </section>
