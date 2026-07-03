@@ -359,7 +359,11 @@ export default async function Home({params}: {params: Promise<{locale: string}>}
             <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-primary/55">
               {locale === "en" ? "STAYS IN MIAMI" : locale === "fr" ? "SÉJOURS À MIAMI" : "ESTADÍAS EN MIAMI"}
             </p>
-            <div className="relative mx-auto mt-4 aspect-square w-full max-w-[220px]">
+            <Link
+              href={letsGoHref}
+              aria-label="Let’s Go Miami"
+              className="relative mx-auto mt-4 block aspect-square w-full max-w-[220px] rounded-[10px] no-underline transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+            >
               <Image
                 src="/images/lets-go-miami/logo.png"
                 alt="Let’s Go Miami by Jacna Services LLC"
@@ -367,7 +371,7 @@ export default async function Home({params}: {params: Promise<{locale: string}>}
                 sizes="220px"
                 className="object-contain"
               />
-            </div>
+            </Link>
             <h2 id="lets-go-miami-title" className="sr-only">
               Let’s Go Miami
             </h2>
@@ -384,11 +388,16 @@ export default async function Home({params}: {params: Promise<{locale: string}>}
           </div>
           <div>
             <h3 className="font-display text-3xl font-medium leading-[1.05] tracking-normal text-primary sm:text-4xl">
-              {locale === "en"
-                ? "Short stays and vacation rentals in Miami"
-                : locale === "fr"
-                  ? "Séjours de courte durée à Miami"
-                  : "Renta corta y estadías en Miami"}
+              <Link
+                href={letsGoHref}
+                className="text-primary no-underline transition-colors hover:text-primary/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+              >
+                {locale === "en"
+                  ? "Short stays and vacation rentals in Miami"
+                  : locale === "fr"
+                    ? "Séjours de courte durée à Miami"
+                    : "Renta corta y estadías en Miami"}
+              </Link>
             </h3>
             <p className="mt-3 text-[15px] leading-[1.75] text-foreground/82">
               {locale === "en"
