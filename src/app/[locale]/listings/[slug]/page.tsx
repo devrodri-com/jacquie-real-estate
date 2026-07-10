@@ -257,7 +257,7 @@ export default async function ListingDetailPage({
   };
 
   return (
-    <main className="mx-auto max-w-[1100px] px-4 py-12 text-foreground">
+    <div className="mx-auto max-w-[1100px] px-4 py-12 text-foreground">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaObject) }}
@@ -414,7 +414,11 @@ export default async function ListingDetailPage({
           <div className="relative w-full aspect-[16/10]">
             <iframe
               src={`https://www.google.com/maps?q=${item.latitude},${item.longitude}&z=15&output=embed`}
-              title={isEN ? "Location map" : isFR ? "Carte de l'emplacement" : "Mapa de ubicación"}
+              title={isEN
+                ? `Location of ${item.title}`
+                : isFR
+                  ? `Emplacement de ${item.title}`
+                  : `Ubicación de ${item.title}`}
               className="absolute inset-0 w-full h-full border-0"
               allowFullScreen
               loading="lazy"
@@ -447,6 +451,6 @@ export default async function ListingDetailPage({
           {isEN ? "Contact" : isFR ? "Contact" : "Contactar"}
         </Link>
       </section>
-    </main>
+    </div>
   );
 }

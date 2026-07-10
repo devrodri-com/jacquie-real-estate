@@ -3,12 +3,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import {usePathname} from "next/navigation";
-import {useState, useEffect} from "react";
+import {useState, useEffect, useRef} from "react";
 import {useLocale} from "next-intl";
 
 export default function NavBar(){
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const menuCloseButtonRef = useRef<HTMLButtonElement>(null);
+  const mobileNavRef = useRef<HTMLElement>(null);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
@@ -29,10 +32,51 @@ export default function NavBar(){
 
   const menuA11y =
     locale === "en"
-      ? { open: "Open menu", close: "Close menu" }
+      ? { open: "Open menu", close: "Close menu", nav: "Main navigation" }
       : locale === "fr"
-        ? { open: "Ouvrir le menu", close: "Fermer le menu" }
-        : { open: "Abrir menú", close: "Cerrar menú" };
+        ? { open: "Ouvrir le menu", close: "Fermer le menu", nav: "Navigation principale" }
+        : { open: "Abrir menú", close: "Cerrar menú", nav: "Navegación principal" };
+
+  useEffect(() => {
+    if (!open) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    menuCloseButtonRef.current?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setOpen(false);
+        window.setTimeout(() => menuButtonRef.current?.focus(), 0);
+        return;
+      }
+      if (event.key !== "Tab") return;
+
+      const controls = Array.from(
+        mobileNavRef.current?.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])'
+        ) ?? []
+      ).filter((element) => element.offsetParent !== null);
+      const first = controls[0];
+      const last = controls[controls.length - 1];
+      if (!first || !last) return;
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [open]);
 
   const items = [
     { href: `${base}`,              label: L.home },
@@ -83,7 +127,7 @@ export default function NavBar(){
               </span>
               <span className="hidden sm:block">
                 <span className="block text-sm font-semibold leading-none">Let’s Go Miami</span>
-                <span className="mt-1 block text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/58">
+                <span className="mt-1 block text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/70">
                   by Jacna Services LLC
                 </span>
               </span>
@@ -183,7 +227,15 @@ export default function NavBar(){
           Jacquie Zarate Realtor
         </Link>
 
-        <button aria-label={open ? menuA11y.close : menuA11y.open} onClick={()=>setOpen(v=>!v)} className="lg:hidden p-2">
+        <button
+          ref={menuButtonRef}
+          type="button"
+          aria-label={open ? menuA11y.close : menuA11y.open}
+          aria-expanded={open}
+          aria-controls="mobile-main-navigation"
+          onClick={()=>setOpen(v=>!v)}
+          className="lg:hidden p-2"
+        >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <line x1="3" y1="6" x2="21" y2="6" />
             <line x1="3" y1="12" x2="21" y2="12" />
@@ -191,7 +243,7 @@ export default function NavBar(){
           </svg>
         </button>
 
-        <nav className="hidden lg:flex gap-6 xl:gap-7 text-sm font-medium">
+        <nav className="hidden lg:flex gap-6 xl:gap-7 text-sm font-medium" aria-label={menuA11y.nav}>
           {items.map(it=>{
             const isHome = it.href === base;
             const isActive = isHome ? (pathname === base) : pathname.startsWith(it.href);
@@ -234,14 +286,28 @@ export default function NavBar(){
       </div>
 
       {open && (
-        <nav className="lg:hidden fixed inset-0 z-50 bg-primary/95 text-primary-foreground backdrop-blur-sm">
+        <nav
+          ref={mobileNavRef}
+          id="mobile-main-navigation"
+          className="lg:hidden fixed inset-0 z-50 bg-primary/95 text-primary-foreground backdrop-blur-sm"
+          aria-label={menuA11y.nav}
+        >
           <div className="mx-auto max-w-6xl px-4 py-4 flex flex-col h-full">
             {/* Top bar */}
             <div className="flex items-center justify-between pb-3 border-b border-black/10">
               <Link href={base} onClick={()=>setOpen(false)} className="font-display text-[17px] font-medium leading-none text-primary-foreground no-underline hover:opacity-90">
                 Jacquie Zarate Realtor
               </Link>
-              <button aria-label={menuA11y.close} onClick={()=>setOpen(false)} className="p-2">
+              <button
+                ref={menuCloseButtonRef}
+                type="button"
+                aria-label={menuA11y.close}
+                onClick={() => {
+                  setOpen(false);
+                  window.setTimeout(() => menuButtonRef.current?.focus(), 0);
+                }}
+                className="p-2"
+              >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" />
                   <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" />
@@ -272,7 +338,6 @@ export default function NavBar(){
                   code === locale ? (
                     <span
                       key={code}
-                      onClick={()=>setOpen(false)}
                       className="flex h-11 flex-1 items-center justify-center rounded-md border border-paper/25 px-3 text-sm font-semibold text-primary-foreground opacity-90 text-center"
                       aria-current="true"
                       title={title}

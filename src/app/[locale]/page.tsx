@@ -1,6 +1,6 @@
 // src/app/[locale]/page.tsx
 import Link from 'next/link';
-import Image from 'next/image';
+import Image, { getImageProps } from 'next/image';
 import type { Metadata } from 'next';
 import SectionAboutJacquieHome from '@/components/SectionAboutJacquieHome';
 import SectionListingsHome from '@/components/SectionListingsHome';
@@ -8,6 +8,38 @@ import SectionWhyPrecon from '@/components/SectionWhyPrecon';
 import { createPageMetadata, normalizeLocale } from '@/lib/seo';
 
 type HomeLocale = "es" | "en" | "fr";
+
+function HeroBackgroundImage() {
+  const common = {
+    alt: "",
+    fill: true,
+    sizes: "100vw",
+    quality: 75,
+    loading: "eager" as const,
+    fetchPriority: "high" as const,
+  };
+  const { props: desktopImage } = getImageProps({
+    ...common,
+    src: "/images/hero-fallback.jpg",
+  });
+  const { props: mobileImage } = getImageProps({
+    ...common,
+    src: "/images/hero-fallback-mobile.jpg",
+  });
+
+  return (
+    <picture>
+      <source media="(max-width: 639px)" srcSet={mobileImage.srcSet} sizes="100vw" />
+      <source media="(min-width: 640px)" srcSet={desktopImage.srcSet} sizes="100vw" />
+      {/* Art direction requires one responsive picture so mobile never downloads the desktop hero. */}
+      <img
+        {...desktopImage}
+        alt=""
+        className="h-full w-full object-cover"
+      />
+    </picture>
+  );
+}
 
 const HOME_META: Record<HomeLocale, { title: string; description: string }> = {
   es: {
@@ -109,18 +141,8 @@ export default async function Home({params}: {params: Promise<{locale: string}>}
       >
         <div className="relative flex min-h-[600px] items-start justify-center px-4 pt-[88px] pb-28 sm:px-0 md:pt-[104px] md:pb-28">
           <div aria-hidden className="absolute inset-0 pointer-events-none">
-            <div className="hidden sm:block absolute inset-0">
-              <Image
-                src="/images/hero-fallback.jpg"
-                alt=""
-                fill
-                priority
-                sizes="100vw"
-                className="h-full w-full object-cover"
-              />
-            </div>
-            <div className="sm:hidden absolute inset-0">
-              <Image src="/images/hero-fallback-mobile.jpg" alt="" fill priority sizes="100vw" className="object-cover" />
+            <div className="absolute inset-0">
+              <HeroBackgroundImage />
             </div>
             <div className="absolute inset-0 bg-background/58 md:bg-gradient-to-r md:from-background/82 md:via-background/62 md:to-background/18" />
           </div>
@@ -136,7 +158,7 @@ export default async function Home({params}: {params: Promise<{locale: string}>}
                       width={96}
                       height={96}
                       sizes="96px"
-                      quality={90}
+                      quality={85}
                       priority
                       className="h-11 w-11 rounded-full object-cover ring-1 ring-white/80"
                     />
@@ -220,7 +242,7 @@ export default async function Home({params}: {params: Promise<{locale: string}>}
                   </a>
                 </div>
 
-                <div className="mt-7 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-center text-primary/58 md:justify-start md:text-left">
+                <div className="mt-7 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-center text-primary/70 md:justify-start md:text-left">
                   <span className="text-[11px] font-semibold uppercase tracking-[0.14em] sm:text-xs" aria-label="Miami Life Realty" title="Miami Life Realty">
                     MIAMI LIFE REALTY
                   </span>
@@ -230,7 +252,7 @@ export default async function Home({params}: {params: Promise<{locale: string}>}
                 </div>
 
                 <div id="hero-desc" className="flex items-center justify-center md:justify-start pt-4 pb-10 md:pb-0 text-xs text-foreground/70 text-center md:text-left">
-                  <span className="mr-1 hidden text-foreground/60 sm:inline">
+                  <span className="mr-1 hidden text-foreground/70 sm:inline">
                     {locale === "en" ? "Questions?" : locale === "fr" ? "Des questions?" : "¿Dudas?"}
                   </span>
                   <a
@@ -256,12 +278,12 @@ export default async function Home({params}: {params: Promise<{locale: string}>}
                         alt="Jacquie Zarate Realtor"
                         fill
                         sizes="(min-width: 768px) 420px, 0px"
-                        quality={92}
+                        quality={85}
                         className="object-cover object-center"
                       />
                     </div>
                     <div className="px-2 pb-1 pt-4">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-primary/60">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-primary/70">
                         {locale === "en"
                           ? "Direct guidance in Miami"
                           : locale === "fr"
@@ -335,7 +357,7 @@ export default async function Home({params}: {params: Promise<{locale: string}>}
         <div className="rounded-[14px] bg-paper p-6 sm:p-8 ring-1 ring-primary/10 shadow-sm">
           <div className="grid gap-8 md:grid-cols-[1.08fr_0.92fr] md:items-center">
             <div>
-              <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-primary/62">
+              <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-primary/70">
                 {locale === "en" ? "Financing" : locale === "fr" ? "Financement" : "Financiación"}
               </p>
               <h2 id="financing-home-title" className="mt-2 font-display text-3xl font-medium leading-[1.05] tracking-normal text-primary sm:text-4xl">
@@ -388,7 +410,7 @@ export default async function Home({params}: {params: Promise<{locale: string}>}
       <section aria-labelledby="lets-go-miami-title" className="max-w-[1100px] mx-auto px-4">
         <div className="grid gap-6 rounded-[14px] bg-paper p-6 sm:p-8 ring-1 ring-accent/25 md:grid-cols-[0.85fr_1.15fr] md:items-center">
           <div className="rounded-[12px] bg-white/70 p-5 text-center ring-1 ring-accent/15 shadow-sm sm:p-6">
-            <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-primary/55">
+            <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-primary/70">
               {locale === "en" ? "STAYS IN MIAMI" : locale === "fr" ? "SÉJOURS À MIAMI" : "ESTADÍAS EN MIAMI"}
             </p>
             <Link
@@ -414,7 +436,7 @@ export default async function Home({params}: {params: Promise<{locale: string}>}
                   ? "Location de courte durée et séjours sélectionnés à Miami."
                   : "Renta corta y estadías seleccionadas en Miami."}
             </p>
-            <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.14em] text-primary/50">
+            <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.14em] text-primary/70">
               Jacna Services LLC · Vacation Condo Management
             </p>
           </div>

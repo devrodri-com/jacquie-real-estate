@@ -291,7 +291,7 @@ export default async function FinancingPage({
     <div className="mx-auto max-w-[1100px] px-4 py-12 sm:py-16 text-foreground">
       <section className="grid gap-8 rounded-[18px] bg-surface p-6 ring-1 ring-primary/10 sm:p-8 md:grid-cols-[1.12fr_0.88fr] md:items-center">
         <div>
-          <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-primary/62">
+          <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-primary/70">
             {copy.eyebrow}
           </p>
           <h1 className="mt-3 max-w-[13ch] font-display text-[44px] font-medium leading-[0.96] tracking-normal text-primary sm:text-[58px] lg:text-[68px]">
@@ -451,7 +451,7 @@ export default async function FinancingPage({
         </div>
       </section>
 
-      <p className="mx-auto mt-6 max-w-[90ch] text-center text-[12px] leading-[1.65] text-foreground/62">
+      <p className="mx-auto mt-6 max-w-[90ch] text-center text-[12px] leading-[1.65] text-foreground/70">
         {copy.disclaimer}
       </p>
     </div>

@@ -69,6 +69,8 @@ const COPY: Record<
     galleryCta: "Consultar disponibilidad",
     galleryLabels: {
       viewAll: "Ver todas las fotos",
+      openImage: "Abrir foto",
+      dialog: "Galería de estadías de Let’s Go Miami",
       close: "Cerrar galería",
       previous: "Foto anterior",
       next: "Foto siguiente",
@@ -105,6 +107,8 @@ const COPY: Record<
     galleryCta: "Check availability",
     galleryLabels: {
       viewAll: "View all photos",
+      openImage: "Open photo",
+      dialog: "Let’s Go Miami stays gallery",
       close: "Close gallery",
       previous: "Previous photo",
       next: "Next photo",
@@ -141,6 +145,8 @@ const COPY: Record<
     galleryCta: "Vérifier la disponibilité",
     galleryLabels: {
       viewAll: "Voir toutes les photos",
+      openImage: "Ouvrir la photo",
+      dialog: "Galerie des séjours Let’s Go Miami",
       close: "Fermer la galerie",
       previous: "Photo précédente",
       next: "Photo suivante",
@@ -271,7 +277,7 @@ export default async function LetsGoMiamiPage({
             </div>
 
             <div>
-              <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-primary/62">
+              <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-primary/70">
                 {copy.eyebrow}
               </p>
               <h1 className="mt-4 max-w-[12ch] font-display text-[44px] font-medium leading-[0.96] tracking-normal text-primary sm:text-[58px] lg:text-[66px]">
@@ -306,7 +312,7 @@ export default async function LetsGoMiamiPage({
         {REPRESENTATIVE_STAY_IMAGES.length > 0 && (
           <section className="mt-12 rounded-[16px] bg-paper p-6 ring-1 ring-primary/10 sm:p-8" aria-labelledby="lets-go-gallery-title">
             <div className="max-w-[900px]">
-              <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-primary/62">
+              <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-primary/70">
                 {copy.galleryEyebrow}
               </p>
               <h2 id="lets-go-gallery-title" className="mt-3 font-display text-3xl font-medium leading-[1.05] tracking-normal text-primary sm:text-4xl">
@@ -315,7 +321,7 @@ export default async function LetsGoMiamiPage({
               <p className="mt-3 text-[15px] leading-[1.7] text-foreground/76">
                 {copy.galleryText}
               </p>
-              <p className="mt-3 text-[13px] leading-[1.6] text-foreground/58">
+              <p className="mt-3 text-[13px] leading-[1.6] text-foreground/70">
                 {copy.galleryNote}
               </p>
               <a

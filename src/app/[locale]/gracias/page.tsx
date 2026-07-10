@@ -85,7 +85,7 @@ export default function GraciasPage() {
       : "Hola Jacquie, acabo de enviar el formulario. Me gustaría hablar sobre oportunidades en Miami.";
 
   return (
-    <main className="bg-white px-4 py-16 sm:py-20">
+    <div className="bg-white px-4 py-16 sm:py-20">
       <section className="mx-auto flex min-h-[58vh] w-full max-w-[1100px] items-center justify-center">
         <div className="relative w-full max-w-[720px] overflow-hidden rounded-[16px] bg-surface/80 p-7 text-center shadow-sm ring-1 ring-primary/10 sm:p-10">
           <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-accent/55 to-transparent" />
@@ -135,6 +135,6 @@ export default function GraciasPage() {
         </div>
       </div>
       </section>
-    </main>
+    </div>
   );
 }

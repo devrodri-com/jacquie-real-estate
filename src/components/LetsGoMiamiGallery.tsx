@@ -12,6 +12,8 @@ export type LetsGoMiamiGalleryImage = {
 
 export type LetsGoMiamiGalleryLabels = {
   viewAll: string;
+  openImage: string;
+  dialog: string;
   close: string;
   previous: string;
   next: string;
@@ -148,6 +150,7 @@ export default function LetsGoMiamiGallery({ images, labels }: LetsGoMiamiGaller
           type="button"
           className="relative block aspect-[4/3] w-full overflow-hidden rounded-[14px] bg-surface ring-1 ring-primary/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
           onClick={(event) => openAt(0, event.currentTarget)}
+          aria-label={`${labels.openImage} 1 / ${imageCount}: ${images[0].alt}`}
         >
           <Image
             src={images[0].src}
@@ -165,6 +168,7 @@ export default function LetsGoMiamiGallery({ images, labels }: LetsGoMiamiGaller
               type="button"
               className="relative aspect-square overflow-hidden rounded-[10px] bg-surface ring-1 ring-primary/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
               onClick={(event) => openAt(index + 1, event.currentTarget)}
+              aria-label={`${labels.openImage} ${index + 2} / ${imageCount}: ${image.alt}`}
             >
               <Image
                 src={image.src}
@@ -202,6 +206,7 @@ export default function LetsGoMiamiGallery({ images, labels }: LetsGoMiamiGaller
                   : "aspect-[4/3] lg:aspect-auto",
             ].join(" ")}
             onClick={(event) => openAt(index, event.currentTarget)}
+            aria-label={`${labels.openImage} ${index + 1} / ${imageCount}: ${image.alt}`}
           >
             <Image
               src={image.src}
@@ -223,10 +228,10 @@ export default function LetsGoMiamiGallery({ images, labels }: LetsGoMiamiGaller
           className="fixed inset-0 z-[120] flex min-h-dvh flex-col bg-black/90 text-white"
           role="dialog"
           aria-modal="true"
-          aria-label={labels.viewAll}
+          aria-label={labels.dialog}
         >
           <div className="flex h-16 shrink-0 items-center justify-between px-4 sm:px-6">
-            <span className="rounded-full bg-white/10 px-3 py-1 text-sm font-medium tabular-nums text-white/90">
+            <span className="rounded-full bg-white/10 px-3 py-1 text-sm font-medium tabular-nums text-white/90" aria-live="polite" aria-atomic="true">
               {activeIndex + 1} / {imageCount}
             </span>
             <button

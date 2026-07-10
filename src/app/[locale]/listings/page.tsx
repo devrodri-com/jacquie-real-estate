@@ -1,6 +1,7 @@
 // src/app/[locale]/listings/page.tsx
 import Link from "next/link";
 import type { Metadata } from "next";
+import Image from "next/image";
 import { LISTINGS } from "@/data/listings";
 import { getListingFrOverlay } from "@/data/listingsFrOverlay";
 import { createPageMetadata, normalizeLocale } from "@/lib/seo";
@@ -51,10 +52,10 @@ export default async function ListingsPage({
   const isFR = locale === "fr";
 
   return (
-    <main className="px-4 py-10 text-foreground sm:py-14">
+    <div className="px-4 py-10 text-foreground sm:py-14">
       {/* Hero */}
       <header className="mb-8 max-w-none">
-        <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-primary/62">
+        <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-primary/70">
           {isEN ? "MIAMI PROPERTIES" : isFR ? "PROPRIÉTÉS À MIAMI" : "PROPIEDADES EN MIAMI"}
         </p>
         <h1 className="mt-2 font-display text-[42px] font-medium leading-[0.98] tracking-normal text-primary sm:text-[56px]">
@@ -86,7 +87,7 @@ export default async function ListingsPage({
         aria-label={isEN ? "Available properties in Miami" : isFR ? "Propriétés disponibles à Miami" : "Propiedades disponibles en Miami"}
       >
         <div className="grid gap-6 sm:grid-cols-2">
-          {LISTINGS.map((item) => (
+          {LISTINGS.map((item, index) => (
             <article
               key={item.id}
               className="group relative overflow-hidden rounded-[14px] bg-paper ring-1 ring-primary/10 shadow-sm transition hover:-translate-y-[2px] hover:shadow-[0_14px_34px_rgba(43,37,48,0.10)]"
@@ -110,15 +111,21 @@ export default async function ListingsPage({
                       : `Ver detalles de ${item.title}`}
                 </span>
               </Link>
-              <div className="h-52 w-full overflow-hidden bg-placeholder">
-                <img
+              <div className="relative h-52 w-full overflow-hidden bg-placeholder">
+                <Image
                   src={item.images[0]}
                   alt=""
+                  fill
+                  sizes="(min-width: 640px) 50vw, calc(100vw - 2rem)"
+                  quality={index === 0 ? 75 : 65}
+                  priority={index === 0}
+                  fetchPriority={index === 0 ? "high" : "auto"}
+                  loading={index === 0 ? "eager" : "lazy"}
                   className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                 />
               </div>
               <div className="relative z-20 p-5">
-                <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-primary/55">{item.city}</p>
+                <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-primary/70">{item.city}</p>
                 <h2 className="mt-2 font-display text-[25px] font-medium leading-[1.08] tracking-normal text-primary">
                   <Link
                     href={`/${locale}/listings/${item.slug}`}
@@ -197,6 +204,6 @@ export default async function ListingsPage({
           </Link>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

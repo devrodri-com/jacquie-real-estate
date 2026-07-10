@@ -394,6 +394,11 @@ export default async function Proyecto({ params }: Params) {
   const mapSrc = hasCoords
     ? `https://www.google.com/maps?q=${p.lat},${p.lng}&hl=${mapHl}&z=15&output=embed`
     : `https://www.google.com/maps?q=${encodeURIComponent(addressQuery)}&hl=${mapHl}&z=15&output=embed`;
+  const mapTitle = isEN
+    ? `Location of ${p.name}`
+    : isFR
+      ? `Emplacement de ${p.name}`
+      : `Ubicación de ${p.name}`;
   const waNumber = "17864072591";
   const waHref = `https://wa.me/${waNumber}?text=${encodeURIComponent(
     isEN
@@ -425,7 +430,7 @@ export default async function Proyecto({ params }: Params) {
   ];
 
   return (
-    <main className="mx-auto max-w-[1100px] px-4 py-12">
+    <div className="mx-auto max-w-[1100px] px-4 py-12">
       {/* Breadcrumb */}
       <div className="mb-6">
         <Link
@@ -529,6 +534,7 @@ export default async function Proyecto({ params }: Params) {
             sizes="(min-width:1024px) 960px, 100vw"
             className="object-cover"
             priority
+            fetchPriority="high"
           />
         </div>
       </section>
@@ -557,7 +563,7 @@ export default async function Proyecto({ params }: Params) {
           iconSrc="/icons/whatsapp.svg"
           label={isEN ? "Share" : isFR ? "Partager" : "Compartir"}
           className="self-start sm:self-auto"
-          buttonClassName="h-9 w-auto rounded-md border border-transparent px-2.5 text-sm font-medium text-primary/55 shadow-none hover:bg-transparent hover:text-primary focus-visible:ring-2 focus-visible:ring-accent/30 sm:h-10 sm:px-3"
+          buttonClassName="h-9 w-auto rounded-md border border-transparent px-2.5 text-sm font-medium text-primary/70 shadow-none hover:bg-transparent hover:text-primary focus-visible:ring-2 focus-visible:ring-accent/30 sm:h-10 sm:px-3"
         />
       </div>
 
@@ -786,6 +792,7 @@ export default async function Proyecto({ params }: Params) {
       {/* Payment plan */}
       <PaymentPlan
         title={t.payments}
+        headingLevel="h2"
         steps={payment.map((label: string) => ({ label }))}
         project={p.name}
         locale={t.paymentLocale}
@@ -802,6 +809,7 @@ export default async function Proyecto({ params }: Params) {
         <div className="overflow-hidden rounded-2xl bg-white ring-1 ring-primary/10">
           <iframe
             src={mapSrc}
+            title={mapTitle}
             width="100%"
             height="360"
             style={{ border: 0 }}
@@ -811,7 +819,7 @@ export default async function Proyecto({ params }: Params) {
           />
         </div>
       </section>
-    </main>
+    </div>
   );
 }
 

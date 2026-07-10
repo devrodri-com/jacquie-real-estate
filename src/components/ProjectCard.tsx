@@ -103,10 +103,10 @@ export default function ProjectCard({ p, showMonthlyEstimate = false, variant = 
             ? (isEN ? `From USD ${fmt(p.priceFromUsd)}` : `Desde USD ${fmt(p.priceFromUsd)}`)
             : (isEN ? "Inquire" : "Consultar")}
           {p.pricePerSfApprox ? (
-            <span className="ml-1 text-[12px] font-normal text-foreground/50"> · ~${p.pricePerSfApprox}/sf</span>
+            <span className="ml-1 text-[12px] font-normal text-foreground/70"> · ~${p.pricePerSfApprox}/sf</span>
           ) : null}
           {monthly > 0 ? (
-            <span className="ml-1 text-[12px] font-normal text-foreground/60"> · {isEN ? `Est. ${fmt(monthly)}/mo*` : `Cuota estimada ${fmt(monthly)}/mes*`}</span>
+            <span className="ml-1 text-[12px] font-normal text-foreground/70"> · {isEN ? `Est. ${fmt(monthly)}/mo*` : `Cuota estimada ${fmt(monthly)}/mes*`}</span>
           ) : null}
         </div>
         <div className="mt-2 flex items-center justify-between gap-1.5">
@@ -119,7 +119,7 @@ export default function ProjectCard({ p, showMonthlyEstimate = false, variant = 
             </span>
           ))}
         </div>
-        <p className={`mt-1 text-[11px] ${monthly > 0 ? "text-foreground/50" : "invisible"}`}>
+        <p className={`mt-1 text-[11px] ${monthly > 0 ? "text-foreground/70" : "invisible"}`}>
           {isEN ? "*25% down payment, 6.5% APR, 30y." : "*25% anticipo, 6.5% APR, 30 años."}
         </p>
         <Link

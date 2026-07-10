@@ -1,5 +1,6 @@
 // src/components/SectionListingsHome.tsx
 import Link from "next/link";
+import Image from "next/image";
 import { LISTINGS } from "@/data/listings";
 
 type Props = { locale: "es" | "en" | "fr" };
@@ -20,7 +21,7 @@ export default function SectionListingsHome({ locale }: Props) {
 
   return (
     <section aria-labelledby="listings-home-title" className="max-w-[1100px] mx-auto px-4 pt-4 md:pt-6">
-      <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-primary/62">
+      <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-primary/70">
         {eyebrow}
       </p>
       <h2 id="listings-home-title" className="font-display text-3xl font-medium leading-[1.05] tracking-normal text-primary sm:text-4xl">
@@ -45,11 +46,14 @@ export default function SectionListingsHome({ locale }: Props) {
             >
               <Link
                 href={listingHref}
-                className="block aspect-[16/9] rounded-t-[12px] overflow-hidden bg-placeholder focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 shrink-0"
+                className="relative block aspect-[16/9] rounded-t-[12px] overflow-hidden bg-placeholder focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 shrink-0"
               >
-                <img
+                <Image
                   src={item.images[0]}
                   alt={addressDisplay}
+                  fill
+                  sizes="(min-width: 640px) 50vw, calc(100vw - 2rem)"
+                  loading="lazy"
                   className="h-full w-full object-cover transition-transform duration-300 hover:scale-[1.02]"
                 />
               </Link>

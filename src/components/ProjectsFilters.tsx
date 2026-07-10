@@ -159,7 +159,11 @@ export function ProjectsFilters({
       if (!listRef.current || !btnRef.current) return;
       if (!listRef.current.contains(e.target as Node) && !btnRef.current.contains(e.target as Node)) close();
     };
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") close(); };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      close();
+      btnRef.current?.focus();
+    };
     document.addEventListener("mousedown", onDoc);
     document.addEventListener("keydown", onKey);
     return () => { document.removeEventListener("mousedown", onDoc); document.removeEventListener("keydown", onKey); };
@@ -176,7 +180,11 @@ export function ProjectsFilters({
       if (!listSortRef.current || !btnSortRef.current) return;
       if (!listSortRef.current.contains(e.target as Node) && !btnSortRef.current.contains(e.target as Node)) closeSort();
     };
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") closeSort(); };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      closeSort();
+      btnSortRef.current?.focus();
+    };
     document.addEventListener("mousedown", onDoc);
     document.addEventListener("keydown", onKey);
     return () => { document.removeEventListener("mousedown", onDoc); document.removeEventListener("keydown", onKey); };
@@ -233,6 +241,7 @@ export function ProjectsFilters({
             onClick={toggle}
             aria-haspopup="listbox"
             aria-expanded={open}
+            aria-controls="rental-policy-listbox"
             className="flex w-full items-center justify-between rounded-md border border-primary/15 bg-white px-3 py-2 text-left text-sm text-foreground outline-none transition focus:ring-2 focus:ring-accent/40"
           >
             <span>{t.rentalLabel(value.rental)}</span>
@@ -244,22 +253,29 @@ export function ProjectsFilters({
           {open && (
             <ul
               ref={listRef}
+              id="rental-policy-listbox"
               role="listbox"
               className="absolute z-20 bottom-full mb-2 max-h-56 w-full overflow-auto rounded-md border border-primary/10 bg-white text-foreground py-1 text-sm shadow-lg focus:outline-none sm:bottom-auto sm:top-full sm:mt-2 sm:mb-0 hover:ring-accent/30 transition"
             >
               {rentalOptions.map((opt) => (
-                <li
-                  key={opt}
-                  role="option"
-                  aria-selected={value.rental === opt}
-                  onMouseDown={(e) => { e.preventDefault(); e.stopPropagation(); onChange({ ...value, rental: opt }); close(); }}
-                  onClick={(e) => { e.stopPropagation(); }}
-                  className={`relative cursor-pointer px-3 py-2 hover:bg-muted ${value.rental === opt ? "bg-muted" : ""}`}
-                >
-                  {value.rental === opt && (
-                    <span className="absolute left-0 top-0 h-full w-[3px] rounded-full bg-gradient-to-b from-accent/50 to-accent/10" />
-                  )}
-                  {t.rentalLabel(opt)}
+                <li key={opt} role="none">
+                  <button
+                    type="button"
+                    role="option"
+                    aria-selected={value.rental === opt}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      onChange({ ...value, rental: opt });
+                      close();
+                      btnRef.current?.focus();
+                    }}
+                    className={`relative w-full cursor-pointer px-3 py-2 text-left hover:bg-muted ${value.rental === opt ? "bg-muted" : ""}`}
+                  >
+                    {value.rental === opt && (
+                      <span className="absolute left-0 top-0 h-full w-[3px] rounded-full bg-gradient-to-b from-accent/50 to-accent/10" aria-hidden />
+                    )}
+                    {t.rentalLabel(opt)}
+                  </button>
                 </li>
               ))}
             </ul>
@@ -277,6 +293,7 @@ export function ProjectsFilters({
             onClick={toggleSort}
             aria-haspopup="listbox"
             aria-expanded={openSort}
+            aria-controls="project-sort-listbox"
             className="flex w-full items-center justify-between rounded-md border border-primary/15 bg-white px-3 py-2 text-left text-sm text-foreground outline-none transition focus:ring-2 focus:ring-accent/40"
           >
             <span>{t.sortLabel(value.sort)}</span>
@@ -288,22 +305,29 @@ export function ProjectsFilters({
           {openSort && (
             <ul
               ref={listSortRef}
+              id="project-sort-listbox"
               role="listbox"
               className="absolute z-20 bottom-full mb-2 max-h-56 w-full overflow-auto rounded-md border border-primary/10 bg-white text-foreground py-1 text-sm shadow-lg focus:outline-none sm:bottom-auto sm:top-full sm:mt-2 sm:mb-0 hover:ring-accent/30 transition"
             >
               {sortOptions.map((opt) => (
-                <li
-                  key={opt}
-                  role="option"
-                  aria-selected={value.sort === opt}
-                  onMouseDown={(e) => { e.preventDefault(); e.stopPropagation(); onChange({ ...value, sort: opt }); closeSort(); }}
-                  onClick={(e) => { e.stopPropagation(); }}
-                  className={`relative cursor-pointer px-3 py-2 hover:bg-muted ${value.sort === opt ? "bg-muted" : ""}`}
-                >
-                  {value.sort === opt && (
-                    <span className="absolute left-0 top-0 h-full w-[3px] rounded-full bg-gradient-to-b from-accent/50 to-accent/10" />
-                  )}
-                  {t.sortLabel(opt)}
+                <li key={opt} role="none">
+                  <button
+                    type="button"
+                    role="option"
+                    aria-selected={value.sort === opt}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      onChange({ ...value, sort: opt });
+                      closeSort();
+                      btnSortRef.current?.focus();
+                    }}
+                    className={`relative w-full cursor-pointer px-3 py-2 text-left hover:bg-muted ${value.sort === opt ? "bg-muted" : ""}`}
+                  >
+                    {value.sort === opt && (
+                      <span className="absolute left-0 top-0 h-full w-[3px] rounded-full bg-gradient-to-b from-accent/50 to-accent/10" aria-hidden />
+                    )}
+                    {t.sortLabel(opt)}
+                  </button>
                 </li>
               ))}
             </ul>
@@ -348,7 +372,7 @@ export function ProjectsFilters({
           </div>
         </label>
       </div>
-      <p className="mt-2 text-[11px] text-foreground/50">
+      <p className="mt-2 text-[11px] text-foreground/70">
         {t.priceHint}
       </p>
 
