@@ -15,15 +15,6 @@ export default function GraciasPage() {
   const isFR = locale === "fr";
 
   useEffect(() => {
-    const title = isEN
-      ? "Thanks for your message"
-      : isFR
-        ? "Merci pour votre message"
-        : "¡Gracias por contactarnos!";
-    document.title = `${title} · Jacquie Zarate Realtor`;
-  }, [isEN, isFR]);
-
-  useEffect(() => {
     if (typeof window === "undefined") return;
 
     const alreadySent = sessionStorage.getItem("lead_thankyou_sent");

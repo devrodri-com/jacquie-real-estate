@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import ShareButtons from "@/components/ShareButtons";
 import { getProjectFrOverlay } from "@/data/projectsFrOverlay";
+import { createPageMetadata, localizedUrl, normalizeLocale } from "@/lib/seo";
 function BedIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} {...props}>
@@ -128,6 +129,10 @@ function fmtUSD(n: number, locale: string) {
   }).format(n);
 }
 
+function withoutTerminalPunctuation(value: string): string {
+  return value.trim().replace(/[.!?]+$/, "");
+}
+
 function pickFrArrays<T>(
   overlay: T[] | undefined,
   en: T[] | undefined,
@@ -139,7 +144,8 @@ function pickFrArrays<T>(
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }) {
-  const { locale, slug } = await params;
+  const { locale: rawLocale, slug } = await params;
+  const locale = normalizeLocale(rawLocale);
   const isEN = locale === "en";
   const isFR = locale === "fr";
   const p = pickBySlug(slug);
@@ -150,16 +156,28 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     };
   }
 
-  const title = `${p.name} — ${p.city} | Jacquie Zarate Realtor`;
   const frOv = isFR ? getProjectFrOverlay(p.slug) : undefined;
+  const city = isFR ? (frOv?.cityFr ?? p.city) : p.city;
+  const title = `${p.name} — ${city} | Jacquie Zarate Realtor`;
   const deliveryMetaFr = frOv?.deliveryFr ?? p.delivery;
+  const rentalPolicy = isEN
+    ? (p.rentalPolicyEn ?? p.rentalPolicy)
+    : isFR
+      ? (frOv?.rentalPolicyFr ?? p.rentalPolicyEn ?? p.rentalPolicyEs ?? p.rentalPolicy)
+      : (p.rentalPolicyEs ?? p.rentalPolicy);
 
   const desc = isEN
-    ? `STR approved, private beach club, ${p.pricePerSfApprox ? `~$${p.pricePerSfApprox}/sf, ` : ""}${p.delivery ? `completion ${p.delivery}, ` : ""}request floor plans and availability.`
+    ? [
+        `${p.name} in ${city}.`,
+        typeof p.priceFromUsd === "number" ? `From ${fmtUSD(p.priceFromUsd, "en")}.` : null,
+        p.delivery ? `Estimated completion: ${p.delivery}.` : null,
+        rentalPolicy ? `Rental policy: ${withoutTerminalPunctuation(String(rentalPolicy))}.` : null,
+        "Request floor plans and availability with Jacquie Zarate Realtor.",
+      ].filter(Boolean).join(" ")
     : isFR
       ? (() => {
           const parts: string[] = [];
-          parts.push(`${p.name} — ${p.city}.`);
+          parts.push(`${p.name} — ${city}.`);
           if (typeof p.priceFromUsd === "number") {
             parts.push(
               `À partir de ${fmtUSD(p.priceFromUsd, "fr")}.`
@@ -171,41 +189,37 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
           if (deliveryMetaFr) {
             parts.push(`Livraison prévue : ${deliveryMetaFr}.`);
           }
+          if (rentalPolicy) {
+            parts.push(`Politique de location : ${withoutTerminalPunctuation(String(rentalPolicy))}.`);
+          }
           parts.push(
             "Plans, disponibilité et accompagnement personnalisé avec Jacquie Zarate Realtor."
           );
           return parts.join(" ");
         })()
-    : `Renta corta aprobada, club de playa privado, ${p.pricePerSfApprox ? `~$${p.pricePerSfApprox}/ft², ` : ""}${p.delivery ? `entrega ${p.delivery}, ` : ""}solicitá planos y disponibilidad.`;
+    : [
+        `${p.name} en ${city}.`,
+        typeof p.priceFromUsd === "number" ? `Desde ${fmtUSD(p.priceFromUsd, "es")}.` : null,
+        p.delivery ? `Entrega estimada: ${p.delivery}.` : null,
+        rentalPolicy ? `Política de renta: ${withoutTerminalPunctuation(String(rentalPolicy))}.` : null,
+        "Solicitá planos y disponibilidad con Jacquie Zarate Realtor.",
+      ].filter(Boolean).join(" ");
 
-  const url = `/${locale}/proyectos/${slug}`;
   const image = p.image || "/og-image.jpg";
 
-  return {
+  return createPageMetadata({
+    locale,
+    path: `proyectos/${slug}`,
     title,
     description: desc,
-    alternates: { canonical: url },
+    image,
     robots: { index: true, follow: true },
-    openGraph: {
-      title,
-      description: desc,
-      url,
-      images: [{ url: image }],
-      locale,
-      siteName: "Jacquie Zarate Realtor — Real Estate",
-      type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description: desc,
-      images: [image],
-    },
-  };
+  });
 }
 
 export default async function Proyecto({ params }: Params) {
-  const { locale, slug } = await params;
+  const { locale: rawLocale, slug } = await params;
+  const locale = normalizeLocale(rawLocale);
   const isEN = locale === "en";
   const isFR = locale === "fr";
   const p = pickBySlug(slug);
@@ -266,7 +280,7 @@ export default async function Proyecto({ params }: Params) {
         furnished: "Furnished",
         unfurnished: "Unfurnished",
         ctas: {
-          schedule: "Schedule a conversation",
+          contact: "Send an inquiry",
           whatsapp: "WhatsApp",
           email: "Write by email",
         },
@@ -300,7 +314,7 @@ export default async function Proyecto({ params }: Params) {
           highlights: "Points forts",
           mix: "Typologies",
           features: "Caractéristiques",
-          payments: "Calendrier de paiement",
+          payments: "Plan de paiement",
           faqsTitle: "Questions fréquentes",
           brochure: "Télécharger la brochure",
           location: "Emplacement",
@@ -308,11 +322,11 @@ export default async function Proyecto({ params }: Params) {
           furnished: "Meublé",
           unfurnished: "Non meublé",
           ctas: {
-            schedule: "Planifier une conversation",
+            contact: "Envoyer une demande",
             whatsapp: "WhatsApp",
             email: "Écrire par courriel",
           },
-          requestPlans: "Demander les plans (PDF)",
+          requestPlans: "Demander les plans d'étage (PDF)",
           checkAvail: "Disponibilité par typologie",
           requestMaterials: "Demander la liste des matériaux (PDF)",
           faqAvailLink: "Voir la disponibilité par typologie",
@@ -321,9 +335,9 @@ export default async function Proyecto({ params }: Params) {
           shareLocale: "fr" as const,
           galleryLocale: "fr" as const,
           paymentLocale: "fr" as const,
-          mailtoPlansSubject: (name: string) => `Plans (PDF) — ${name}`,
+          mailtoPlansSubject: (name: string) => `Plans d'étage (PDF) — ${name}`,
           mailtoPlansBody: (name: string) =>
-            `Bonjour Jacquie,\n\nJe suis intéressé(e) par ${name}. Pourriez-vous m'envoyer les plans (PDF) ?\n\nMerci.`,
+            `Bonjour Jacquie,\n\nJe suis intéressé(e) par ${name}. Pourriez-vous m'envoyer les plans d'étage (PDF) ?\n\nMerci.`,
           mailtoAvailSubject: (name: string) => `Disponibilité par typologie — ${name}`,
           mailtoAvailBody: (name: string) =>
             `Bonjour Jacquie,\n\nJe suis intéressé(e) par ${name}. Pourriez-vous m'indiquer la disponibilité par typologie (Jr‑1 / 1BR / 2BR / 3BR) ?\n\nMerci.`,
@@ -349,7 +363,7 @@ export default async function Proyecto({ params }: Params) {
           furnished: "Amueblado",
           unfurnished: "Sin amueblar",
           ctas: {
-            schedule: "Agendar una conversación",
+            contact: "Enviar una consulta",
             whatsapp: "WhatsApp",
             email: "Escribir por email",
           },
@@ -373,7 +387,7 @@ export default async function Proyecto({ params }: Params) {
             `Hola Jacquie,\n\nEstoy interesado/a en ${name}. Por favor envíame la lista de materiales (PDF).\n\nGracias.`,
         };
 
-  const bookingUrl = process.env.NEXT_PUBLIC_CALENDAR_URL || `/${locale}/agendar`;
+  const contactUrl = `/${locale}/contacto`;
   const hasCoords = typeof (p as Project).lat === "number" && typeof (p as Project).lng === "number";
   const addressQuery = p.city && /\d/.test(p.city) ? p.city : `${p.name} ${p.city}`;
   const mapHl = isEN ? "en" : isFR ? "fr" : "es";
@@ -388,8 +402,7 @@ export default async function Proyecto({ params }: Params) {
         ? `Bonjour Jacquie, je suis intéressé(e) par ${p.name}. Pourriez-vous m'envoyer plus d'informations ?`
         : `Hola Jacquie, estoy interesado/a en ${p.name}. ¿Podés enviarme más información?`
   )}`;
-  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://www.jacquiezaraterealtor.com";
-  const shareUrl = `${base}/${locale}/proyectos/${slug}`.replace(/(?<!:)\/\/+/, "/");
+  const shareUrl = localizedUrl(locale, `proyectos/${slug}`);
 
   const deliveryShown = isFR ? (o?.deliveryFr ?? p.delivery) : p.delivery;
   const priceSfSuffix = isFR ? "/pi²" : isEN ? "/sf" : "/ft²";
@@ -531,10 +544,10 @@ export default async function Proyecto({ params }: Params) {
           {t.ctas.whatsapp}
         </a>
         <Link
-          href={bookingUrl}
+          href={contactUrl}
           className="inline-flex h-10 items-center justify-center rounded-md border border-primary/25 px-5 text-sm font-medium text-primary hover:bg-muted focus-visible:ring-2 focus-visible:ring-accent/40"
         >
-          {t.ctas.schedule}
+          {t.ctas.contact}
         </Link>
         <ShareButtons
           url={shareUrl}
@@ -765,8 +778,8 @@ export default async function Proyecto({ params }: Params) {
         <a href={waHref} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:opacity-95">
           {t.ctas.whatsapp}
         </a>
-        <Link href={bookingUrl} className="w-full sm:w-auto inline-flex h-10 items-center justify-center rounded-md border border-primary/20 px-4 text-sm font-medium text-primary hover:bg-muted">
-          {t.ctas.schedule}
+        <Link href={contactUrl} className="w-full sm:w-auto inline-flex h-10 items-center justify-center rounded-md border border-primary/20 px-4 text-sm font-medium text-primary hover:bg-muted">
+          {t.ctas.contact}
         </Link>
       </section>
 

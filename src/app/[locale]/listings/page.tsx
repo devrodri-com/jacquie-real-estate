@@ -3,8 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { LISTINGS } from "@/data/listings";
 import { getListingFrOverlay } from "@/data/listingsFrOverlay";
-
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.jacquiezaraterealtor.com";
+import { createPageMetadata, normalizeLocale } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -12,7 +11,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale: raw } = await params;
-  const locale = raw === "en" ? "en" : raw === "fr" ? "fr" : "es";
+  const locale = normalizeLocale(raw);
   const title =
     locale === "en"
       ? "Available Properties | Jacquie Zarate Realtor"
@@ -26,27 +25,7 @@ export async function generateMetadata({
         ? "Propriétés actives disponibles à l’achat à Miami et dans le sud de la Floride, selon l’emplacement, le budget et l’objectif d’investissement."
         : "Propiedades activas disponibles para compra en Miami y South Florida, según ubicación, presupuesto y objetivo de inversión.";
 
-  return {
-    title,
-    description,
-    alternates: {
-      canonical: `${BASE_URL}/${locale}/listings`,
-      languages: {
-        es: `${BASE_URL}/es/listings`,
-        en: `${BASE_URL}/en/listings`,
-        fr: `${BASE_URL}/fr/listings`,
-      },
-    },
-    openGraph: {
-      title,
-      description,
-      url: `${BASE_URL}/${locale}/listings`,
-    },
-    twitter: {
-      title,
-      description,
-    },
-  };
+  return createPageMetadata({ locale, path: "listings", title, description });
 }
 
 function cardDescription(

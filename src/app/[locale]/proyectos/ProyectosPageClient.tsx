@@ -196,6 +196,7 @@ export default function ProyectosPageClient() {
 
           const deliveryLabel =
             locale === "fr" ? (frOverlay?.deliveryFr ?? p.delivery) : p.delivery;
+          const cityLabel = locale === "fr" ? (frOverlay?.cityFr ?? p.city) : p.city;
 
           return (
             <article
@@ -228,7 +229,7 @@ export default function ProyectosPageClient() {
                 </Link>
               </h3>
               <p className="mt-2 h-[18px] truncate text-[12px] font-medium uppercase tracking-[0.12em] text-primary/55">
-                {p.city} · {rentalDisplay}
+                {cityLabel} · {rentalDisplay}
               </p>
               <div className="mt-3 h-[22px] truncate text-[15px] font-semibold text-primary">
                 {typeof p.priceFromUsd === "number"

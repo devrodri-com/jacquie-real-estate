@@ -4,6 +4,7 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import LetsGoMiamiFooter from "@/components/LetsGoMiamiFooter";
 import LetsGoMiamiGallery, { type LetsGoMiamiGalleryLabels } from "@/components/LetsGoMiamiGallery";
+import { createPageMetadata, normalizeLocale as normalizeSiteLocale } from "@/lib/seo";
 
 type Locale = "es" | "en" | "fr";
 
@@ -11,8 +12,6 @@ type RepresentativeStayImage = {
   src: string;
   alt: Record<Locale, string>;
 };
-
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.jacquiezaraterealtor.com";
 
 const COPY: Record<
   Locale,
@@ -231,30 +230,15 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale: raw } = await params;
-  const locale = normalizeLocale(raw);
+  const locale = normalizeSiteLocale(raw);
   const copy = COPY[locale];
 
-  return {
+  return createPageMetadata({
+    locale,
+    path: "lets-go-miami",
     title: copy.metaTitle,
     description: copy.metaDescription,
-    alternates: {
-      canonical: `${BASE_URL}/${locale}/lets-go-miami`,
-      languages: {
-        es: `${BASE_URL}/es/lets-go-miami`,
-        en: `${BASE_URL}/en/lets-go-miami`,
-        fr: `${BASE_URL}/fr/lets-go-miami`,
-      },
-    },
-    openGraph: {
-      title: copy.metaTitle,
-      description: copy.metaDescription,
-      url: `${BASE_URL}/${locale}/lets-go-miami`,
-    },
-    twitter: {
-      title: copy.metaTitle,
-      description: copy.metaDescription,
-    },
-  };
+  });
 }
 
 export default async function LetsGoMiamiPage({

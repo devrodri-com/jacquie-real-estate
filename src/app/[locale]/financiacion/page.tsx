@@ -1,10 +1,9 @@
 // src/app/[locale]/financiacion/page.tsx
 import Link from "next/link";
 import type { Metadata } from "next";
+import { createPageMetadata, normalizeLocale as normalizeSiteLocale } from "@/lib/seo";
 
 type Locale = "es" | "en" | "fr";
-
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.jacquiezaraterealtor.com";
 
 const COPY: Record<
   Locale,
@@ -267,30 +266,15 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale: raw } = await params;
-  const locale = normalizeLocale(raw);
+  const locale = normalizeSiteLocale(raw);
   const copy = COPY[locale];
 
-  return {
+  return createPageMetadata({
+    locale,
+    path: "financiacion",
     title: copy.metaTitle,
     description: copy.metaDescription,
-    alternates: {
-      canonical: `${BASE_URL}/${locale}/financiacion`,
-      languages: {
-        es: `${BASE_URL}/es/financiacion`,
-        en: `${BASE_URL}/en/financiacion`,
-        fr: `${BASE_URL}/fr/financiacion`,
-      },
-    },
-    openGraph: {
-      title: copy.metaTitle,
-      description: copy.metaDescription,
-      url: `${BASE_URL}/${locale}/financiacion`,
-    },
-    twitter: {
-      title: copy.metaTitle,
-      description: copy.metaDescription,
-    },
-  };
+  });
 }
 
 export default async function FinancingPage({

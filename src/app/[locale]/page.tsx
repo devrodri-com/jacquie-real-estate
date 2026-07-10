@@ -1,11 +1,43 @@
 // src/app/[locale]/page.tsx
 import Link from 'next/link';
 import Image from 'next/image';
+import type { Metadata } from 'next';
 import SectionAboutJacquieHome from '@/components/SectionAboutJacquieHome';
 import SectionListingsHome from '@/components/SectionListingsHome';
 import SectionWhyPrecon from '@/components/SectionWhyPrecon';
+import { createPageMetadata, normalizeLocale } from '@/lib/seo';
 
 type HomeLocale = "es" | "en" | "fr";
+
+const HOME_META: Record<HomeLocale, { title: string; description: string }> = {
+  es: {
+    title: "Jacquie Zarate Realtor | Inversión inmobiliaria en Miami",
+    description:
+      "Asesoría personalizada para comprar, invertir y gestionar propiedades en Miami. Acompañamiento completo, incluso si no estás en Estados Unidos.",
+  },
+  en: {
+    title: "Jacquie Zarate Realtor | Miami Real Estate & Investment",
+    description:
+      "Personalized guidance to buy, invest, and manage properties in Miami. Full support, even if you're not based in the U.S.",
+  },
+  fr: {
+    title: "Jacquie Zarate Realtor | Immobilier et investissement à Miami",
+    description:
+      "Accompagnement personnalisé pour acheter, investir et gérer des propriétés à Miami, même à distance.",
+  },
+};
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale: raw } = await params;
+  const locale = normalizeLocale(raw);
+  const meta = HOME_META[locale];
+  return createPageMetadata({ locale, title: meta.title, description: meta.description });
+}
+
 export default async function Home({params}: {params: Promise<{locale: string}>}) {
   const { locale: rawLocale } = await params;
   const locale: HomeLocale = rawLocale === "en" ? "en" : rawLocale === "fr" ? "fr" : "es";
