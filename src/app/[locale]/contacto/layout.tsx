@@ -4,19 +4,19 @@ import { createPageMetadata, normalizeLocale } from "@/lib/seo";
 
 const CONTACT_META = {
   es: {
-    title: "Contacto | Jacquie Zarate Realtor",
+    title: "Contacto | Jacquie Zárate",
     description:
-      "Contame qué estás buscando en Miami y recibí una orientación clara para avanzar con tu inversión, compra o estadía.",
+      "Cuéntame qué estás buscando en Miami y recibe una orientación clara para avanzar con tu inversión, compra o propiedad.",
   },
   en: {
-    title: "Contact | Jacquie Zarate Realtor",
+    title: "Contact | Jacquie Zárate",
     description:
-      "Tell me what you are looking for in Miami and receive clear guidance for your investment, purchase, or stay.",
+      "Tell me what you are looking for in Miami and receive clear guidance for your investment, purchase, or property.",
   },
   fr: {
-    title: "Contact | Jacquie Zarate Realtor",
+    title: "Contact | Jacquie Zárate",
     description:
-      "Dites-moi ce que vous recherchez à Miami et recevez un accompagnement clair pour votre investissement, votre achat ou votre séjour.",
+      "Parlez-moi de votre projet à Miami et recevez des conseils clairs pour votre investissement, votre achat ou votre propriété.",
   },
 };
 
