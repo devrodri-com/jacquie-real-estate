@@ -68,7 +68,7 @@ export default async function SobreMi({
                 className="object-cover object-center"
               />
             </div>
-            <figcaption className="mt-4 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/62">
+            <figcaption className="mt-4 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/75">
               <span aria-hidden className="h-px w-10 bg-accent" />
               {content.hero.imageCaption}
             </figcaption>
@@ -86,8 +86,8 @@ export default async function SobreMi({
           <ol className="border-t border-primary/15">
             {content.journey.items.map((item, index) => (
               <li key={item.place} className="grid gap-2 border-b border-primary/15 py-4 sm:grid-cols-[72px_1fr] sm:gap-x-7 lg:py-8">
-                <span className="row-span-3 text-xs font-semibold tracking-[0.18em] text-accent">0{index + 1}</span>
-                <p className="hidden text-[10px] font-semibold uppercase tracking-[0.16em] text-primary/58 sm:block">{item.place}</p>
+                <span className="row-span-3 text-xs font-semibold tracking-[0.18em] text-primary/75">0{index + 1}</span>
+                <p className="hidden text-[10px] font-semibold uppercase tracking-[0.16em] text-primary/75 sm:block">{item.place}</p>
                 <h3 className="font-display text-[clamp(1.35rem,2.8vw,2.25rem)] leading-[1.05] text-primary">{item.title}</h3>
                 <p className="max-w-[58ch] text-[14px] leading-[1.58] text-foreground/72 sm:text-[16px]">{item.text}</p>
               </li>
@@ -113,7 +113,7 @@ export default async function SobreMi({
             {content.lens.items.map((item, index) => (
               <li key={item.question} className="border-b border-primary-foreground/20 py-4 lg:py-8">
                 <div className="grid gap-5 sm:grid-cols-[54px_1fr]">
-                  <span className="text-xs font-semibold tracking-[0.18em] text-accent">0{index + 1}</span>
+                  <span className="text-xs font-semibold tracking-[0.18em] text-primary-foreground/82">0{index + 1}</span>
                   <div>
                     <h3 className="max-w-[25ch] font-display text-[clamp(1.35rem,3.4vw,2.7rem)] leading-[1.04] tracking-[-0.015em]">{item.question}</h3>
                     <p className="mt-2 max-w-[52ch] text-[14px] leading-[1.55] text-primary-foreground/68 sm:mt-4 sm:text-[15px]">{item.answer}</p>
@@ -138,7 +138,7 @@ export default async function SobreMi({
           <ol className="mt-9 grid border-t border-primary/15 md:grid-cols-3 md:divide-x md:divide-primary/15 lg:mt-20">
             {content.method.items.map((item, index) => (
               <li key={item.title} className="grid grid-cols-[28px_minmax(0,1fr)] gap-x-3 border-b border-primary/15 py-4 md:block md:border-b-0 md:px-8 lg:py-8 first:pl-0 last:pr-0">
-                <span className="row-span-2 text-xs font-semibold tracking-[0.18em] text-accent md:row-auto">0{index + 1}</span>
+                <span className="row-span-2 text-xs font-semibold tracking-[0.18em] text-primary/75 md:row-auto">0{index + 1}</span>
                 <h3 className="max-w-[15ch] font-display text-[clamp(1.35rem,2.6vw,2.15rem)] leading-[1.05] text-primary md:mt-4 lg:mt-8">{item.title}</h3>
                 <p className="col-start-2 mt-2 text-[14px] leading-[1.52] text-foreground/72 sm:text-[15px] md:col-auto md:mt-3">{item.text}</p>
               </li>
@@ -146,7 +146,7 @@ export default async function SobreMi({
           </ol>
 
           <aside className="mt-8 grid gap-3 border-t border-primary/15 pt-5 sm:mt-12 sm:grid-cols-[190px_1fr] sm:items-start sm:gap-8 sm:pt-7" aria-label={content.method.ownerNoteLabel}>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.17em] text-primary/58">{content.method.ownerNoteLabel}</p>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.17em] text-primary/75">{content.method.ownerNoteLabel}</p>
             <p className="max-w-[62ch] font-display text-[clamp(1.1rem,2.4vw,1.8rem)] leading-[1.2] text-primary/88">{content.method.ownerNote}</p>
           </aside>
         </div>
@@ -161,7 +161,7 @@ export default async function SobreMi({
           </div>
 
           <div className="border-t border-primary/15 pt-7 lg:border-l lg:border-t-0 lg:pl-12 lg:pt-0">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.17em] text-primary/55">{content.close.credentialLabel}</p>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.17em] text-primary/75">{content.close.credentialLabel}</p>
             <p className="mt-2 font-display text-2xl text-primary">{content.close.credential}</p>
             <div className="mt-5 flex flex-col gap-2 sm:mt-7 sm:gap-3">
               <a href={whatsAppHref} target="_blank" rel="noopener noreferrer" className={PRIMARY_CTA}>

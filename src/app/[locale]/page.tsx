@@ -168,8 +168,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             {content.decision.items.map((item, index) => (
               <article key={item.label} className="grid grid-cols-[84px_minmax(0,1fr)] gap-4 border-b border-primary/15 py-6 md:block md:border-b-0 md:px-7 lg:py-8 first:pl-0 last:pr-0">
                 <div className="flex flex-col items-start gap-2 md:flex-row md:items-center md:justify-between md:gap-4">
-                  <span className="text-xs font-semibold tracking-[0.18em] text-accent">0{index + 1}</span>
-                  <span className="text-[11px] font-semibold uppercase tracking-[0.15em] text-primary/60">{item.label}</span>
+                  <span className="text-xs font-semibold tracking-[0.18em] text-primary/75">0{index + 1}</span>
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.15em] text-primary/75">{item.label}</span>
                 </div>
                 <p className="max-w-[24ch] font-display text-[clamp(1.4rem,2.3vw,2rem)] leading-[1.12] text-primary md:mt-5 lg:mt-8">
                   {item.question}
@@ -281,7 +281,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <ol className="border-t border-primary/15">
               {content.method.items.map((item, index) => (
                 <li key={item.title} className="grid gap-3 border-b border-primary/15 py-4 sm:grid-cols-[64px_0.8fr_1.2fr] sm:items-start sm:gap-6 lg:py-7">
-                  <span className="text-xs font-semibold tracking-[0.18em] text-accent">0{index + 1}</span>
+                  <span className="text-xs font-semibold tracking-[0.18em] text-primary/75">0{index + 1}</span>
                   <h3 className="font-display text-[1.55rem] leading-[1.1] text-primary">{item.title}</h3>
                   <p className="text-[15px] leading-[1.7] text-foreground/72">{item.text}</p>
                 </li>
@@ -289,7 +289,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             </ol>
           </div>
 
-          <ul className="mt-8 flex flex-wrap gap-x-5 gap-y-1 border-y border-primary/15 py-3 text-[10px] font-semibold uppercase tracking-[0.12em] text-primary/65 sm:mt-14 sm:grid sm:grid-cols-3 sm:gap-0 sm:divide-x sm:divide-primary/15 sm:py-5 sm:text-center sm:text-[11px]">
+          <ul className="mt-8 flex flex-wrap gap-x-5 gap-y-1 border-y border-primary/15 py-3 text-[10px] font-semibold uppercase tracking-[0.12em] text-primary/75 sm:mt-14 sm:grid sm:grid-cols-3 sm:gap-0 sm:divide-x sm:divide-primary/15 sm:py-5 sm:text-center sm:text-[11px]">
             {content.method.proof.map((item) => (
               <li key={item} className="py-2 sm:px-5">{item}</li>
             ))}
@@ -307,7 +307,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               <p className={EYEBROW}>{content.stays.eyebrow}</p>
               <h2 id="lets-go-title" className="mt-2 font-display text-[clamp(2.2rem,4vw,3.4rem)] leading-none text-primary">{content.stays.title}</h2>
               <p className={`${BODY} mt-4 max-w-[58ch]`}>{content.stays.text}</p>
-              <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.16em] text-primary/58">{content.stays.signature}</p>
+              <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.16em] text-primary/75">{content.stays.signature}</p>
             </div>
             <Link href={letsGoHref} className={`${SECONDARY_CTA} md:justify-self-end`}>
               {content.stays.cta}
