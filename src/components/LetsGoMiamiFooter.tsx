@@ -159,9 +159,9 @@ export default function LetsGoMiamiFooter({ locale, logoSrc }: LetsGoMiamiFooter
           </div>
 
           <div className="space-y-3">
-            <h4 className="text-xs font-semibold uppercase tracking-wider opacity-80">
+            <h2 className="text-xs font-semibold uppercase tracking-wider opacity-80">
               {copy.links}
-            </h4>
+            </h2>
             <ul className="text-sm space-y-2">
               <li>
                 <a href="mailto:jacnaservices@gmail.com" className="text-primary-foreground hover:opacity-90">

@@ -68,7 +68,7 @@ export function SectionWhyPrecon({ heroImageSrc, heroImageAlt }: SectionWhyPreco
         </figure>
       ) : null}
       <div className="max-w-3xl">
-        <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-primary/62">
+        <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-primary/70">
           {eyebrow}
         </p>
         <h2 id="why-precon" className="font-display text-3xl font-medium leading-[1.05] tracking-normal text-primary sm:text-4xl">{title}</h2>

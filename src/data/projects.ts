@@ -226,17 +226,6 @@ export const ALL_PROJECTS: Project[] = [
     highlights: ["Daily up to 6m", "Investor‑ready"],
   },
   {
-    id: "mercedes-benz-places",
-    name: "Mercedes‑Benz Places",
-    city: "Brickell",
-    rentalPolicy: "30 días",
-    delivery: "2028",
-    priceFromUsd: 850000,
-    image: "/images/projects/mercedes-benz-places.webp",
-    slug: "/proyectos/mercedes-benz-places",
-    highlights: ["Mobility focus", "Design brand"],
-  },
-  {
     id: "edge-house",
     name: "Edge House",
     city: "Edgewater",

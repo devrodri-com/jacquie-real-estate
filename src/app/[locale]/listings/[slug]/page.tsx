@@ -6,8 +6,7 @@ import { FileText, ListChecks, MapPin } from "lucide-react";
 import { LISTINGS } from "@/data/listings";
 import { getListingFrOverlay } from "@/data/listingsFrOverlay";
 import { ListingDetailTopClient } from "./ListingDetailTopClient";
-
-const BASE_URL = "https://www.jacquiezaraterealtor.com";
+import { createPageMetadata, localizedUrl, normalizeLocale } from "@/lib/seo";
 
 type RouteParams = { locale: string; slug: string };
 
@@ -34,45 +33,38 @@ export async function generateMetadata({
   params: Promise<RouteParams>;
 }): Promise<Metadata> {
   const { locale: raw, slug } = await params;
-  const locale = raw === "en" ? "en" : raw === "fr" ? "fr" : "es";
+  const locale = normalizeLocale(raw);
   const item = LISTINGS.find((l) => l.slug === slug);
+  if (!item) {
+    return {
+      title:
+        locale === "en"
+          ? "Property not found"
+          : locale === "fr"
+            ? "Propriété introuvable"
+            : "Propiedad no encontrada",
+      robots: { index: false, follow: false },
+    };
+  }
   const addressFull = (item as { addressFull?: string } | undefined)?.addressFull;
-  const description = item
-    ? locale === "en"
+  const description =
+    locale === "en"
       ? ((item as { descriptionLong_en?: string; description_en: string }).descriptionLong_en ??
           item.description_en)
       : locale === "fr"
         ? listingMetaDescriptionFr(item as ListingMetaItem)
         : ((item as { descriptionLong_es?: string; description_es: string }).descriptionLong_es ??
-            item.description_es)
-    : undefined;
+            item.description_es);
   const image = item?.images?.[0];
   const pageTitle = addressFull ? `${addressFull} | Jacquie Zarate Realtor` : undefined;
 
-  return {
-    title: pageTitle,
-    description: description ?? undefined,
-    alternates: {
-      canonical: `${BASE_URL}/${locale}/listings/${slug}`,
-      languages: {
-        es: `${BASE_URL}/es/listings/${slug}`,
-        en: `${BASE_URL}/en/listings/${slug}`,
-        fr: `${BASE_URL}/fr/listings/${slug}`,
-      },
-    },
-    openGraph: {
-      title: pageTitle,
-      description: description ?? undefined,
-      url: `${BASE_URL}/${locale}/listings/${slug}`,
-      ...(image ? { images: [{ url: image }] } : {}),
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: pageTitle,
-      description: description ?? undefined,
-      ...(image ? { images: [image] } : {}),
-    },
-  };
+  return createPageMetadata({
+    locale,
+    path: `listings/${slug}`,
+    title: pageTitle ?? `${item.title} | Jacquie Zarate Realtor`,
+    description,
+    image,
+  });
 }
 
 export default async function ListingDetailPage({
@@ -81,7 +73,7 @@ export default async function ListingDetailPage({
   params: Promise<RouteParams>;
 }) {
   const { locale: raw, slug } = await params;
-  const locale = raw === "en" ? "en" : raw === "fr" ? "fr" : "es";
+  const locale = normalizeLocale(raw);
   const isEN = locale === "en";
   const isFR = locale === "fr";
 
@@ -260,12 +252,12 @@ export default async function ListingDetailPage({
       "price": item.price,
       "priceCurrency": "USD",
       "availability": "https://schema.org/InStock",
-      "url": `${BASE_URL}/${locale}/listings/${item.slug}`
+      "url": localizedUrl(locale, `listings/${item.slug}`)
     }
   };
 
   return (
-    <main className="mx-auto max-w-[1100px] px-4 py-12 text-foreground">
+    <div className="mx-auto max-w-[1100px] px-4 py-12 text-foreground">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaObject) }}
@@ -422,7 +414,11 @@ export default async function ListingDetailPage({
           <div className="relative w-full aspect-[16/10]">
             <iframe
               src={`https://www.google.com/maps?q=${item.latitude},${item.longitude}&z=15&output=embed`}
-              title={isEN ? "Location map" : isFR ? "Carte de l'emplacement" : "Mapa de ubicación"}
+              title={isEN
+                ? `Location of ${item.title}`
+                : isFR
+                  ? `Emplacement de ${item.title}`
+                  : `Ubicación de ${item.title}`}
               className="absolute inset-0 w-full h-full border-0"
               allowFullScreen
               loading="lazy"
@@ -455,6 +451,6 @@ export default async function ListingDetailPage({
           {isEN ? "Contact" : isFR ? "Contact" : "Contactar"}
         </Link>
       </section>
-    </main>
+    </div>
   );
 }

@@ -218,7 +218,7 @@ export default function CountrySelect({
             <span className="hidden min-w-0 flex-1 truncate sm:inline">
               {labels?.[value] ?? value}
             </span>
-            <span className="shrink-0 text-primary/60">+{getCountryCallingCode(value)}</span>
+            <span className="shrink-0 text-primary/70">+{getCountryCallingCode(value)}</span>
           </>
         ) : (
           <>
@@ -226,7 +226,7 @@ export default function CountrySelect({
             <span className="hidden min-w-0 flex-1 truncate sm:inline">
               {internationalLabel}
             </span>
-            <span className="shrink-0 text-primary/60">+</span>
+            <span className="shrink-0 text-primary/70">+</span>
           </>
         )}
         <svg
@@ -284,7 +284,7 @@ export default function CountrySelect({
               <span className="text-xl">🌐</span>
               <div className="flex-1 min-w-0">
                 <div className="font-medium text-primary">{internationalLabel}</div>
-                <div className="text-xs text-primary/60">{manualEntryLabel}</div>
+                <div className="text-xs text-primary/70">{manualEntryLabel}</div>
               </div>
             </button>
 
@@ -322,13 +322,13 @@ export default function CountrySelect({
                   <div className="flex-1 min-w-0">
                     <div className="font-medium text-primary truncate">{label}</div>
                   </div>
-                  <span className="text-xs text-primary/60 flex-shrink-0">+{callingCode}</span>
+                  <span className="text-xs text-primary/70 flex-shrink-0">+{callingCode}</span>
                 </button>
               );
             })}
             
             {filteredOptions.length === 0 && (
-              <div className="px-3 py-4 text-center text-sm text-primary/60">
+              <div className="px-3 py-4 text-center text-sm text-primary/70">
                 {noCountriesLabel}
               </div>
             )}

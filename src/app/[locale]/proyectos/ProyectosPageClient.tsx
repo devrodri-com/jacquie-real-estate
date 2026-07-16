@@ -81,11 +81,11 @@ export default function ProyectosPageClient() {
   }, [filtered, filters.sort]);
 
   return (
-    <main className="px-4 py-10 text-foreground sm:py-14">
+    <div className="px-4 py-10 text-foreground sm:py-14">
       <div className="flex flex-col gap-5 sm:gap-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-none">
-            <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-primary/62">
+            <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-primary/70">
               {isEn ? "PRECONSTRUCTION" : isFr ? "PRÉCONSTRUCTION" : "PRECONSTRUCCIÓN"}
             </p>
             <h1 className="mt-2 font-display text-[42px] font-medium leading-[0.98] tracking-normal text-primary sm:text-[56px] lg:whitespace-nowrap">
@@ -171,7 +171,7 @@ export default function ProyectosPageClient() {
       )}
 
       <div className="mt-8 grid grid-cols-1 gap-5 md:mt-10 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
-        {sorted.map((p) => {
+        {sorted.map((p, index) => {
           const frOverlay = isFr ? getProjectFrOverlay(p.slug) : undefined;
 
           const legacyRental = p.rentalPolicy != null ? String(p.rentalPolicy) : "";
@@ -196,6 +196,7 @@ export default function ProyectosPageClient() {
 
           const deliveryLabel =
             locale === "fr" ? (frOverlay?.deliveryFr ?? p.delivery) : p.delivery;
+          const cityLabel = locale === "fr" ? (frOverlay?.cityFr ?? p.city) : p.city;
 
           return (
             <article
@@ -209,8 +210,11 @@ export default function ProyectosPageClient() {
                   alt={p.name}
                   fill
                   className="object-cover transition-transform duration-300 group-hover:scale-[1.025]"
-                  sizes="(min-width:1024px) 33vw, 100vw"
-                  loading="lazy"
+                  sizes="(min-width: 1024px) 350px, (min-width: 768px) 50vw, calc(100vw - 2rem)"
+                  quality={index === 0 ? 75 : 65}
+                  priority={index === 0}
+                  fetchPriority={index === 0 ? "high" : "auto"}
+                  loading={index === 0 ? "eager" : "lazy"}
                   decoding="async"
                 />
                 {deliveryLabel && (
@@ -222,13 +226,13 @@ export default function ProyectosPageClient() {
             </Link>
 
             <div className="flex flex-1 flex-col p-5">
-              <h3 className="min-h-[52px] font-display text-[24px] font-medium leading-[1.08] tracking-normal text-primary line-clamp-2">
+              <h2 className="min-h-[52px] font-display text-[24px] font-medium leading-[1.08] tracking-normal text-primary line-clamp-2">
                 <Link href={`/${locale}${p.slug}`} className="text-primary no-underline hover:underline underline-offset-4 decoration-primary/25">
                   {p.name}
                 </Link>
-              </h3>
-              <p className="mt-2 h-[18px] truncate text-[12px] font-medium uppercase tracking-[0.12em] text-primary/55">
-                {p.city} · {rentalDisplay}
+              </h2>
+              <p className="mt-2 h-[18px] truncate text-[12px] font-medium uppercase tracking-[0.12em] text-primary/70">
+                {cityLabel} · {rentalDisplay}
               </p>
               <div className="mt-3 h-[22px] truncate text-[15px] font-semibold text-primary">
                 {typeof p.priceFromUsd === "number"
@@ -243,7 +247,7 @@ export default function ProyectosPageClient() {
                       ? "Consulter"
                       : "Consultar"}
                 {typeof p.pricePerSfApprox === "number" ? (
-                  <span className="ml-1 text-[12px] font-normal text-foreground/55"> · ~${p.pricePerSfApprox}{priceSfSuffix}</span>
+                  <span className="ml-1 text-[12px] font-normal text-foreground/70"> · ~${p.pricePerSfApprox}{priceSfSuffix}</span>
                 ) : null}
               </div>
               <div className="mt-4 grid h-[58px] grid-rows-2 content-start gap-2 overflow-hidden">
@@ -274,6 +278,6 @@ export default function ProyectosPageClient() {
           );
         })}
       </div>
-    </main>
+    </div>
   );
 }

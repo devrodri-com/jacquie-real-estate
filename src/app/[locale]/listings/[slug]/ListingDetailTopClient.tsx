@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 type ListingDetailTopItem = {
@@ -37,10 +38,44 @@ export function ListingDetailTopClient({
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const lightboxHistoryPushedRef = useRef(false);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const lastTriggerRef = useRef<HTMLButtonElement | null>(null);
 
-  const openLightbox = (index: number) => {
+  const galleryA11y = isEN
+    ? {
+        dialog: `Photo gallery for ${listingDisplayTitle}`,
+        openImage: (index: number, total: number) => `Open image ${index} of ${total}`,
+        imageAlt: (index: number, total: number) => `${listingDisplayTitle}, image ${index} of ${total}`,
+        remaining: (count: number) => `Open ${count} more photos`,
+        close: "Close gallery",
+        previous: "Previous image",
+        next: "Next image",
+      }
+    : isFR
+      ? {
+          dialog: `Galerie de photos de ${listingDisplayTitle}`,
+          openImage: (index: number, total: number) => `Ouvrir l’image ${index} sur ${total}`,
+          imageAlt: (index: number, total: number) => `${listingDisplayTitle}, image ${index} sur ${total}`,
+          remaining: (count: number) => `Ouvrir ${count} photos supplémentaires`,
+          close: "Fermer la galerie",
+          previous: "Image précédente",
+          next: "Image suivante",
+        }
+      : {
+          dialog: `Galería de fotos de ${listingDisplayTitle}`,
+          openImage: (index: number, total: number) => `Abrir imagen ${index} de ${total}`,
+          imageAlt: (index: number, total: number) => `${listingDisplayTitle}, imagen ${index} de ${total}`,
+          remaining: (count: number) => `Abrir ${count} fotos adicionales`,
+          close: "Cerrar galería",
+          previous: "Imagen anterior",
+          next: "Imagen siguiente",
+        };
+
+  const openLightbox = (index: number, trigger: HTMLButtonElement) => {
     if (item.images.length === 0) return;
     const i = Math.min(Math.max(0, index), item.images.length - 1);
+    lastTriggerRef.current = trigger;
     setLightboxIndex(i);
     setActiveImage(item.images[i]);
     setIsLightboxOpen(true);
@@ -77,9 +112,15 @@ export function ListingDetailTopClient({
     if (!isLightboxOpen) return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    closeButtonRef.current?.focus();
     return () => {
       document.body.style.overflow = prev;
     };
+  }, [isLightboxOpen]);
+
+  useEffect(() => {
+    if (isLightboxOpen || !lastTriggerRef.current) return;
+    window.setTimeout(() => lastTriggerRef.current?.focus(), 0);
   }, [isLightboxOpen]);
 
   const showPrevImage = useCallback(() => {
@@ -120,6 +161,25 @@ export function ListingDetailTopClient({
       if (e.key === "ArrowRight") {
         e.preventDefault();
         showNextImage();
+        return;
+      }
+      if (e.key === "Tab") {
+        const controls = Array.from(
+          dialogRef.current?.querySelectorAll<HTMLElement>(
+            'button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])'
+          ) ?? []
+        ).filter((element) => element.offsetParent !== null);
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        if (!first || !last) return;
+
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
       }
     };
 
@@ -151,7 +211,7 @@ export function ListingDetailTopClient({
               : `Superficie ${item.size.toLocaleString("en-US")} ft²`} · {item.type}
         </p>
 
-        <p className="mt-1 text-[13px] text-foreground/60">
+        <p className="mt-1 text-[13px] text-foreground/70">
           MLS {item.mls}
         </p>
       </section>
@@ -161,46 +221,63 @@ export function ListingDetailTopClient({
         <div>
           {item.images.length > 0 && (
             <>
-              <div
+              <button
+                type="button"
                 className="relative aspect-[16/10] w-full overflow-hidden rounded-[12px] ring-1 ring-black/10 mb-3 cursor-pointer"
-                onClick={() =>
-                  openLightbox(item.images.findIndex((img) => img === activeImage))
+                onClick={(event) =>
+                  openLightbox(item.images.findIndex((img) => img === activeImage), event.currentTarget)
                 }
+                aria-label={galleryA11y.openImage(item.images.findIndex((img) => img === activeImage) + 1, item.images.length)}
               >
-                <img
+                <Image
                   src={activeImage}
                   alt=""
+                  fill
+                  sizes="(min-width: 1024px) 640px, calc(100vw - 2rem)"
+                  priority
+                  fetchPriority="high"
                   className="h-full w-full object-cover transition-transform duration-300 hover:scale-[1.02] cursor-pointer"
                 />
                 <div className="absolute bottom-3 right-3 rounded-md bg-black/65 px-2.5 py-1 text-xs font-medium text-white">
                   {item.images.findIndex((img) => img === activeImage) + 1} / {item.images.length}
                 </div>
-              </div>
+              </button>
 
               <div className="flex flex-wrap gap-2">
                 {item.images.slice(0, 5).map((src, i) => (
                   <button
                     key={i}
                     type="button"
-                    onClick={() => {
+                    onClick={(event) => {
                       setActiveImage(src);
-                      openLightbox(item.images.findIndex((img) => img === src));
+                      openLightbox(item.images.findIndex((img) => img === src), event.currentTarget);
                     }}
-                    className={`h-20 w-28 overflow-hidden rounded-md ring-1 p-0 border-0 bg-transparent cursor-pointer transition ${
+                    aria-label={galleryA11y.openImage(i + 1, item.images.length)}
+                    aria-pressed={activeImage === src}
+                    className={`relative h-20 w-28 overflow-hidden rounded-md ring-1 p-0 border-0 bg-transparent cursor-pointer transition focus-visible:ring-2 focus-visible:ring-accent ${
                       activeImage === src
                         ? "ring-primary"
                         : "ring-black/10 hover:ring-primary/50"
                     }`}
                   >
-                    <img src={src} alt="" className="h-full w-full object-cover pointer-events-none" />
+                    <Image
+                      src={src}
+                      alt=""
+                      fill
+                      sizes="112px"
+                      quality={65}
+                      loading="lazy"
+                      className="h-full w-full object-cover pointer-events-none"
+                    />
                   </button>
                 ))}
 
                 {item.images.length > 5 && (
                   <button
                     type="button"
-                    onClick={() => openLightbox(5)}
-                    className="relative h-20 w-28 overflow-hidden rounded-md ring-1 ring-primary/20 bg-primary/[0.06] flex items-center justify-center text-sm font-semibold text-primary hover:bg-primary/[0.12] transition-colors"
+                    onClick={(event) => openLightbox(5, event.currentTarget)}
+                    aria-label={galleryA11y.remaining(item.images.length - 5)}
+                    className="relative h-20 w-28 overflow-hidden rounded-md ring-1 ring-primary/20 bg-primary/[0.06] flex items-center justify-center text-sm font-semibold text-primary hover:bg-primary/[0.12] transition-colors focus-visible:ring-2 focus-visible:ring-accent"
                   >
                     <span className="relative z-10">
                       +{item.images.length - 5} {isEN ? "photos" : isFR ? "photos" : "fotos"}
@@ -272,8 +349,12 @@ export function ListingDetailTopClient({
 
       {isLightboxOpen && (
         <div
+          ref={dialogRef}
           className="fixed inset-0 z-[100] bg-black/88 backdrop-blur-sm overflow-y-auto"
           onClick={closeLightbox}
+          role="dialog"
+          aria-modal="true"
+          aria-label={galleryA11y.dialog}
         >
           <div className="min-h-full flex items-start justify-center p-4 sm:p-6">
             <div
@@ -281,22 +362,28 @@ export function ListingDetailTopClient({
               onClick={(e) => e.stopPropagation()}
             >
               <button
+                ref={closeButtonRef}
                 type="button"
                 onClick={closeLightbox}
                 className="fixed right-[max(1rem,env(safe-area-inset-right,0px))] top-[max(1rem,env(safe-area-inset-top,0px))] z-[110] inline-flex h-10 w-10 items-center justify-center rounded-full bg-black/55 text-white backdrop-blur-sm hover:bg-black/70 sm:absolute sm:right-0 sm:top-0 sm:z-10 sm:bg-white/10 sm:hover:bg-white/20"
-                aria-label={isEN ? "Close gallery" : isFR ? "Fermer la galerie" : "Cerrar galería"}
+                aria-label={galleryA11y.close}
               >
                 ✕
               </button>
 
               <div className="relative overflow-hidden rounded-[16px] bg-black">
-                <img
+                <Image
                   src={item.images[lightboxIndex]}
-                  alt=""
+                  alt={galleryA11y.imageAlt(lightboxIndex + 1, item.images.length)}
+                  width={1600}
+                  height={1000}
+                  sizes="92vw"
+                  quality={85}
+                  fetchPriority="high"
                   className="max-h-[58vh] sm:max-h-[78vh] w-full object-contain"
                 />
 
-                <div className="absolute bottom-4 right-4 rounded-md bg-black/60 px-3 py-1 text-sm font-medium text-white">
+                <div className="absolute bottom-4 right-4 rounded-md bg-black/60 px-3 py-1 text-sm font-medium text-white" aria-live="polite" aria-atomic="true">
                   {lightboxIndex + 1} / {item.images.length}
                 </div>
 
@@ -304,7 +391,7 @@ export function ListingDetailTopClient({
                   type="button"
                   onClick={showPrevImage}
                   className="absolute left-4 top-1/2 -translate-y-1/2 inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/45 text-white hover:bg-black/65"
-                  aria-label={isEN ? "Previous image" : isFR ? "Image précédente" : "Imagen anterior"}
+                  aria-label={galleryA11y.previous}
                 >
                   ‹
                 </button>
@@ -313,7 +400,7 @@ export function ListingDetailTopClient({
                   type="button"
                   onClick={showNextImage}
                   className="absolute right-4 top-1/2 -translate-y-1/2 inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/45 text-white hover:bg-black/65"
-                  aria-label={isEN ? "Next image" : isFR ? "Image suivante" : "Imagen siguiente"}
+                  aria-label={galleryA11y.next}
                 >
                   ›
                 </button>
@@ -328,13 +415,23 @@ export function ListingDetailTopClient({
                       setLightboxIndex(index);
                       setActiveImage(src);
                     }}
-                    className={`shrink-0 h-16 w-20 overflow-hidden rounded-md ring-1 transition ${
+                    aria-label={galleryA11y.openImage(index + 1, item.images.length)}
+                    aria-current={index === lightboxIndex ? "true" : undefined}
+                    className={`relative shrink-0 h-16 w-20 overflow-hidden rounded-md ring-1 transition focus-visible:ring-2 focus-visible:ring-white ${
                       index === lightboxIndex
                         ? "ring-white"
                         : "ring-white/20 hover:ring-white/50"
                     }`}
                   >
-                    <img src={src} alt="" className="h-full w-full object-cover" />
+                    <Image
+                      src={src}
+                      alt=""
+                      fill
+                      sizes="80px"
+                      quality={65}
+                      loading="lazy"
+                      className="h-full w-full object-cover"
+                    />
                   </button>
                 ))}
               </div>
