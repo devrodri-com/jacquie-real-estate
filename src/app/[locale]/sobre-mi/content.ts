@@ -66,7 +66,7 @@ export const ABOUT_CONTENT: Record<HomeLocale, AboutContent> = {
         "Trabajo con compradores, inversores y propietarios para comprar, invertir o gestionar una propiedad en Miami.",
       primaryCta: "Hablar por WhatsApp",
       secondaryCta: "Conocer mi forma de trabajar",
-      portraitAlt: "Retrato de Jacquie Zárate, realtor en Miami",
+      portraitAlt: "Retrato de Jacquie Zárate, Realtor en Miami",
       imageCaption: "Buenos Aires · Finanzas · Miami",
     },
     journey: {
@@ -81,7 +81,7 @@ export const ABOUT_CONTENT: Record<HomeLocale, AboutContent> = {
         {
           place: "FINANZAS",
           title: "Más de 15 años en Finanzas",
-          text: "Experiencia en empresas S&P 500, con foco en análisis, procesos y toma de decisiones.",
+          text: "Más de 15 años de experiencia en Finanzas trabajando en empresas S&P 500.",
         },
         {
           place: "REAL ESTATE",
@@ -112,12 +112,12 @@ export const ABOUT_CONTENT: Record<HomeLocale, AboutContent> = {
         { title: "Mantener el proceso en movimiento", text: "Seguimiento de cada etapa y coordinación de los próximos pasos." },
       ],
       ownerNoteLabel: "PARA PROPIETARIOS",
-      ownerNote: "También apoyo a propietarios en la gestión de su propiedad.",
+      ownerNote: "También trabajo con propietarios en el área de Property Management.",
     },
     close: {
       eyebrow: "RESPALDO PROFESIONAL",
       title: "Tu próximo paso en Miami.",
-      text: "Trabajo como realtor asociada a Miami Life Realty. La comunicación y el seguimiento del proceso son directamente conmigo.",
+      text: "Trabajo como Realtor en Miami, asociada a Miami Life Realty. La comunicación y el seguimiento del proceso son directamente conmigo.",
       credentialLabel: "BROKERAGE",
       credential: "Miami Life Realty",
       primaryCta: "Hablar con Jacquie por WhatsApp",
@@ -147,7 +147,7 @@ export const ABOUT_CONTENT: Record<HomeLocale, AboutContent> = {
         {
           place: "FINANCE",
           title: "More than 15 years in Finance",
-          text: "Experience with S&P 500 companies, focusing on analysis, processes, and decision-making.",
+          text: "More than 15 years of experience in Finance at S&P 500 companies.",
         },
         {
           place: "REAL ESTATE",
@@ -163,7 +163,7 @@ export const ABOUT_CONTENT: Record<HomeLocale, AboutContent> = {
         "Understand what the property needs to accomplish, how it fits the budget, and which conditions to review before moving forward.",
       items: [
         { question: "What should this purchase accomplish?", answer: "Personal use, investment, rental, or a combination of needs." },
-        { question: "How do budget and financing fit together?", answer: "Budget, available capital, and financing are considered together before choosing." },
+        { question: "How do budget and financing fit together?", answer: "Budget, available capital, and financing are considered together before choosing a property." },
         { question: "Which conditions change the decision?", answer: "Location, building, property type, timing, and intended use." },
       ],
       cta: "Explore financing options",
@@ -178,12 +178,12 @@ export const ABOUT_CONTENT: Record<HomeLocale, AboutContent> = {
         { title: "Keep the process moving", text: "Follow-through at every stage and coordination of the next steps." },
       ],
       ownerNoteLabel: "FOR PROPERTY OWNERS",
-      ownerNote: "I also support property owners with the management of their property.",
+      ownerNote: "I also work with property owners in Property Management.",
     },
     close: {
       eyebrow: "PROFESSIONAL BACKING",
       title: "Your next step in Miami.",
-      text: "I work as a Realtor affiliated with Miami Life Realty. Communication and follow-through throughout the process are directly with me.",
+      text: "I work as a Miami Realtor affiliated with Miami Life Realty. Communication and follow-through throughout the process are directly with me.",
       credentialLabel: "BROKERAGE",
       credential: "Miami Life Realty",
       primaryCta: "Chat with Jacquie on WhatsApp",
@@ -192,13 +192,13 @@ export const ABOUT_CONTENT: Record<HomeLocale, AboutContent> = {
   },
   fr: {
     hero: {
-      eyebrow: "JACQUIE ZÁRATE · REALTOR À MIAMI",
+      eyebrow: "JACQUIE ZÁRATE · COURTIÈRE IMMOBILIÈRE À MIAMI",
       title: "Une expérience financière appliquée aux décisions immobilières à Miami.",
       intro:
-        "Je travaille avec des acheteurs, des investisseurs et des propriétaires pour acheter, investir ou gérer une propriété à Miami.",
+        "Je travaille avec des acheteurs, des investisseurs et des propriétaires qui souhaitent acheter, investir ou gérer une propriété à Miami.",
       primaryCta: "Écrire sur WhatsApp",
       secondaryCta: "Découvrir ma façon de travailler",
-      portraitAlt: "Portrait de Jacquie Zárate, realtor à Miami",
+      portraitAlt: "Portrait de Jacquie Zárate, courtière immobilière à Miami",
       imageCaption: "Buenos Aires · Finances · Miami",
     },
     journey: {
@@ -213,12 +213,12 @@ export const ABOUT_CONTENT: Record<HomeLocale, AboutContent> = {
         {
           place: "FINANCES",
           title: "Plus de 15 ans en finances",
-          text: "Expérience au sein d’entreprises du S&P 500, axée sur l’analyse, les processus et la prise de décision.",
+          text: "Plus de 15 ans d’expérience en finances au sein d’entreprises du S&P 500.",
         },
         {
           place: "IMMOBILIER",
           title: "Miami depuis 2023",
-          text: "Je travaille avec des acheteurs, des investisseurs et des propriétaires en immobilier et en gestion de propriétés.",
+          text: "Je travaille avec des acheteurs, des investisseurs et des propriétaires en immobilier et en gestion immobilière.",
         },
       ],
     },
@@ -226,11 +226,11 @@ export const ABOUT_CONTENT: Record<HomeLocale, AboutContent> = {
       eyebrow: "UNE VUE PLUS COMPLÈTE",
       title: "Les finances changent les questions que je pose.",
       intro:
-        "Comprendre ce que la propriété doit accomplir, comment elle s’intègre au budget et quelles conditions examiner avant d’avancer.",
+        "Comprendre le rôle que la propriété doit remplir, la façon dont elle s’intègre à votre budget et les conditions à examiner avant d’avancer.",
       items: [
-        { question: "Que doit accomplir cet achat?", answer: "Usage personnel, investissement, location ou combinaison de besoins." },
-        { question: "Comment le budget et le financement s’articulent-ils?", answer: "Le budget, le capital disponible et le financement sont considérés ensemble avant de choisir." },
-        { question: "Quelles conditions changent la décision?", answer: "Emplacement, immeuble, type de propriété, échéancier et usage prévu." },
+        { question: "Quel rôle cet achat doit-il remplir?", answer: "Usage personnel, investissement, location ou combinaison de besoins." },
+        { question: "Comment le budget et le financement s’articulent-ils?", answer: "Le budget, le capital disponible et le financement sont considérés ensemble avant de choisir une propriété." },
+        { question: "Quelles conditions peuvent modifier la décision?", answer: "Emplacement, immeuble, type de propriété, échéancier et usage prévu." },
       ],
       cta: "Explorer les options de financement",
     },
@@ -241,15 +241,15 @@ export const ABOUT_CONTENT: Record<HomeLocale, AboutContent> = {
       items: [
         { title: "Comprendre le contexte", text: "Votre objectif, votre échéancier, votre budget et les conditions importantes." },
         { title: "Organiser les options", text: "L’information nécessaire pour décider lesquelles méritent d’être explorées." },
-        { title: "Faire avancer le processus", text: "Le suivi de chaque étape et la coordination des prochaines avec vous." },
+        { title: "Faire avancer le processus", text: "Le suivi de chaque étape et la coordination des prochaines étapes avec vous." },
       ],
       ownerNoteLabel: "POUR LES PROPRIÉTAIRES",
-      ownerNote: "J’aide aussi les propriétaires dans la gestion de leur propriété.",
+      ownerNote: "Je travaille aussi avec des propriétaires dans le domaine de la gestion immobilière.",
     },
     close: {
       eyebrow: "APPUI PROFESSIONNEL",
       title: "Votre prochaine étape à Miami.",
-      text: "Je travaille comme realtor affiliée à Miami Life Realty. La communication et le suivi du processus se font directement avec moi.",
+      text: "Je travaille comme courtière immobilière à Miami, affiliée à Miami Life Realty. La communication et le suivi du processus se font directement avec moi.",
       credentialLabel: "AGENCE IMMOBILIÈRE",
       credential: "Miami Life Realty",
       primaryCta: "Écrire à Jacquie sur WhatsApp",

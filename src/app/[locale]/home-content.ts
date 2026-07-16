@@ -81,10 +81,10 @@ export const HOME_CONTENT: Record<HomeLocale, HomeContent> = {
       eyebrow: "REAL ESTATE EN MIAMI · COMPRA E INVERSIÓN",
       title: "Compra o invierte en Miami con criterio financiero y guía local.",
       intro:
-        "Soy Jacquie Zárate, realtor en Miami. Te ayudo a comparar propiedades, proyectos de preconstrucción y opciones de financiación según tu objetivo, tu presupuesto y la forma en que quieres usar la propiedad.",
+        "Soy Jacquie Zárate, Realtor en Miami. Te ayudo a comparar propiedades, proyectos de preconstrucción y opciones de financiación según tu objetivo, tu presupuesto y la forma en que quieres usar la propiedad.",
       primaryCta: "Hablar por WhatsApp",
       secondaryCta: "Explorar opciones",
-      portraitAlt: "Jacquie Zárate, realtor en Miami",
+      portraitAlt: "Jacquie Zárate, Realtor en Miami",
       portraitCaption: "Jacquie Zárate · Realtor en Miami",
     },
     decision: {
@@ -111,7 +111,7 @@ export const HOME_CONTENT: Record<HomeLocale, HomeContent> = {
       },
       properties: {
         eyebrow: "02 · PROPIEDADES DISPONIBLES",
-        title: "Evaluar una propiedad que ya puedes recorrer.",
+        title: "Evaluar una propiedad ya construida.",
         text: "Explora las propiedades publicadas y revisa precio, edificio, condiciones y potencial de uso antes de avanzar.",
         cta: "Ver propiedades",
         imageAlt: "Interior de una propiedad disponible en South Florida",
@@ -120,7 +120,7 @@ export const HOME_CONTENT: Record<HomeLocale, HomeContent> = {
     financing: {
       eyebrow: "FINANCIACIÓN",
       title: "La financiación también forma parte de la decisión.",
-      text: "En algunos casos, las alternativas pueden comenzar desde un 25% de pago inicial. Revisamos tu objetivo, perfil y documentación para entender qué opciones podrían aplicar antes de elegir una propiedad.",
+      text: "En algunos casos, las alternativas pueden comenzar desde un 25% de pago inicial. Te ayudo a ordenar la información y las preguntas necesarias para entender qué opciones de financiación podrían evaluarse según tu situación.",
       reference: "de pago inicial como referencia",
       note: "El 25% es una referencia inicial, no una garantía. Toda financiación está sujeta a evaluación, documentación, tipo de propiedad y aprobación de la entidad financiera.",
       cta: "Conocer opciones de financiación",
@@ -197,14 +197,14 @@ export const HOME_CONTENT: Record<HomeLocale, HomeContent> = {
     financing: {
       eyebrow: "FINANCING",
       title: "Financing is also part of the purchase decision.",
-      text: "In some cases, options may start at a 25% down payment. We review your goals, profile, and documentation to understand what may apply before you choose a property.",
+      text: "In some cases, options may start with a 25% down payment. I help you organize the information and questions needed to understand which financing options could be considered based on your situation.",
       reference: "down payment as an initial reference",
       note: "The 25% figure is an initial reference, not a guarantee. All financing is subject to review, documentation, property type, and lender approval.",
       cta: "Explore financing options",
     },
     method: {
       eyebrow: "HOW I WORK",
-      title: "Personal criteria at every stage.",
+      title: "A personal approach at every stage.",
       intro: "My background in Finance and my real estate work in Miami help me organize the conversation from your goal to the next step.",
       items: [
         { title: "Define the goal", text: "I learn what you want to buy, why, and which conditions matter to you." },
@@ -235,15 +235,15 @@ export const HOME_CONTENT: Record<HomeLocale, HomeContent> = {
       eyebrow: "IMMOBILIER À MIAMI · ACHAT ET INVESTISSEMENT",
       title: "Achetez ou investissez à Miami avec une perspective financière et un accompagnement local.",
       intro:
-        "Je suis Jacquie Zárate, realtor à Miami. Je vous aide à comparer des propriétés, des projets en préconstruction et des options de financement selon vos objectifs, votre budget et l’usage prévu de la propriété.",
+        "Je suis Jacquie Zárate, courtière immobilière à Miami. Je vous aide à comparer des propriétés, des projets en préconstruction et des options de financement selon vos objectifs, votre budget et l’usage prévu de la propriété.",
       primaryCta: "Écrire sur WhatsApp",
       secondaryCta: "Explorer les options",
-      portraitAlt: "Jacquie Zárate, realtor à Miami",
-      portraitCaption: "Jacquie Zárate · Realtor à Miami",
+      portraitAlt: "Jacquie Zárate, courtière immobilière à Miami",
+      portraitCaption: "Jacquie Zárate · courtière immobilière à Miami",
     },
     decision: {
       eyebrow: "DES CRITÈRES AVANT DE DÉCIDER",
-      title: "Objectif, situation financière et propriété: une seule décision.",
+      title: "Objectif, situation financière et propriété : une seule décision.",
       intro: "Avant d’avancer, nous organisons les variables qui peuvent réellement influencer l’achat.",
       items: [
         { label: "Objectif", question: "Est-ce pour y habiter, investir, louer ou combiner plusieurs usages?" },
@@ -274,18 +274,18 @@ export const HOME_CONTENT: Record<HomeLocale, HomeContent> = {
     financing: {
       eyebrow: "FINANCEMENT",
       title: "Le financement fait aussi partie de la décision d’achat.",
-      text: "Dans certains cas, certaines options peuvent prévoir une mise de fonds à partir de 25 %. Nous examinons vos objectifs, votre profil et vos documents afin de comprendre les possibilités avant de choisir une propriété.",
+      text: "Dans certains cas, des options de financement peuvent prévoir une mise de fonds à partir de 25 %. Je vous aide à organiser l’information et les questions nécessaires pour comprendre quelles options de financement pourraient être envisagées selon votre situation.",
       reference: "de mise de fonds comme référence initiale",
       note: "La mise de fonds de 25 % est une référence initiale, pas une garantie. Tout financement est assujetti à l’évaluation, aux documents, au type de propriété et à l’approbation de l’institution financière.",
       cta: "Explorer les options de financement",
     },
     method: {
       eyebrow: "MA FAÇON DE TRAVAILLER",
-      title: "Des critères personnels à chaque étape.",
+      title: "Une approche personnalisée à chaque étape.",
       intro: "Mon expérience en finances et mon travail en immobilier à Miami aident à structurer la conversation, de votre objectif jusqu’à la prochaine étape.",
       items: [
         { title: "Définir l’objectif", text: "Je cherche à comprendre ce que vous souhaitez acheter, pourquoi et quelles conditions comptent pour vous." },
-        { title: "Comparer les scénarios", text: "Nous organisons la propriété, le budget, le financement et l’échéancier afin de voir l’option qui convient le mieux." },
+        { title: "Comparer les scénarios", text: "Nous organisons la propriété, le budget, le financement et l’échéancier afin de déterminer quelle option convient le mieux." },
         { title: "Coordonner la prochaine étape", text: "Si vous avancez, je vous accompagne dans la recherche, l’offre et la coordination du processus." },
       ],
       proof: ["Plus de 15 ans en finances", "Entreprises du S&P 500", "Immobilier à Miami depuis 2023"],
