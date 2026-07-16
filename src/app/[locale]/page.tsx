@@ -511,14 +511,14 @@ export default async function Home({params}: {params: Promise<{locale: string}>}
         <div className="pointer-events-none absolute inset-x-5 sm:inset-x-6 top-0 h-[1.5px] rounded-full bg-gradient-to-r from-transparent via-accent/25 to-transparent" />
         <div className="mx-auto mb-3 h-[2px] w-24 rounded-full bg-gradient-to-r from-transparent via-accent/60 to-transparent" />
         <h3 className="font-display text-2xl font-medium leading-[1.08] tracking-normal text-primary-foreground sm:text-3xl">
-          {locale === "en" ? "Tell me what you want to do in Miami" : locale === "fr" ? "Dites-moi ce que vous souhaitez faire à Miami" : "Contame qué querés hacer en Miami"}
+          {locale === "en" ? "Tell me what you want to do in Miami" : locale === "fr" ? "Dites-moi ce que vous souhaitez faire à Miami" : "Cuéntame qué estás buscando en Miami"}
         </h3>
         <p className="mt-2 text-[14px] text-primary-foreground/80">
           {locale === "en"
             ? "Buying, investing, comparing financing, or evaluating a specific property: send me the context and we review the next step."
             : locale === "fr"
               ? "Acheter, investir, comparer un financement ou évaluer une propriété précise : envoyez-moi le contexte et nous voyons la prochaine étape."
-              : "Comprar, invertir, comparar financiación o evaluar una propiedad puntual: mandame el contexto y vemos el próximo paso."}
+              : "Comprar, invertir, comparar opciones de financiación o evaluar una propiedad: comparte el contexto y definimos el siguiente paso."}
         </p>
         <div className="mt-4 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <a

@@ -30,6 +30,7 @@ const COPY: Record<
     emailLabel: string;
     phoneLabel: string;
     rights: string;
+    madeBy: string;
     logoAlt: string;
   }
 > = {
@@ -38,12 +39,13 @@ const COPY: Record<
     areas: "Sunny Isles y zonas seleccionadas.",
     inquiries: "Consultas",
     whatsapp: "WhatsApp",
-    mainSite: "Sitio de Jacquie Zarate Realtor",
-    mainSiteLabel: "Jacquie Zarate Realtor",
+    mainSite: "Sitio de Jacquie Zárate",
+    mainSiteLabel: "Jacquie Zárate",
     links: "Enlaces",
     emailLabel: "Email Let’s Go Miami",
     phoneLabel: "Llamar a Let’s Go Miami",
     rights: "Todos los derechos reservados.",
+    madeBy: "Diseño y desarrollo por Rodrigo Opalo",
     logoAlt: "Logo de Let’s Go Miami",
   },
   en: {
@@ -51,12 +53,13 @@ const COPY: Record<
     areas: "Sunny Isles and selected areas.",
     inquiries: "Inquiries",
     whatsapp: "WhatsApp",
-    mainSite: "Jacquie Zarate Realtor site",
-    mainSiteLabel: "Jacquie Zarate Realtor",
+    mainSite: "Jacquie Zárate website",
+    mainSiteLabel: "Jacquie Zárate",
     links: "Links",
     emailLabel: "Email Let’s Go Miami",
     phoneLabel: "Call Let’s Go Miami",
     rights: "All rights reserved.",
+    madeBy: "Designed and developed by Rodrigo Opalo",
     logoAlt: "Let’s Go Miami logo",
   },
   fr: {
@@ -64,12 +67,13 @@ const COPY: Record<
     areas: "Sunny Isles et secteurs sélectionnés.",
     inquiries: "Demandes",
     whatsapp: "WhatsApp",
-    mainSite: "Site de Jacquie Zarate Realtor",
-    mainSiteLabel: "Jacquie Zarate Realtor",
+    mainSite: "Site de Jacquie Zárate",
+    mainSiteLabel: "Jacquie Zárate",
     links: "Liens",
     emailLabel: "Courriel Let’s Go Miami",
     phoneLabel: "Appeler Let’s Go Miami",
     rights: "Tous droits réservés.",
+    madeBy: "Conception et développement par Rodrigo Opalo",
     logoAlt: "Logo de Let’s Go Miami",
   },
 };
@@ -187,12 +191,20 @@ export default function LetsGoMiamiFooter({ locale, logoSrc }: LetsGoMiamiFooter
       </div>
 
       <div className="border-t border-paper/10">
-        <div className="mx-auto max-w-6xl px-4 py-4 text-xs flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-          <div className="w-full flex justify-center">
-            <p className="opacity-90 text-center">
-              © 2026 Let’s Go Miami by Jacna Services LLC. {copy.rights}
-            </p>
-          </div>
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-2 px-4 py-4 text-center text-xs sm:flex-row sm:justify-between sm:text-left">
+          <p className="opacity-90">
+            © 2026 Let’s Go Miami by Jacna Services LLC. {copy.rights}
+          </p>
+          <p className="text-primary-foreground/70">
+            <a
+              href="https://www.devrodri.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline decoration-primary-foreground/35 underline-offset-2 hover:text-primary-foreground"
+            >
+              {copy.madeBy}
+            </a>
+          </p>
         </div>
       </div>
 

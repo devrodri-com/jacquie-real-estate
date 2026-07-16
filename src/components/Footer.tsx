@@ -59,7 +59,7 @@ const FOOTER_COPY: Record<
     rights: "Todos los derechos reservados.",
     madeBy: "Diseño y desarrollo por",
     photoAlt: "Retrato de Jacquie Zárate",
-    instagram: "Instagram de Jacquie Zárate",
+    instagram: "Instagram de Jacquie",
   },
   en: {
     role: "Miami Realtor for buyers and investors seeking clarity, sound criteria, and personal follow-through.",
@@ -79,7 +79,7 @@ const FOOTER_COPY: Record<
     rights: "All rights reserved.",
     madeBy: "Designed and developed by",
     photoAlt: "Portrait of Jacquie Zárate",
-    instagram: "Jacquie Zárate on Instagram",
+    instagram: "Jacquie’s Instagram",
   },
   fr: {
     role: "Courtière immobilière à Miami auprès d’acheteurs et d’investisseurs qui recherchent clarté, rigueur et suivi personnalisé.",
@@ -99,7 +99,7 @@ const FOOTER_COPY: Record<
     rights: "Tous droits réservés.",
     madeBy: "Conception et développement par",
     photoAlt: "Portrait de Jacquie Zárate",
-    instagram: "Jacquie Zárate sur Instagram",
+    instagram: "Instagram de Jacquie",
   },
 };
 
@@ -171,6 +171,16 @@ export default function Footer() {
               >
                 <Phone className="h-4 w-4" strokeWidth={1.75} aria-hidden />
                 {copy.phone}
+              </a>
+              <a
+                href="https://www.instagram.com/jacquiezarate_realtor/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={copy.instagram}
+                className="flex items-center gap-2 text-primary-foreground/84 no-underline hover:text-primary-foreground"
+              >
+                <Instagram className="h-4 w-4" strokeWidth={1.75} aria-hidden />
+                {copy.instagram}
               </a>
               <Link
                 href={`/${locale}/contacto`}
@@ -244,28 +254,17 @@ export default function Footer() {
           <p>
             © {year} Jacquie Zárate. {copy.rights}
           </p>
-          <div className="flex items-center justify-center gap-4 sm:justify-end">
+          <p>
+            {copy.madeBy}{" "}
             <a
-              href="https://www.instagram.com/jacquiezarate_realtor/"
+              href="https://www.devrodri.com"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={copy.instagram}
-              className="text-primary-foreground/70 hover:text-primary-foreground"
+              className="text-primary-foreground/82 underline decoration-primary-foreground/45 underline-offset-2 hover:text-primary-foreground"
             >
-              <Instagram className="h-4 w-4" strokeWidth={1.75} aria-hidden />
+              Rodrigo Opalo
             </a>
-            <p>
-              {copy.madeBy}{" "}
-              <a
-                href="https://www.devrodri.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary-foreground/82 underline decoration-primary-foreground/45 underline-offset-2 hover:text-primary-foreground"
-              >
-                Rodrigo Opalo
-              </a>
-            </p>
-          </div>
+          </p>
         </div>
       </div>
       <div className="h-[3px] bg-accent" />
