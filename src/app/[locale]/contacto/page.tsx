@@ -3,6 +3,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter, useParams } from "next/navigation";
 import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 import type { Country } from "react-phone-number-input";
@@ -13,6 +14,7 @@ import frLabels from "react-phone-number-input/locale/fr.json";
 import "react-phone-number-input/style.css";
 import styles from "./ContactoPhone.module.css";
 import CountrySelect from "./CountrySelect";
+import { buildJacquieWhatsAppHref } from "@/lib/whatsapp";
 
 declare global {
   interface Window { gtag?: (...args: unknown[]) => void }
@@ -42,15 +44,14 @@ export default function Contacto() {
   const { locale } = useParams() as { locale: 'es' | 'en' | 'fr' };
   const isEN = locale === 'en';
   const isFR = locale === 'fr';
-  const waMsg = isEN ? 'Hi Jacquie, I would like to schedule a call to discuss Miami pre-construction opportunities.' : isFR ? 'Bonjour Jacquie, je souhaiterais prendre rendez-vous pour discuter d\'opportunités en préconstruction à Miami.' : 'Hola Jacquie, me gustaría coordinar una llamada para hablar de oportunidades en Miami.';
-  const waHref = `https://wa.me/17864072591?text=${encodeURIComponent(waMsg)}`;
+  const waHref = buildJacquieWhatsAppHref(locale);
   const contactEmail = "jacqueline@miamiliferealty.com";
   const emailHref = `mailto:${contactEmail}`;
   const emailNotConfiguredText = isEN
     ? "Automatic form delivery will be enabled once the final domain/email setup is configured. In the meantime, you can contact me by WhatsApp or email."
     : isFR
       ? "L’envoi automatique du formulaire sera activé lorsque le domaine/courriel final sera configuré. Entre-temps, vous pouvez me contacter par WhatsApp ou par courriel."
-      : "El envío automático del formulario quedará activo cuando se configure el dominio/correo final. Mientras tanto, podés escribirme por WhatsApp o email.";
+      : "El envío automático del formulario quedará activo cuando se configure el dominio/correo final. Mientras tanto, puedes escribirme por WhatsApp o email.";
 
   const [form, setForm] = useState({ nombre: "", email: "", mensaje: "", telefonoE164: "", country: "" as Country | "" | "INTL" });
   const [companyHoneypot, setCompanyHoneypot] = useState<string>("");
@@ -189,7 +190,7 @@ export default function Contacto() {
       if (r.status === 429 || data?.error === "rate_limited") {
         setNotice({ 
           type: 'error', 
-          text: isEN ? 'Too many attempts. Please try again in a few minutes.' : isFR ? 'Trop de tentatives. Réessayez dans quelques minutes.' : 'Demasiados intentos. Probá de nuevo en unos minutos.' 
+          text: isEN ? 'Too many attempts. Please try again in a few minutes.' : isFR ? 'Trop de tentatives. Réessayez dans quelques minutes.' : 'Demasiados intentos. Intenta de nuevo en unos minutos.'
         });
         return;
       }
@@ -236,19 +237,22 @@ export default function Contacto() {
     <div className="w-full bg-white">
       <div className="mx-auto w-full max-w-[1100px] px-4 py-14 sm:py-16 lg:py-20">
         <header className="mb-10 max-w-[52rem] text-left">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary/70">
+            {isEN ? "CONTACT" : isFR ? "CONTACT" : "CONTACTO"}
+          </p>
           <h1 className="font-display text-[36px] font-medium leading-[1.02] tracking-normal text-primary sm:text-[48px]">
             {isEN
-              ? "Let’s talk about your next investment or stay in Miami"
+              ? "Let’s talk about your next real estate decision in Miami"
               : isFR
-                ? "Parlons de votre prochain investissement ou séjour à Miami"
-                : "Hablemos de tu próxima inversión o estadía en Miami"}
+                ? "Parlons de votre prochaine décision immobilière à Miami"
+                : "Hablemos de tu próxima decisión inmobiliaria en Miami"}
           </h1>
           <p className="mt-3 text-[15px] leading-[1.7] text-foreground/80">
             {isEN
-              ? "Tell me what you're looking for and I'll respond with clear guidance on how to move forward."
+              ? "Tell me what you’re looking for and I’ll respond with clear guidance to define the next step."
               : isFR
-                ? "Dites-moi ce que vous recherchez et je vous répondrai avec une orientation claire pour avancer."
-                : "Contame qué estás buscando y te respondo con una orientación clara para avanzar."}
+                ? "Parlez-moi de ce que vous recherchez et je vous répondrai avec des conseils clairs pour définir la prochaine étape."
+                : "Cuéntame qué estás buscando y te responderé con una orientación clara para definir el siguiente paso."}
           </p>
         </header>
 
@@ -258,7 +262,7 @@ export default function Contacto() {
               <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl ring-1 ring-primary/10">
                 <Image
                   src="/images/jacquie-zarate.jpg"
-                  alt="Jacquie Zarate Realtor"
+                  alt={isEN ? "Portrait of Jacquie Zárate" : isFR ? "Portrait de Jacquie Zárate" : "Retrato de Jacquie Zárate"}
                   width={80}
                   height={80}
                   className="h-full w-full object-cover"
@@ -266,7 +270,7 @@ export default function Contacto() {
                 />
               </div>
               <div className="min-w-0">
-                <p className="font-semibold text-primary">Jacquie Zarate Realtor</p>
+                <p className="font-semibold text-primary">Jacquie Zárate</p>
                 <p className="mt-1 text-sm font-medium text-primary/90">
                   {isEN
                     ? "Your trusted contact in Miami"
@@ -290,11 +294,11 @@ export default function Contacto() {
                 rel="noopener noreferrer"
                 onClick={handleWhatsApp}
                 className="group inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-primary px-5 text-[14px] font-medium text-white shadow-sm transition-all duration-200 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 sm:w-auto"
-                aria-label={isEN ? "Chat on WhatsApp" : isFR ? "Contacter par WhatsApp" : "Contactar por WhatsApp"}
+                aria-label={isEN ? "Chat on WhatsApp" : isFR ? "Écrire sur WhatsApp" : "Hablar por WhatsApp"}
               >
                 <svg aria-hidden viewBox="0 0 24 24" className="h-4 w-4 opacity-90 transition-transform group-hover:scale-110" fill="currentColor"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.04 0C5.5 0 .2 5.3.2 11.84c0 2.08.54 4.1 1.57 5.89L0 24l6.42-1.67a11.75 11.75 0 0 0 5.62 1.43h.01c6.54 0 11.85-5.3 11.85-11.84 0-3.16-1.23-6.14-3.38-8.44ZM12.05 21.4a9.55 9.55 0 0 1-4.86-1.33l-.35-.2-3.81 1 1.02-3.71-.23-.38a9.65 9.65 0 0 1-1.49-5.2c0-5.32 4.33-9.64 9.66-9.64 2.58 0 5 1 6.82 2.82a9.6 9.6 0 0 1 2.83 6.8c0 5.32-4.33 9.64-9.59 9.64Zm5.46-7.17c-.3-.15-1.77-.87-2.05-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.65.08-.3-.15-1.26-.46-2.4-1.47-.89-.78-1.49-1.73-1.66-2.02-.17-.3-.02-.46.13-.6.13-.12.3-.32.44-.48.15-.16.2-.27.3-.45.1-.2.05-.36-.02-.5-.07-.15-.66-1.6-.9-2.2-.24-.57-.48-.5-.66-.5h-.56c-.2 0-.5.07-.76.36-.26.3-1 1-1 2.42s1.02 2.8 1.17 3c.15.2 2.02 3.08 4.92 4.33.69.3 1.24.48 1.66.6.7.22 1.35.19 1.86.12.57-.08 1.77-.72 2.03-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.36Z"/></svg>
                 <span className="relative">
-                  {isEN ? "Write on WhatsApp" : isFR ? "Écrire sur WhatsApp" : "Escribir por WhatsApp"}
+                  {isEN ? "Chat on WhatsApp" : isFR ? "Écrire sur WhatsApp" : "Hablar por WhatsApp"}
                   <span className="absolute -bottom-1 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent" />
                 </span>
               </a>
@@ -312,14 +316,14 @@ export default function Contacto() {
 
         <header className="mb-4">
           <h2 className="font-display text-[26px] font-medium leading-[1.05] tracking-normal text-primary sm:text-[30px]">
-            {isEN ? "Leave your inquiry" : isFR ? "Laissez votre demande" : "Dejame tu consulta"}
+            {isEN ? "Send your inquiry" : isFR ? "Envoyez votre demande" : "Déjame tu consulta"}
           </h2>
           <p className="mt-2 text-[15px] leading-[1.7] text-foreground/75">
             {isEN
               ? "You can also write on WhatsApp for a more direct response."
               : isFR
                 ? "Vous pouvez aussi m’écrire sur WhatsApp pour une réponse plus directe."
-              : "También podés escribirme por WhatsApp para una respuesta más directa."}
+              : "También puedes escribirme por WhatsApp para una respuesta más directa."}
           </p>
         </header>
 
@@ -422,6 +426,35 @@ export default function Contacto() {
         </form>
           </section>
         </div>
+
+        <section className="mt-12 flex flex-col gap-5 rounded-xl border border-primary/10 bg-surface/70 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-7">
+          <div className="max-w-[62ch]">
+            <h2 className="font-display text-[26px] font-medium leading-[1.05] text-primary sm:text-[30px]">
+              {isEN
+                ? "Looking for a stay in Miami?"
+                : isFR
+                  ? "Vous cherchez un séjour à Miami?"
+                  : "¿Buscas una estadía en Miami?"}
+            </h2>
+            <p className="mt-2 text-[15px] leading-[1.7] text-foreground/78">
+              {isEN
+                ? "Stay inquiries are handled separately through Let’s Go Miami, a Jacna Services LLC brand."
+                : isFR
+                  ? "Les demandes de séjour sont gérées séparément par Let’s Go Miami, une marque de Jacna Services LLC."
+                  : "Las consultas de estadías se gestionan por separado a través de Let’s Go Miami, una marca de Jacna Services LLC."}
+            </p>
+          </div>
+          <Link
+            href={`/${locale}/lets-go-miami`}
+            className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-lg border border-primary/20 bg-white px-5 text-sm font-semibold text-primary no-underline transition-colors hover:bg-surface"
+          >
+            {isEN
+              ? "Explore Let’s Go Miami"
+              : isFR
+                ? "Découvrir Let’s Go Miami"
+                : "Conocer Let’s Go Miami"}
+          </Link>
+        </section>
 
       {/* Toast */}
       {notice && notice.type !== "info" && (

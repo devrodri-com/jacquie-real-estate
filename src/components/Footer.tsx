@@ -1,7 +1,14 @@
 "use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Instagram, Mail, Phone } from "lucide-react";
+import { usePathname } from "next/navigation";
+import {
+  buildJacquieWhatsAppHref,
+  normalizeSiteLocale,
+  type SiteLocale,
+} from "@/lib/whatsapp";
 
 function IconWhatsApp({ className }: { className?: string }) {
   return (
@@ -10,204 +17,257 @@ function IconWhatsApp({ className }: { className?: string }) {
     </svg>
   );
 }
-import { usePathname } from "next/navigation";
+
+const FOOTER_COPY: Record<
+  SiteLocale,
+  {
+    role: string;
+    contactHeading: string;
+    whatsapp: string;
+    email: string;
+    phone: string;
+    contact: string;
+    links: string;
+    projects: string;
+    properties: string;
+    financing: string;
+    about: string;
+    stays: string;
+    staysLabel: string;
+    brokerage: string;
+    rights: string;
+    madeBy: string;
+    photoAlt: string;
+    instagram: string;
+  }
+> = {
+  es: {
+    role: "Realtor en Miami para compradores e inversores que buscan claridad, criterio y seguimiento personal.",
+    contactHeading: "Hablemos",
+    whatsapp: "Hablar por WhatsApp",
+    email: "Escribir por email",
+    phone: "Llamar a Jacquie",
+    contact: "Ir a Contacto",
+    links: "Explorar",
+    projects: "Proyectos",
+    properties: "Propiedades",
+    financing: "Financiación",
+    about: "Sobre Jacquie",
+    stays: "Conocer Let’s Go Miami",
+    staysLabel: "Estadías en Miami",
+    brokerage: "Brokerage y credencial inmobiliaria",
+    rights: "Todos los derechos reservados.",
+    madeBy: "Hecho con Next.js por",
+    photoAlt: "Retrato de Jacquie Zárate",
+    instagram: "Instagram de Jacquie Zárate",
+  },
+  en: {
+    role: "Miami Realtor for buyers and investors seeking clarity, sound criteria, and personal follow-through.",
+    contactHeading: "Let’s talk",
+    whatsapp: "Chat on WhatsApp",
+    email: "Email Jacquie",
+    phone: "Call Jacquie",
+    contact: "Go to Contact",
+    links: "Explore",
+    projects: "Projects",
+    properties: "Properties",
+    financing: "Financing",
+    about: "About Jacquie",
+    stays: "Explore Let’s Go Miami",
+    staysLabel: "Miami stays",
+    brokerage: "Real estate brokerage and credentials",
+    rights: "All rights reserved.",
+    madeBy: "Made with Next.js by",
+    photoAlt: "Portrait of Jacquie Zárate",
+    instagram: "Jacquie Zárate on Instagram",
+  },
+  fr: {
+    role: "Courtière immobilière à Miami auprès d’acheteurs et d’investisseurs qui recherchent clarté, rigueur et suivi personnalisé.",
+    contactHeading: "Parlons de votre projet",
+    whatsapp: "Écrire sur WhatsApp",
+    email: "Écrire par courriel",
+    phone: "Appeler Jacquie",
+    contact: "Aller à la page Contact",
+    links: "Explorer",
+    projects: "Projets",
+    properties: "Propriétés",
+    financing: "Financement",
+    about: "À propos de Jacquie",
+    stays: "Découvrir Let’s Go Miami",
+    staysLabel: "Séjours à Miami",
+    brokerage: "Agence et accréditation immobilières",
+    rights: "Tous droits réservés.",
+    madeBy: "Fait avec Next.js par",
+    photoAlt: "Portrait de Jacquie Zárate",
+    instagram: "Jacquie Zárate sur Instagram",
+  },
+};
 
 export default function Footer() {
   const year = new Date().getFullYear();
-
   const pathname = usePathname();
-  const locale = (pathname?.split("/")[1] || "es") as "es" | "en" | "fr";
-  const isEN = locale === "en";
-  const isFR = locale === "fr";
+  const locale = normalizeSiteLocale(pathname?.split("/")[1] ?? "es");
+  const copy = FOOTER_COPY[locale];
   const isLetsGoMiami = /^\/(es|en|fr)\/lets-go-miami(?:\/|$)/.test(pathname ?? "");
 
   if (isLetsGoMiami) return null;
 
   return (
     <footer className="mt-16 bg-primary text-primary-foreground">
-      <div className="mx-auto max-w-6xl px-4 py-12">
-        <div className="grid gap-10 md:grid-cols-3">
-          {/* Brand + tagline */}
-          <div className="space-y-3">
-            <h3 className="text-xl font-semibold">
-              Jacquie Zarate Realtor
-            </h3>
-            <p className="mt-2 text-[16px] font-medium text-primary-foreground/95">
-              {isEN
-                ? "Your trusted contact in Miami."
-                : isFR
-                  ? "Votre personne de confiance à Miami."
-                  : "Tu persona de confianza en Miami."}
+      <div className="mx-auto max-w-6xl px-4 py-10 sm:py-12">
+        <div className="grid gap-9 md:grid-cols-[1.2fr_1fr_0.85fr] md:gap-10">
+          <div>
+            <Link
+              href={`/${locale}`}
+              className="font-display text-[28px] font-medium text-primary-foreground no-underline hover:opacity-90"
+            >
+              Jacquie Zárate
+            </Link>
+            <p className="mt-3 max-w-[42ch] text-[15px] leading-[1.7] text-primary-foreground/82">
+              {copy.role}
             </p>
-
-            <p className="mt-2 text-sm opacity-90 max-w-[38ch]">
-              {isEN
-                ? "I guide you through the entire process so investing in Miami is clear, simple, and well managed — even if you're not here."
-                : isFR
-                  ? "Je vous accompagne tout au long du processus pour que votre investissement à Miami soit clair, simple et bien géré, même à distance."
-                  : "Te acompaño en todo el proceso para que invertir en Miami sea claro, simple y bien gestionado, incluso si no estás acá."}
-            </p>
-          </div>
-
-          {/* Contacto */}
-          <div className="space-y-3">
-            <div className="flex items-center gap-3">
-              <div className="relative h-12 w-12 overflow-hidden rounded-full border-2 border-accent">
-                {/* Foto realtor: public/images/jacquie-zarate.jpg */}
+            <div className="mt-5 flex items-center gap-3">
+              <div className="relative h-12 w-12 overflow-hidden rounded-full border border-accent/80">
                 <Image
                   src="/images/jacquie-zarate.jpg"
-                  alt={
-                    isEN
-                      ? "Photo of Jacquie Zarate Realtor"
-                      : isFR
-                        ? "Photo de Jacquie Zarate Realtor"
-                        : "Foto de Jacquie Zarate Realtor"
-                  }
+                  alt={copy.photoAlt}
                   fill
                   className="object-cover"
-                  sizes="150px"
+                  sizes="48px"
                 />
               </div>
               <div>
-                <p className="text-sm font-medium">Jacquie Zarate Realtor</p>
-                <p className="text-xs opacity-90">REALTOR® Associate</p>
+                <p className="text-sm font-semibold text-primary-foreground">Jacquie Zárate</p>
+                <p className="mt-0.5 text-xs text-primary-foreground/70">REALTOR® Associate</p>
               </div>
             </div>
+          </div>
 
-            <div className="mt-4 flex items-center gap-3">
+          <div>
+            <h2 className="text-xs font-semibold uppercase tracking-[0.16em] text-primary-foreground/70">
+              {copy.contactHeading}
+            </h2>
+            <a
+              href={buildJacquieWhatsAppHref(locale)}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-analytics="footer:whatsapp"
+              className="mt-4 inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-paper px-4 text-sm font-semibold text-primary no-underline transition-colors hover:bg-surface"
+            >
+              <IconWhatsApp className="h-4 w-4" />
+              {copy.whatsapp}
+            </a>
+            <div className="mt-4 space-y-2.5 text-sm">
               <a
                 href="mailto:jacqueline@miamiliferealty.com"
-                className="text-primary-foreground hover:opacity-70 transition-opacity focus-visible:ring-2 focus-visible:ring-paper/50 focus-visible:ring-offset-2 focus-visible:ring-offset-primary rounded-sm"
-                aria-label={isEN ? "Email Jacquie" : isFR ? "Courriel Jacquie" : "Email Jacquie"}
+                className="flex items-center gap-2 text-primary-foreground/84 no-underline hover:text-primary-foreground"
               >
-                <Mail className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+                <Mail className="h-4 w-4" strokeWidth={1.75} aria-hidden />
+                {copy.email}
               </a>
               <a
                 href="tel:+17864072591"
-                className="text-primary-foreground hover:opacity-70 transition-opacity focus-visible:ring-2 focus-visible:ring-paper/50 focus-visible:ring-offset-2 focus-visible:ring-offset-primary rounded-sm"
-                aria-label={isEN ? "Call Jacquie" : isFR ? "Appeler Jacquie" : "Llamar a Jacquie"}
+                className="flex items-center gap-2 text-primary-foreground/84 no-underline hover:text-primary-foreground"
               >
-                <Phone className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+                <Phone className="h-4 w-4" strokeWidth={1.75} aria-hidden />
+                {copy.phone}
               </a>
-              <a
-                href="https://wa.me/17864072591"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary-foreground hover:opacity-70 transition-opacity focus-visible:ring-2 focus-visible:ring-paper/50 focus-visible:ring-offset-2 focus-visible:ring-offset-primary rounded-sm"
-                aria-label="WhatsApp Jacquie"
+              <Link
+                href={`/${locale}/contacto`}
+                className="inline-flex text-primary-foreground/84 underline decoration-primary-foreground/30 underline-offset-4 hover:text-primary-foreground"
               >
-                <IconWhatsApp className="h-5 w-5" />
-              </a>
-              <a
-                href="https://www.instagram.com/jacquiezarate_realtor/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary-foreground hover:opacity-70 transition-opacity focus-visible:ring-2 focus-visible:ring-paper/50 focus-visible:ring-offset-2 focus-visible:ring-offset-primary rounded-sm"
-                aria-label="Instagram Jacquie"
-              >
-                <Instagram className="h-5 w-5" strokeWidth={1.75} aria-hidden />
-              </a>
-            </div>
-            <p className="mt-2 text-sm opacity-90">
-              Miami Life Realty · 2320 Hollywood Blvd, Hollywood, FL 33020
-            </p>
-
-            {/* Logo broker */}
-            <div className="pt-3">
-              <Image
-                src="/images/miamiliferealty_logo.png"
-                alt="Miami Life Realty"
-                width={160}
-                height={40}
-                className="h-8 w-auto object-contain"
-                sizes="160px"
-              />
+                {copy.contact}
+              </Link>
             </div>
           </div>
 
-          {/* Enlaces útiles */}
-          <div className="space-y-3">
-            <h4 className="text-xs font-semibold uppercase tracking-wider opacity-80">
-              {isEN ? "Links" : isFR ? "Liens" : "Enlaces"}
-            </h4>
-            <ul className="text-sm space-y-2">
+          <div>
+            <h2 className="text-xs font-semibold uppercase tracking-[0.16em] text-primary-foreground/70">
+              {copy.links}
+            </h2>
+            <ul className="mt-4 space-y-2.5 text-sm">
               <li>
-                <Link href={`/${locale}/proyectos`} className="text-primary-foreground hover:opacity-90">
-                  {isEN ? "Projects" : isFR ? "Projets" : "Proyectos"}
+                <Link href={`/${locale}/proyectos`} className="text-primary-foreground/84 hover:text-primary-foreground">
+                  {copy.projects}
                 </Link>
               </li>
               <li>
-                <Link href={`/${locale}/listings`} className="text-primary-foreground hover:opacity-90">
-                  {isEN ? "Properties" : isFR ? "Propriétés" : "Propiedades"}
+                <Link href={`/${locale}/listings`} className="text-primary-foreground/84 hover:text-primary-foreground">
+                  {copy.properties}
                 </Link>
               </li>
               <li>
-                <Link href={`/${locale}/lets-go-miami`} className="text-primary-foreground hover:opacity-90">
-                  Let’s Go Miami
+                <Link href={`/${locale}/financiacion`} className="text-primary-foreground/84 hover:text-primary-foreground">
+                  {copy.financing}
                 </Link>
               </li>
               <li>
-                <Link href={`/${locale}/sobre-mi`} className="text-primary-foreground hover:opacity-90">
-                  {isEN ? "About" : isFR ? "À propos" : "Sobre mí"}
-                </Link>
-              </li>
-              <li>
-                <Link href={`/${locale}/contacto`} className="text-primary-foreground hover:opacity-90">
-                  {isEN ? "Contact" : isFR ? "Contact" : "Contacto"}
+                <Link href={`/${locale}/sobre-mi`} className="text-primary-foreground/84 hover:text-primary-foreground">
+                  {copy.about}
                 </Link>
               </li>
             </ul>
+            <div className="mt-5 border-t border-paper/15 pt-4">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary-foreground/60">
+                {copy.staysLabel}
+              </p>
+              <Link
+                href={`/${locale}/lets-go-miami`}
+                className="mt-2 inline-flex text-sm text-primary-foreground/82 underline decoration-primary-foreground/25 underline-offset-4 hover:text-primary-foreground"
+              >
+                {copy.stays}
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Legal bar */}
-      <div className="border-t border-paper/10">
-        <div className="mx-auto max-w-6xl px-4 py-4 text-xs flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-          <div className="w-full flex justify-center">
-            {/* Desktop: una sola línea */}
-            <p className="opacity-90 hidden sm:block text-center">
-              {isEN
-                ? <>© {year} Jacquie Zarate Realtor. All rights reserved. · Made with <span aria-hidden>Next.js</span> by{" "}</>
-                : isFR
-                  ? <>© {year} Jacquie Zarate Realtor. Tous droits réservés. · Fait avec <span aria-hidden>Next.js</span> par{" "}</>
-                  : <>© {year} Jacquie Zarate Realtor. Todos los derechos reservados. · Hecho con <span aria-hidden>Next.js</span> por{" "}</>
-              }
+        <div className="mt-9 flex flex-col gap-4 border-t border-paper/12 pt-5 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-primary-foreground/58">
+              {copy.brokerage}
+            </p>
+            <p className="mt-1 text-xs leading-5 text-primary-foreground/68">
+              Miami Life Realty · 2320 Hollywood Blvd, Hollywood, FL 33020
+            </p>
+          </div>
+          <Image
+            src="/images/miamiliferealty_logo.png"
+            alt="Miami Life Realty"
+            width={140}
+            height={36}
+            className="h-6 w-auto object-contain opacity-75"
+            sizes="140px"
+          />
+        </div>
+
+        <div className="mt-5 flex flex-col gap-3 border-t border-paper/10 pt-4 text-center text-xs text-primary-foreground/68 sm:flex-row sm:items-center sm:justify-between sm:text-left">
+          <p>
+            © {year} Jacquie Zárate. {copy.rights}
+          </p>
+          <div className="flex items-center justify-center gap-4 sm:justify-end">
+            <a
+              href="https://www.instagram.com/jacquiezarate_realtor/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={copy.instagram}
+              className="text-primary-foreground/70 hover:text-primary-foreground"
+            >
+              <Instagram className="h-4 w-4" strokeWidth={1.75} aria-hidden />
+            </a>
+            <p>
+              {copy.madeBy}{" "}
               <a
                 href="https://www.devrodri.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary-foreground hover:opacity-90"
+                className="text-primary-foreground/82 underline decoration-primary-foreground/45 underline-offset-2 hover:text-primary-foreground"
               >
                 Rodrigo Opalo
               </a>
             </p>
-            {/* Mobile: dos líneas centradas */}
-            <div className="sm:hidden text-center leading-relaxed">
-              <p className="opacity-90">
-                {isEN
-                  ? `© ${year} Jacquie Zarate Realtor. All rights reserved.`
-                  : isFR
-                    ? `© ${year} Jacquie Zarate Realtor. Tous droits réservés.`
-                    : `© ${year} Jacquie Zarate Realtor. Todos los derechos reservados.`}
-              </p>
-              <p className="opacity-90">
-                {isEN ? "Made with Next.js by " : isFR ? "Fait avec Next.js par " : "Hecho con Next.js por "}
-                <a
-                  href="https://www.devrodri.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-primary-foreground hover:opacity-90"
-                >
-                  Rodrigo Opalo
-                </a>
-              </p>
-            </div>
           </div>
         </div>
       </div>
-
-      {/* Sutil acento inferior */}
       <div className="h-[3px] bg-accent" />
     </footer>
   );
