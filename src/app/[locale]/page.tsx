@@ -35,11 +35,31 @@ function HeroBackgroundImage() {
   });
 
   return (
-    <picture>
-      <source media="(max-width: 639px)" srcSet={mobileImage.srcSet} sizes="100vw" />
-      <source media="(min-width: 640px)" srcSet={desktopImage.srcSet} sizes="100vw" />
-      <img {...desktopImage} alt="" className="h-full w-full object-cover object-center" />
-    </picture>
+    <>
+      <link
+        rel="preload"
+        as="image"
+        href={mobileImage.src}
+        imageSrcSet={mobileImage.srcSet}
+        imageSizes="100vw"
+        media="(max-width: 639px)"
+        fetchPriority="high"
+      />
+      <link
+        rel="preload"
+        as="image"
+        href={desktopImage.src}
+        imageSrcSet={desktopImage.srcSet}
+        imageSizes="100vw"
+        media="(min-width: 640px)"
+        fetchPriority="high"
+      />
+      <picture>
+        <source media="(max-width: 639px)" srcSet={mobileImage.srcSet} sizes="100vw" />
+        <source media="(min-width: 640px)" srcSet={desktopImage.srcSet} sizes="100vw" />
+        <img {...desktopImage} alt="" className="h-full w-full object-cover object-center" />
+      </picture>
+    </>
   );
 }
 
@@ -93,18 +113,18 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const listingImage = LISTINGS[0].images[0];
 
   return (
-    <div className="pb-0">
+    <div className="-mb-24 pb-0">
       <section
         aria-labelledby="home-hero-title"
         aria-describedby="home-hero-intro"
         className={`${FULL_BLEED} isolate overflow-hidden bg-background`}
       >
-        <div aria-hidden className="absolute inset-0 -z-20">
+        <div aria-hidden className="absolute inset-0 z-0">
           <HeroBackgroundImage />
         </div>
-        <div aria-hidden className="absolute inset-0 -z-10 bg-paper/72 lg:bg-gradient-to-r lg:from-paper lg:via-paper/88 lg:to-paper/20" />
+        <div aria-hidden className="absolute inset-0 z-10 bg-paper/72 lg:bg-gradient-to-r lg:from-paper lg:via-paper/88 lg:to-paper/20" />
 
-        <div className={`${CONTAINER} grid items-center gap-8 py-10 sm:py-14 lg:min-h-[700px] lg:grid-cols-[minmax(0,1.2fr)_minmax(340px,0.8fr)] lg:gap-16 lg:py-20`}>
+        <div className={`${CONTAINER} relative z-20 grid items-center gap-8 py-10 sm:py-14 lg:min-h-[700px] lg:grid-cols-[minmax(0,1.2fr)_minmax(340px,0.8fr)] lg:gap-16 lg:py-20`}>
           <div className="max-w-[720px]">
             <p className={EYEBROW}>{content.hero.eyebrow}</p>
             <h1
@@ -135,7 +155,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                 fill
                 sizes="(min-width: 1024px) 410px, (min-width: 640px) 320px, 220px"
                 quality={85}
-                loading="eager"
+                loading="lazy"
                 className="object-cover object-center"
               />
             </div>
@@ -147,16 +167,17 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         </div>
       </section>
 
-      <section aria-labelledby="decision-title" className={`${FULL_BLEED} bg-paper py-14 sm:py-20 lg:py-28`}>
-        <div className={CONTAINER}>
-          <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+      <section aria-labelledby="decision-title" className={`${FULL_BLEED} relative bg-paper pt-14 pb-0 sm:pt-16 lg:pt-20`}>
+        <div className={`${CONTAINER} relative`}>
+          <span aria-hidden className="absolute -top-16 left-5 h-10 w-px bg-accent/70 sm:-top-20 sm:left-8 sm:h-12 lg:-top-24 lg:h-16" />
+          <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
             <div>
               <p className={EYEBROW}>{content.decision.eyebrow}</p>
               <h2 id="decision-title" className={`${H2} mt-4 max-w-[14ch]`}>
                 {content.decision.title}
               </h2>
             </div>
-            <div className="lg:pt-8">
+            <div className="lg:pt-6">
               <p className={`${BODY} max-w-[60ch]`}>{content.decision.intro}</p>
               <p className="mt-7 max-w-[33ch] font-display text-[clamp(1.55rem,2.3vw,2rem)] leading-[1.15] text-primary/88">
                 {content.decision.close}
@@ -164,9 +185,9 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             </div>
           </div>
 
-          <div className="mt-10 grid border-t border-primary/15 md:grid-cols-3 md:divide-x md:divide-primary/15 lg:mt-20">
+          <div className="mt-10 grid border-y border-primary/15 md:grid-cols-3 md:divide-x md:divide-primary/15 lg:mt-14">
             {content.decision.items.map((item, index) => (
-              <article key={item.label} className="grid grid-cols-[84px_minmax(0,1fr)] gap-4 border-b border-primary/15 py-6 md:block md:border-b-0 md:px-7 lg:py-8 first:pl-0 last:pr-0">
+              <article key={item.label} className="grid grid-cols-[84px_minmax(0,1fr)] gap-4 border-b border-primary/15 py-6 last:border-b-0 md:block md:border-b-0 md:px-7 lg:py-8 first:pl-0 last:pr-0">
                 <div className="flex flex-col items-start gap-2 md:flex-row md:items-center md:justify-between md:gap-4">
                   <span className="text-xs font-semibold tracking-[0.18em] text-primary/75">0{index + 1}</span>
                   <span className="text-[11px] font-semibold uppercase tracking-[0.15em] text-primary/75">{item.label}</span>
@@ -180,9 +201,9 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         </div>
       </section>
 
-      <section id="formas-de-comprar" aria-labelledby="buying-title" className={`${FULL_BLEED} bg-background py-14 sm:py-20 lg:py-28`}>
+      <section id="formas-de-comprar" aria-labelledby="buying-title" className={`${FULL_BLEED} bg-background pt-14 pb-16 sm:py-20 lg:pt-20 lg:pb-24`}>
         <div className={CONTAINER}>
-          <div className="grid gap-6 lg:grid-cols-[0.75fr_1.25fr] lg:items-end lg:gap-20">
+          <div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-end lg:gap-16">
             <div>
               <p className={EYEBROW}>{content.buying.eyebrow}</p>
               <h2 id="buying-title" className={`${H2} mt-4 max-w-[14ch]`}>
@@ -192,14 +213,14 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <p className={`${BODY} max-w-[62ch] lg:pb-1`}>{content.buying.intro}</p>
           </div>
 
-          <div className="mt-10 grid gap-10 md:grid-cols-12 md:items-start lg:mt-20 lg:gap-x-10">
-            <article className="md:col-span-7">
+          <div className="mt-10 grid gap-12 md:grid-cols-2 md:items-stretch lg:mt-16 lg:gap-x-12">
+            <article className="flex h-full flex-col">
               <div className="relative aspect-[2/1] overflow-hidden rounded-[4px] bg-paper sm:aspect-[16/10]">
                 <Image
                   src="/images/precon-hero.jpg"
                   alt={content.buying.preconstruction.imageAlt}
                   fill
-                  sizes="(min-width: 768px) 58vw, 100vw"
+                  sizes="(min-width: 1280px) 566px, (min-width: 768px) 50vw, 100vw"
                   className="object-cover object-center"
                 />
               </div>
@@ -207,20 +228,20 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               <h3 className="mt-3 max-w-[17ch] font-display text-[clamp(1.8rem,3.5vw,3rem)] leading-[1.02] tracking-[-0.02em] text-primary">
                 {content.buying.preconstruction.title}
               </h3>
-              <p className={`${BODY} mt-4 max-w-[58ch]`}>{content.buying.preconstruction.text}</p>
+              <p className={`${BODY} mt-4 max-w-[58ch] flex-1`}>{content.buying.preconstruction.text}</p>
               <Link href={projectsHref} className="mt-6 inline-flex items-center gap-3 border-b border-primary/30 pb-1 text-sm font-semibold text-primary no-underline transition hover:border-accent hover:text-primary/80">
                 {content.buying.preconstruction.cta}
                 <span aria-hidden>↗</span>
               </Link>
             </article>
 
-            <article className="md:col-span-5 md:pt-20">
-              <div className="relative aspect-[2/1] overflow-hidden rounded-[4px] bg-paper sm:aspect-[16/10] md:aspect-[4/3]">
+            <article className="flex h-full flex-col">
+              <div className="relative aspect-[2/1] overflow-hidden rounded-[4px] bg-paper sm:aspect-[16/10]">
                 <Image
                   src={listingImage}
                   alt={content.buying.properties.imageAlt}
                   fill
-                  sizes="(min-width: 768px) 42vw, 100vw"
+                  sizes="(min-width: 1280px) 566px, (min-width: 768px) 50vw, 100vw"
                   className="object-cover object-center"
                 />
               </div>
@@ -228,7 +249,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               <h3 className="mt-3 max-w-[17ch] font-display text-[clamp(1.8rem,3.5vw,3rem)] leading-[1.02] tracking-[-0.02em] text-primary">
                 {content.buying.properties.title}
               </h3>
-              <p className={`${BODY} mt-4`}>{content.buying.properties.text}</p>
+              <p className={`${BODY} mt-4 max-w-[58ch] flex-1`}>{content.buying.properties.text}</p>
               <Link href={listingsHref} className="mt-6 inline-flex items-center gap-3 border-b border-primary/30 pb-1 text-sm font-semibold text-primary no-underline transition hover:border-accent hover:text-primary/80">
                 {content.buying.properties.cta}
                 <span aria-hidden>↗</span>
@@ -238,8 +259,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         </div>
       </section>
 
-      <section aria-labelledby="financing-home-title" className={`${FULL_BLEED} bg-primary py-10 text-primary-foreground sm:py-20 lg:py-24`}>
-        <div className={`${CONTAINER} grid gap-7 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-20`}>
+      <section aria-labelledby="financing-home-title" className={`${FULL_BLEED} bg-primary py-14 text-primary-foreground sm:py-20 lg:py-24`}>
+        <div className={`${CONTAINER} grid gap-10 lg:grid-cols-[1.3fr_0.7fr] lg:items-center lg:gap-16`}>
           <div>
             <p className={EYEBROW_LIGHT}>{content.financing.eyebrow}</p>
             <h2 id="financing-home-title" className="mt-4 max-w-[16ch] font-display text-[clamp(2.15rem,4.8vw,3.9rem)] font-medium leading-[0.98] tracking-[-0.025em]">
@@ -253,17 +274,17 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             </Link>
           </div>
 
-          <div className="order-first border-b border-primary-foreground/18 pb-6 lg:order-last lg:border-b-0 lg:border-l lg:pb-0 lg:pl-16">
-            <p className="font-display text-[clamp(4.8rem,13vw,9.5rem)] leading-[0.78] tracking-[-0.06em] text-primary-foreground">25%</p>
-            <p className="mt-4 max-w-[26ch] text-[11px] font-semibold uppercase tracking-[0.15em] text-primary-foreground/68 sm:text-xs">
+          <div className="border-y border-primary-foreground/18 py-6 lg:border-y-0 lg:border-l lg:py-2 lg:pl-12">
+            <p className="font-display text-[clamp(3.1rem,7vw,5.75rem)] leading-[0.82] tracking-[-0.05em] text-primary-foreground">25%</p>
+            <p className="mt-3 max-w-[26ch] text-[11px] font-semibold uppercase tracking-[0.15em] text-primary-foreground/68 sm:text-xs">
               {content.financing.reference}
             </p>
-            <p className="mt-4 max-w-[44ch] text-[12px] leading-[1.6] text-primary-foreground/62 sm:text-[13px]">{content.financing.note}</p>
+            <p className="mt-5 max-w-[44ch] border-t border-primary-foreground/14 pt-5 text-[12px] leading-[1.6] text-primary-foreground/62 sm:text-[13px]">{content.financing.note}</p>
           </div>
         </div>
       </section>
 
-      <section aria-labelledby="method-title" className={`${FULL_BLEED} bg-paper py-10 sm:py-20 lg:py-28`}>
+      <section aria-labelledby="method-title" className={`${FULL_BLEED} bg-paper py-10 sm:py-20 lg:py-24`}>
         <div className={CONTAINER}>
           <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20">
             <div>
@@ -297,7 +318,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         </div>
       </section>
 
-      <section aria-labelledby="lets-go-title" className={`${FULL_BLEED} bg-background py-10 sm:py-20`}>
+      <section aria-labelledby="lets-go-title" className={`${FULL_BLEED} bg-background pt-10 pb-12 sm:pt-20 sm:pb-12`}>
         <div className={CONTAINER}>
           <div className="grid items-center gap-6 md:grid-cols-[180px_1fr_auto] md:gap-10">
             <Link href={letsGoHref} className="relative block aspect-square w-[72px] no-underline sm:w-[160px]" aria-label={content.stays.title}>
@@ -314,7 +335,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             </Link>
           </div>
 
-          <div className="mt-10 grid gap-7 border-t border-primary/15 pt-10 sm:mt-16 sm:pt-16 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-16">
+          <div className="mt-10 grid gap-7 border-t border-primary/15 pt-10 sm:mt-12 sm:pt-12 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-16">
             <div>
               <p className={EYEBROW}>{content.close.eyebrow}</p>
               <h2 className={`${H2} mt-4 max-w-[15ch]`}>{content.close.title}</h2>
