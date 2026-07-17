@@ -32,7 +32,8 @@ type ProjectsCatalogCopy = {
     eyebrow: string;
     title: string;
     intro: string;
-    catalogLabel: (count: number) => string;
+    availabilityLabel: string;
+    availabilityValue: string;
     scopeLabel: string;
     scopeValue: string;
     compareLabel: string;
@@ -71,8 +72,10 @@ type ProjectsCatalogCopy = {
   card: {
     from: string;
     inquire: string;
+    delivery: string;
     rental: string;
-    residenceTypes: string;
+    configurations: string;
+    moreConfigurations: (count: number) => string;
     viewProject: string;
   };
   close: {
@@ -93,9 +96,10 @@ export const PROJECTS_CATALOG_COPY: Record<
       eyebrow: "CATÁLOGO DE PROYECTOS",
       title: "Explora proyectos de preconstrucción",
       intro:
-        "Compara proyectos en Miami, Orlando y otras zonas de Florida según ubicación, precio inicial, entrega, condiciones de renta y tipologías. Usa los filtros y abre cada proyecto para conocer sus detalles.",
-      catalogLabel: (count) =>
-        count === 1 ? "proyecto en el catálogo" : "proyectos en el catálogo",
+        "Explora y compara proyectos de preconstrucción disponibles actualmente en Miami, Orlando y otras zonas de Florida según ubicación, precio inicial, entrega, condiciones de renta y tipologías.",
+      availabilityLabel: "Disponibilidad",
+      availabilityValue:
+        "El catálogo se actualiza a medida que cambian las opciones disponibles.",
       scopeLabel: "Zonas",
       scopeValue: "Miami · Orlando · otras zonas de Florida",
       compareLabel: "Comparar por",
@@ -151,16 +155,19 @@ export const PROJECTS_CATALOG_COPY: Record<
     },
     card: {
       from: "Desde",
-      inquire: "Consultar",
+      inquire: "Precio a consultar",
+      delivery: "Entrega",
       rental: "Renta",
-      residenceTypes: "Tipologías",
+      configurations: "Configuraciones",
+      moreConfigurations: (count) =>
+        `y ${count} ${count === 1 ? "configuración más" : "configuraciones más"}`,
       viewProject: "Ver proyecto",
     },
     close: {
       eyebrow: "AYUDA PARA COMPARAR",
       title: "¿No sabes qué proyectos comparar?",
       text:
-        "Cuéntame qué estás buscando, tu presupuesto aproximado y las zonas que te interesan. Podemos ordenar la comparación y revisar qué información necesitas antes de avanzar.",
+        "Cuéntame tu objetivo, tu presupuesto aproximado y las zonas que te interesan. Podemos ordenar la comparación y revisar qué información necesitas antes de avanzar.",
       cta: "Hablar con Jacquie",
       whatsappMessage:
         "Hola Jacquie, estoy comparando proyectos de preconstrucción y quiero contarte qué estoy buscando.",
@@ -171,9 +178,10 @@ export const PROJECTS_CATALOG_COPY: Record<
       eyebrow: "PROJECT CATALOG",
       title: "Explore preconstruction projects",
       intro:
-        "Compare projects in Miami, Orlando, and other areas of Florida by location, starting price, delivery, rental terms, and residence type. Use the filters, then open any project for details.",
-      catalogLabel: (count) =>
-        count === 1 ? "project in the catalog" : "projects in the catalog",
+        "Explore and compare currently available preconstruction projects in Miami, Orlando, and other areas of Florida by location, starting price, delivery, rental terms, and residence types.",
+      availabilityLabel: "Availability",
+      availabilityValue:
+        "The catalog is updated as available options change.",
       scopeLabel: "Areas",
       scopeValue: "Miami · Orlando · other areas of Florida",
       compareLabel: "Compare by",
@@ -229,16 +237,19 @@ export const PROJECTS_CATALOG_COPY: Record<
     },
     card: {
       from: "From",
-      inquire: "Inquire",
+      inquire: "Price upon request",
+      delivery: "Delivery",
       rental: "Rental",
-      residenceTypes: "Residence types",
+      configurations: "Configurations",
+      moreConfigurations: (count) =>
+        `and ${count} more ${count === 1 ? "configuration" : "configurations"}`,
       viewProject: "View project",
     },
     close: {
       eyebrow: "HELP WITH YOUR COMPARISON",
       title: "Not sure which projects to compare?",
       text:
-        "Share what you’re looking for, your approximate budget, and the areas that interest you. We can organize the comparison and review what information you need before moving forward.",
+        "Share your goal, approximate budget, and the areas that interest you. We can organize the comparison and review what information you need before moving forward.",
       cta: "Talk with Jacquie",
       whatsappMessage:
         "Hi Jacquie, I’m comparing preconstruction projects and would like to tell you what I’m looking for.",
@@ -249,9 +260,10 @@ export const PROJECTS_CATALOG_COPY: Record<
       eyebrow: "CATALOGUE DE PROJETS",
       title: "Explorez les projets en préconstruction",
       intro:
-        "Comparez les projets à Miami, à Orlando et ailleurs en Floride selon l’emplacement, le prix de départ, la livraison, les conditions de location et le type de résidence. Utilisez les filtres, puis consultez chaque projet pour en voir les détails.",
-      catalogLabel: (count) =>
-        count === 1 ? "projet au catalogue" : "projets au catalogue",
+        "Explorez et comparez les projets de préconstruction actuellement disponibles à Miami, à Orlando et ailleurs en Floride selon l’emplacement, le prix de départ, la date de livraison, les conditions de location et les types de résidences.",
+      availabilityLabel: "Disponibilité",
+      availabilityValue:
+        "Le catalogue est mis à jour au fil de l’évolution des options offertes.",
       scopeLabel: "Secteurs",
       scopeValue: "Miami · Orlando · autres secteurs de la Floride",
       compareLabel: "Comparer selon",
@@ -307,16 +319,19 @@ export const PROJECTS_CATALOG_COPY: Record<
     },
     card: {
       from: "À partir de",
-      inquire: "Nous consulter",
+      inquire: "Prix sur demande",
+      delivery: "Livraison",
       rental: "Location",
-      residenceTypes: "Types de résidences",
+      configurations: "Configurations",
+      moreConfigurations: (count) =>
+        `et ${count} ${count === 1 ? "autre configuration" : "autres configurations"}`,
       viewProject: "Voir le projet",
     },
     close: {
       eyebrow: "AIDE À LA COMPARAISON",
       title: "Vous ne savez pas quels projets comparer?",
       text:
-        "Parlez-moi de ce que vous recherchez, de votre budget approximatif et des secteurs qui vous intéressent. Nous pouvons organiser la comparaison et préciser les renseignements à examiner avant d’aller plus loin.",
+        "Parlez-moi de votre objectif, de votre budget approximatif et des secteurs qui vous intéressent. Nous pouvons organiser la comparaison et préciser les renseignements à examiner avant d’aller plus loin.",
       cta: "Parler avec Jacquie",
       whatsappMessage:
         "Bonjour Jacquie, je compare des projets en préconstruction et j’aimerais vous expliquer ce que je recherche.",

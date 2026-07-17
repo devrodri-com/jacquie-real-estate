@@ -170,7 +170,7 @@ export function CatalogSelect<T extends string>({
               tabIndex={-1}
               onClick={() => selectOption(option)}
               onKeyDown={(event) => onOptionKeyDown(event, index, option)}
-              className={`flex min-h-11 w-full items-center border-l-2 px-4 py-2 text-left text-sm leading-5 outline-none transition-colors focus-visible:bg-surface ${
+              className={`flex min-h-11 w-full items-center border-l-2 px-4 py-2 text-left text-sm leading-5 outline-none transition-colors focus-visible:bg-surface focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary ${
                 option.value === value
                   ? "border-primary bg-surface font-semibold text-primary"
                   : "border-transparent text-foreground/82 hover:bg-surface"

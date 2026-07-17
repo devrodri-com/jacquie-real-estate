@@ -20,17 +20,17 @@ const proyectosMeta: Record<
   es: {
     title: "Proyectos de preconstrucción | Jacquie Zarate Realtor",
     description:
-      "Explorá proyectos de preconstrucción en Miami, Orlando y distintas zonas de Florida con foco en ubicación, entrega, renta permitida y criterio de inversión.",
+      "Explora y compara proyectos de preconstrucción en Miami, Orlando y otras zonas de Florida según ubicación, precio inicial, fecha de entrega, condiciones de renta y tipologías.",
   },
   en: {
     title: "Preconstruction projects | Jacquie Zarate Realtor",
     description:
-      "Explore preconstruction projects in Miami, Orlando, and other areas of Florida by location, starting price, delivery timing, rental policy, and residence type.",
+      "Explore and compare preconstruction projects in Miami, Orlando, and other areas of Florida by location, starting price, delivery timing, rental policy, and residence types.",
   },
   fr: {
     title: "Projets en préconstruction | Jacquie Zarate Realtor",
     description:
-      "Découvrez des projets en préconstruction à Miami, Orlando et dans d’autres secteurs de la Floride, avec un accompagnement sur l’emplacement, la livraison, la flexibilité locative et les critères d’investissement.",
+      "Explorez et comparez des projets de préconstruction à Miami, à Orlando et ailleurs en Floride selon l’emplacement, le prix de départ, la date de livraison, les conditions de location et les types de résidences.",
   },
 };
 
@@ -69,6 +69,15 @@ function localizedUnitTypes(
     .filter(Boolean);
 }
 
+const EN_DELIVERY_OVERRIDES: Record<string, string> = {
+  "/proyectos/ave-maria": "8–12 months",
+  "/proyectos/the-lauderdale": "Dec 2029",
+};
+
+const EN_RENTAL_OVERRIDES: Record<string, string> = {
+  "/proyectos/ave-maria": "Traditional rentals (long-term).",
+};
+
 function toCatalogItem(
   project: Project,
   locale: ProjectsCatalogLocale
@@ -81,7 +90,7 @@ function toCatalogItem(
     locale === "fr"
       ? frOverlay?.rentalPolicyFr || project.rentalPolicyFr || project.rentalPolicyEn || project.rentalPolicyEs || legacyRental
       : locale === "en"
-        ? project.rentalPolicyEn ||
+        ? project.rentalPolicyEn || EN_RENTAL_OVERRIDES[project.slug] ||
           (rentalCategory ? copy.filters.rentalOptions[rentalCategory] : legacyRental)
         : project.rentalPolicyEs || legacyRental;
 
@@ -93,7 +102,9 @@ function toCatalogItem(
     delivery:
       locale === "fr"
         ? frOverlay?.deliveryFr || project.deliveryFr || project.delivery
-        : project.delivery,
+        : locale === "en"
+          ? EN_DELIVERY_OVERRIDES[project.slug] || project.delivery
+          : project.delivery,
     priceFromUsd: project.priceFromUsd,
     rentalPolicy: rentalPolicy || undefined,
     rentalCategory,
@@ -127,21 +138,24 @@ export default async function ProyectosPage({
       >
         <div className="mx-auto grid w-full max-w-[1280px] px-5 py-12 sm:px-8 sm:py-16 lg:grid-cols-[210px_minmax(0,1fr)] lg:gap-14 lg:py-20">
           <aside className="order-2 mt-8 border-t border-primary/15 pt-6 lg:order-1 lg:mt-0 lg:border-r lg:border-t-0 lg:pr-10 lg:pt-0">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/72">
+            <p className="hidden text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/72 lg:block">
               {copy.header.eyebrow}
             </p>
-            <p className="mt-4 font-display text-[58px] font-medium leading-none text-primary lg:text-[76px]">
-              {projects.length}
+            <p className="mt-0 text-[10px] font-semibold uppercase tracking-[0.16em] text-primary/72 lg:mt-7">
+              {copy.header.availabilityLabel}
             </p>
-            <p className="relative mt-1 w-full bg-surface text-[13px] leading-5 text-foreground">
-              {copy.header.catalogLabel(projects.length)}
+            <p className="mt-2 max-w-[28ch] text-[13px] leading-6 text-foreground/74">
+              {copy.header.availabilityValue}
             </p>
           </aside>
 
           <div className="order-1 min-w-0 lg:order-2">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/72 lg:hidden">
+              {copy.header.eyebrow}
+            </p>
             <h1
               id="projects-catalog-title"
-              className="max-w-[14ch] font-display text-[48px] font-medium leading-[0.96] tracking-[-0.02em] text-primary sm:text-[62px] lg:text-[76px]"
+              className="mt-3 max-w-[14ch] font-display text-[48px] font-medium leading-[0.96] tracking-[-0.02em] text-primary sm:text-[62px] lg:mt-0 lg:text-[76px]"
             >
               {copy.header.title}
             </h1>
@@ -175,7 +189,7 @@ export default async function ProyectosPage({
 
       <section
         aria-labelledby="projects-help-title"
-        className="border-t border-primary/15 bg-paper"
+        className="border-t border-primary/15 bg-surface"
       >
         <div className="mx-auto grid w-full max-w-[1180px] gap-7 px-5 py-14 sm:px-8 sm:py-16 md:grid-cols-[minmax(0,.9fr)_minmax(320px,1.1fr)] md:items-start md:gap-14">
           <div>

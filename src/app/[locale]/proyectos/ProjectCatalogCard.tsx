@@ -43,26 +43,21 @@ export function ProjectCatalogCard({
         data-project-link
         className="group flex h-full min-w-0 flex-col text-foreground no-underline outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4"
       >
-        <figure className="relative aspect-[3/2] w-full overflow-hidden rounded-[4px] bg-surface">
+        <div className="relative aspect-[3/2] w-full overflow-hidden rounded-[4px] bg-surface">
           {visible ? (
             <Image
               src={project.image}
-              alt={project.name}
+              alt=""
               fill
               data-project-image
               className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.015] motion-reduce:transition-none"
-              sizes="(min-width: 1200px) 377px, (min-width: 768px) calc(50vw - 48px), calc(100vw - 40px)"
+              sizes="(min-width: 1280px) 356px, (min-width: 1180px) 546px, (min-width: 768px) calc(50vw - 44px), (min-width: 640px) calc(100vw - 64px), calc(100vw - 40px)"
               quality={priority ? 75 : 65}
               priority={priority}
               decoding="async"
             />
           ) : null}
-          {project.delivery ? (
-            <figcaption className="absolute left-3 top-3 border border-primary/12 bg-paper px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.1em] text-primary">
-              {project.delivery}
-            </figcaption>
-          ) : null}
-        </figure>
+        </div>
 
         <div className="flex flex-1 flex-col border-b border-primary/18 pb-5 pt-5">
           <p className="min-w-0 break-words text-[12px] font-semibold uppercase tracking-[0.12em] text-primary/72">
@@ -77,8 +72,18 @@ export function ProjectCatalogCard({
           </p>
 
           <dl className="mt-5 space-y-4 border-y border-primary/10 py-4 text-[14px] leading-[1.55]">
+            {project.delivery ? (
+              <div className="grid min-w-0 grid-cols-[112px_minmax(0,1fr)] gap-3">
+                <dt className="text-[10px] font-semibold uppercase tracking-[0.13em] text-primary/72">
+                  {copy.delivery}
+                </dt>
+                <dd className="min-w-0 break-words text-foreground/78">
+                  {project.delivery}
+                </dd>
+              </div>
+            ) : null}
             {project.rentalPolicy ? (
-              <div className="grid min-w-0 grid-cols-[86px_minmax(0,1fr)] gap-3">
+              <div className="grid min-w-0 grid-cols-[112px_minmax(0,1fr)] gap-3">
                 <dt className="text-[10px] font-semibold uppercase tracking-[0.13em] text-primary/72">
                   {copy.rental}
                 </dt>
@@ -88,13 +93,15 @@ export function ProjectCatalogCard({
               </div>
             ) : null}
             {displayedUnitTypes.length > 0 ? (
-              <div className="grid min-w-0 grid-cols-[86px_minmax(0,1fr)] gap-3">
+              <div className="grid min-w-0 grid-cols-[112px_minmax(0,1fr)] gap-3">
                 <dt className="text-[10px] font-semibold uppercase tracking-[0.13em] text-primary/72">
-                  {copy.residenceTypes}
+                  {copy.configurations}
                 </dt>
                 <dd className="min-w-0 break-words text-foreground/78">
                   {displayedUnitTypes.join(" · ")}
-                  {remainingUnitTypes > 0 ? ` · +${remainingUnitTypes}` : ""}
+                  {remainingUnitTypes > 0
+                    ? ` · ${copy.moreConfigurations(remainingUnitTypes)}`
+                    : ""}
                 </dd>
               </div>
             ) : null}
@@ -103,7 +110,7 @@ export function ProjectCatalogCard({
           <span className="mt-auto inline-flex min-h-11 items-end gap-2 pt-5 text-[13px] font-semibold uppercase tracking-[0.12em] text-primary underline decoration-primary/25 underline-offset-4 transition-colors group-hover:decoration-primary">
             {copy.viewProject}
             <span aria-hidden="true" className="text-base leading-none">
-              ↗
+              →
             </span>
           </span>
         </div>

@@ -11,7 +11,7 @@ import {
   type ProjectsCatalogLocale,
 } from "./content";
 
-const PAGE_SIZE = 12;
+const PAGE_SIZE = 6;
 
 const INITIAL_FILTERS: Filters = {
   q: "",
@@ -91,13 +91,13 @@ export default function ProyectosPageClient({
         return result.sort((a, b) => {
           const aPrice = a.priceFromUsd ?? Number.POSITIVE_INFINITY;
           const bPrice = b.priceFromUsd ?? Number.POSITIVE_INFINITY;
-          return aPrice - bPrice || collator.compare(a.name, b.name);
+          return aPrice - bPrice;
         });
       case "price-desc":
         return result.sort((a, b) => {
           const aPrice = a.priceFromUsd ?? Number.NEGATIVE_INFINITY;
           const bPrice = b.priceFromUsd ?? Number.NEGATIVE_INFINITY;
-          return bPrice - aPrice || collator.compare(a.name, b.name);
+          return bPrice - aPrice;
         });
       case "alpha-asc":
       default:
@@ -113,6 +113,9 @@ export default function ProyectosPageClient({
   const resetFilters = useCallback(() => {
     setFilters(INITIAL_FILTERS);
     setVisibleCount(PAGE_SIZE);
+    requestAnimationFrame(() => {
+      document.getElementById("catalog-controls-title")?.focus();
+    });
   }, []);
 
   const total = sorted.length;
@@ -184,7 +187,9 @@ export default function ProyectosPageClient({
               aria-atomic="true"
               className="mt-2 text-[13px] text-foreground/68"
             >
-              {copy.results.showing(visibleTotal, total)}
+              {invalidRange
+                ? copy.filters.rangeError
+                : copy.results.showing(visibleTotal, total)}
             </p>
           </div>
           <CatalogSelect
@@ -195,7 +200,7 @@ export default function ProyectosPageClient({
           />
         </div>
 
-        {total === 0 ? (
+        {invalidRange ? null : total === 0 ? (
           <div
             data-empty-state
             className="border-b border-primary/12 py-16 text-center sm:py-20"

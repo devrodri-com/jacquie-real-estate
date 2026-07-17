@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useMemo, useState } from "react";
+import { useCallback, useId, useMemo, useRef, useState } from "react";
 import { CatalogSelect } from "@/app/[locale]/proyectos/CatalogSelect";
 import {
   PROJECTS_CATALOG_COPY,
@@ -29,8 +29,7 @@ type ProjectsFiltersProps = {
 function parseBudgetInput(input: string): number | undefined {
   const digits = input.replace(/\D/g, "");
   if (!digits) return undefined;
-  const value = Number(digits);
-  return value >= 10_000 ? value : value * 1_000;
+  return Number(digits) * 1_000;
 }
 
 function budgetInputValue(value?: number): string {
@@ -47,6 +46,7 @@ export function ProjectsFilters({
 }: ProjectsFiltersProps) {
   const copy = PROJECTS_CATALOG_COPY[locale];
   const [open, setOpen] = useState(false);
+  const controlsTitleRef = useRef<HTMLHeadingElement>(null);
   const panelId = useId();
   const rangeErrorId = useId();
   const numberLocale = locale === "en" ? "en-US" : locale === "fr" ? "fr-CA" : "es-ES";
@@ -70,6 +70,10 @@ export function ProjectsFilters({
       ),
     [copy]
   );
+
+  const focusControlsTitle = useCallback(() => {
+    requestAnimationFrame(() => controlsTitleRef.current?.focus());
+  }, []);
 
   const activeFilters = [
     value.q.trim()
@@ -113,7 +117,9 @@ export function ProjectsFilters({
             {copy.filters.activeCount(activeFilters.length)}
           </p>
           <h2
+            ref={controlsTitleRef}
             id="catalog-controls-title"
+            tabIndex={-1}
             className="mt-1 font-display text-[24px] font-medium leading-none text-primary"
           >
             {copy.filters.title}
@@ -248,7 +254,10 @@ export function ProjectsFilters({
             <button
               key={filter.key}
               type="button"
-              onClick={filter.clear}
+              onClick={() => {
+                filter.clear();
+                focusControlsTitle();
+              }}
               aria-label={copy.filters.removeFilterAria(filter.label)}
               className="inline-flex min-h-11 max-w-full items-center gap-2 rounded-full border border-primary/18 bg-surface px-3 text-left text-[12px] font-medium leading-4 text-primary outline-none transition-colors hover:border-primary/45 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             >
