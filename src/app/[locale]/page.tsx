@@ -1,13 +1,23 @@
-// src/app/[locale]/page.tsx
-import Link from 'next/link';
-import Image, { getImageProps } from 'next/image';
-import type { Metadata } from 'next';
-import SectionAboutJacquieHome from '@/components/SectionAboutJacquieHome';
-import SectionListingsHome from '@/components/SectionListingsHome';
-import SectionWhyPrecon from '@/components/SectionWhyPrecon';
-import { createPageMetadata, normalizeLocale } from '@/lib/seo';
+import Image, { getImageProps } from "next/image";
+import Link from "next/link";
+import type { Metadata } from "next";
+import { LISTINGS } from "@/data/listings";
+import { createPageMetadata, normalizeLocale } from "@/lib/seo";
+import { HOME_CONTENT, type HomeLocale } from "./home-content";
 
-type HomeLocale = "es" | "en" | "fr";
+const FULL_BLEED = "relative left-1/2 w-[100dvw] -translate-x-1/2";
+const CONTAINER = "mx-auto w-full max-w-[1180px] px-5 sm:px-8";
+const EYEBROW = "text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/70 sm:text-xs";
+const EYEBROW_LIGHT = "text-[11px] font-semibold uppercase tracking-[0.18em] text-primary-foreground/65 sm:text-xs";
+const H2 = "font-display text-[clamp(2.25rem,4.6vw,3.6rem)] font-medium leading-[0.98] tracking-[-0.02em] text-primary";
+const BODY = "text-[16px] leading-[1.75] text-foreground/78 sm:text-[17px]";
+const PRIMARY_CTA =
+  "inline-flex min-h-11 items-center justify-center rounded-[6px] bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground no-underline transition hover:-translate-y-0.5 hover:bg-primary/92 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary motion-reduce:transform-none motion-reduce:transition-none";
+const SECONDARY_CTA =
+  "inline-flex min-h-11 items-center justify-center rounded-[6px] border border-primary px-6 py-3 text-sm font-semibold text-primary no-underline transition hover:bg-primary/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary motion-reduce:transition-none";
+const CREDIBILITY_ICON_IDS = ["finance", "companies", "miami", "affiliation"] as const;
+const CREDIBILITY_STYLES =
+  ".home-cred-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.home-cred-item{display:flex;min-height:96px;align-items:center;gap:.75rem;padding:1rem .75rem;border-color:#3b274a26;color:#3b274ad1;font-size:14px;font-weight:500;line-height:1.45}.home-cred-item:nth-child(even){border-left:1px solid #3b274a26}.home-cred-item:nth-child(n+3){border-top:1px solid #3b274a26}.home-cred-item svg{width:17px;height:17px;flex:none}.home-cred-item span{max-width:24ch}@media(min-width:640px){.home-cred-item{min-height:100px;padding-right:1.25rem;padding-left:1.25rem}}@media(min-width:1024px){.home-cred-list{grid-template-columns:repeat(4,minmax(0,1fr))}.home-cred-item{min-height:108px;padding:1.25rem 1.75rem;border-left:1px solid #3b274a26}.home-cred-item:nth-child(n+3){border-top-width:0}.home-cred-item:first-child{border-left-width:0}}";
 
 function HeroBackgroundImage() {
   const common = {
@@ -28,34 +38,49 @@ function HeroBackgroundImage() {
   });
 
   return (
-    <picture>
-      <source media="(max-width: 639px)" srcSet={mobileImage.srcSet} sizes="100vw" />
-      <source media="(min-width: 640px)" srcSet={desktopImage.srcSet} sizes="100vw" />
-      {/* Art direction requires one responsive picture so mobile never downloads the desktop hero. */}
-      <img
-        {...desktopImage}
-        alt=""
-        className="h-full w-full object-cover"
+    <>
+      <link
+        rel="preload"
+        as="image"
+        href={mobileImage.src}
+        imageSrcSet={mobileImage.srcSet}
+        imageSizes="100vw"
+        media="(max-width: 639px)"
+        fetchPriority="high"
       />
-    </picture>
+      <link
+        rel="preload"
+        as="image"
+        href={desktopImage.src}
+        imageSrcSet={desktopImage.srcSet}
+        imageSizes="100vw"
+        media="(min-width: 640px)"
+        fetchPriority="high"
+      />
+      <picture>
+        <source media="(max-width: 639px)" srcSet={mobileImage.srcSet} sizes="100vw" />
+        <source media="(min-width: 640px)" srcSet={desktopImage.srcSet} sizes="100vw" />
+        <img {...desktopImage} alt="" className="h-full w-full object-cover object-center" />
+      </picture>
+    </>
   );
 }
 
 const HOME_META: Record<HomeLocale, { title: string; description: string }> = {
   es: {
-    title: "Jacquie Zarate Realtor | Inversión inmobiliaria en Miami",
+    title: "Jacquie Zárate | Inversión inmobiliaria en Miami",
     description:
-      "Asesoría personalizada para comprar, invertir y gestionar propiedades en Miami. Acompañamiento completo, incluso si no estás en Estados Unidos.",
+      "Asesoría personalizada para comprar o invertir en propiedades y proyectos de preconstrucción en Miami, con opciones de financiación sujetas a evaluación.",
   },
   en: {
-    title: "Jacquie Zarate Realtor | Miami Real Estate & Investment",
+    title: "Jacquie Zárate | Miami Real Estate & Investment",
     description:
-      "Personalized guidance to buy, invest, and manage properties in Miami. Full support, even if you're not based in the U.S.",
+      "Personal guidance for buying or investing in Miami properties and pre-construction projects, with financing options subject to review.",
   },
   fr: {
-    title: "Jacquie Zarate Realtor | Immobilier et investissement à Miami",
+    title: "Jacquie Zárate | Immobilier et investissement à Miami",
     description:
-      "Accompagnement personnalisé pour acheter, investir et gérer des propriétés à Miami, même à distance.",
+      "Accompagnement personnalisé pour acheter ou investir dans des propriétés et des projets en préconstruction à Miami, avec des options de financement sous réserve d’évaluation.",
   },
 };
 
@@ -70,471 +95,280 @@ export async function generateMetadata({
   return createPageMetadata({ locale, title: meta.title, description: meta.description });
 }
 
-export default async function Home({params}: {params: Promise<{locale: string}>}) {
+export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const { locale: rawLocale } = await params;
   const locale: HomeLocale = rawLocale === "en" ? "en" : rawLocale === "fr" ? "fr" : "es";
+  const content = HOME_CONTENT[locale];
+
   const whatsappMessage =
     locale === "en"
-      ? "Hi Jacquie, I’d like to talk with you about an opportunity in Miami."
+      ? "Hi Jacquie, I’d like to talk with you about a real estate opportunity in Miami."
       : locale === "fr"
-        ? "Bonjour Jacquie, j’aimerais vous parler d’une opportunité à Miami."
-        : "Hola Jacquie, quiero hablar con vos sobre una oportunidad en Miami.";
+        ? "Bonjour Jacquie, j’aimerais vous parler d’un projet immobilier à Miami."
+        : "Hola Jacquie, quiero hablar contigo sobre una oportunidad inmobiliaria en Miami.";
   const whatsAppHref = `https://wa.me/17864072591?text=${encodeURIComponent(whatsappMessage)}`;
   const contactHref = `/${locale}/contacto`;
   const projectsHref = `/${locale}/proyectos`;
   const listingsHref = `/${locale}/listings`;
   const financingHref = `/${locale}/financiacion`;
+  const aboutHref = `/${locale}/sobre-mi`;
   const letsGoHref = `/${locale}/lets-go-miami`;
-
-  const letsGoMessage =
-    locale === "en"
-      ? "Hi Jacquie, I’d like to ask about availability for a Let’s Go Miami stay."
-      : locale === "fr"
-        ? "Bonjour Jacquie, j’aimerais vérifier la disponibilité pour un séjour avec Let’s Go Miami."
-        : "Hola Jacquie, quiero consultar disponibilidad para una estadía con Let’s Go Miami.";
-  const letsGoWhatsAppHref = `https://wa.me/17864072591?text=${encodeURIComponent(letsGoMessage)}`;
-  const letsGoEmailSubject =
-    locale === "en"
-      ? "Let’s Go Miami stay inquiry"
-      : locale === "fr"
-        ? "Demande de séjour Let’s Go Miami"
-        : "Consulta de estadía Let’s Go Miami";
-  const letsGoEmailHref = `mailto:jacnaservices@gmail.com?subject=${encodeURIComponent(letsGoEmailSubject)}`;
-  const letsGoAmenities =
-    locale === "en"
-      ? ["Pool", "Spa", "Gym", "Covered patio", "From 6 nights"]
-      : locale === "fr"
-        ? ["Piscine", "Spa", "Salle d’entraînement", "Patio couvert", "À partir de 6 nuits"]
-        : ["Piscina", "Spa", "Gimnasio", "Patio techado", "Desde 6 noches"];
-
-  const opportunityCards = [
-    {
-      title: locale === "en" ? "Pre-construction projects" : locale === "fr" ? "Projets en préconstruction" : "Proyectos de preconstrucción",
-      text: locale === "en"
-        ? "Evaluate selected projects with staged payments, delivery timelines, rental potential, and long-term appreciation in mind."
-        : locale === "fr"
-          ? "Évaluez des projets sélectionnés selon les paiements échelonnés, les délais de livraison, le potentiel locatif et la valorisation."
-          : "Evaluá proyectos seleccionados por plan de pagos, entrega, potencial de renta y valorización a largo plazo.",
-      href: projectsHref,
-      label: locale === "en" ? "See projects" : locale === "fr" ? "Voir les projets" : "Ver proyectos",
-    },
-    {
-      title: locale === "en" ? "Available Properties" : locale === "fr" ? "Propriétés disponibles" : "Propiedades disponibles",
-      text: locale === "en"
-        ? "Compare active properties available for purchase in Miami and South Florida with practical guidance before scheduling a visit or making an offer."
-        : locale === "fr"
-          ? "Comparez des propriétés actives disponibles à l’achat à Miami et dans le sud de la Floride avec un accompagnement clair avant d’avancer."
-          : "Compará propiedades activas disponibles para compra en Miami y South Florida con guía práctica antes de visitar o avanzar con una oferta.",
-      href: listingsHref,
-      label: locale === "en" ? "See properties" : locale === "fr" ? "Voir les propriétés" : "Ver propiedades",
-    },
-  ];
+  const listingImage = LISTINGS[0].images[0];
 
   return (
-    <div className="space-y-20 pt-0 pb-12">
-      {/* HERO */}
+    <div className="-mb-24 pb-0">
       <section
-        role="region"
-        aria-labelledby="hero-title"
-        aria-describedby="hero-desc"
-        className="relative left-1/2 -translate-x-1/2 overflow-hidden bg-background flex flex-col min-h-[600px] w-[100dvw] max-w-[100dvw]"
+        aria-labelledby="home-hero-title"
+        aria-describedby="home-hero-intro"
+        className={`${FULL_BLEED} isolate overflow-hidden bg-background`}
       >
-        <div className="relative flex min-h-[600px] items-start justify-center px-4 pt-[88px] pb-28 sm:px-0 md:pt-[104px] md:pb-28">
-          <div aria-hidden className="absolute inset-0 pointer-events-none">
-            <div className="absolute inset-0">
-              <HeroBackgroundImage />
-            </div>
-            <div className="absolute inset-0 bg-background/58 md:bg-gradient-to-r md:from-background/82 md:via-background/62 md:to-background/18" />
-          </div>
-
-          <div className="relative z-10 mx-auto w-full max-w-[1180px] px-4 sm:px-6 lg:px-8">
-            <div className="grid items-center gap-10 md:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.92fr)] lg:gap-14">
-              <div className="max-w-[44rem] text-left">
-                <div className="mb-5 flex justify-center md:justify-start">
-                  <div className="inline-flex items-center gap-3 rounded-full bg-background/92 px-3 py-2 ring-1 ring-accent/20 backdrop-blur-sm">
-                    <Image
-                      src="/images/jacquie-zarate.jpg"
-                      alt="Jacquie Zarate Realtor"
-                      width={96}
-                      height={96}
-                      sizes="96px"
-                      quality={85}
-                      priority
-                      className="h-11 w-11 rounded-full object-cover ring-1 ring-white/80"
-                    />
-                    <div className="min-w-0">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-primary/80">
-                        JACQUIE ZARATE · REALTOR®
-                      </p>
-                      <p className="text-[13px] leading-5 text-foreground/72">
-                        {locale === "en"
-                          ? "Your trusted contact in Miami"
-                          : locale === "fr"
-                            ? "Votre personne de confiance à Miami"
-                            : "Tu persona de confianza en Miami"}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mb-3 text-[12px] uppercase tracking-[0.12em] text-primary/70 text-center md:text-left">
-                  <div className="md:hidden leading-[1.5]">
-                    {locale === "en" ? (
-                      <>
-                        <div>MIAMI · REAL ESTATE INVESTMENT</div>
-                        <div>PERSONAL GUIDANCE</div>
-                      </>
-                    ) : locale === "fr" ? (
-                      <>
-                        <div>MIAMI · INVESTISSEMENT IMMOBILIER</div>
-                        <div>ACCOMPAGNEMENT PERSONNALISÉ</div>
-                      </>
-                    ) : (
-                      <>
-                        <div>MIAMI · COMPRA E INVERSIÓN</div>
-                        <div>ACOMPAÑAMIENTO PERSONAL</div>
-                      </>
-                    )}
-                  </div>
-
-                  <p className="hidden md:block">
-                    {locale === "en"
-                      ? "MIAMI · REAL ESTATE INVESTMENT · PERSONAL GUIDANCE"
-                      : locale === "fr"
-                        ? "MIAMI · INVESTISSEMENT IMMOBILIER · ACCOMPAGNEMENT PERSONNALISÉ"
-                        : "MIAMI · COMPRA E INVERSIÓN · ACOMPAÑAMIENTO PERSONAL"}
-                  </p>
-                </div>
-
-                <h1
-                  id="hero-title"
-                  className="font-display max-w-[15ch] text-[44px] font-medium leading-[0.96] tracking-normal text-primary sm:text-[56px] md:text-[64px] lg:text-[70px]"
-                >
-                  {locale === "en"
-                    ? "Invest in Miami with clear guidance from a trusted local advisor."
-                    : locale === "fr"
-                      ? "Investir à Miami avec clarté et une personne de confiance sur place."
-                      : "Invierte en Miami con claridad, estrategia y una persona de confianza en el proceso."}
-                </h1>
-
-                <p className="mt-5 max-w-[68ch] text-[18px] font-medium leading-8 text-foreground/80">
-                  {locale === "en"
-                    ? "I help you evaluate purchases, pre-construction projects, and active properties with practical criteria, real follow-up, and a focus on confident decisions, even if you are not in Miami."
-                    : locale === "fr"
-                      ? "Je vous aide à évaluer des achats, des projets en préconstruction et des propriétés actives avec des critères concrets, un vrai suivi et des décisions plus sereines, même à distance."
-                      : "Te ayudo a evaluar compras, proyectos de preconstrucción y propiedades activas con criterio, seguimiento real y foco en que tomes decisiones seguras, incluso si no estás en Miami."}
-                </p>
-
-                <div className="mt-8 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
-                  <a
-                    href={whatsAppHref}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="inline-flex h-11 min-w-[176px] w-full items-center justify-center rounded-lg bg-primary px-6 text-sm font-medium text-primary-foreground transition hover:-translate-y-[1px] hover:opacity-95 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary focus-visible:ring-2 focus-visible:ring-accent/40 sm:w-auto"
-                  >
-                    {locale === "en" ? "Chat on WhatsApp" : locale === "fr" ? "Écrire sur WhatsApp" : "Hablar por WhatsApp"}
-                  </a>
-                  <a
-                    href="#oportunidades"
-                    className="inline-flex h-11 min-w-[176px] w-full items-center justify-center gap-2 rounded-lg border-[1.5px] border-primary px-6 text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-primary-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary focus-visible:ring-2 focus-visible:ring-accent/30 sm:w-auto md:min-w-0"
-                  >
-                    {locale === "en" ? "View opportunities" : locale === "fr" ? "Voir les opportunités" : "Ver oportunidades"}
-                  </a>
-                </div>
-
-                <div className="mt-7 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-center text-primary/70 md:justify-start md:text-left">
-                  <span className="text-[11px] font-semibold uppercase tracking-[0.14em] sm:text-xs" aria-label="Miami Life Realty" title="Miami Life Realty">
-                    MIAMI LIFE REALTY
-                  </span>
-                  <span className="text-[11px] font-semibold uppercase tracking-[0.14em] sm:text-xs" aria-label="NAR · REALTOR®" title="NAR · REALTOR®">
-                    NAR · REALTOR®
-                  </span>
-                </div>
-
-                <div id="hero-desc" className="flex items-center justify-center md:justify-start pt-4 pb-10 md:pb-0 text-xs text-foreground/70 text-center md:text-left">
-                  <span className="mr-1 hidden text-foreground/70 sm:inline">
-                    {locale === "en" ? "Questions?" : locale === "fr" ? "Des questions?" : "¿Dudas?"}
-                  </span>
-                  <a
-                    href={whatsAppHref}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={locale === "en" ? "Open Jacquie's WhatsApp with a prefilled message" : locale === "fr" ? "Ouvrir WhatsApp avec un message prérempli" : "Abrir WhatsApp de Jacquie con mensaje prellenado"}
-                    className="block underline decoration-accent/50 underline-offset-2 hover:decoration-accent sm:ml-2 sm:inline"
-                    data-analytics="hero:whatsapp"
-                  >
-                    {locale === "en" ? "Chat on WhatsApp" : locale === "fr" ? "Écrire sur WhatsApp" : "Hablemos por WhatsApp"}
-                  </a>
-                </div>
-              </div>
-
-              <div className="relative hidden md:flex justify-end">
-                <div className="relative w-full max-w-[420px]">
-                  <div className="absolute -inset-4 rounded-[32px] bg-background/70 blur-2xl" />
-                  <div className="relative overflow-hidden rounded-[28px] border border-white/75 bg-background/90 p-3 ring-1 ring-accent/20 shadow-lg backdrop-blur-sm">
-                    <div className="relative aspect-[4/5] overflow-hidden rounded-[22px]">
-                      <Image
-                        src="/images/jacquie-zarate.jpg"
-                        alt="Jacquie Zarate Realtor"
-                        fill
-                        sizes="(min-width: 768px) 420px, 0px"
-                        quality={85}
-                        className="object-cover object-center"
-                      />
-                    </div>
-                    <div className="px-2 pb-1 pt-4">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-primary/70">
-                        {locale === "en"
-                          ? "Direct guidance in Miami"
-                          : locale === "fr"
-                            ? "Accompagnement direct à Miami"
-                            : "Acompañamiento directo en Miami"}
-                      </p>
-                      <p className="mt-2 font-display text-[24px] font-medium leading-[1.08] tracking-normal text-primary">
-                        {locale === "en"
-                          ? "From search to financing questions and closing decisions."
-                          : locale === "fr"
-                            ? "De la recherche aux questions de financement et aux décisions d’achat."
-                            : "Desde la búsqueda hasta financiación y decisiones de compra."}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div aria-hidden className="absolute inset-0 z-0">
+          <HeroBackgroundImage />
         </div>
-        <div className="absolute bottom-0 left-0 right-0 w-full bg-primary text-primary-foreground py-5 px-4" role="region" aria-label={locale === "en" ? "What we offer" : locale === "fr" ? "Ce que nous offrons" : "Qué ofrecemos"}>
-          <div className="mx-auto max-w-5xl flex flex-col items-center justify-center gap-3 text-center text-sm font-medium sm:flex-row sm:flex-wrap sm:justify-center sm:gap-6">
-            <span className="text-primary-foreground/95">
-              {locale === "en" ? "Buy with clarity" : locale === "fr" ? "Acheter avec clarté" : "Comprar con claridad"}
-            </span>
-            <span className="hidden sm:inline text-primary-foreground/35" aria-hidden>·</span>
-            <span className="text-primary-foreground/95">
-              {locale === "en" ? "Invest with local guidance" : locale === "fr" ? "Investir avec un accompagnement local" : "Invertir con guía local"}
-            </span>
-            <span className="hidden sm:inline text-primary-foreground/35" aria-hidden>·</span>
-            <span className="text-primary-foreground/95">
-              {locale === "en" ? "Financing from 25% down payment" : locale === "fr" ? "Financement dès 25% de mise de fonds" : "Financiación desde 25% de down payment"}
-            </span>
-          </div>
-        </div>
-      </section>
+        <div aria-hidden className="absolute inset-0 z-10 bg-paper/72 lg:bg-gradient-to-r lg:from-paper lg:via-paper/88 lg:to-paper/20" />
 
-      <section id="oportunidades" aria-labelledby="opportunities-title" className="max-w-[1100px] mx-auto px-4">
-        <div>
-          <h2 id="opportunities-title" className="font-display text-3xl font-medium leading-[1.05] tracking-normal text-primary sm:text-4xl">
-            {locale === "en" ? "Opportunities to buy or invest in Miami" : locale === "fr" ? "Opportunités pour acheter ou investir à Miami" : "Oportunidades para comprar o invertir en Miami"}
-          </h2>
-          <p className="mt-3 max-w-[64ch] text-[16px] leading-[1.75] text-foreground/80">
-            {locale === "en"
-              ? "Start by comparing the two paths buyers usually evaluate: available properties and pre-construction projects."
-              : locale === "fr"
-                ? "Commencez par comparer les deux chemins que les acheteurs évaluent souvent : les propriétés disponibles et les projets en préconstruction."
-                : "Empezá comparando los dos caminos que suelen evaluar compradores e inversores: propiedades disponibles y proyectos de preconstrucción."}
-          </p>
-        </div>
-
-        <div className="mt-8 grid gap-5 md:grid-cols-2">
-          {opportunityCards.map((card) => (
-            <Link
-              key={card.href}
-              href={card.href}
-              className="group flex h-full flex-col rounded-[14px] bg-primary p-6 text-primary-foreground ring-1 ring-primary-foreground/10 no-underline shadow-sm transition hover:-translate-y-[2px] hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+        <div className={`${CONTAINER} relative z-20 grid items-center gap-8 py-10 sm:py-14 lg:min-h-[700px] lg:grid-cols-[minmax(0,1.2fr)_minmax(340px,0.8fr)] lg:gap-16 lg:py-20`}>
+          <div className="max-w-[720px]">
+            <p className={EYEBROW}>{content.hero.eyebrow}</p>
+            <h1
+              id="home-hero-title"
+              className="mt-5 max-w-[15ch] font-display text-[clamp(2.8rem,6.2vw,5rem)] font-medium leading-[1.02] tracking-[-0.035em] text-primary sm:leading-none"
             >
-              <div className="h-[3px] w-20 rounded-full bg-accent/80" aria-hidden />
-              <h3 className="mt-5 font-display text-[24px] font-medium leading-[1.08] tracking-normal">{card.title}</h3>
-              <p className="mt-3 flex-1 text-[15px] leading-[1.65] text-primary-foreground/82">{card.text}</p>
-              <span className="mt-5 inline-flex text-sm font-semibold text-primary-foreground">
-                {card.label}
-              </span>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <section aria-labelledby="financing-home-title" className="max-w-[1100px] mx-auto px-4">
-        <div className="rounded-[14px] bg-paper p-6 sm:p-8 ring-1 ring-primary/10 shadow-sm">
-          <div className="grid gap-8 md:grid-cols-[1.08fr_0.92fr] md:items-center">
-            <div>
-              <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-primary/70">
-                {locale === "en" ? "Financing" : locale === "fr" ? "Financement" : "Financiación"}
-              </p>
-              <h2 id="financing-home-title" className="mt-2 font-display text-3xl font-medium leading-[1.05] tracking-normal text-primary sm:text-4xl">
-                {locale === "en" ? "Financing can shape the right purchase strategy." : locale === "fr" ? "Le financement peut orienter la bonne stratégie d’achat." : "La financiación puede ordenar la estrategia de compra."}
-              </h2>
-              <p className="mt-3 text-[15px] leading-[1.75] text-foreground/82">
-                {locale === "en"
-                  ? "We can review options from 25% down payment, subject to approval, buyer profile, documentation, and property type. The goal is to understand your range before moving forward."
-                  : locale === "fr"
-                    ? "Nous pouvons examiner des options à partir de 25% de mise de fonds, sous réserve d’approbation, du profil acheteur, des documents et du type de propriété."
-                    : "Podemos revisar alternativas desde 25% de down payment, sujeto a aprobación, perfil del comprador, documentación y tipo de propiedad. La idea es entender tu rango antes de avanzar."}
-              </p>
-            </div>
-            <div className="rounded-[12px] bg-primary p-5 text-primary-foreground ring-1 ring-primary-foreground/10">
-              <div className="text-[42px] font-semibold leading-none tracking-tight">25%</div>
-              <p className="mt-2 text-[13px] font-semibold uppercase tracking-[0.12em] text-primary-foreground/70">
-                {locale === "en" ? "Starting point" : locale === "fr" ? "Point de départ" : "Punto de partida"}
-              </p>
-              <p className="mt-3 text-[14px] leading-[1.65] text-primary-foreground/82">
-                {locale === "en"
-                  ? "Not a guarantee of approval. Final terms depend on financial institution review and the specific property."
-                  : locale === "fr"
-                    ? "Ce n’est pas une garantie d’approbation. Les conditions finales dépendent de l’analyse de l’institution financière et de la propriété."
-                    : "No es una garantía de aprobación. Las condiciones finales dependen de la entidad financiera y de la propiedad específica."}
-              </p>
-              <Link
-                href={financingHref}
-                className="mt-5 inline-flex h-10 w-full items-center justify-center rounded-md bg-primary-foreground/10 px-4 text-sm font-medium text-primary-foreground no-underline hover:bg-primary-foreground/20 focus-visible:ring-2 focus-visible:ring-accent/40"
-              >
-                {locale === "en" ? "View financing" : locale === "fr" ? "Voir le financement" : "Ver financiación"}
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <SectionWhyPrecon
-        heroImageSrc="/images/precon-hero.jpg"
-        heroImageAlt={
-          locale === "en"
-            ? "Miami preconstruction residential project"
-            : locale === "fr"
-              ? "Projet résidentiel en préconstruction à Miami"
-              : "Proyecto residencial de preconstrucción en Miami"
-        }
-      />
-
-      <SectionListingsHome locale={locale} />
-
-      <section aria-labelledby="lets-go-miami-title" className="max-w-[1100px] mx-auto px-4">
-        <div className="grid gap-6 rounded-[14px] bg-paper p-6 sm:p-8 ring-1 ring-accent/25 md:grid-cols-[0.85fr_1.15fr] md:items-center">
-          <div className="rounded-[12px] bg-white/70 p-5 text-center ring-1 ring-accent/15 shadow-sm sm:p-6">
-            <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-primary/70">
-              {locale === "en" ? "STAYS IN MIAMI" : locale === "fr" ? "SÉJOURS À MIAMI" : "ESTADÍAS EN MIAMI"}
+              {content.hero.title}
+            </h1>
+            <p id="home-hero-intro" className="mt-6 max-w-[62ch] text-[17px] leading-[1.72] text-foreground/82 sm:text-[19px]">
+              {content.hero.intro}
             </p>
-            <Link
-              href={letsGoHref}
-              aria-label="Let’s Go Miami"
-              className="relative mx-auto mt-4 block aspect-square w-full max-w-[220px] rounded-[10px] no-underline transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
-            >
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <a href={whatsAppHref} target="_blank" rel="noopener noreferrer" className={PRIMARY_CTA}>
+                {content.hero.primaryCta}
+              </a>
+              <a href="#formas-de-comprar" className={SECONDARY_CTA}>
+                {content.hero.secondaryCta}
+              </a>
+            </div>
+          </div>
+
+          <figure className="relative ml-auto w-full max-w-[220px] justify-self-end sm:max-w-[320px] lg:max-w-[410px]">
+            <span aria-hidden className="absolute -left-5 top-10 h-[55%] w-px bg-accent lg:-left-8" />
+            <div className="relative aspect-[4/5] overflow-hidden rounded-[3px] bg-surface">
               <Image
-                src="/images/lets-go-miami/logo.png"
-                alt="Let’s Go Miami by Jacna Services LLC"
+                src="/images/jacquie-zarate.jpg"
+                alt={content.hero.portraitAlt}
                 fill
-                sizes="220px"
-                className="object-contain"
+                sizes="(min-width: 1024px) 410px, (min-width: 640px) 320px, 220px"
+                quality={85}
+                loading="lazy"
+                className="object-cover object-center"
               />
-            </Link>
-            <h2 id="lets-go-miami-title" className="sr-only">
-              Let’s Go Miami
-            </h2>
-            <p className="mt-2 text-sm text-foreground/70">
-              {locale === "en"
-                ? "Short-term rentals and selected Miami stays."
-                : locale === "fr"
-                  ? "Location de courte durée et séjours sélectionnés à Miami."
-                  : "Renta corta y estadías seleccionadas en Miami."}
-            </p>
-            <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.14em] text-primary/70">
-              Jacna Services LLC · Vacation Condo Management
-            </p>
+            </div>
+            <figcaption className="mt-4 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.15em] text-primary/72">
+              <span aria-hidden className="h-px w-8 bg-accent" />
+              {content.hero.portraitCaption}
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section
+        aria-label={content.credibility.label}
+        className={`${FULL_BLEED} border-y border-primary/15 bg-paper`}
+        data-home-credibility
+      >
+        <style href="home-credibility" precedence="low">
+          {CREDIBILITY_STYLES}
+        </style>
+        <div className={CONTAINER}>
+          <ul className="home-cred-list">
+            {content.credibility.items.map((item, index) => (
+              <li key={item} className="home-cred-item">
+                <svg aria-hidden viewBox="0 0 24 24">
+                  <use href={`/icons/home-credibility.svg#${CREDIBILITY_ICON_IDS[index]}`} />
+                </svg>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section aria-labelledby="decision-title" className={`${FULL_BLEED} relative bg-paper pt-14 pb-0 sm:pt-16 lg:pt-20`}>
+        <div className={`${CONTAINER} relative`}>
+          <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+            <div>
+              <p className={EYEBROW}>{content.decision.eyebrow}</p>
+              <h2 id="decision-title" className={`${H2} mt-4 max-w-[14ch]`}>
+                {content.decision.title}
+              </h2>
+            </div>
+            <div className="lg:pt-6">
+              <p className={`${BODY} max-w-[60ch]`}>{content.decision.intro}</p>
+              <p className="mt-7 max-w-[33ch] font-display text-[clamp(1.55rem,2.3vw,2rem)] leading-[1.15] text-primary/88">
+                {content.decision.close}
+              </p>
+            </div>
           </div>
-          <div>
-            <h3 className="font-display text-3xl font-medium leading-[1.05] tracking-normal text-primary sm:text-4xl">
-              <Link
-                href={letsGoHref}
-                className="text-primary no-underline transition-colors hover:text-primary/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
-              >
-                {locale === "en"
-                  ? "Short stays and vacation rentals in Miami"
-                  : locale === "fr"
-                    ? "Séjours de courte durée à Miami"
-                    : "Renta corta y estadías en Miami"}
+
+          <div className="mt-10 grid border-y border-primary/15 md:grid-cols-3 md:divide-x md:divide-primary/15 lg:mt-14">
+            {content.decision.items.map((item, index) => (
+              <article key={item.label} className="grid grid-cols-[84px_minmax(0,1fr)] gap-4 border-b border-primary/15 py-6 last:border-b-0 md:block md:border-b-0 md:px-7 lg:py-8 first:pl-0 last:pr-0">
+                <div className="flex flex-col items-start gap-2 md:flex-row md:items-center md:justify-between md:gap-4">
+                  <span className="text-xs font-semibold tracking-[0.18em] text-primary/75">0{index + 1}</span>
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.15em] text-primary/75">{item.label}</span>
+                </div>
+                <p className="max-w-[24ch] font-display text-[clamp(1.4rem,2.3vw,2rem)] leading-[1.12] text-primary md:mt-5 lg:mt-8">
+                  {item.question}
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="formas-de-comprar" aria-labelledby="buying-title" className={`${FULL_BLEED} bg-background pt-14 pb-16 sm:py-20 lg:pt-20 lg:pb-24`}>
+        <div className={CONTAINER}>
+          <div className="grid gap-5 md:grid-cols-2 md:items-start md:gap-x-12 md:gap-y-0">
+            <div>
+              <p className={EYEBROW}>{content.buying.eyebrow}</p>
+              <h2 id="buying-title" className={`${H2} mt-4 max-w-[14.25ch]`}>
+                {content.buying.title}
+              </h2>
+            </div>
+            <p className={`${BODY} max-w-[40ch] md:mt-8`}>{content.buying.intro}</p>
+          </div>
+
+          <div className="mt-8 grid gap-12 md:mt-10 md:grid-cols-2 md:items-stretch lg:mt-12 lg:gap-x-12">
+            <article className="flex h-full flex-col">
+              <div className="relative aspect-[2/1] overflow-hidden rounded-[4px] bg-paper sm:aspect-[16/10]">
+                <Image
+                  src="/images/precon-hero.jpg"
+                  alt={content.buying.preconstruction.imageAlt}
+                  fill
+                  sizes="(min-width: 1280px) 566px, (min-width: 768px) 50vw, 100vw"
+                  className="object-cover object-center"
+                />
+              </div>
+              <p className={`${EYEBROW} mt-5 lg:mt-7`}>{content.buying.preconstruction.eyebrow}</p>
+              <h3 className="mt-3 max-w-[17ch] font-display text-[clamp(1.8rem,3.5vw,3rem)] leading-[1.02] tracking-[-0.02em] text-primary">
+                {content.buying.preconstruction.title}
+              </h3>
+              <p className={`${BODY} mt-4 max-w-[58ch] flex-1`}>{content.buying.preconstruction.text}</p>
+              <Link href={projectsHref} className="mt-6 inline-flex items-center gap-3 border-b border-primary/30 pb-1 text-sm font-semibold text-primary no-underline transition hover:border-accent hover:text-primary/80">
+                {content.buying.preconstruction.cta}
+                <span aria-hidden>↗</span>
               </Link>
-            </h3>
-            <p className="mt-3 text-[15px] leading-[1.75] text-foreground/82">
-              {locale === "en"
-                  ? "Let’s Go Miami brings together short-stay options in areas like Sunny Isles, designed for guests looking for a comfortable, private, and well-located stay."
-                : locale === "fr"
-                  ? "Let’s Go Miami regroupe des options de location de courte durée dans des secteurs comme Sunny Isles, pensées pour les personnes qui recherchent un séjour confortable, privé et bien situé."
-                  : "Let’s Go Miami reúne opciones de renta corta en zonas como Sunny Isles, pensadas para quienes buscan una estadía cómoda, privada y bien ubicada."}
+            </article>
+
+            <article className="flex h-full flex-col">
+              <div className="relative aspect-[2/1] overflow-hidden rounded-[4px] bg-paper sm:aspect-[16/10]">
+                <Image
+                  src={listingImage}
+                  alt={content.buying.properties.imageAlt}
+                  fill
+                  sizes="(min-width: 1280px) 566px, (min-width: 768px) 50vw, 100vw"
+                  className="object-cover object-center"
+                />
+              </div>
+              <p className={`${EYEBROW} mt-5 lg:mt-7`}>{content.buying.properties.eyebrow}</p>
+              <h3 className="mt-3 max-w-[17ch] font-display text-[clamp(1.8rem,3.5vw,3rem)] leading-[1.02] tracking-[-0.02em] text-primary">
+                {content.buying.properties.title}
+              </h3>
+              <p className={`${BODY} mt-4 max-w-[58ch] flex-1`}>{content.buying.properties.text}</p>
+              <Link href={listingsHref} className="mt-6 inline-flex items-center gap-3 border-b border-primary/30 pb-1 text-sm font-semibold text-primary no-underline transition hover:border-accent hover:text-primary/80">
+                {content.buying.properties.cta}
+                <span aria-hidden>↗</span>
+              </Link>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="financing-home-title" className={`${FULL_BLEED} bg-primary py-14 text-primary-foreground sm:py-20 lg:py-24`}>
+        <div className={`${CONTAINER} grid gap-10 lg:grid-cols-[1.3fr_0.7fr] lg:items-center lg:gap-16`}>
+          <div>
+            <p className={EYEBROW_LIGHT}>{content.financing.eyebrow}</p>
+            <h2 id="financing-home-title" className="mt-4 max-w-[16ch] font-display text-[clamp(2.15rem,4.8vw,3.9rem)] font-medium leading-[0.98] tracking-[-0.025em]">
+              {content.financing.title}
+            </h2>
+            <p className="mt-4 max-w-[62ch] text-[15px] leading-[1.68] text-primary-foreground/78 sm:mt-6 sm:text-[17px]">
+              {content.financing.text}
             </p>
-            <p className="mt-3 text-[14px] leading-[1.65] text-foreground/70">
-              {locale === "en"
-                ? "Photos are used as a reference for the type of properties available. Rates, availability, and details are confirmed based on dates, season, and number of guests."
-                : locale === "fr"
-                  ? "Les photos servent de référence pour le type de propriétés disponibles. Les tarifs, la disponibilité et les détails sont confirmés selon les dates, la saison et le nombre de voyageurs."
-                  : "Las fotos funcionan como referencia del tipo de propiedades disponibles. Tarifas, disponibilidad y detalles se confirman según fechas, temporada y cantidad de huéspedes."}
+            <Link href={financingHref} className="mt-6 inline-flex min-h-11 items-center justify-center rounded-[6px] bg-paper px-6 py-3 text-sm font-semibold text-primary no-underline transition hover:-translate-y-0.5 hover:bg-paper/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary-foreground motion-reduce:transform-none motion-reduce:transition-none sm:mt-8">
+              {content.financing.cta}
+            </Link>
+          </div>
+
+          <div className="border-y border-primary-foreground/18 py-6 lg:border-y-0 lg:border-l lg:py-2 lg:pl-12">
+            <p className="font-display text-[clamp(3.1rem,7vw,5.75rem)] leading-[0.82] tracking-[-0.05em] text-primary-foreground">25%</p>
+            <p className="mt-3 max-w-[26ch] text-[11px] font-semibold uppercase tracking-[0.15em] text-primary-foreground/68 sm:text-xs">
+              {content.financing.reference}
             </p>
-            <ul className="mt-5 flex flex-wrap gap-2" aria-label={locale === "en" ? "Amenities" : locale === "fr" ? "Commodités" : "Amenities"}>
-              {letsGoAmenities.map((amenity) => (
-                <li
-                  key={amenity}
-                  className="rounded-full bg-surface px-3 py-1.5 text-[13px] font-medium text-primary ring-1 ring-primary/10"
-                >
-                  {amenity}
+            <p className="mt-5 max-w-[44ch] border-t border-primary-foreground/14 pt-5 text-[12px] leading-[1.6] text-primary-foreground/62 sm:text-[13px]">{content.financing.note}</p>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="method-title" className={`${FULL_BLEED} bg-paper py-10 sm:py-20 lg:py-24`}>
+        <div className={CONTAINER}>
+          <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20">
+            <div>
+              <p className={EYEBROW}>{content.method.eyebrow}</p>
+              <h2 id="method-title" className={`${H2} mt-4 max-w-[13ch]`}>
+                {content.method.title}
+              </h2>
+              <p className={`${BODY} mt-4 max-w-[45ch] sm:mt-6`}>{content.method.intro}</p>
+              <Link href={aboutHref} className="mt-7 inline-flex items-center gap-3 border-b border-primary/30 pb-1 text-sm font-semibold text-primary no-underline transition hover:border-accent">
+                {content.method.cta}
+                <span aria-hidden>↗</span>
+              </Link>
+            </div>
+
+            <ol className="border-t border-primary/15">
+              {content.method.items.map((item, index) => (
+                <li key={item.title} className="grid gap-3 border-b border-primary/15 py-4 sm:grid-cols-[64px_0.8fr_1.2fr] sm:items-start sm:gap-6 lg:py-7">
+                  <span className="text-xs font-semibold tracking-[0.18em] text-primary/75">0{index + 1}</span>
+                  <h3 className="font-display text-[1.55rem] leading-[1.1] text-primary">{item.title}</h3>
+                  <p className="text-[15px] leading-[1.7] text-foreground/72">{item.text}</p>
                 </li>
               ))}
-            </ul>
-            <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-              <a
-                href={letsGoWhatsAppHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-5 text-sm font-medium text-primary-foreground no-underline hover:opacity-95 focus-visible:ring-2 focus-visible:ring-accent/40"
-              >
-                {locale === "en" ? "Check availability" : locale === "fr" ? "Vérifier la disponibilité" : "Consultar disponibilidad"}
-              </a>
-              <Link
-                href={letsGoHref}
-                className="inline-flex h-10 items-center justify-center rounded-md border border-primary/25 px-5 text-sm font-medium text-primary no-underline hover:bg-primary/5 focus-visible:ring-2 focus-visible:ring-accent/40"
-              >
-                {locale === "en" ? "View stays" : locale === "fr" ? "Voir les séjours" : "Ver estadías"}
-              </Link>
-              <a
-                href={letsGoEmailHref}
-                className="inline-flex h-10 items-center justify-center px-2 text-sm font-medium text-primary/70 underline decoration-accent/50 underline-offset-4 hover:text-primary hover:decoration-accent focus-visible:ring-2 focus-visible:ring-accent/40"
-              >
-                {locale === "en" ? "Email us" : locale === "fr" ? "Écrire par courriel" : "Escribir por email"}
-              </a>
-            </div>
+            </ol>
           </div>
+
         </div>
       </section>
 
-      <div className="bg-surface">
-        <SectionAboutJacquieHome locale={locale} />
-      </div>
+      <section aria-labelledby="lets-go-title" className={`${FULL_BLEED} bg-background pt-10 pb-12 sm:pt-20 sm:pb-12`}>
+        <div className={CONTAINER}>
+          <div className="grid items-center gap-6 md:grid-cols-[180px_1fr_auto] md:gap-10">
+            <Link href={letsGoHref} className="relative block aspect-square w-[72px] no-underline sm:w-[160px]" aria-label={content.stays.title}>
+              <Image src="/images/lets-go-miami/logo.png" alt={content.stays.logoAlt} fill sizes="160px" className="object-contain" />
+            </Link>
+            <div>
+              <p className={EYEBROW}>{content.stays.eyebrow}</p>
+              <h2 id="lets-go-title" className="mt-2 font-display text-[clamp(2.2rem,4vw,3.4rem)] leading-none text-primary">{content.stays.title}</h2>
+              <p className={`${BODY} mt-4 max-w-[58ch]`}>{content.stays.text}</p>
+              <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.16em] text-primary/75">{content.stays.signature}</p>
+            </div>
+            <Link href={letsGoHref} className={`${SECONDARY_CTA} md:justify-self-end`}>
+              {content.stays.cta}
+            </Link>
+          </div>
 
-      <section className="mt-6 rounded-[10px] bg-primary p-6 sm:p-7 ring-1 ring-primary-foreground/10 text-primary-foreground text-center relative overflow-hidden max-w-[1100px] mx-auto">
-        <div className="pointer-events-none absolute inset-x-5 sm:inset-x-6 top-0 h-[1.5px] rounded-full bg-gradient-to-r from-transparent via-accent/25 to-transparent" />
-        <div className="mx-auto mb-3 h-[2px] w-24 rounded-full bg-gradient-to-r from-transparent via-accent/60 to-transparent" />
-        <h3 className="font-display text-2xl font-medium leading-[1.08] tracking-normal text-primary-foreground sm:text-3xl">
-          {locale === "en" ? "Tell me what you want to do in Miami" : locale === "fr" ? "Dites-moi ce que vous souhaitez faire à Miami" : "Cuéntame qué estás buscando en Miami"}
-        </h3>
-        <p className="mt-2 text-[14px] text-primary-foreground/80">
-          {locale === "en"
-            ? "Buying, investing, comparing financing, or evaluating a specific property: send me the context and we review the next step."
-            : locale === "fr"
-              ? "Acheter, investir, comparer un financement ou évaluer une propriété précise : envoyez-moi le contexte et nous voyons la prochaine étape."
-              : "Comprar, invertir, comparar opciones de financiación o evaluar una propiedad: comparte el contexto y definimos el siguiente paso."}
-        </p>
-        <div className="mt-4 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <a
-            href={whatsAppHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex h-10 items-center justify-center rounded-md bg-primary-foreground/10 px-4 text-sm font-medium text-primary-foreground no-underline hover:bg-primary-foreground/20 focus-visible:ring-2 focus-visible:ring-accent/40"
-          >
-            WhatsApp
-          </a>
-          <Link
-            href={contactHref}
-            className="inline-flex h-10 items-center justify-center rounded-md border border-primary-foreground/25 px-4 text-sm font-medium text-primary-foreground no-underline hover:bg-primary-foreground/10 focus-visible:ring-2 focus-visible:ring-accent/40"
-          >
-            {locale === "en" ? "Contact" : locale === "fr" ? "Contact" : "Contacto"}
-          </Link>
+          <div className="mt-10 grid gap-7 border-t border-primary/15 pt-10 sm:mt-12 sm:pt-12 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-16">
+            <div>
+              <p className={EYEBROW}>{content.close.eyebrow}</p>
+              <h2 className={`${H2} mt-4 max-w-[15ch]`}>{content.close.title}</h2>
+              <p className={`${BODY} mt-5 max-w-[62ch]`}>{content.close.text}</p>
+            </div>
+            <div className="flex flex-col gap-3 sm:flex-row lg:flex-col lg:items-stretch">
+              <a href={whatsAppHref} target="_blank" rel="noopener noreferrer" className={PRIMARY_CTA}>
+                {content.close.primaryCta}
+              </a>
+              <Link href={contactHref} className={SECONDARY_CTA}>
+                {content.close.secondaryCta}
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
     </div>
