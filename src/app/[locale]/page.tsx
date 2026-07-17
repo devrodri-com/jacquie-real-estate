@@ -129,7 +129,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <p className={EYEBROW}>{content.hero.eyebrow}</p>
             <h1
               id="home-hero-title"
-              className="mt-5 max-w-[15ch] font-display text-[clamp(2.8rem,6.2vw,5rem)] font-medium leading-[0.93] tracking-[-0.035em] text-primary"
+              className="mt-5 max-w-[15ch] font-display text-[clamp(2.8rem,6.2vw,5rem)] font-medium leading-[1.02] tracking-[-0.035em] text-primary sm:leading-none"
             >
               {content.hero.title}
             </h1>
