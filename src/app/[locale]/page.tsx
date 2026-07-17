@@ -1,6 +1,7 @@
 import Image, { getImageProps } from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { Building2, ChartNoAxesCombined, Handshake, MapPin } from "lucide-react";
 import { LISTINGS } from "@/data/listings";
 import { createPageMetadata, normalizeLocale } from "@/lib/seo";
 import { HOME_CONTENT, type HomeLocale } from "./home-content";
@@ -15,6 +16,7 @@ const PRIMARY_CTA =
   "inline-flex min-h-11 items-center justify-center rounded-[6px] bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground no-underline transition hover:-translate-y-0.5 hover:bg-primary/92 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary motion-reduce:transform-none motion-reduce:transition-none";
 const SECONDARY_CTA =
   "inline-flex min-h-11 items-center justify-center rounded-[6px] border border-primary px-6 py-3 text-sm font-semibold text-primary no-underline transition hover:bg-primary/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary motion-reduce:transition-none";
+const CREDIBILITY_ICONS = [ChartNoAxesCombined, Building2, MapPin, Handshake] as const;
 
 function HeroBackgroundImage() {
   const common = {
@@ -167,9 +169,34 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         </div>
       </section>
 
+      <section
+        aria-label={content.credibility.label}
+        className={`${FULL_BLEED} border-y border-primary/15 bg-paper`}
+        data-home-credibility
+      >
+        <div className={CONTAINER}>
+          <ul className="grid grid-cols-2 lg:grid-cols-4">
+            {content.credibility.items.map((item, index) => {
+              const Icon = CREDIBILITY_ICONS[index];
+
+              return (
+                <li
+                  key={item}
+                  className="flex min-h-[96px] items-center gap-3 border-primary/15 px-3 py-4 even:border-l [&:nth-child(n+3)]:border-t sm:min-h-[100px] sm:px-5 lg:min-h-[108px] lg:border-l lg:border-t-0 lg:px-7 lg:py-5 lg:first:border-l-0"
+                >
+                  <Icon aria-hidden className="size-[17px] shrink-0 text-accent stroke-[1.65]" />
+                  <span className="max-w-[24ch] text-[14px] font-medium leading-[1.45] text-primary/82">
+                    {item}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </section>
+
       <section aria-labelledby="decision-title" className={`${FULL_BLEED} relative bg-paper pt-14 pb-0 sm:pt-16 lg:pt-20`}>
         <div className={`${CONTAINER} relative`}>
-          <span aria-hidden className="absolute -top-16 left-5 h-10 w-px bg-accent/70 sm:-top-20 sm:left-8 sm:h-12 lg:-top-24 lg:h-16" />
           <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
             <div>
               <p className={EYEBROW}>{content.decision.eyebrow}</p>
@@ -310,11 +337,6 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             </ol>
           </div>
 
-          <ul className="mt-8 flex flex-wrap gap-x-5 gap-y-1 border-y border-primary/15 py-3 text-[10px] font-semibold uppercase tracking-[0.12em] text-primary/75 sm:mt-14 sm:grid sm:grid-cols-3 sm:gap-0 sm:divide-x sm:divide-primary/15 sm:py-5 sm:text-center sm:text-[11px]">
-            {content.method.proof.map((item) => (
-              <li key={item} className="py-2 sm:px-5">{item}</li>
-            ))}
-          </ul>
         </div>
       </section>
 

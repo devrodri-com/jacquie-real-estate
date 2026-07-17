@@ -28,6 +28,10 @@ export type HomeContent = {
     portraitAlt: string;
     portraitCaption: string;
   };
+  credibility: {
+    label: string;
+    items: [string, string, string, string];
+  };
   decision: {
     eyebrow: string;
     title: string;
@@ -55,7 +59,6 @@ export type HomeContent = {
     title: string;
     intro: string;
     items: MethodItem[];
-    proof: string[];
     cta: string;
   };
   stays: {
@@ -86,6 +89,15 @@ export const HOME_CONTENT: Record<HomeLocale, HomeContent> = {
       secondaryCta: "Explorar opciones",
       portraitAlt: "Jacquie Zárate, Realtor en Miami",
       portraitCaption: "Jacquie Zárate · Realtor en Miami",
+    },
+    credibility: {
+      label: "Experiencia profesional de Jacquie Zárate",
+      items: [
+        "Más de 15 años en Finanzas",
+        "Experiencia en empresas S&P 500",
+        "Real Estate en Miami desde 2023",
+        "Asociada a Miami Life Realty",
+      ],
     },
     decision: {
       eyebrow: "CRITERIO ANTES DE DECIDIR",
@@ -134,7 +146,6 @@ export const HOME_CONTENT: Record<HomeLocale, HomeContent> = {
         { title: "Comparamos escenarios", text: "Ordenamos propiedad, presupuesto, financiación y tiempos para ver qué alternativa encaja mejor." },
         { title: "Coordinamos el siguiente paso", text: "Si decides avanzar, te acompaño en la búsqueda, la oferta y la coordinación del proceso." },
       ],
-      proof: ["Más de 15 años en Finanzas", "Empresas S&P 500", "Real Estate en Miami desde 2023"],
       cta: "Conocer a Jacquie",
     },
     stays: {
@@ -163,6 +174,15 @@ export const HOME_CONTENT: Record<HomeLocale, HomeContent> = {
       secondaryCta: "Explore your options",
       portraitAlt: "Jacquie Zárate, Miami Realtor",
       portraitCaption: "Jacquie Zárate · Miami Realtor",
+    },
+    credibility: {
+      label: "Jacquie Zárate’s professional experience",
+      items: [
+        "More than 15 years in Finance",
+        "Experience at S&P 500 companies",
+        "Miami real estate since 2023",
+        "Affiliated with Miami Life Realty",
+      ],
     },
     decision: {
       eyebrow: "CRITERIA BEFORE A DECISION",
@@ -211,7 +231,6 @@ export const HOME_CONTENT: Record<HomeLocale, HomeContent> = {
         { title: "Compare scenarios", text: "We organize property, budget, financing, and timing to see which option fits best." },
         { title: "Coordinate the next step", text: "If you decide to move forward, I help coordinate the search, offer, and next stages of the process." },
       ],
-      proof: ["15+ years in Finance", "S&P 500 companies", "Miami real estate since 2023"],
       cta: "Meet Jacquie",
     },
     stays: {
@@ -240,6 +259,15 @@ export const HOME_CONTENT: Record<HomeLocale, HomeContent> = {
       secondaryCta: "Explorer les options",
       portraitAlt: "Jacquie Zárate, courtière immobilière à Miami",
       portraitCaption: "Jacquie Zárate · courtière immobilière à Miami",
+    },
+    credibility: {
+      label: "Expérience professionnelle de Jacquie Zárate",
+      items: [
+        "Plus de 15 ans en finances",
+        "Expérience au sein d’entreprises du S&P 500",
+        "Immobilier à Miami depuis 2023",
+        "Affiliée à Miami Life Realty",
+      ],
     },
     decision: {
       eyebrow: "DES CRITÈRES AVANT DE DÉCIDER",
@@ -288,7 +316,6 @@ export const HOME_CONTENT: Record<HomeLocale, HomeContent> = {
         { title: "Comparer les scénarios", text: "Nous organisons la propriété, le budget, le financement et l’échéancier afin de déterminer quelle option convient le mieux." },
         { title: "Coordonner la prochaine étape", text: "Si vous avancez, je vous accompagne dans la recherche, l’offre et la coordination du processus." },
       ],
-      proof: ["Plus de 15 ans en finances", "Entreprises du S&P 500", "Immobilier à Miami depuis 2023"],
       cta: "Découvrir Jacquie",
     },
     stays: {
