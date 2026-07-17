@@ -224,7 +224,7 @@ export default function ProyectosPageClient({
             <ul
               role="list"
               data-project-grid
-              className="mt-9 grid grid-cols-1 gap-x-6 gap-y-10 md:grid-cols-2 md:gap-y-12 xl:grid-cols-3"
+              className="mt-9 grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 md:gap-7 xl:grid-cols-3 xl:gap-x-6 xl:gap-y-8"
             >
               {sorted.map((project, index) => {
                 const visible = index < visibleCount;
@@ -235,7 +235,7 @@ export default function ProyectosPageClient({
                     hidden={!visible}
                     data-project-card
                     data-project-slug={project.slug}
-                    className="min-w-0"
+                    className="h-full min-w-0"
                   >
                     <ProjectCatalogCard
                       project={project}

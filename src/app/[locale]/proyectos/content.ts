@@ -73,9 +73,9 @@ type ProjectsCatalogCopy = {
     from: string;
     inquire: string;
     delivery: string;
+    deliveryFallback: string;
     rental: string;
-    configurations: string;
-    moreConfigurations: (count: number) => string;
+    rentalFallback: string;
     viewProject: string;
   };
   close: {
@@ -157,10 +157,9 @@ export const PROJECTS_CATALOG_COPY: Record<
       from: "Desde",
       inquire: "Precio a consultar",
       delivery: "Entrega",
+      deliveryFallback: "A consultar",
       rental: "Renta",
-      configurations: "Configuraciones",
-      moreConfigurations: (count) =>
-        `y ${count} ${count === 1 ? "configuración más" : "configuraciones más"}`,
+      rentalFallback: "Consultar condiciones",
       viewProject: "Ver proyecto",
     },
     close: {
@@ -239,10 +238,9 @@ export const PROJECTS_CATALOG_COPY: Record<
       from: "From",
       inquire: "Price upon request",
       delivery: "Delivery",
+      deliveryFallback: "To be confirmed",
       rental: "Rental",
-      configurations: "Configurations",
-      moreConfigurations: (count) =>
-        `and ${count} more ${count === 1 ? "configuration" : "configurations"}`,
+      rentalFallback: "Ask about rental terms",
       viewProject: "View project",
     },
     close: {
@@ -321,10 +319,9 @@ export const PROJECTS_CATALOG_COPY: Record<
       from: "À partir de",
       inquire: "Prix sur demande",
       delivery: "Livraison",
+      deliveryFallback: "À confirmer",
       rental: "Location",
-      configurations: "Configurations",
-      moreConfigurations: (count) =>
-        `et ${count} ${count === 1 ? "autre configuration" : "autres configurations"}`,
+      rentalFallback: "Conditions sur demande",
       viewProject: "Voir le projet",
     },
     close: {
