@@ -354,19 +354,21 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             </Link>
           </div>
 
-          <div className="mt-10 grid gap-7 border-t border-primary/15 pt-10 sm:mt-12 sm:pt-12 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-16">
+          <div className="mt-10 grid gap-6 border-t border-primary/15 pt-10 sm:mt-12 sm:gap-8 sm:pt-12 lg:grid-cols-2 lg:items-start lg:gap-12 xl:gap-16">
             <div>
               <p className={EYEBROW}>{content.close.eyebrow}</p>
               <h2 className={`${H2} mt-4 max-w-[15ch]`}>{content.close.title}</h2>
-              <p className={`${BODY} mt-5 max-w-[62ch]`}>{content.close.text}</p>
             </div>
-            <div className="flex flex-col gap-3 sm:flex-row lg:flex-col lg:items-stretch">
-              <a href={whatsAppHref} target="_blank" rel="noopener noreferrer" className={PRIMARY_CTA}>
-                {content.close.primaryCta}
-              </a>
-              <Link href={contactHref} className={SECONDARY_CTA}>
-                {content.close.secondaryCta}
-              </Link>
+            <div className="w-full max-w-[560px] lg:justify-self-end lg:pt-8">
+              <p className={`${BODY} max-w-[52ch]`}>{content.close.text}</p>
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <a href={whatsAppHref} target="_blank" rel="noopener noreferrer" className={PRIMARY_CTA}>
+                  {content.close.primaryCta}
+                </a>
+                <Link href={contactHref} className={SECONDARY_CTA}>
+                  {content.close.secondaryCta}
+                </Link>
+              </div>
             </div>
           </div>
         </div>
