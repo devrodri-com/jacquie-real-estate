@@ -1,10 +1,10 @@
 import Image, { getImageProps } from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { Building2, ChartNoAxesCombined, Handshake, MapPin } from "lucide-react";
 import { LISTINGS } from "@/data/listings";
 import { createPageMetadata, normalizeLocale } from "@/lib/seo";
 import { HOME_CONTENT, type HomeLocale } from "./home-content";
+import styles from "./home-credibility.module.css";
 
 const FULL_BLEED = "relative left-1/2 w-[100dvw] -translate-x-1/2";
 const CONTAINER = "mx-auto w-full max-w-[1180px] px-5 sm:px-8";
@@ -16,7 +16,6 @@ const PRIMARY_CTA =
   "inline-flex min-h-11 items-center justify-center rounded-[6px] bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground no-underline transition hover:-translate-y-0.5 hover:bg-primary/92 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary motion-reduce:transform-none motion-reduce:transition-none";
 const SECONDARY_CTA =
   "inline-flex min-h-11 items-center justify-center rounded-[6px] border border-primary px-6 py-3 text-sm font-semibold text-primary no-underline transition hover:bg-primary/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary motion-reduce:transition-none";
-const CREDIBILITY_ICONS = [ChartNoAxesCombined, Building2, MapPin, Handshake] as const;
 
 function HeroBackgroundImage() {
   const common = {
@@ -175,22 +174,12 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         data-home-credibility
       >
         <div className={CONTAINER}>
-          <ul className="grid grid-cols-2 lg:grid-cols-4">
-            {content.credibility.items.map((item, index) => {
-              const Icon = CREDIBILITY_ICONS[index];
-
-              return (
-                <li
-                  key={item}
-                  className="flex min-h-[96px] items-center gap-3 border-primary/15 px-3 py-4 even:border-l [&:nth-child(n+3)]:border-t sm:min-h-[100px] sm:px-5 lg:min-h-[108px] lg:border-l lg:border-t-0 lg:px-7 lg:py-5 lg:first:border-l-0"
-                >
-                  <Icon aria-hidden className="size-[17px] shrink-0 text-accent stroke-[1.65]" />
-                  <span className="max-w-[24ch] text-[14px] font-medium leading-[1.45] text-primary/82">
-                    {item}
-                  </span>
-                </li>
-              );
-            })}
+          <ul className={styles.list}>
+            {content.credibility.items.map((item) => (
+              <li key={item} className={styles.item}>
+                <span>{item}</span>
+              </li>
+            ))}
           </ul>
         </div>
       </section>
