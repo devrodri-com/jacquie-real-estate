@@ -203,17 +203,17 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
       <section id="formas-de-comprar" aria-labelledby="buying-title" className={`${FULL_BLEED} bg-background pt-14 pb-16 sm:py-20 lg:pt-20 lg:pb-24`}>
         <div className={CONTAINER}>
-          <div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-end lg:gap-16">
+          <div className="grid gap-5 md:grid-cols-2 md:items-start md:gap-x-12 md:gap-y-0">
             <div>
               <p className={EYEBROW}>{content.buying.eyebrow}</p>
-              <h2 id="buying-title" className={`${H2} mt-4 max-w-[14ch]`}>
+              <h2 id="buying-title" className={`${H2} mt-4 max-w-[14.25ch]`}>
                 {content.buying.title}
               </h2>
             </div>
-            <p className={`${BODY} max-w-[62ch] lg:pb-1`}>{content.buying.intro}</p>
+            <p className={`${BODY} max-w-[40ch] md:mt-8`}>{content.buying.intro}</p>
           </div>
 
-          <div className="mt-10 grid gap-12 md:grid-cols-2 md:items-stretch lg:mt-16 lg:gap-x-12">
+          <div className="mt-8 grid gap-12 md:mt-10 md:grid-cols-2 md:items-stretch lg:mt-12 lg:gap-x-12">
             <article className="flex h-full flex-col">
               <div className="relative aspect-[2/1] overflow-hidden rounded-[4px] bg-paper sm:aspect-[16/10]">
                 <Image
