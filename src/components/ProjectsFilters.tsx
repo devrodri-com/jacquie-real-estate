@@ -1,391 +1,273 @@
-// src/components/ProjectsFilters.tsx
 "use client";
-import { useMemo, useEffect, useRef, useState, useCallback } from "react";
+
+import { useId, useMemo, useState } from "react";
+import { CatalogSelect } from "@/app/[locale]/proyectos/CatalogSelect";
+import {
+  PROJECTS_CATALOG_COPY,
+  type ProjectSortValue,
+  type ProjectsCatalogLocale,
+  type RentalFilterValue,
+} from "@/app/[locale]/proyectos/content";
 
 export type Filters = {
   q: string;
-  rental: "all" | "No restr." | "30 días" | "60 días" | "90 días" | "6 meses";
+  rental: RentalFilterValue;
   min?: number;
   max?: number;
-  sort?: "alpha-asc" | "alpha-desc" | "price-asc" | "price-desc";
+  sort: ProjectSortValue;
 };
 
+type ProjectsFiltersProps = {
+  locale: ProjectsCatalogLocale;
+  value: Filters;
+  onChange: (next: Filters) => void;
+  onReset: () => void;
+  isDirty: boolean;
+  invalidRange: boolean;
+};
+
+function parseBudgetInput(input: string): number | undefined {
+  const digits = input.replace(/\D/g, "");
+  if (!digits) return undefined;
+  const value = Number(digits);
+  return value >= 10_000 ? value : value * 1_000;
+}
+
+function budgetInputValue(value?: number): string {
+  return typeof value === "number" ? String(Math.round(value / 1_000)) : "";
+}
+
 export function ProjectsFilters({
-  locale = "es",
+  locale,
   value,
   onChange,
   onReset,
-}: {
-  locale?: "es" | "en" | "fr";
-  value: Filters;
-  onChange: (next: Filters) => void;
-  onReset?: () => void;
-}) {
-  const t = useMemo(() => {
-    const L =
-      locale === "en"
-        ? {
-            title: "Filters",
-            search: "Search by project or area",
-            rental: "Rental flexibility",
-            any: "Any",
-            priceFrom: "Minimum budget",
-            priceTo: "Maximum budget",
-            sort: "Sort by",
-            reset: "Reset",
-            priceHint: "Prices in thousands (500 = 500,000 USD)",
-            placeholderMin: "e.g. 500",
-            placeholderMax: "e.g. 800",
-            sortLabels: {
-              "alpha-asc": "A→Z",
-              "alpha-desc": "Z→A",
-              "price-asc": "Lowest price",
-              "price-desc": "Highest price",
-            } as Record<NonNullable<Filters["sort"]>, string>,
-            rentalLabels: {
-              all: "Any",
-              "No restr.": "No restrictions",
-              "30 días": "30 days",
-              "60 días": "60 days",
-              "90 días": "90 days",
-              "6 meses": "6 months",
-            } as Record<Filters["rental"], string>,
-          }
-        : locale === "fr"
-          ? {
-              title: "Filtres",
-              search: "Rechercher par projet ou secteur",
-              rental: "Flexibilité locative",
-              any: "Toutes",
-              priceFrom: "Budget minimum",
-              priceTo: "Budget maximum",
-              sort: "Trier par",
-              reset: "Réinitialiser",
-              priceHint: "Prix en milliers (500 = 500 000 USD)",
-              placeholderMin: "p. ex. 500",
-              placeholderMax: "p. ex. 800",
-              sortLabels: {
-                "alpha-asc": "A→Z",
-                "alpha-desc": "Z→A",
-                "price-asc": "Prix le plus bas",
-                "price-desc": "Prix le plus élevé",
-              } as Record<NonNullable<Filters["sort"]>, string>,
-              rentalLabels: {
-                all: "Toutes",
-                "No restr.": "Sans restriction",
-                "30 días": "30 jours",
-                "60 días": "60 jours",
-                "90 días": "90 jours",
-                "6 meses": "6 mois",
-              } as Record<Filters["rental"], string>,
-            }
-          : {
-              title: "Filtros",
-              search: "Buscar por proyecto o zona",
-              rental: "Renta permitida",
-              any: "Todas",
-              priceFrom: "Presupuesto mínimo",
-              priceTo: "Presupuesto máximo",
-              sort: "Ordenar por",
-              reset: "Reiniciar",
-              priceHint: "Precios en miles (500 = 500.000 USD)",
-              placeholderMin: "ej. 500",
-              placeholderMax: "ej. 800",
-              sortLabels: {
-                "alpha-asc": "A→Z",
-                "alpha-desc": "Z→A",
-                "price-asc": "Precio más bajo",
-                "price-desc": "Precio más alto",
-              } as Record<NonNullable<Filters["sort"]>, string>,
-              rentalLabels: {
-                all: "Todas",
-                "No restr.": "No restr.",
-                "30 días": "30 días",
-                "60 días": "60 días",
-                "90 días": "90 días",
-                "6 meses": "6 meses",
-              } as Record<Filters["rental"], string>,
-            };
-
-    return {
-      title: L.title,
-      search: L.search,
-      rental: L.rental,
-      any: L.any,
-      priceFrom: L.priceFrom,
-      priceTo: L.priceTo,
-      sort: L.sort,
-      reset: L.reset,
-      priceHint: L.priceHint,
-      placeholderMin: L.placeholderMin,
-      placeholderMax: L.placeholderMax,
-      sortLabel: (v?: Filters["sort"]) => L.sortLabels[v || "alpha-asc"],
-      rentalLabel: (v: Filters["rental"]) => L.rentalLabels[v] ?? String(v),
-    };
-  }, [locale]);
-
-  const rentalOptions: Filters["rental"][] = [
-    "all",
-    "No restr.",
-    "30 días",
-    "60 días",
-    "90 días",
-    "6 meses",
-  ];
-
-  const sortOptions: NonNullable<Filters["sort"]>[] = [
-    "alpha-asc",
-    "alpha-desc",
-    "price-asc",
-    "price-desc",
-  ];
-
+  isDirty,
+  invalidRange,
+}: ProjectsFiltersProps) {
+  const copy = PROJECTS_CATALOG_COPY[locale];
   const [open, setOpen] = useState(false);
-  const btnRef = useRef<HTMLButtonElement>(null);
-  const listRef = useRef<HTMLUListElement>(null);
-  const toggle = useCallback(() => setOpen(v => !v), []);
-  const close = useCallback(() => setOpen(false), []);
+  const panelId = useId();
+  const rangeErrorId = useId();
+  const numberLocale = locale === "en" ? "en-US" : locale === "fr" ? "fr-CA" : "es-ES";
+  const currency = useMemo(
+    () =>
+      new Intl.NumberFormat(numberLocale, {
+        style: "currency",
+        currency: "USD",
+        maximumFractionDigits: 0,
+      }),
+    [numberLocale]
+  );
 
-  const [openSort, setOpenSort] = useState(false);
-  const btnSortRef = useRef<HTMLButtonElement>(null);
-  const listSortRef = useRef<HTMLUListElement>(null);
-  const toggleSort = useCallback(() => setOpenSort((v) => !v), []);
-  const closeSort = useCallback(() => setOpenSort(false), []);
+  const rentalOptions = useMemo(
+    () =>
+      (Object.keys(copy.filters.rentalOptions) as RentalFilterValue[]).map(
+        (option) => ({
+          value: option,
+          label: copy.filters.rentalOptions[option],
+        })
+      ),
+    [copy]
+  );
 
-  // close on outside click
-  useEffect(() => {
-    if (!open) return;
-    const onDoc = (e: MouseEvent) => {
-      if (!listRef.current || !btnRef.current) return;
-      if (!listRef.current.contains(e.target as Node) && !btnRef.current.contains(e.target as Node)) close();
-    };
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key !== "Escape") return;
-      close();
-      btnRef.current?.focus();
-    };
-    document.addEventListener("mousedown", onDoc);
-    document.addEventListener("keydown", onKey);
-    return () => { document.removeEventListener("mousedown", onDoc); document.removeEventListener("keydown", onKey); };
-  }, [open, close]);
-
-  // close rental dropdown when value changes
-  useEffect(() => {
-    setOpen(false);
-  }, [value.rental]);
-
-  useEffect(() => {
-    if (!openSort) return;
-    const onDoc = (e: MouseEvent) => {
-      if (!listSortRef.current || !btnSortRef.current) return;
-      if (!listSortRef.current.contains(e.target as Node) && !btnSortRef.current.contains(e.target as Node)) closeSort();
-    };
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key !== "Escape") return;
-      closeSort();
-      btnSortRef.current?.focus();
-    };
-    document.addEventListener("mousedown", onDoc);
-    document.addEventListener("keydown", onKey);
-    return () => { document.removeEventListener("mousedown", onDoc); document.removeEventListener("keydown", onKey); };
-  }, [openSort, closeSort]);
-
-  // close sort dropdown when value changes
-  useEffect(() => {
-    setOpenSort(false);
-  }, [value.sort]);
+  const activeFilters = [
+    value.q.trim()
+      ? {
+          key: "q",
+          label: `${copy.filters.searchLabel}: ${value.q.trim()}`,
+          clear: () => onChange({ ...value, q: "" }),
+        }
+      : null,
+    value.rental !== "all"
+      ? {
+          key: "rental",
+          label: copy.filters.rentalOptions[value.rental],
+          clear: () => onChange({ ...value, rental: "all" }),
+        }
+      : null,
+    typeof value.min === "number"
+      ? {
+          key: "min",
+          label: `≥ ${currency.format(value.min)}`,
+          clear: () => onChange({ ...value, min: undefined }),
+        }
+      : null,
+    typeof value.max === "number"
+      ? {
+          key: "max",
+          label: `≤ ${currency.format(value.max)}`,
+          clear: () => onChange({ ...value, max: undefined }),
+        }
+      : null,
+  ].filter((item): item is NonNullable<typeof item> => item !== null);
 
   return (
-    <aside aria-label={t.title} className="relative mx-auto max-w-[1100px] rounded-[12px] bg-paper p-4 text-primary ring-1 ring-primary/10 shadow-sm sm:p-4 sm:ring-primary/5 sm:shadow-none">
-      <div className="mb-2 h-[2px] w-full rounded-full bg-gradient-to-r from-transparent via-accent/35 to-transparent sm:via-accent/20" />
-      <div className="flex items-center justify-between">
-        <p className="text-[13px] font-semibold text-primary">{t.title}</p>
-        {onReset ? (
+    <section
+      aria-labelledby="catalog-controls-title"
+      className="border-y border-primary/12 bg-paper"
+    >
+      <div className="flex min-h-16 items-center justify-between gap-4 py-3">
+        <div className="min-w-0">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/72">
+            {copy.filters.activeCount(activeFilters.length)}
+          </p>
+          <h2
+            id="catalog-controls-title"
+            className="mt-1 font-display text-[24px] font-medium leading-none text-primary"
+          >
+            {copy.filters.title}
+          </h2>
+        </div>
+        <button
+          type="button"
+          aria-controls={panelId}
+          aria-expanded={open}
+          aria-label={open ? copy.filters.hideAria : copy.filters.showAria}
+          onClick={() => setOpen((current) => !current)}
+          className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 border border-primary/25 px-4 text-sm font-semibold text-primary outline-none transition-colors hover:bg-surface focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 md:hidden"
+        >
+          {copy.filters.button}
+          {activeFilters.length > 0 ? (
+            <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1.5 text-[11px] text-primary-foreground">
+              {activeFilters.length}
+            </span>
+          ) : null}
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            className={`h-4 w-4 transition-transform motion-reduce:transition-none ${open ? "rotate-180" : ""}`}
+          >
+            <path
+              fillRule="evenodd"
+              d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08Z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <div
+        id={panelId}
+        className={`${open ? "grid" : "hidden"} gap-6 border-t border-primary/10 py-6 md:grid md:grid-cols-2 xl:grid-cols-[minmax(260px,1.3fr)_minmax(190px,.8fr)_minmax(320px,1fr)] xl:items-start`}
+      >
+        <label className="block min-w-0">
+          <span className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.14em] text-primary/68">
+            {copy.filters.searchLabel}
+          </span>
+          <span className="relative block">
+            <input
+              type="search"
+              value={value.q}
+              placeholder={copy.filters.searchPlaceholder}
+              onChange={(event) => onChange({ ...value, q: event.target.value })}
+              className="min-h-11 w-full border-b border-primary/25 bg-transparent py-2 pr-9 text-[15px] text-foreground outline-none transition-colors placeholder:text-foreground/68 hover:border-primary focus:border-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            />
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              className="pointer-events-none absolute right-1 top-1/2 h-4 w-4 -translate-y-1/2 text-primary/55"
+            >
+              <path
+                fillRule="evenodd"
+                d="M9 3a6 6 0 1 0 3.745 10.69l3.782 3.783a.75.75 0 1 0 1.06-1.06l-3.781-3.782A6 6 0 0 0 9 3Zm-4.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0Z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </span>
+        </label>
+
+        <CatalogSelect
+          label={copy.filters.rentalLabel}
+          value={value.rental}
+          options={rentalOptions}
+          onChange={(rental) => onChange({ ...value, rental })}
+        />
+
+        <fieldset className="min-w-0 md:col-span-2 xl:col-span-1">
+          <legend className="sr-only">{copy.filters.priceHint}</legend>
+          <div className="grid grid-cols-2 gap-4">
+            <label className="block min-w-0">
+              <span className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.14em] text-primary/68">
+                {copy.filters.minBudget}
+              </span>
+              <input
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9 ]*"
+                value={budgetInputValue(value.min)}
+                placeholder={copy.filters.minPlaceholder}
+                aria-invalid={invalidRange}
+                aria-describedby={invalidRange ? rangeErrorId : undefined}
+                onChange={(event) =>
+                  onChange({ ...value, min: parseBudgetInput(event.target.value) })
+                }
+                className="min-h-11 w-full min-w-0 border-b border-primary/25 bg-transparent py-2 text-[15px] text-foreground outline-none transition-colors placeholder:text-foreground/68 hover:border-primary focus:border-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              />
+            </label>
+            <label className="block min-w-0">
+              <span className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.14em] text-primary/68">
+                {copy.filters.maxBudget}
+              </span>
+              <input
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9 ]*"
+                value={budgetInputValue(value.max)}
+                placeholder={copy.filters.maxPlaceholder}
+                aria-invalid={invalidRange}
+                aria-describedby={invalidRange ? rangeErrorId : undefined}
+                onChange={(event) =>
+                  onChange({ ...value, max: parseBudgetInput(event.target.value) })
+                }
+                className="min-h-11 w-full min-w-0 border-b border-primary/25 bg-transparent py-2 text-[15px] text-foreground outline-none transition-colors placeholder:text-foreground/68 hover:border-primary focus:border-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              />
+            </label>
+          </div>
+          <p className="mt-2 text-[11px] leading-5 text-foreground/72">
+            {copy.filters.priceHint}
+          </p>
+          {invalidRange ? (
+            <p id={rangeErrorId} role="alert" className="mt-1 text-[12px] font-medium text-red-700">
+              {copy.filters.rangeError}
+            </p>
+          ) : null}
+        </fieldset>
+      </div>
+
+      {activeFilters.length > 0 || isDirty ? (
+        <div className="flex flex-wrap items-center gap-2 border-t border-primary/10 py-3">
+          {activeFilters.length > 0 ? (
+            <p className="mr-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-primary/72">
+              {copy.filters.activeLabel}
+            </p>
+          ) : null}
+          {activeFilters.map((filter) => (
+            <button
+              key={filter.key}
+              type="button"
+              onClick={filter.clear}
+              aria-label={copy.filters.removeFilterAria(filter.label)}
+              className="inline-flex min-h-11 max-w-full items-center gap-2 rounded-full border border-primary/18 bg-surface px-3 text-left text-[12px] font-medium leading-4 text-primary outline-none transition-colors hover:border-primary/45 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            >
+              <span className="min-w-0 break-words">{filter.label}</span>
+              <span aria-hidden="true" className="text-base leading-none">
+                ×
+              </span>
+            </button>
+          ))}
           <button
             type="button"
             onClick={onReset}
-            className="inline-flex h-8 items-center justify-center rounded-md border border-primary/20 bg-transparent px-2 text-[12px] text-primary hover:bg-surface focus-visible:ring-2 focus-visible:ring-accent/40"
+            className="inline-flex min-h-11 items-center px-2 text-[12px] font-semibold text-primary underline decoration-primary/30 underline-offset-4 outline-none hover:decoration-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
           >
-            {t.reset}
+            {copy.filters.reset}
           </button>
-        ) : null}
-      </div>
-      {/* Search */}
-      <label className="block text-[12px] font-medium text-primary/78">
-        {t.search}
-        <div className="relative mt-1">
-          <input
-            type="text"
-            value={value.q}
-            onChange={(e) => onChange({ ...value, q: e.target.value })}
-            placeholder={t.search}
-            className="block w-full rounded-md border border-primary/15 bg-white px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none transition focus:ring-2 focus:ring-accent/40"
-          />
-          <svg
-            aria-hidden
-            className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground"
-            viewBox="0 0 20 20" fill="currentColor"
-          >
-            <path fillRule="evenodd" d="M12.9 14.32a8 8 0 111.414-1.414l3.387 3.387a1 1 0 01-1.414 1.414l-3.387-3.387zM14 8a6 6 0 11-12 0 6 6 0 0112 0z" clipRule="evenodd" />
-          </svg>
         </div>
-      </label>
-
-      {/* Rental policy */}
-      <label className="mt-3 block text-[12px] font-medium text-primary/78">
-        {t.rental}
-        <div className="relative mt-1">
-          <button
-            ref={btnRef}
-            type="button"
-            onClick={toggle}
-            aria-haspopup="listbox"
-            aria-expanded={open}
-            aria-controls="rental-policy-listbox"
-            className="flex w-full items-center justify-between rounded-md border border-primary/15 bg-white px-3 py-2 text-left text-sm text-foreground outline-none transition focus:ring-2 focus:ring-accent/40"
-          >
-            <span>{t.rentalLabel(value.rental)}</span>
-            <svg className={`h-4 w-4 text-muted-foreground transition-transform ${open ? "rotate-180" : ""}`} viewBox="0 0 20 20" fill="currentColor" aria-hidden>
-              <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd" />
-            </svg>
-          </button>
-
-          {open && (
-            <ul
-              ref={listRef}
-              id="rental-policy-listbox"
-              role="listbox"
-              className="absolute z-20 bottom-full mb-2 max-h-56 w-full overflow-auto rounded-md border border-primary/10 bg-white text-foreground py-1 text-sm shadow-lg focus:outline-none sm:bottom-auto sm:top-full sm:mt-2 sm:mb-0 hover:ring-accent/30 transition"
-            >
-              {rentalOptions.map((opt) => (
-                <li key={opt} role="none">
-                  <button
-                    type="button"
-                    role="option"
-                    aria-selected={value.rental === opt}
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      onChange({ ...value, rental: opt });
-                      close();
-                      btnRef.current?.focus();
-                    }}
-                    className={`relative w-full cursor-pointer px-3 py-2 text-left hover:bg-muted ${value.rental === opt ? "bg-muted" : ""}`}
-                  >
-                    {value.rental === opt && (
-                      <span className="absolute left-0 top-0 h-full w-[3px] rounded-full bg-gradient-to-b from-accent/50 to-accent/10" aria-hidden />
-                    )}
-                    {t.rentalLabel(opt)}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      </label>
-
-      {/* Sort by */}
-      <label className="mt-3 block text-[12px] font-medium text-primary/78">
-        {t.sort}
-        <div className="relative mt-1">
-          <button
-            ref={btnSortRef}
-            type="button"
-            onClick={toggleSort}
-            aria-haspopup="listbox"
-            aria-expanded={openSort}
-            aria-controls="project-sort-listbox"
-            className="flex w-full items-center justify-between rounded-md border border-primary/15 bg-white px-3 py-2 text-left text-sm text-foreground outline-none transition focus:ring-2 focus:ring-accent/40"
-          >
-            <span>{t.sortLabel(value.sort)}</span>
-            <svg className={`h-4 w-4 text-muted-foreground transition-transform ${openSort ? "rotate-180" : ""}`} viewBox="0 0 20 20" fill="currentColor" aria-hidden>
-              <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd" />
-            </svg>
-          </button>
-
-          {openSort && (
-            <ul
-              ref={listSortRef}
-              id="project-sort-listbox"
-              role="listbox"
-              className="absolute z-20 bottom-full mb-2 max-h-56 w-full overflow-auto rounded-md border border-primary/10 bg-white text-foreground py-1 text-sm shadow-lg focus:outline-none sm:bottom-auto sm:top-full sm:mt-2 sm:mb-0 hover:ring-accent/30 transition"
-            >
-              {sortOptions.map((opt) => (
-                <li key={opt} role="none">
-                  <button
-                    type="button"
-                    role="option"
-                    aria-selected={value.sort === opt}
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      onChange({ ...value, sort: opt });
-                      closeSort();
-                      btnSortRef.current?.focus();
-                    }}
-                    className={`relative w-full cursor-pointer px-3 py-2 text-left hover:bg-muted ${value.sort === opt ? "bg-muted" : ""}`}
-                  >
-                    {value.sort === opt && (
-                      <span className="absolute left-0 top-0 h-full w-[3px] rounded-full bg-gradient-to-b from-accent/50 to-accent/10" aria-hidden />
-                    )}
-                    {t.sortLabel(opt)}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      </label>
-
-      {/* Price range */}
-      <div className="mt-3 grid grid-cols-2 gap-2">
-        <label className="block text-[12px] font-medium text-primary/78">
-          {t.priceFrom}
-          <div className="relative mt-1">
-            <input
-              type="text"
-              inputMode="numeric"
-              pattern="[0-9]*"
-              placeholder={t.placeholderMin}
-              value={typeof value.min === "number" ? String(Math.floor(value.min / 1000)) : ""}
-              onChange={(e) => {
-                const raw = e.target.value.replace(/\D/g, "");
-                onChange({ ...value, min: raw ? Number(raw) * 1000 : undefined });
-              }}
-              className="block w-full rounded-md border border-primary/15 bg-white px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none transition focus:ring-2 focus:ring-accent/40"
-            />
-          </div>
-        </label>
-        <label className="block text-[12px] font-medium text-primary/78">
-          {t.priceTo}
-          <div className="relative mt-1">
-            <input
-              type="text"
-              inputMode="numeric"
-              pattern="[0-9]*"
-              placeholder={t.placeholderMax}
-              value={typeof value.max === "number" ? String(Math.floor(value.max / 1000)) : ""}
-              onChange={(e) => {
-                const raw = e.target.value.replace(/\D/g, "");
-                onChange({ ...value, max: raw ? Number(raw) * 1000 : undefined });
-              }}
-              className="block w-full rounded-md border border-primary/15 bg-white px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none transition focus:ring-2 focus:ring-accent/40"
-            />
-          </div>
-        </label>
-      </div>
-      <p className="mt-2 text-[11px] text-foreground/70">
-        {t.priceHint}
-      </p>
-
-      {/* Reset */}
-      <div className="mt-3 flex gap-2">
-        <button
-          type="button"
-          onClick={() => onChange({ ...value })}
-          className="hidden"
-          aria-hidden
-        />
-      </div>
-    </aside>
+      ) : null}
+    </section>
   );
 }
 
