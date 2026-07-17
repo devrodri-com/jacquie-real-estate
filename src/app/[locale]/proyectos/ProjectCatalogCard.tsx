@@ -31,7 +31,7 @@ export function ProjectCatalogCard({
       : undefined;
 
   return (
-    <article className="h-full min-w-0 overflow-hidden rounded-[12px] border border-primary/12 bg-paper transition-colors duration-300 hover:border-primary/30 focus-within:border-primary/35">
+    <article className="h-full min-w-0 overflow-hidden rounded-[12px] border border-primary/18 bg-paper shadow-[0_10px_28px_rgba(59,39,74,0.045)] transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-px hover:border-primary/32 hover:shadow-[0_14px_32px_rgba(59,39,74,0.07)] focus-within:border-primary/35 motion-reduce:transform-none">
       <Link
         href={`/${locale}${project.slug}`}
         prefetch={false}
@@ -58,11 +58,11 @@ export function ProjectCatalogCard({
           <p className="min-w-0 break-words text-[12px] font-semibold uppercase tracking-[0.12em] text-primary/72">
             {project.city}
           </p>
-          <h3 className="mt-2 min-w-0 break-words font-display text-[27px] font-medium leading-[1.04] text-primary sm:text-[29px]">
+          <h3 className="mt-2 min-w-0 break-words font-display text-[27px] font-medium leading-[1.04] text-primary sm:text-[29px] md:min-h-[2.08em]">
             {project.name}
           </h3>
 
-          <p className="mt-4 text-[17px] font-semibold leading-6 text-primary">
+          <p className="mt-4 text-[17px] font-semibold leading-6 text-primary md:min-h-6">
             {price ? `${copy.from} ${price}` : copy.inquire}
           </p>
 

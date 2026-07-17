@@ -62,8 +62,8 @@ type ProjectsCatalogCopy = {
     reset: string;
   };
   results: {
-    label: string;
-    count: (count: number) => string;
+    title: string;
+    summary: (total: number, visible: number) => string;
     showing: (visible: number, total: number) => string;
     emptyTitle: string;
     emptyBody: string;
@@ -107,8 +107,8 @@ export const PROJECTS_CATALOG_COPY: Record<
         "Ubicación · Precio inicial · Entrega · Renta · Tipologías",
     },
     filters: {
-      title: "Filtrar proyectos",
-      button: "Filtros",
+      title: "Buscar y filtrar proyectos",
+      button: "Filtrar proyectos",
       showAria: "Mostrar filtros",
       hideAria: "Ocultar filtros",
       searchLabel: "Proyecto o zona",
@@ -144,8 +144,9 @@ export const PROJECTS_CATALOG_COPY: Record<
       reset: "Limpiar filtros",
     },
     results: {
-      label: "Resultados",
-      count: (count) => `${count} ${count === 1 ? "proyecto" : "proyectos"}`,
+      title: "Proyectos disponibles",
+      summary: (total, visible) =>
+        `${total} ${total === 1 ? "resultado" : "resultados"} · Mostrando ${visible}`,
       showing: (visible, total) =>
         `Mostrando ${visible} de ${total} ${total === 1 ? "proyecto" : "proyectos"}`,
       emptyTitle: "No encontramos proyectos con esos filtros.",
@@ -188,8 +189,8 @@ export const PROJECTS_CATALOG_COPY: Record<
         "Location · Starting price · Delivery · Rental · Residence type",
     },
     filters: {
-      title: "Filter projects",
-      button: "Filters",
+      title: "Search and filter projects",
+      button: "Filter projects",
       showAria: "Show filters",
       hideAria: "Hide filters",
       searchLabel: "Project or area",
@@ -225,8 +226,9 @@ export const PROJECTS_CATALOG_COPY: Record<
       reset: "Clear filters",
     },
     results: {
-      label: "Results",
-      count: (count) => `${count} ${count === 1 ? "project" : "projects"}`,
+      title: "Available projects",
+      summary: (total, visible) =>
+        `${total} ${total === 1 ? "result" : "results"} · Showing ${visible}`,
       showing: (visible, total) =>
         `Showing ${visible} of ${total} ${total === 1 ? "project" : "projects"}`,
       emptyTitle: "No projects match those filters.",
@@ -269,8 +271,8 @@ export const PROJECTS_CATALOG_COPY: Record<
         "Emplacement · Prix de départ · Livraison · Location · Type de résidence",
     },
     filters: {
-      title: "Filtrer les projets",
-      button: "Filtres",
+      title: "Rechercher et filtrer les projets",
+      button: "Filtrer les projets",
       showAria: "Afficher les filtres",
       hideAria: "Masquer les filtres",
       searchLabel: "Projet ou secteur",
@@ -306,8 +308,9 @@ export const PROJECTS_CATALOG_COPY: Record<
       reset: "Effacer les filtres",
     },
     results: {
-      label: "Résultats",
-      count: (count) => `${count} ${count === 1 ? "projet" : "projets"}`,
+      title: "Projets disponibles",
+      summary: (total, visible) =>
+        `${total} ${total === 1 ? "résultat" : "résultats"} · ${visible} ${visible === 1 ? "affiché" : "affichés"}`,
       showing: (visible, total) =>
         `Affichage de ${visible} ${visible === 1 ? "projet" : "projets"} sur ${total}`,
       emptyTitle: "Aucun projet ne correspond à ces filtres.",

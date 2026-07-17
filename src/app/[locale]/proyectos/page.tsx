@@ -136,34 +136,22 @@ export default async function ProyectosPage({
         aria-labelledby="projects-catalog-title"
         className="border-b border-primary/12 bg-surface"
       >
-        <div className="mx-auto grid w-full max-w-[1280px] px-5 py-12 sm:px-8 sm:py-16 lg:grid-cols-[210px_minmax(0,1fr)] lg:gap-14 lg:py-20">
-          <aside className="order-2 mt-8 border-t border-primary/15 pt-6 lg:order-1 lg:mt-0 lg:border-r lg:border-t-0 lg:pr-10 lg:pt-0">
-            <p className="hidden text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/72 lg:block">
-              {copy.header.eyebrow}
-            </p>
-            <p className="mt-0 text-[10px] font-semibold uppercase tracking-[0.16em] text-primary/72 lg:mt-7">
-              {copy.header.availabilityLabel}
-            </p>
-            <p className="mt-2 max-w-[28ch] text-[13px] leading-6 text-foreground/74">
-              {copy.header.availabilityValue}
-            </p>
-          </aside>
-
+        <div className="mx-auto grid w-full max-w-[1280px] px-5 py-6 sm:px-8 sm:py-12 lg:grid-cols-[190px_minmax(0,1fr)] lg:gap-10 lg:py-14">
           <div className="order-1 min-w-0 lg:order-2">
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/72 lg:hidden">
               {copy.header.eyebrow}
             </p>
             <h1
               id="projects-catalog-title"
-              className="mt-3 max-w-[14ch] font-display text-[48px] font-medium leading-[0.96] tracking-[-0.02em] text-primary sm:text-[62px] lg:mt-0 lg:text-[76px]"
+              className="mt-2 max-w-[14ch] font-display text-[40px] font-medium leading-[0.98] tracking-[-0.02em] text-primary sm:mt-3 sm:text-[52px] lg:mt-0 lg:text-[64px]"
             >
               {copy.header.title}
             </h1>
-            <p className="mt-6 max-w-[62ch] text-[16px] leading-[1.75] text-foreground/76 sm:text-[17px]">
+            <p className="mt-3 max-w-[62ch] text-[15px] leading-[1.65] text-foreground/76 sm:mt-5 sm:text-[17px] sm:leading-[1.75]">
               {copy.header.intro}
             </p>
 
-            <dl className="mt-8 grid gap-5 border-t border-primary/15 pt-5 sm:grid-cols-2 sm:gap-8">
+            <dl className="mt-4 grid gap-3 border-t border-primary/15 pt-3 sm:mt-6 sm:grid-cols-2 sm:gap-7 sm:pt-4">
               <div>
                 <dt className="text-[10px] font-semibold uppercase tracking-[0.16em] text-primary/72">
                   {copy.header.scopeLabel}
@@ -182,6 +170,18 @@ export default async function ProyectosPage({
               </div>
             </dl>
           </div>
+
+          <aside className="order-2 mt-4 border-t border-primary/15 pt-3 sm:mt-6 sm:pt-4 lg:order-1 lg:mt-0 lg:border-r lg:border-t-0 lg:pr-8 lg:pt-0">
+            <p className="hidden text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/72 lg:block">
+              {copy.header.eyebrow}
+            </p>
+            <p className="mt-0 text-[10px] font-semibold uppercase tracking-[0.16em] text-primary/72 lg:mt-5">
+              {copy.header.availabilityLabel}
+            </p>
+            <p className="mt-2 max-w-[28ch] text-[13px] leading-[1.7] text-foreground/74 sm:leading-6">
+              {copy.header.availabilityValue}
+            </p>
+          </aside>
         </div>
       </section>
 

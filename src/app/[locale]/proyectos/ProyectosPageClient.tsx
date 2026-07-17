@@ -155,7 +155,7 @@ export default function ProyectosPageClient({
   };
 
   return (
-    <div className="mx-auto w-full max-w-[1180px] px-5 py-10 sm:px-8 sm:py-12 lg:py-14">
+    <div className="mx-auto w-full max-w-[1180px] px-5 pb-10 pt-6 sm:px-8 sm:pb-12 sm:pt-8 lg:pb-14 lg:pt-9">
       <ProjectsFilters
         locale={locale}
         value={filters}
@@ -167,29 +167,29 @@ export default function ProyectosPageClient({
 
       <section
         aria-labelledby="catalog-results-title"
-        className="pt-9 sm:pt-11"
+        className="-mx-5 mt-8 border-y border-primary/10 bg-surface px-5 pb-10 pt-6 sm:-mx-8 sm:mt-9 sm:px-8 sm:pb-12 sm:pt-7"
       >
-        <div className="grid gap-5 border-b border-primary/12 pb-5 sm:grid-cols-[minmax(0,1fr)_230px] sm:items-end">
+        <div
+          data-results-header
+          className="grid gap-4 border-b border-primary/12 pb-5 sm:grid-cols-[minmax(0,1fr)_230px] sm:items-end"
+        >
           <div className="min-w-0">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/72">
-              {copy.results.label}
-            </p>
             <h2
               id="catalog-results-title"
-              data-results-count
-              className="mt-1 font-display text-[34px] font-medium leading-none text-primary sm:text-[40px]"
+              className="font-display text-[30px] font-medium leading-[1.05] text-primary sm:text-[34px]"
             >
-              {copy.results.count(total)}
+              {copy.results.title}
             </h2>
             <p
+              data-results-count
               role="status"
               aria-live="polite"
               aria-atomic="true"
-              className="mt-2 text-[13px] text-foreground/68"
+              className="mt-2 text-[14px] text-foreground/68"
             >
               {invalidRange
                 ? copy.filters.rangeError
-                : copy.results.showing(visibleTotal, total)}
+                : copy.results.summary(total, visibleTotal)}
             </p>
           </div>
           <CatalogSelect
@@ -224,7 +224,7 @@ export default function ProyectosPageClient({
             <ul
               role="list"
               data-project-grid
-              className="mt-9 grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 md:gap-7 xl:grid-cols-3 xl:gap-x-6 xl:gap-y-8"
+              className="mt-7 grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 md:gap-7 xl:grid-cols-3 xl:gap-x-6 xl:gap-y-8"
             >
               {sorted.map((project, index) => {
                 const visible = index < visibleCount;

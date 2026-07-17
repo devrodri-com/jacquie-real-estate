@@ -109,54 +109,80 @@ export function ProjectsFilters({
   return (
     <section
       aria-labelledby="catalog-controls-title"
-      className="border-y border-primary/12 bg-paper"
+      className="relative z-20 rounded-[14px] border border-primary/15 bg-paper px-4 shadow-[0_10px_30px_rgba(43,37,48,0.055)] sm:px-6"
     >
-      <div className="flex min-h-16 items-center justify-between gap-4 py-3">
-        <div className="min-w-0">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/72">
-            {copy.filters.activeCount(activeFilters.length)}
-          </p>
-          <h2
-            ref={controlsTitleRef}
-            id="catalog-controls-title"
-            tabIndex={-1}
-            className="mt-1 font-display text-[24px] font-medium leading-none text-primary"
-          >
-            {copy.filters.title}
-          </h2>
-        </div>
-        <button
-          type="button"
-          aria-controls={panelId}
-          aria-expanded={open}
-          aria-label={open ? copy.filters.hideAria : copy.filters.showAria}
-          onClick={() => setOpen((current) => !current)}
-          className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 border border-primary/25 px-4 text-sm font-semibold text-primary outline-none transition-colors hover:bg-surface focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 md:hidden"
-        >
-          {copy.filters.button}
-          {activeFilters.length > 0 ? (
-            <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1.5 text-[11px] text-primary-foreground">
-              {activeFilters.length}
-            </span>
-          ) : null}
+      <div className="flex flex-col gap-3 py-4 md:min-h-[76px] md:flex-row md:items-center md:justify-between md:gap-5">
+        <div className="flex min-w-0 items-start gap-3">
           <svg
             aria-hidden="true"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            className={`h-4 w-4 transition-transform motion-reduce:transition-none ${open ? "rotate-180" : ""}`}
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.7"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="mt-0.5 h-5 w-5 shrink-0 text-primary/70"
           >
-            <path
-              fillRule="evenodd"
-              d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08Z"
-              clipRule="evenodd"
-            />
+            <path d="M3 5h18l-7 8v5l-4 2v-7L3 5Z" />
           </svg>
-        </button>
+          <div className="min-w-0">
+            <h2
+              ref={controlsTitleRef}
+              id="catalog-controls-title"
+              tabIndex={-1}
+              className="font-display text-[22px] font-medium leading-[1.08] text-primary sm:text-[24px]"
+            >
+              {copy.filters.title}
+            </h2>
+            <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-primary/68">
+              {copy.filters.activeCount(activeFilters.length)}
+            </p>
+          </div>
+        </div>
+
+        <div className="flex w-full items-center gap-2 md:w-auto md:justify-end">
+          {isDirty ? (
+            <button
+              type="button"
+              onClick={onReset}
+              className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-[8px] border border-primary/18 bg-paper px-3 text-[12px] font-semibold text-primary underline decoration-primary/25 underline-offset-4 outline-none transition-colors hover:border-primary/40 hover:decoration-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            >
+              {copy.filters.reset}
+            </button>
+          ) : null}
+          <button
+            type="button"
+            aria-controls={panelId}
+            aria-expanded={open}
+            aria-label={open ? copy.filters.hideAria : copy.filters.showAria}
+            onClick={() => setOpen((current) => !current)}
+            className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-[8px] border border-primary/55 bg-surface px-4 text-sm font-semibold text-primary outline-none transition-colors hover:border-primary/70 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 md:hidden"
+          >
+            {copy.filters.button}
+            {activeFilters.length > 0 ? (
+              <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1.5 text-[11px] text-primary-foreground">
+                {activeFilters.length}
+              </span>
+            ) : null}
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              className={`h-4 w-4 transition-transform motion-reduce:transition-none ${open ? "rotate-180" : ""}`}
+            >
+              <path
+                fillRule="evenodd"
+                d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08Z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
 
       <div
         id={panelId}
-        className={`${open ? "grid" : "hidden"} gap-6 border-t border-primary/10 py-6 md:grid md:grid-cols-2 xl:grid-cols-[minmax(260px,1.3fr)_minmax(190px,.8fr)_minmax(320px,1fr)] xl:items-start`}
+        className={`${open ? "grid" : "hidden"} gap-5 border-t border-primary/10 py-5 md:grid md:grid-cols-2 xl:grid-cols-[minmax(280px,1.35fr)_minmax(210px,.85fr)_minmax(360px,1fr)] xl:items-start`}
       >
         <label className="block min-w-0">
           <span className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.14em] text-primary/68">
@@ -168,13 +194,13 @@ export function ProjectsFilters({
               value={value.q}
               placeholder={copy.filters.searchPlaceholder}
               onChange={(event) => onChange({ ...value, q: event.target.value })}
-              className="min-h-11 w-full border-b border-primary/25 bg-transparent py-2 pr-9 text-[15px] text-foreground outline-none transition-colors placeholder:text-foreground/68 hover:border-primary focus:border-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              className="min-h-11 w-full rounded-[8px] border border-primary/55 bg-surface py-2 pl-3 pr-10 text-[15px] text-foreground outline-none transition-colors placeholder:text-foreground/68 hover:border-primary/70 focus:border-primary/75 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             />
             <svg
               aria-hidden="true"
               viewBox="0 0 20 20"
               fill="currentColor"
-              className="pointer-events-none absolute right-1 top-1/2 h-4 w-4 -translate-y-1/2 text-primary/55"
+              className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-primary/55"
             >
               <path
                 fillRule="evenodd"
@@ -210,7 +236,7 @@ export function ProjectsFilters({
                 onChange={(event) =>
                   onChange({ ...value, min: parseBudgetInput(event.target.value) })
                 }
-                className="min-h-11 w-full min-w-0 border-b border-primary/25 bg-transparent py-2 text-[15px] text-foreground outline-none transition-colors placeholder:text-foreground/68 hover:border-primary focus:border-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                className="min-h-11 w-full min-w-0 rounded-[8px] border border-primary/55 bg-surface px-3 py-2 text-[15px] text-foreground outline-none transition-colors placeholder:text-foreground/68 hover:border-primary/70 focus:border-primary/75 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 aria-invalid:border-red-700"
               />
             </label>
             <label className="block min-w-0">
@@ -228,7 +254,7 @@ export function ProjectsFilters({
                 onChange={(event) =>
                   onChange({ ...value, max: parseBudgetInput(event.target.value) })
                 }
-                className="min-h-11 w-full min-w-0 border-b border-primary/25 bg-transparent py-2 text-[15px] text-foreground outline-none transition-colors placeholder:text-foreground/68 hover:border-primary focus:border-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                className="min-h-11 w-full min-w-0 rounded-[8px] border border-primary/55 bg-surface px-3 py-2 text-[15px] text-foreground outline-none transition-colors placeholder:text-foreground/68 hover:border-primary/70 focus:border-primary/75 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 aria-invalid:border-red-700"
               />
             </label>
           </div>
@@ -243,7 +269,7 @@ export function ProjectsFilters({
         </fieldset>
       </div>
 
-      {activeFilters.length > 0 || isDirty ? (
+      {activeFilters.length > 0 ? (
         <div className="flex flex-wrap items-center gap-2 border-t border-primary/10 py-3">
           {activeFilters.length > 0 ? (
             <p className="mr-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-primary/72">
@@ -267,13 +293,6 @@ export function ProjectsFilters({
               </span>
             </button>
           ))}
-          <button
-            type="button"
-            onClick={onReset}
-            className="inline-flex min-h-11 items-center px-2 text-[12px] font-semibold text-primary underline decoration-primary/30 underline-offset-4 outline-none hover:decoration-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-          >
-            {copy.filters.reset}
-          </button>
         </div>
       ) : null}
     </section>
