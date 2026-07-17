@@ -29,6 +29,8 @@ export function ProjectCatalogCard({
           maximumFractionDigits: 0,
         }).format(project.priceFromUsd)
       : undefined;
+  const delivery = project.delivery || copy.deliveryFallback;
+  const rental = project.rentalPolicy || copy.rentalFallback;
 
   return (
     <article className="h-full min-w-0 overflow-hidden rounded-[12px] border border-primary/18 bg-paper shadow-[0_10px_28px_rgba(59,39,74,0.045)] transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-px hover:border-primary/32 hover:shadow-[0_14px_32px_rgba(59,39,74,0.07)] focus-within:border-primary/35 motion-reduce:transform-none">
@@ -55,39 +57,63 @@ export function ProjectCatalogCard({
         </div>
 
         <div className="flex flex-1 flex-col px-5 pb-5 pt-5 sm:px-6 sm:pb-6">
-          <p className="min-w-0 break-words text-[12px] font-semibold uppercase tracking-[0.12em] text-primary/72">
-            {project.city}
-          </p>
-          <h3 className="mt-2 min-w-0 break-words font-display text-[27px] font-medium leading-[1.04] text-primary sm:text-[29px] md:min-h-[2.08em]">
-            {project.name}
-          </h3>
+          <header className="min-w-0" data-project-identity>
+            <p
+              data-project-location
+              title={project.city}
+              className="line-clamp-2 min-w-0 break-words text-[12px] font-semibold uppercase leading-4 tracking-[0.12em] text-primary/72 md:min-h-8"
+            >
+              {project.city}
+            </p>
+            <h3
+              data-project-title
+              title={project.name}
+              className="mt-2 line-clamp-2 min-w-0 break-words font-display text-[27px] font-medium leading-[1.04] text-primary sm:text-[29px] md:min-h-[2.08em]"
+            >
+              {project.name}
+            </h3>
+          </header>
 
-          <p className="mt-4 text-[17px] font-semibold leading-6 text-primary md:min-h-6">
-            {price ? `${copy.from} ${price}` : copy.inquire}
-          </p>
+          <div className="mt-4 min-w-0" data-project-commercial>
+            <p
+              data-project-price
+              className="min-h-6 text-[17px] font-semibold leading-6 text-primary"
+            >
+              {price ? `${copy.from} ${price}` : copy.inquire}
+            </p>
 
-          <dl className="mt-5 grid gap-4 border-t border-primary/10 pt-4 text-[14px] leading-[1.55]">
-            <div className="grid min-w-0 grid-cols-[84px_minmax(0,1fr)] gap-3">
-              <dt className="text-[10px] font-semibold uppercase tracking-[0.13em] text-primary/72">
-                {copy.delivery}
-              </dt>
-              <dd className="min-w-0 break-words text-foreground/78">
-                {project.delivery || copy.deliveryFallback}
-              </dd>
-            </div>
-            <div className="grid min-w-0 grid-cols-[84px_minmax(0,1fr)] gap-3">
-              <dt className="text-[10px] font-semibold uppercase tracking-[0.13em] text-primary/72">
-                {copy.rental}
-              </dt>
-              <dd className="min-w-0 break-words text-foreground/78">
-                {project.rentalPolicy || copy.rentalFallback}
-              </dd>
-            </div>
-          </dl>
+            <dl
+              data-project-metadata
+              className="mt-4 grid grid-cols-2 items-start border-t border-primary/10 pt-3 text-[14px]"
+            >
+              <div className="min-w-0 pr-3 sm:pr-4">
+                <dt className="text-[10px] font-semibold uppercase leading-4 tracking-[0.13em] text-primary/72">
+                  {copy.delivery}
+                </dt>
+                <dd
+                  title={delivery}
+                  className="mt-1.5 line-clamp-2 min-h-10 min-w-0 break-words leading-5 text-foreground/78"
+                >
+                  {delivery}
+                </dd>
+              </div>
+              <div className="min-w-0 border-l border-primary/10 pl-3 sm:pl-4">
+                <dt className="text-[10px] font-semibold uppercase leading-4 tracking-[0.13em] text-primary/72">
+                  {copy.rental}
+                </dt>
+                <dd
+                  title={rental}
+                  className="mt-1.5 line-clamp-2 min-h-10 min-w-0 break-words leading-5 text-foreground/78"
+                >
+                  {rental}
+                </dd>
+              </div>
+            </dl>
+          </div>
 
-          <span
+          <footer
             data-project-cta
-            className="mt-auto inline-flex min-h-11 w-full items-end justify-between gap-3 border-t border-primary/10 pt-5 text-[13px] font-semibold uppercase tracking-[0.12em] text-primary"
+            className="mt-auto flex min-h-11 w-full items-end justify-between gap-3 border-t border-primary/10 pt-5 text-[13px] font-semibold uppercase tracking-[0.12em] text-primary"
           >
             <span className="underline decoration-primary/25 underline-offset-4 transition-colors group-hover:decoration-primary">
               {copy.viewProject}
@@ -95,7 +121,7 @@ export function ProjectCatalogCard({
             <span aria-hidden="true" className="text-base leading-none">
               →
             </span>
-          </span>
+          </footer>
         </div>
       </Link>
     </article>
