@@ -175,7 +175,9 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         className={`${FULL_BLEED} border-y border-primary/15 bg-paper`}
         data-home-credibility
       >
-        <style>{CREDIBILITY_STYLES}</style>
+        <style href="home-credibility" precedence="low">
+          {CREDIBILITY_STYLES}
+        </style>
         <div className={CONTAINER}>
           <ul className="home-cred-list">
             {content.credibility.items.map((item, index) => (
