@@ -80,10 +80,10 @@ const COPY: Record<SiteLocale, ListingDetailCopy> = {
     whatsapp: "Consultar por WhatsApp",
     contact: "Enviar una consulta",
     whatsappMessage: (address) =>
-      `Hola Jacquie, quiero consultar por la propiedad en ${address}. Me gustaría confirmar sus condiciones y próximos pasos.`,
+      `Hola Jacquie, quiero conocer más sobre la propiedad en ${address}. ¿Podemos conversar sobre ella y los próximos pasos?`,
     gallery: {
       eyebrow: "Recorrido visual",
-      title: "Galería de la propiedad",
+      title: "Conoce los espacios",
       count: (count) => `${count} fotos`,
       labels: (name, count) => ({
         dialog: `Galería de fotos de ${name}`,
@@ -97,12 +97,12 @@ const COPY: Record<SiteLocale, ListingDetailCopy> = {
       }),
     },
     overview: {
-      eyebrow: "La residencia",
-      title: "Una mirada a la propiedad",
+      eyebrow: "Descripción",
+      title: "La propiedad",
     },
     amenities: {
-      eyebrow: "Comodidades",
-      title: "Servicios y detalles incluidos",
+      eyebrow: "Características",
+      title: "Comodidades",
     },
     details: {
       eyebrow: "Ficha residencial",
@@ -119,14 +119,14 @@ const COPY: Record<SiteLocale, ListingDetailCopy> = {
       yes: "Sí",
     },
     advisor: {
-      eyebrow: "Antes de decidir",
-      title: "Qué conviene confirmar antes de avanzar",
+      eyebrow: "Acompañamiento personal",
+      title: "Conoce esta propiedad con más claridad",
       intro:
-        "Jacquie puede ayudarte a ordenar la conversación y las preguntas relevantes para esta propiedad.",
+        "Jacquie puede ayudarte a conocer mejor esta propiedad, resolver dudas y coordinar los próximos pasos según tu objetivo.",
       items: [
-        "Documentación y condiciones del edificio que conviene confirmar.",
-        "Reglas de renta y costos aplicables que deben revisarse.",
-        "Financiación, uso previsto y próximos pasos según tu situación.",
+        "Conocer más sobre la propiedad",
+        "Coordinar una visita o una conversación",
+        "Comparar esta opción con lo que estás buscando",
       ],
     },
     location: {
@@ -135,10 +135,10 @@ const COPY: Record<SiteLocale, ListingDetailCopy> = {
       mapPrompt: "Ubica la dirección en el mapa.",
     },
     close: {
-      eyebrow: "Próximo paso",
-      title: (propertyTitle) => `Conversemos sobre ${propertyTitle}`,
+      eyebrow: "Conversemos",
+      title: (propertyTitle) => propertyTitle,
       body:
-        "Pregunta por las condiciones de esta propiedad o cuéntale a Jacquie qué tipo de alternativa estás evaluando.",
+        "Conversa con Jacquie sobre esta propiedad para resolver tus dudas y coordinar una visita o los próximos pasos.",
     },
   },
   en: {
@@ -152,10 +152,10 @@ const COPY: Record<SiteLocale, ListingDetailCopy> = {
     whatsapp: "Ask on WhatsApp",
     contact: "Send an inquiry",
     whatsappMessage: (address) =>
-      `Hi Jacquie, I’d like to ask about the property at ${address}. I’d like to confirm its terms and next steps.`,
+      `Hi Jacquie, I’d like to learn more about the property at ${address}. Could we discuss it and the next steps?`,
     gallery: {
       eyebrow: "Visual tour",
-      title: "Property gallery",
+      title: "Explore the spaces",
       count: (count) => `${count} photos`,
       labels: (name, count) => ({
         dialog: `Photo gallery for ${name}`,
@@ -169,12 +169,12 @@ const COPY: Record<SiteLocale, ListingDetailCopy> = {
       }),
     },
     overview: {
-      eyebrow: "The residence",
-      title: "A closer look at the property",
+      eyebrow: "Overview",
+      title: "The property",
     },
     amenities: {
-      eyebrow: "Amenities",
-      title: "Included services and details",
+      eyebrow: "Features",
+      title: "Amenities",
     },
     details: {
       eyebrow: "Residential profile",
@@ -191,14 +191,14 @@ const COPY: Record<SiteLocale, ListingDetailCopy> = {
       yes: "Yes",
     },
     advisor: {
-      eyebrow: "Before you decide",
-      title: "What to confirm before moving forward",
+      eyebrow: "Personal guidance",
+      title: "Explore this property with clarity",
       intro:
-        "Jacquie can help structure the conversation and the questions that matter for this property.",
+        "Jacquie can help you learn more about this property, answer your questions, and coordinate the next steps based on your goals.",
       items: [
-        "Building documentation and conditions that should be confirmed.",
-        "Rental rules and applicable costs that need to be reviewed.",
-        "Financing, intended use, and next steps for your situation.",
+        "Learn more about the property",
+        "Schedule a visit or a conversation",
+        "Compare this option with what you’re looking for",
       ],
     },
     location: {
@@ -207,10 +207,10 @@ const COPY: Record<SiteLocale, ListingDetailCopy> = {
       mapPrompt: "Locate the address on the map.",
     },
     close: {
-      eyebrow: "Next step",
-      title: (propertyTitle) => `Let’s discuss ${propertyTitle}`,
+      eyebrow: "Let’s talk",
+      title: (propertyTitle) => propertyTitle,
       body:
-        "Ask about this property’s terms, or tell Jacquie what kind of alternative you are considering.",
+        "Talk with Jacquie about this property, get answers to your questions, and plan a visit or next steps.",
     },
   },
   fr: {
@@ -224,10 +224,10 @@ const COPY: Record<SiteLocale, ListingDetailCopy> = {
     whatsapp: "Poser une question sur WhatsApp",
     contact: "Envoyer une demande",
     whatsappMessage: (address) =>
-      `Bonjour Jacquie, j’aimerais me renseigner sur la propriété située à l’adresse suivante : ${address}. Je souhaite confirmer ses conditions et les prochaines étapes.`,
+      `Bonjour Jacquie, j’aimerais en savoir plus sur la propriété située à l’adresse suivante : ${address}. Pourrions-nous en discuter et voir les prochaines étapes?`,
     gallery: {
       eyebrow: "Visite en images",
-      title: "Galerie de la propriété",
+      title: "Découvrez les espaces",
       count: (count) => `${count} photos`,
       labels: (name, count) => ({
         dialog: `Galerie de photos de ${name}`,
@@ -241,12 +241,12 @@ const COPY: Record<SiteLocale, ListingDetailCopy> = {
       }),
     },
     overview: {
-      eyebrow: "La résidence",
-      title: "Un aperçu de la propriété",
+      eyebrow: "Description",
+      title: "La propriété",
     },
     amenities: {
-      eyebrow: "Commodités",
-      title: "Services et détails inclus",
+      eyebrow: "Caractéristiques",
+      title: "Commodités",
     },
     details: {
       eyebrow: "Profil résidentiel",
@@ -263,14 +263,14 @@ const COPY: Record<SiteLocale, ListingDetailCopy> = {
       yes: "Oui",
     },
     advisor: {
-      eyebrow: "Avant de décider",
-      title: "Ce qu’il convient de confirmer avant d’aller de l’avant",
+      eyebrow: "Accompagnement personnalisé",
+      title: "Découvrez cette propriété en toute clarté",
       intro:
-        "Jacquie peut vous aider à structurer la conversation et les questions pertinentes pour cette propriété.",
+        "Jacquie peut vous aider à mieux connaître cette propriété, à répondre à vos questions et à coordonner les prochaines étapes selon votre projet.",
       items: [
-        "La documentation et les conditions de l’immeuble à confirmer.",
-        "Les règles de location et les coûts applicables à examiner.",
-        "Le financement, l’usage prévu et les prochaines étapes selon votre situation.",
+        "En savoir plus sur la propriété",
+        "Planifier une visite ou une discussion",
+        "Comparer cette option à ce que vous recherchez",
       ],
     },
     location: {
@@ -279,10 +279,10 @@ const COPY: Record<SiteLocale, ListingDetailCopy> = {
       mapPrompt: "Repérez l’adresse sur la carte.",
     },
     close: {
-      eyebrow: "Prochaine étape",
-      title: (propertyTitle) => `Parlons de ${propertyTitle}`,
+      eyebrow: "Échangeons",
+      title: (propertyTitle) => propertyTitle,
       body:
-        "Posez vos questions sur les conditions de cette propriété ou indiquez à Jacquie le type d’alternative que vous envisagez.",
+        "Échangez avec Jacquie au sujet de cette propriété pour obtenir des réponses à vos questions et planifier une visite ou les prochaines étapes.",
     },
   },
 };

@@ -395,7 +395,7 @@ export default async function ListingDetailPage({
             </p>
             <h2
               id="listing-gallery-title"
-              className="mt-2 font-display text-[clamp(2rem,4vw,3.15rem)] font-medium leading-[1.02] tracking-[-0.028em] text-primary"
+              className="mt-2 font-display text-[clamp(1.75rem,2.5vw,2.35rem)] font-medium leading-[1.06] tracking-[-0.02em] text-primary"
             >
               {copy.gallery.title}
             </h2>
@@ -412,47 +412,43 @@ export default async function ListingDetailPage({
         />
       </section>
 
-      <div className="mt-12 grid gap-12 sm:mt-20 lg:mt-24 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-20">
-        <div>
+      <div className="mt-12 sm:mt-16 lg:mt-20">
+        <div className="grid gap-12 border-t border-primary/15 pt-7 sm:pt-9 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:gap-16">
           <section
-            className="grid gap-5 border-t border-primary/15 pt-6 sm:grid-cols-[180px_minmax(0,1fr)] sm:gap-10 sm:pt-8"
+            className="min-w-0"
             aria-labelledby="listing-overview-title"
             data-listing-section="description"
           >
-            <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/75">
-                {copy.overview.eyebrow}
-              </p>
-              <h2
-                id="listing-overview-title"
-                className="mt-2 font-display text-[clamp(1.8rem,3vw,2.55rem)] font-medium leading-[1.06] tracking-[-0.02em] text-primary"
-              >
-                {copy.overview.title}
-              </h2>
-            </div>
-            <p className="max-w-[66ch] text-[16px] leading-[1.8] text-foreground/78 sm:text-[17px]">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/75">
+              {copy.overview.eyebrow}
+            </p>
+            <h2
+              id="listing-overview-title"
+              className="mt-2 font-display text-[clamp(1.6rem,2.1vw,2.05rem)] font-medium leading-[1.08] tracking-[-0.018em] text-primary"
+            >
+              {copy.overview.title}
+            </h2>
+            <p className="mt-5 max-w-[66ch] text-[16px] leading-[1.8] text-foreground/78 sm:text-[17px]">
               {descriptionText}
             </p>
           </section>
 
           {amenitiesList.length > 0 && (
             <section
-              className="mt-12 grid gap-5 border-t border-primary/15 pt-6 sm:mt-20 sm:grid-cols-[180px_minmax(0,1fr)] sm:gap-10 sm:pt-8"
+              className="min-w-0"
               aria-labelledby="listing-amenities-title"
               data-listing-section="features"
             >
-              <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/75">
-                  {copy.amenities.eyebrow}
-                </p>
-                <h2
-                  id="listing-amenities-title"
-                  className="mt-2 font-display text-[clamp(1.8rem,3vw,2.55rem)] font-medium leading-[1.06] tracking-[-0.02em] text-primary"
-                >
-                  {copy.amenities.title}
-                </h2>
-              </div>
-              <ul className="grid grid-cols-2 gap-x-5 sm:gap-x-8" role="list">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/75">
+                {copy.amenities.eyebrow}
+              </p>
+              <h2
+                id="listing-amenities-title"
+                className="mt-2 font-display text-[clamp(1.6rem,2.1vw,2.05rem)] font-medium leading-[1.08] tracking-[-0.018em] text-primary"
+              >
+                {copy.amenities.title}
+              </h2>
+              <ul className="mt-5 grid grid-cols-1 gap-x-8 sm:grid-cols-2" role="list">
                 {amenitiesList.map((amenity) => (
                   <li
                     key={amenity}
@@ -468,7 +464,7 @@ export default async function ListingDetailPage({
         </div>
 
         <aside
-          className="h-fit border-l-2 border-accent bg-surface px-5 py-6 sm:px-8 sm:py-9 lg:px-7"
+          className="mt-10 max-w-[900px] border-y border-primary/15 py-7 sm:mt-14 sm:py-9 lg:mt-16"
           aria-labelledby="listing-advisor-title"
           data-listing-section="advisor"
         >
@@ -477,20 +473,21 @@ export default async function ListingDetailPage({
           </p>
           <h2
             id="listing-advisor-title"
-            className="mt-3 font-display text-[clamp(1.75rem,3vw,2.35rem)] font-medium leading-[1.06] tracking-[-0.02em] text-primary"
+            className="mt-2 max-w-[26ch] font-display text-[clamp(1.55rem,2vw,2rem)] font-medium leading-[1.08] tracking-[-0.018em] text-primary"
           >
             {copy.advisor.title}
           </h2>
-          <p className="mt-4 text-[14px] leading-[1.6] text-foreground/74 sm:mt-5 sm:text-[15px] sm:leading-[1.7]">
+          <p className="mt-4 max-w-[68ch] text-[14px] leading-[1.65] text-foreground/74 sm:text-[15px] sm:leading-[1.7]">
             {copy.advisor.intro}
           </p>
-          <ul className="mt-5 sm:mt-7" role="list">
+          <ul className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-x-7 sm:gap-y-2" role="list">
             {copy.advisor.items.map((advice) => (
               <li
                 key={advice}
-                className="border-t border-primary/12 py-3 text-[13px] leading-[1.5] text-foreground/76 first:border-t-0 first:pt-0 sm:py-4 sm:text-[14px] sm:leading-[1.6]"
+                className="flex items-start text-[13px] leading-[1.55] text-foreground/76 sm:text-[14px]"
               >
-                {advice}
+                <span className="mr-2.5 mt-[0.58em] h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
+                <span>{advice}</span>
               </li>
             ))}
           </ul>
@@ -498,7 +495,7 @@ export default async function ListingDetailPage({
       </div>
 
       <section
-        className="mt-12 border-t border-primary/15 pt-7 sm:mt-20 sm:pt-9 lg:mt-24"
+        className="mt-12 border-t border-primary/15 pt-7 sm:mt-16 sm:pt-9 lg:mt-20"
         aria-labelledby="listing-details-title"
         data-listing-section="details"
       >
@@ -508,7 +505,7 @@ export default async function ListingDetailPage({
           </p>
           <h2
             id="listing-details-title"
-            className="mt-2 font-display text-[clamp(2rem,4vw,3.15rem)] font-medium leading-[1.02] tracking-[-0.028em] text-primary"
+            className="mt-2 font-display text-[clamp(1.75rem,2.5vw,2.35rem)] font-medium leading-[1.06] tracking-[-0.02em] text-primary"
           >
             {copy.details.title}
           </h2>
@@ -558,7 +555,7 @@ export default async function ListingDetailPage({
         item.latitude != null &&
         item.longitude != null && (
           <section
-            className="mt-12 overflow-hidden border-y border-primary/15 bg-surface sm:mt-20 lg:mt-24 lg:grid lg:grid-cols-[0.7fr_1.3fr]"
+            className="mt-12 overflow-hidden border-y border-primary/15 bg-surface sm:mt-16 lg:mt-20 lg:grid lg:grid-cols-[0.7fr_1.3fr]"
             aria-labelledby="listing-location-title"
             data-listing-section="location"
           >
@@ -568,7 +565,7 @@ export default async function ListingDetailPage({
               </p>
               <h2
                 id="listing-location-title"
-                className="mt-2 max-w-[13ch] font-display text-[clamp(2rem,4vw,3.15rem)] font-medium leading-[1.02] tracking-[-0.028em] text-primary"
+                className="mt-2 max-w-[13ch] font-display text-[clamp(1.75rem,2.5vw,2.35rem)] font-medium leading-[1.06] tracking-[-0.02em] text-primary"
               >
                 {copy.location.title}
               </h2>
@@ -599,7 +596,7 @@ export default async function ListingDetailPage({
         )}
 
       <section
-        className="mt-12 grid gap-7 border-y border-primary/15 py-8 sm:mt-20 sm:gap-8 sm:py-12 lg:mt-24 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-center lg:gap-16 lg:py-14"
+        className="mt-12 grid gap-7 border-y border-primary/15 py-8 sm:mt-16 sm:gap-8 sm:py-12 lg:mt-20 lg:grid-cols-2 lg:items-start lg:gap-16 lg:py-14"
         aria-labelledby="listing-close-title"
         data-listing-section="closing"
       >
@@ -609,29 +606,31 @@ export default async function ListingDetailPage({
           </p>
           <h2
             id="listing-close-title"
-            className="mt-2 max-w-[16ch] font-display text-[clamp(2.2rem,4.7vw,3.8rem)] font-medium leading-[1] tracking-[-0.032em] text-primary"
+            className="mt-2 max-w-[18ch] font-display text-[clamp(1.9rem,3vw,2.8rem)] font-medium leading-[1.04] tracking-[-0.024em] text-primary"
           >
             {copy.close.title(item.title)}
           </h2>
-          <p className="mt-5 max-w-[60ch] text-[15px] leading-[1.75] text-foreground/70 sm:text-[16px]">
+        </div>
+        <div className="grid content-start gap-5">
+          <p className="max-w-[56ch] text-[15px] leading-[1.75] text-foreground/70 sm:text-[16px]">
             {copy.close.body}
           </p>
-        </div>
-        <div className="grid gap-2">
-          <a
-            href={whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex min-h-12 items-center justify-center rounded-[6px] bg-primary px-5 py-3 text-center text-sm font-semibold text-primary-foreground no-underline transition hover:bg-primary/92 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary motion-reduce:transition-none"
-          >
-            {copy.whatsapp}
-          </a>
-          <Link
-            href={`/${locale}/contacto`}
-            className="inline-flex min-h-12 items-center justify-center rounded-[6px] border border-primary/25 px-5 py-3 text-center text-sm font-semibold text-primary no-underline transition hover:bg-primary/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary motion-reduce:transition-none"
-          >
-            {copy.contact}
-          </Link>
+          <div className="grid max-w-[420px] gap-2">
+            <a
+              href={whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-12 items-center justify-center rounded-[6px] bg-primary px-5 py-3 text-center text-sm font-semibold text-primary-foreground no-underline transition hover:bg-primary/92 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary motion-reduce:transition-none"
+            >
+              {copy.whatsapp}
+            </a>
+            <Link
+              href={`/${locale}/contacto`}
+              className="inline-flex min-h-12 items-center justify-center rounded-[6px] border border-primary/25 px-5 py-3 text-center text-sm font-semibold text-primary no-underline transition hover:bg-primary/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary motion-reduce:transition-none"
+            >
+              {copy.contact}
+            </Link>
+          </div>
         </div>
       </section>
     </article>
