@@ -23,11 +23,6 @@ export function ListingsPersonalizedSearch({
       className="relative left-1/2 mt-16 w-screen -translate-x-1/2 border-y border-primary/10 bg-paper sm:mt-20 lg:mt-24"
     >
       <div className="relative mx-auto grid max-w-6xl gap-10 overflow-hidden px-4 py-14 sm:py-16 lg:grid-cols-[minmax(0,1.05fr)_minmax(380px,0.95fr)] lg:gap-16 lg:py-20">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -left-28 -top-28 size-64 rounded-full border border-accent/15"
-        />
-
         <div className="relative min-w-0">
           <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary/75">
             {copy.eyebrow}
