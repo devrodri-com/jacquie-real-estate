@@ -113,7 +113,15 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const financingHref = `/${locale}/financiacion`;
   const aboutHref = `/${locale}/sobre-mi`;
   const letsGoHref = `/${locale}/lets-go-miami`;
-  const listingImage = LISTINGS[0].images[0];
+  const featuredListing = LISTINGS.at(0);
+  const listingImage = featuredListing?.images.at(0);
+  const propertiesCta = featuredListing
+    ? content.buying.properties.cta
+    : locale === "en"
+      ? "Explore available properties"
+      : locale === "fr"
+        ? "Découvrir les propriétés disponibles"
+        : "Explorar propiedades disponibles";
 
   return (
     <div className="-mb-24 pb-0">
@@ -262,8 +270,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <article className="flex h-full flex-col">
               <div className="relative aspect-[2/1] overflow-hidden rounded-[4px] bg-paper sm:aspect-[16/10]">
                 <Image
-                  src={listingImage}
-                  alt={content.buying.properties.imageAlt}
+                  src={listingImage ?? "/images/miami-hero.jpg"}
+                  alt={listingImage ? content.buying.properties.imageAlt : ""}
                   fill
                   sizes="(min-width: 1280px) 566px, (min-width: 768px) 50vw, 100vw"
                   className="object-cover object-center"
@@ -275,7 +283,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               </h3>
               <p className={`${BODY} mt-4 max-w-[58ch] flex-1`}>{content.buying.properties.text}</p>
               <Link href={listingsHref} className="mt-6 inline-flex items-center gap-3 border-b border-primary/30 pb-1 text-sm font-semibold text-primary no-underline transition hover:border-accent hover:text-primary/80">
-                {content.buying.properties.cta}
+                {propertiesCta}
                 <span aria-hidden>↗</span>
               </Link>
             </article>
