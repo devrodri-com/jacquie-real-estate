@@ -18,7 +18,7 @@ export function ListingsCatalog({ items, locale, copy }: ListingsCatalogProps) {
   const singleListing = listingCount === 1;
 
   return (
-    <div className="pb-10 sm:pb-14">
+    <div className="-mb-8 sm:-mb-6">
       <header className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden border-b border-primary/10 bg-paper">
         <div
           aria-hidden="true"

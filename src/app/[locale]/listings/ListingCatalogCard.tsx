@@ -24,6 +24,11 @@ type ListingCatalogCardProps = {
   layout?: "grid" | "single";
 };
 
+const CATALOG_COVER_INDEX_BY_SLUG: Readonly<Record<string, number>> = {
+  "tides-hollywood-2c": 4,
+  "le-frontenac-505": 22,
+};
+
 function quantityLabel(
   value: number,
   labels: [singular: string, plural: string]
@@ -40,6 +45,8 @@ export function ListingCatalogCard({
 }: ListingCatalogCardProps) {
   const isSingle = layout === "single";
   const detailHref = `/${locale}/listings/${item.slug}`;
+  const coverIndex = CATALOG_COVER_INDEX_BY_SLUG[item.slug] ?? 0;
+  const coverImage = item.images[coverIndex] ?? item.images[0];
 
   return (
     <article className={isSingle ? "max-w-[860px]" : "h-full min-w-0"}>
@@ -58,7 +65,7 @@ export function ListingCatalogCard({
           }`}
         >
           <Image
-            src={item.images[0]}
+            src={coverImage}
             alt={`${item.title}, ${item.city}`}
             fill
             sizes={

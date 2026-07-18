@@ -33,7 +33,7 @@ export type ListingsCopy = {
 const COPY: Record<SiteLocale, ListingsCopy> = {
   es: {
     eyebrow: "Propiedades en Miami",
-    title: "Explora propiedades disponibles actualmente",
+    title: "Explora propiedades disponibles",
     intro:
       "Revisa el precio, la ubicación y las características principales de las propiedades publicadas. Si buscas algo diferente, Jacquie puede ayudarte a orientar la búsqueda según tu objetivo.",
     availabilityNote:
@@ -74,7 +74,7 @@ const COPY: Record<SiteLocale, ListingsCopy> = {
   },
   en: {
     eyebrow: "Miami properties",
-    title: "Explore properties currently available",
+    title: "Explore available properties",
     intro:
       "Review the price, location, and key features of each published property. If you are looking for something different, Jacquie can help focus the search around your goal.",
     availabilityNote:
@@ -115,7 +115,7 @@ const COPY: Record<SiteLocale, ListingsCopy> = {
   },
   fr: {
     eyebrow: "Propriétés à Miami",
-    title: "Explorez les propriétés actuellement disponibles",
+    title: "Découvrez les propriétés disponibles",
     intro:
       "Consultez le prix, l’emplacement et les caractéristiques principales de chaque propriété publiée. Si vous cherchez autre chose, Jacquie peut vous aider à orienter la recherche selon votre objectif.",
     availabilityNote:
