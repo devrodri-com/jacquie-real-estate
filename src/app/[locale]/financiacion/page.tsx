@@ -271,7 +271,7 @@ export default async function FinancingPage({
   const contactHref = "/" + locale + "/contacto";
 
   return (
-    <div className="-mb-8 text-foreground">
+    <div className="-mb-[72px] text-foreground sm:-mb-16">
       <section
         aria-labelledby="financing-hero-title"
         className={FULL_BLEED + " bg-paper pt-7 pb-8 sm:py-10 lg:py-14"}
