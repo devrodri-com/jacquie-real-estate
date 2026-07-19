@@ -16,6 +16,18 @@ import { getListingDetailCopy } from "./content";
 
 type RouteParams = { locale: string; slug: string };
 
+type VerifiedOpeningIdentity = {
+  building: string;
+  unit: string;
+};
+
+const VERIFIED_OPENING_IDENTITIES: Readonly<
+  Record<string, VerifiedOpeningIdentity | undefined>
+> = {
+  "tides-hollywood-2c": { building: "The Tides", unit: "#2C" },
+  "le-frontenac-505": { building: "Le Frontenac", unit: "#505" },
+};
+
 type ListingMetaItem = {
   city: string;
   beds: number;
@@ -214,6 +226,7 @@ export default async function ListingDetailPage({
   const frOverlay = isFR ? getListingFrOverlay(item.slug) : null;
   const addressDisplay =
     (item as { addressFull?: string; title: string }).addressFull ?? item.title;
+  const verifiedOpeningIdentity = VERIFIED_OPENING_IDENTITIES[item.slug];
   const descriptionText = isEN
     ? ((item as { descriptionLong_en?: string; description_en: string })
         .descriptionLong_en ?? item.description_en)
@@ -312,13 +325,24 @@ export default async function ListingDetailPage({
             </p>
             <h1
               id="listing-title"
-              className="mt-4 max-w-[17ch] font-display text-[clamp(3rem,7vw,5.6rem)] font-medium leading-[0.93] tracking-[-0.045em] text-primary"
+              className="mt-4 max-w-[19ch] font-display text-[clamp(2.65rem,6vw,5rem)] font-medium leading-[0.98] tracking-[-0.035em] text-primary"
             >
-              {item.title}
+              {verifiedOpeningIdentity ? (
+                <>
+                  {verifiedOpeningIdentity.building}{" "}
+                  <span className="whitespace-nowrap">
+                    {verifiedOpeningIdentity.unit}
+                  </span>
+                </>
+              ) : (
+                addressDisplay
+              )}
             </h1>
-            <address className="mt-5 max-w-[58ch] text-[14px] leading-[1.65] text-foreground/72 not-italic sm:text-[16px]">
-              {addressDisplay}
-            </address>
+            {verifiedOpeningIdentity && (
+              <address className="mt-4 max-w-[58ch] break-words text-[14px] leading-[1.65] text-foreground/72 not-italic sm:mt-5 sm:text-[16px]">
+                {addressDisplay}
+              </address>
+            )}
           </div>
 
           <div>
@@ -464,38 +488,29 @@ export default async function ListingDetailPage({
         </div>
 
         <aside
-          className="mt-10 max-w-[900px] border-y border-primary/15 py-7 sm:mt-14 sm:py-9 lg:mt-16"
+          className="mt-8 max-w-[980px] border-l-2 border-accent/70 pl-5 sm:mt-10 sm:pl-6 lg:mt-12 lg:grid lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:items-center lg:gap-12"
           aria-labelledby="listing-advisor-title"
           data-listing-section="advisor"
         >
-          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/75">
-            {copy.advisor.eyebrow}
-          </p>
-          <h2
-            id="listing-advisor-title"
-            className="mt-2 max-w-[26ch] font-display text-[clamp(1.55rem,2vw,2rem)] font-medium leading-[1.08] tracking-[-0.018em] text-primary"
-          >
-            {copy.advisor.title}
-          </h2>
-          <p className="mt-4 max-w-[68ch] text-[14px] leading-[1.65] text-foreground/74 sm:text-[15px] sm:leading-[1.7]">
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/75">
+              {copy.advisor.eyebrow}
+            </p>
+            <h2
+              id="listing-advisor-title"
+              className="mt-2 max-w-[24ch] font-display text-[clamp(1.45rem,1.8vw,1.85rem)] font-medium leading-[1.1] tracking-[-0.015em] text-primary"
+            >
+              {copy.advisor.title}
+            </h2>
+          </div>
+          <p className="mt-3 max-w-[60ch] text-[14px] leading-[1.65] text-foreground/74 sm:text-[15px] lg:mt-0">
             {copy.advisor.intro}
           </p>
-          <ul className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-x-7 sm:gap-y-2" role="list">
-            {copy.advisor.items.map((advice) => (
-              <li
-                key={advice}
-                className="flex items-start text-[13px] leading-[1.55] text-foreground/76 sm:text-[14px]"
-              >
-                <span className="mr-2.5 mt-[0.58em] h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
-                <span>{advice}</span>
-              </li>
-            ))}
-          </ul>
         </aside>
       </div>
 
       <section
-        className="mt-12 border-t border-primary/15 pt-7 sm:mt-16 sm:pt-9 lg:mt-20"
+        className="mt-10 border-t border-primary/15 pt-7 sm:mt-12 sm:pt-9 lg:mt-14"
         aria-labelledby="listing-details-title"
         data-listing-section="details"
       >
@@ -596,7 +611,7 @@ export default async function ListingDetailPage({
         )}
 
       <section
-        className="mt-12 grid gap-7 border-y border-primary/15 py-8 sm:mt-16 sm:gap-8 sm:py-12 lg:mt-20 lg:grid-cols-2 lg:items-start lg:gap-16 lg:py-14"
+        className="mt-12 grid gap-6 border-t border-primary/15 pb-4 pt-8 sm:mt-14 sm:gap-8 sm:pb-6 sm:pt-10 lg:mt-16 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start lg:gap-14 lg:pb-8 lg:pt-12"
         aria-labelledby="listing-close-title"
         data-listing-section="closing"
       >
@@ -606,12 +621,12 @@ export default async function ListingDetailPage({
           </p>
           <h2
             id="listing-close-title"
-            className="mt-2 max-w-[18ch] font-display text-[clamp(1.9rem,3vw,2.8rem)] font-medium leading-[1.04] tracking-[-0.024em] text-primary"
+            className="mt-2 max-w-[20ch] font-display text-[clamp(1.85rem,2.6vw,2.55rem)] font-medium leading-[1.06] tracking-[-0.022em] text-primary"
           >
-            {copy.close.title(item.title)}
+            {copy.close.title}
           </h2>
         </div>
-        <div className="grid content-start gap-5">
+        <div className="grid content-start gap-4">
           <p className="max-w-[56ch] text-[15px] leading-[1.75] text-foreground/70 sm:text-[16px]">
             {copy.close.body}
           </p>

@@ -54,7 +54,6 @@ type ListingDetailCopy = {
     eyebrow: string;
     title: string;
     intro: string;
-    items: readonly string[];
   };
   location: {
     eyebrow: string;
@@ -63,7 +62,7 @@ type ListingDetailCopy = {
   };
   close: {
     eyebrow: string;
-    title: (propertyTitle: string) => string;
+    title: string;
     body: string;
   };
 };
@@ -119,15 +118,10 @@ const COPY: Record<SiteLocale, ListingDetailCopy> = {
       yes: "Sí",
     },
     advisor: {
-      eyebrow: "Acompañamiento personal",
-      title: "Conoce esta propiedad con más claridad",
+      eyebrow: "Acompañamiento de Jacquie",
+      title: "Conoce mejor esta propiedad",
       intro:
-        "Jacquie puede ayudarte a conocer mejor esta propiedad, resolver dudas y coordinar los próximos pasos según tu objetivo.",
-      items: [
-        "Conocer más sobre la propiedad",
-        "Coordinar una visita o una conversación",
-        "Comparar esta opción con lo que estás buscando",
-      ],
+        "Jacquie puede ayudarte a resolver dudas y coordinar los próximos pasos según lo que estás buscando.",
     },
     location: {
       eyebrow: "Ubicación",
@@ -135,10 +129,10 @@ const COPY: Record<SiteLocale, ListingDetailCopy> = {
       mapPrompt: "Ubica la dirección en el mapa.",
     },
     close: {
-      eyebrow: "Conversemos",
-      title: (propertyTitle) => propertyTitle,
+      eyebrow: "Próximo paso",
+      title: "Conversemos sobre esta propiedad",
       body:
-        "Conversa con Jacquie sobre esta propiedad para resolver tus dudas y coordinar una visita o los próximos pasos.",
+        "Puedes preguntarle a Jacquie por esta propiedad, coordinar una visita o contarle qué estás buscando.",
     },
   },
   en: {
@@ -191,15 +185,10 @@ const COPY: Record<SiteLocale, ListingDetailCopy> = {
       yes: "Yes",
     },
     advisor: {
-      eyebrow: "Personal guidance",
-      title: "Explore this property with clarity",
+      eyebrow: "Guidance from Jacquie",
+      title: "Get to know this property better",
       intro:
-        "Jacquie can help you learn more about this property, answer your questions, and coordinate the next steps based on your goals.",
-      items: [
-        "Learn more about the property",
-        "Schedule a visit or a conversation",
-        "Compare this option with what you’re looking for",
-      ],
+        "Jacquie can help answer your questions and coordinate the next steps based on what you’re looking for.",
     },
     location: {
       eyebrow: "Location",
@@ -207,10 +196,10 @@ const COPY: Record<SiteLocale, ListingDetailCopy> = {
       mapPrompt: "Locate the address on the map.",
     },
     close: {
-      eyebrow: "Let’s talk",
-      title: (propertyTitle) => propertyTitle,
+      eyebrow: "Next step",
+      title: "Let’s talk about this property",
       body:
-        "Talk with Jacquie about this property, get answers to your questions, and plan a visit or next steps.",
+        "You can ask Jacquie about this property, schedule a visit, or tell her what you’re looking for.",
     },
   },
   fr: {
@@ -263,15 +252,10 @@ const COPY: Record<SiteLocale, ListingDetailCopy> = {
       yes: "Oui",
     },
     advisor: {
-      eyebrow: "Accompagnement personnalisé",
-      title: "Découvrez cette propriété en toute clarté",
+      eyebrow: "L’accompagnement de Jacquie",
+      title: "Mieux connaître cette propriété",
       intro:
-        "Jacquie peut vous aider à mieux connaître cette propriété, à répondre à vos questions et à coordonner les prochaines étapes selon votre projet.",
-      items: [
-        "En savoir plus sur la propriété",
-        "Planifier une visite ou une discussion",
-        "Comparer cette option à ce que vous recherchez",
-      ],
+        "Jacquie peut répondre à vos questions et coordonner les prochaines étapes en fonction de ce que vous recherchez.",
     },
     location: {
       eyebrow: "Emplacement",
@@ -279,10 +263,10 @@ const COPY: Record<SiteLocale, ListingDetailCopy> = {
       mapPrompt: "Repérez l’adresse sur la carte.",
     },
     close: {
-      eyebrow: "Échangeons",
-      title: (propertyTitle) => propertyTitle,
+      eyebrow: "Prochaine étape",
+      title: "Parlons de cette propriété",
       body:
-        "Échangez avec Jacquie au sujet de cette propriété pour obtenir des réponses à vos questions et planifier une visite ou les prochaines étapes.",
+        "Vous pouvez demander à Jacquie des renseignements sur cette propriété, planifier une visite ou lui expliquer ce que vous recherchez.",
     },
   },
 };
