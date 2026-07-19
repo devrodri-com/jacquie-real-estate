@@ -1,272 +1,254 @@
-// src/app/[locale]/financiacion/page.tsx
 import Link from "next/link";
 import type { Metadata } from "next";
-import { createPageMetadata, normalizeLocale as normalizeSiteLocale } from "@/lib/seo";
+import { createPageMetadata, normalizeLocale } from "@/lib/seo";
+import { buildJacquieWhatsAppHref } from "@/lib/whatsapp";
 
 type Locale = "es" | "en" | "fr";
 
-const COPY: Record<
-  Locale,
-  {
-    metaTitle: string;
-    metaDescription: string;
-    eyebrow: string;
-    heroTitle: string;
-    heroSubtitle: string;
-    primaryCta: string;
-    secondaryCta: string;
-    summaryTitle: string;
-    summaryItems: string[];
-    judgmentTitle: string;
-    judgmentText: string;
-    cards: string[];
-    programsTitle: string;
-    programsText: string;
-    programsNote: string;
-    downPaymentLabel: string;
-    reviewTitle: string;
-    reviewItems: string[];
-    processTitle: string;
-    steps: { title: string; text: string }[];
-    experienceTitle: string;
-    experienceText: string;
-    finalTitle: string;
-    finalText: string;
-    finalCta: string;
-    disclaimer: string;
-    whatsAppMessage: string;
-  }
-> = {
+type FinancingCopy = {
+  metaTitle: string;
+  metaDescription: string;
+  eyebrow: string;
+  heroTitle: string;
+  heroThesis: string;
+  heroText: string;
+  credential: string;
+  primaryCta: string;
+  secondaryCta: string;
+  ctaHelper: string;
+  newTabLabel: string;
+  structureLabel: string;
+  structureTitle: string;
+  structureText: string;
+  variableItems: { title: string; text: string }[];
+  experienceLabel: string;
+  experienceTitle: string;
+  experienceText: string;
+  preparationLabel: string;
+  preparationTitle: string;
+  realtorRoleLabel: string;
+  realtorRoleText: string;
+  institutionRoleLabel: string;
+  institutionRoleText: string;
+  referenceLabel: string;
+  referenceTitle: string;
+  referenceDisclaimer: string;
+  roleDisclaimerLabel: string;
+  roleDisclaimer: string;
+  closingLabel: string;
+  closingTitle: string;
+  closingText: string;
+  whatsAppMessage: string;
+};
+
+const COPY: Record<Locale, FinancingCopy> = {
   es: {
     metaTitle: "Financiación para comprar en Miami | Jacquie Zarate Realtor",
     metaDescription:
-      "Financiación para compradores e inversores en Miami con criterio financiero, opciones desde 25% de down payment sujetas a evaluación y aprobación.",
+      "Financiación para compradores e inversores que consideran una compra en Miami, con una mirada prudente sobre el contexto, las variables y los próximos pasos.",
     eyebrow: "Financiación inmobiliaria",
-    heroTitle: "Financiación para comprar en Miami con una mirada más completa",
-    heroSubtitle:
-      "Antes de elegir una propiedad, revisamos tu objetivo, perfil y documentación para entender qué opciones de financiación podrían aplicar y cómo impactan en tu decisión de compra.",
-    primaryCta: "Evaluar mi caso",
-    secondaryCta: "Ver propiedades",
-    summaryTitle: "Comprar con criterio financiero",
-    summaryItems: [
-      "Realtor en Miami",
-      "Más de 15 años en Finanzas",
-      "Experiencia en empresas S&P 500",
-    ],
-    judgmentTitle: "No se trata solo de conseguir un préstamo. Se trata de comprar con criterio.",
-    judgmentText:
-      "La financiación puede ayudarte a acceder a una propiedad en Miami sin usar todo tu capital disponible. Pero cada caso debe evaluarse con cuidado: tipo de propiedad, perfil del comprador, reservas, documentación, estructura de compra y objetivo de inversión.",
-    cards: [
-      "Compra para inversión",
-      "Compra para uso personal",
-      "Compradores extranjeros",
-      "Compra a nombre personal o empresa",
-    ],
-    programsTitle: "Programas que pueden comenzar desde 25% de down payment",
-    programsText:
-      "En algunos casos, compradores extranjeros pueden acceder a alternativas de financiación desde 25% de down payment. La disponibilidad depende del perfil del comprador, el tipo de propiedad, la documentación presentada y la aprobación de la entidad financiera.",
-    programsNote:
-      "El 25% no es una garantía. Es una referencia inicial para evaluar posibilidades.",
-    downPaymentLabel: "down payment",
-    reviewTitle: "Qué se suele revisar antes de avanzar",
-    reviewItems: [
-      "Objetivo de compra: inversión, uso personal o renta.",
-      "Presupuesto estimado y capital disponible.",
-      "Fondos para down payment y reservas.",
-      "Ingresos o respaldo financiero comprobable.",
-      "Historial o referencia bancaria.",
-      "Tipo de propiedad y condiciones del edificio.",
-      "Compra a nombre personal o estructura corporativa.",
-    ],
-    processTitle: "Un proceso simple para tomar mejores decisiones",
-    steps: [
+    heroTitle: "Financiación para comprar en Miami",
+    heroThesis: "Una mirada más completa sobre la estructura de la compra.",
+    heroText:
+      "Puedo ayudarte a reunir la información relevante y ubicar la financiación dentro de la decisión inmobiliaria antes de avanzar.",
+    credential: "Realtor en Miami",
+    primaryCta: "Hablar por WhatsApp",
+    secondaryCta: "Contacto",
+    ctaHelper: "No hace falta tener todo definido para empezar.",
+    newTabLabel: "Se abre en una pestaña nueva.",
+    structureLabel: "La compra en contexto",
+    structureTitle: "La financiación forma parte de la estructura de la compra",
+    structureText:
+      "Puede influir en el presupuesto, la documentación y el tipo de propiedad que conviene considerar. Estos factores varían según el caso y no constituyen requisitos universales ni una lista de documentos obligatorios. Tampoco determinan por sí solos que haya financiación disponible.",
+    variableItems: [
       {
-        title: "Entendemos tu objetivo",
-        text: "Definimos si buscás invertir, comprar para uso propio o evaluar una oportunidad puntual.",
+        title: "Objetivo y contexto de compra",
+        text: "El uso previsto y el momento de la decisión ayudan a definir las prioridades de la compra.",
       },
       {
-        title: "Revisamos el escenario financiero",
-        text: "Analizamos capital disponible, documentación y posibles caminos de financiación.",
+        title: "Presupuesto y capital disponible",
+        text: "El presupuesto estimado y el capital disponible ofrecen referencias iniciales para considerar distintos escenarios.",
       },
       {
-        title: "Conectamos con opciones adecuadas",
-        text: "Según tu perfil, se revisan alternativas con profesionales o entidades financieras correspondientes.",
+        title: "Perfil y documentación",
+        text: "La entidad puede solicitar información distinta según las características de cada caso.",
       },
       {
-        title: "Acompañamos la compra",
-        text: "Si avanzás, la financiación se coordina junto con la búsqueda, oferta, contrato y cierre.",
+        title: "Tipo de propiedad y entidad",
+        text: "El tipo de propiedad, las condiciones vigentes y la entidad financiera pueden influir en la planificación de la compra.",
       },
     ],
-    experienceTitle: "Experiencia inmobiliaria con criterio financiero",
+    experienceLabel: "Experiencia aplicada",
+    experienceTitle: "Experiencia financiera aplicada al proceso inmobiliario",
     experienceText:
-      "Jacquie combina su trabajo como realtor en Miami con más de 15 años de experiencia en Finanzas en empresas S&P 500. Esa mirada le permite acompañar a compradores e inversores no solo desde la propiedad, sino también desde los números, la estructura y el proceso.",
-    finalTitle: "¿Querés saber si la financiación puede aplicar a tu compra?",
-    finalText:
-      "Contame qué tipo de propiedad estás buscando y revisamos el mejor camino para tu caso.",
-    finalCta: "Consultar por WhatsApp",
-    disclaimer:
-      "La información es orientativa. Toda financiación está sujeta a evaluación, documentación, aprobación de la entidad financiera, tipo de propiedad y condiciones vigentes al momento de aplicar.",
+      "Cuento con más de 15 años de experiencia en Finanzas trabajando en empresas del S&P 500. Esa trayectoria me permite aportar claridad a la información disponible, considerar escenarios de compra y formular preguntas más precisas dentro del proceso inmobiliario.",
+    preparationLabel: "Antes de avanzar",
+    preparationTitle: "Preparar la información antes de avanzar",
+    realtorRoleLabel: "Jacquie puede ayudar a",
+    realtorRoleText:
+      "Relacionar las variables relevantes, preparar preguntas y coordinar próximos pasos inmobiliarios.",
+    institutionRoleLabel: "La entidad financiera determina",
+    institutionRoleText:
+      "Evaluar el perfil, la documentación y la propiedad; definir las condiciones y tomar la decisión final.",
+    referenceLabel: "Referencia posible",
+    referenceTitle: "En algunos casos, un pago inicial del 25% puede servir como referencia.",
+    referenceDisclaimer:
+      "Esta referencia no es una regla universal ni garantiza un préstamo o resultado alguno. La disponibilidad, el porcentaje aplicable y las demás condiciones dependen de la evaluación de la entidad financiera, la documentación, el perfil del comprador, el tipo de propiedad, las condiciones vigentes de la entidad y la aprobación final.",
+    roleDisclaimerLabel: "Alcance de la información",
+    roleDisclaimer:
+      "Información general. Jacquie Zarate actúa como Realtor y brinda acompañamiento inmobiliario; no actúa como prestamista, corredora hipotecaria, asesora de crédito ni asesora financiera, fiscal o legal. La entidad financiera correspondiente determina la disponibilidad, las condiciones y la decisión final. No se garantiza financiación, aprobación ni resultado alguno.",
+    closingLabel: "Próximo paso",
+    closingTitle: "Conversemos sobre la estructura de tu compra",
+    closingText:
+      "Cuéntame tu objetivo y las preguntas de financiación relacionadas con tu compra. Puedo ayudarte a coordinar los próximos pasos inmobiliarios.",
     whatsAppMessage:
-      "Hola Jacquie, quiero evaluar si la financiación puede aplicar a mi compra en Miami.",
+      "Hola Jacquie, quisiera conversar sobre la financiación para una compra que estoy considerando en Miami.",
   },
   en: {
-    metaTitle: "Financing to buy in Miami | Jacquie Zarate Realtor",
+    metaTitle: "Financing for a Miami purchase | Jacquie Zarate Realtor",
     metaDescription:
-      "Financing for Miami buyers and investors with financial judgment, including options from 25% down payment subject to review and financial institution approval.",
+      "Financing for buyers and investors considering a Miami purchase, with a careful look at context, relevant factors, and next steps.",
     eyebrow: "Real estate financing",
-    heroTitle: "Financing to buy in Miami with a more complete perspective",
-    heroSubtitle:
-      "Before choosing a property, we review your goal, profile, and documentation to understand which financing options may apply and how they can impact your purchase decision.",
-    primaryCta: "Evaluate my case",
-    secondaryCta: "View properties",
-    summaryTitle: "Buy with financial judgment",
-    summaryItems: [
-      "Miami Realtor",
-      "15+ years in Finance",
-      "Experience in S&P 500 companies",
-    ],
-    judgmentTitle: "It is not just about getting a loan. It is about buying with judgment.",
-    judgmentText:
-      "Financing can help you access a Miami property without using all your available capital. But every case should be reviewed carefully: property type, buyer profile, reserves, documentation, purchase structure, and investment goal.",
-    cards: [
-      "Investment purchase",
-      "Personal use purchase",
-      "Foreign buyers",
-      "Personal or company purchase",
-    ],
-    programsTitle: "Programs that may start from 25% down payment",
-    programsText:
-      "In some cases, foreign buyers may access financing alternatives from 25% down payment. Availability depends on the buyer profile, property type, documentation submitted, and financial institution approval.",
-    programsNote:
-      "25% is not a guarantee. It is an initial reference to evaluate possibilities.",
-    downPaymentLabel: "down payment",
-    reviewTitle: "What is usually reviewed before moving forward",
-    reviewItems: [
-      "Purchase goal: investment, personal use, or rental.",
-      "Estimated budget and available capital.",
-      "Funds for down payment and reserves.",
-      "Verifiable income or financial support.",
-      "Bank history or bank reference.",
-      "Property type and building conditions.",
-      "Purchase under a personal name or corporate structure.",
-    ],
-    processTitle: "A simple process to make better decisions",
-    steps: [
+    heroTitle: "Financing a Miami property purchase",
+    heroThesis: "A broader view of how the purchase can be structured.",
+    heroText:
+      "I can help you gather the relevant information, identify the factors worth clarifying, and understand how financing fits into the broader real estate decision before moving forward.",
+    credential: "Miami Realtor",
+    primaryCta: "Message Jacquie on WhatsApp",
+    secondaryCta: "Contact",
+    ctaHelper: "You do not need to have everything figured out to begin.",
+    newTabLabel: "Opens in a new tab.",
+    structureLabel: "The purchase in context",
+    structureTitle: "Financing is part of the purchase structure",
+    structureText:
+      "It may affect the budget, documentation, and property type worth considering. These factors vary by case and are neither universal requirements nor a mandatory document checklist. On their own, they do not establish that financing is available.",
+    variableItems: [
       {
-        title: "We understand your goal",
-        text: "We define whether you want to invest, buy for personal use, or evaluate a specific opportunity.",
+        title: "Purchase goal and context",
+        text: "The intended use and timing of the decision help define the purchase priorities.",
       },
       {
-        title: "We review the financial scenario",
-        text: "We analyze available capital, documentation, and possible financing paths.",
+        title: "Budget and available capital",
+        text: "The estimated budget and available capital provide useful starting points for considering different scenarios.",
       },
       {
-        title: "We connect with suitable options",
-        text: "Depending on your profile, alternatives are reviewed with the corresponding professionals or financial institutions.",
+        title: "Buyer profile and documentation",
+        text: "The institution may request different information depending on the circumstances.",
       },
       {
-        title: "We support the purchase",
-        text: "If you move forward, financing is coordinated alongside the search, offer, contract, and closing.",
+        title: "Property type and financial institution",
+        text: "Property type, current terms, and the financial institution involved may all influence the purchase plan.",
       },
     ],
-    experienceTitle: "Real estate experience with financial judgment",
+    experienceLabel: "Experience in practice",
+    experienceTitle: "Financial experience applied to the real estate process",
     experienceText:
-      "Jacquie combines her work as a Miami Realtor with more than 15 years of Finance experience in S&P 500 companies. That perspective allows her to support buyers and investors not only through the property itself, but also through the numbers, structure, and process.",
-    finalTitle: "Want to know if financing may apply to your purchase?",
-    finalText:
-      "Tell me what type of property you are looking for and we can review the best path for your case.",
-    finalCta: "Ask on WhatsApp",
-    disclaimer:
-      "This information is for guidance only. All financing is subject to review, documentation, financial institution approval, property type, and conditions in effect at the time of application.",
+      "I bring more than 15 years of experience in finance at S&P 500 companies. That background helps me bring clarity to the available information, consider purchase scenarios, and frame more precise questions within the real estate process.",
+    preparationLabel: "Before moving forward",
+    preparationTitle: "Preparing the information before moving forward",
+    realtorRoleLabel: "Jacquie can help",
+    realtorRoleText:
+      "Clarify relevant factors, prepare questions, and coordinate real estate next steps.",
+    institutionRoleLabel: "The financial institution determines",
+    institutionRoleText:
+      "Review the buyer profile, documentation, and property; set the terms and make the final decision.",
+    referenceLabel: "Possible reference",
+    referenceTitle: "In some cases, a 25% down payment may serve as an initial reference.",
+    referenceDisclaimer:
+      "This reference is not a universal standard and does not guarantee a loan or any outcome. Availability, the applicable down payment, and all other terms depend on the financial institution’s review, documentation, buyer profile, property type, the institution’s current terms, and final approval.",
+    roleDisclaimerLabel: "Scope of this information",
+    roleDisclaimer:
+      "This is general information. Jacquie Zarate acts as a Realtor and provides real estate support; she does not act as a lender, mortgage broker, credit adviser, or financial, tax, or legal adviser. The relevant financial institution determines availability, terms, and the final decision. No financing, approval, or outcome is guaranteed.",
+    closingLabel: "Next step",
+    closingTitle: "Let’s talk about the structure of your purchase",
+    closingText:
+      "Tell me about your goal and the financing questions related to your purchase. I can help coordinate the next real estate steps.",
     whatsAppMessage:
-      "Hi Jacquie, I’d like to evaluate whether financing may apply to my purchase in Miami.",
+      "Hi Jacquie, I’d like to discuss financing for a purchase I’m considering in Miami.",
   },
   fr: {
-    metaTitle: "Financement pour acheter à Miami | Jacquie Zarate Realtor",
+    metaTitle: "Financement d’un achat à Miami | Jacquie Zarate Realtor",
     metaDescription:
-      "Financement pour acheteurs et investisseurs à Miami avec discernement financier, incluant des options à partir de 25% de mise de fonds sous réserve d’évaluation et d’approbation.",
+      "Financement pour les acheteurs et investisseurs qui envisagent un achat à Miami, avec une approche rigoureuse du contexte, des facteurs à considérer et des prochaines étapes.",
     eyebrow: "Financement immobilier",
-    heroTitle: "Financement pour acheter à Miami avec une vision plus complète",
-    heroSubtitle:
-      "Avant de choisir une propriété, nous revoyons votre objectif, votre profil et vos documents afin de comprendre quelles options de financement pourraient s’appliquer et comment elles peuvent influencer votre décision d’achat.",
-    primaryCta: "Évaluer mon cas",
-    secondaryCta: "Voir les propriétés",
-    summaryTitle: "Acheter avec discernement financier",
-    summaryItems: [
-      "Realtor à Miami",
-      "Plus de 15 ans en Finance",
-      "Expérience dans des entreprises du S&P 500",
-    ],
-    judgmentTitle: "Il ne s’agit pas seulement d’obtenir un prêt. Il s’agit d’acheter avec discernement.",
-    judgmentText:
-      "Le financement peut vous aider à accéder à une propriété à Miami sans utiliser tout votre capital disponible. Mais chaque cas doit être évalué avec soin : type de propriété, profil de l’acheteur, réserves, documents, structure d’achat et objectif d’investissement.",
-    cards: [
-      "Achat pour investissement",
-      "Achat pour usage personnel",
-      "Acheteurs étrangers",
-      "Achat à titre personnel ou via une société",
-    ],
-    programsTitle: "Des programmes qui peuvent commencer à 25% de mise de fonds",
-    programsText:
-      "Dans certains cas, des acheteurs étrangers peuvent accéder à des options de financement à partir de 25% de mise de fonds. La disponibilité dépend du profil de l’acheteur, du type de propriété, des documents fournis et de l’approbation de l’institution financière.",
-    programsNote:
-      "Le 25% n’est pas une garantie. C’est une référence initiale pour évaluer les possibilités.",
-    downPaymentLabel: "mise de fonds",
-    reviewTitle: "Ce qui est habituellement revu avant d’avancer",
-    reviewItems: [
-      "Objectif d’achat : investissement, usage personnel ou location.",
-      "Budget estimé et capital disponible.",
-      "Fonds pour la mise de fonds et les réserves.",
-      "Revenus ou soutien financier vérifiable.",
-      "Historique ou référence bancaire.",
-      "Type de propriété et conditions de l’immeuble.",
-      "Achat à titre personnel ou structure corporative.",
-    ],
-    processTitle: "Un processus simple pour prendre de meilleures décisions",
-    steps: [
+    heroTitle: "Financer l’achat d’une propriété à Miami",
+    heroThesis: "Une vision plus complète de la structure de l’achat.",
+    heroText:
+      "Je peux vous aider à rassembler les renseignements pertinents et à situer le financement dans l’ensemble de la décision immobilière avant d’aller plus loin.",
+    credential: "Realtor à Miami",
+    primaryCta: "Écrire à Jacquie sur WhatsApp",
+    secondaryCta: "Contact",
+    ctaHelper: "Il n’est pas nécessaire que tout soit défini pour commencer.",
+    newTabLabel: "S’ouvre dans un nouvel onglet.",
+    structureLabel: "Le projet d’achat en contexte",
+    structureTitle: "Le financement fait partie de la structure de l’achat",
+    structureText:
+      "Il peut influer sur le budget, les documents et le type de propriété à considérer. Ces facteurs varient selon la situation et ne constituent ni des exigences universelles ni une liste de documents obligatoires. À eux seuls, ils ne signifient pas qu’un financement est offert.",
+    variableItems: [
       {
-        title: "Nous comprenons votre objectif",
-        text: "Nous définissons si vous cherchez à investir, acheter pour usage personnel ou évaluer une occasion précise.",
+        title: "Objectif et contexte de l’achat",
+        text: "L’usage prévu et le moment de la décision aident à définir les priorités de l’achat.",
       },
       {
-        title: "Nous revoyons le scénario financier",
-        text: "Nous analysons le capital disponible, les documents et les chemins de financement possibles.",
+        title: "Budget et capitaux disponibles",
+        text: "Le budget estimé et les capitaux disponibles offrent des points de repère pour examiner différents scénarios.",
       },
       {
-        title: "Nous connectons avec les options adéquates",
-        text: "Selon votre profil, les alternatives sont revues avec les professionnels ou les institutions financières appropriées.",
+        title: "Profil de l’acheteur et documents",
+        text: "L’institution peut demander des renseignements différents selon les particularités de chaque situation.",
       },
       {
-        title: "Nous accompagnons l’achat",
-        text: "Si vous avancez, le financement se coordonne avec la recherche, l’offre, le contrat et la clôture.",
+        title: "Type de propriété et institution financière",
+        text: "Le type de propriété, les conditions en vigueur et l’institution financière peuvent influer sur la planification de l’achat.",
       },
     ],
-    experienceTitle: "Expérience immobilière avec discernement financier",
+    experienceLabel: "L’expérience en pratique",
+    experienceTitle: "Une expérience financière appliquée au processus immobilier",
     experienceText:
-      "Jacquie combine son travail comme Realtor à Miami avec plus de 15 ans d’expérience en Finance dans des entreprises du S&P 500. Cette perspective lui permet d’accompagner les acheteurs et investisseurs non seulement sur la propriété, mais aussi sur les chiffres, la structure et le processus.",
-    finalTitle: "Voulez-vous savoir si le financement peut s’appliquer à votre achat ?",
-    finalText:
-      "Dites-moi quel type de propriété vous cherchez et nous revoyons le meilleur chemin pour votre cas.",
-    finalCta: "Consulter par WhatsApp",
-    disclaimer:
-      "L’information est fournie à titre indicatif. Tout financement est soumis à l’évaluation, aux documents, à l’approbation de l’institution financière, au type de propriété et aux conditions en vigueur au moment de la demande.",
+      "Je compte plus de 15 ans d’expérience en finance au sein d’entreprises du S&P 500. Cette expérience m’aide à clarifier les renseignements disponibles, à examiner différents scénarios d’achat et à formuler des questions plus précises dans le cadre du processus immobilier.",
+    preparationLabel: "Avant d’aller plus loin",
+    preparationTitle: "Préparer les renseignements avant d’aller plus loin",
+    realtorRoleLabel: "Jacquie peut aider à",
+    realtorRoleText:
+      "Clarifier les facteurs pertinents, préparer les questions et coordonner les prochaines étapes immobilières.",
+    institutionRoleLabel: "L’institution financière détermine",
+    institutionRoleText:
+      "Analyser le profil de l’acheteur, les documents et la propriété; établir les conditions et prendre la décision finale.",
+    referenceLabel: "Point de repère possible",
+    referenceTitle:
+      "Dans certains cas, une mise de fonds de 25 % peut servir de point de repère initial.",
+    referenceDisclaimer:
+      "Ce point de repère n’est pas une règle universelle et ne garantit ni l’obtention d’un prêt ni quelque résultat que ce soit. La disponibilité, le pourcentage de mise de fonds applicable et toute autre condition dépendent de l’analyse de l’institution financière, des documents, du profil de l’acheteur, du type de propriété, des conditions alors en vigueur et de l’approbation finale.",
+    roleDisclaimerLabel: "Portée de ces renseignements",
+    roleDisclaimer:
+      "Ces renseignements sont de nature générale. Jacquie Zarate agit comme Realtor et offre un accompagnement immobilier; elle n’agit pas comme prêteuse, courtière hypothécaire, conseillère en crédit ni conseillère financière, fiscale ou juridique. L’institution financière concernée détermine la disponibilité, les conditions et la décision finale. Aucun financement, aucune approbation et aucun résultat ne sont garantis.",
+    closingLabel: "Prochaine étape",
+    closingTitle: "Parlons de la structure de votre achat",
+    closingText:
+      "Parlez-moi de votre objectif et des questions de financement liées à votre achat. Je peux vous aider à coordonner les prochaines étapes immobilières.",
     whatsAppMessage:
-      "Bonjour Jacquie, j’aimerais évaluer si le financement peut s’appliquer à mon achat à Miami.",
+      "Bonjour Jacquie, j’aimerais discuter du financement pour un achat que j’envisage à Miami.",
   },
 };
 
-function normalizeLocale(raw: string): Locale {
-  if (raw === "en" || raw === "fr") return raw;
-  return "es";
-}
+const FULL_BLEED = "relative left-1/2 w-[100dvw] -translate-x-1/2";
+const CONTAINER = "mx-auto w-full max-w-[1160px] px-5 sm:px-8";
+const EYEBROW =
+  "text-[11px] font-semibold uppercase tracking-[0.19em] text-primary/70 sm:text-xs";
+const H2 =
+  "text-balance font-display text-[clamp(2rem,4.2vw,3.35rem)] font-medium leading-[1.02] tracking-[-0.025em] text-primary";
+const PRIMARY_CTA =
+  "inline-flex min-h-11 items-center justify-center rounded-[6px] bg-primary px-6 py-3 text-center text-sm font-semibold text-primary-foreground no-underline transition hover:-translate-y-0.5 hover:bg-primary/92 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary motion-reduce:transform-none motion-reduce:transition-none";
+const SECONDARY_CTA =
+  "inline-flex min-h-11 items-center justify-center rounded-[6px] border border-primary px-6 py-3 text-center text-sm font-semibold text-primary no-underline transition hover:bg-primary/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary motion-reduce:transition-none";
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
-  const { locale: raw } = await params;
-  const locale = normalizeSiteLocale(raw);
+  const { locale: rawLocale } = await params;
+  const locale = normalizeLocale(rawLocale);
   const copy = COPY[locale];
 
   return createPageMetadata({
@@ -282,178 +264,223 @@ export default async function FinancingPage({
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const { locale: raw } = await params;
-  const locale = normalizeLocale(raw);
+  const { locale: rawLocale } = await params;
+  const locale = normalizeLocale(rawLocale);
   const copy = COPY[locale];
-  const whatsAppHref = `https://wa.me/17864072591?text=${encodeURIComponent(copy.whatsAppMessage)}`;
+  const whatsAppHref = buildJacquieWhatsAppHref(locale, copy.whatsAppMessage);
+  const contactHref = "/" + locale + "/contacto";
 
   return (
-    <div className="mx-auto max-w-[1100px] px-4 py-12 sm:py-16 text-foreground">
-      <section className="grid gap-8 rounded-[18px] bg-surface p-6 ring-1 ring-primary/10 sm:p-8 md:grid-cols-[1.12fr_0.88fr] md:items-center">
-        <div>
-          <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-primary/70">
-            {copy.eyebrow}
-          </p>
-          <h1 className="mt-3 max-w-[13ch] font-display text-[44px] font-medium leading-[0.96] tracking-normal text-primary sm:text-[58px] lg:text-[68px]">
-            {copy.heroTitle}
-          </h1>
-          <p className="mt-5 max-w-[66ch] text-[17px] leading-[1.75] text-foreground/82">
-            {copy.heroSubtitle}
-          </p>
-          <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-            <a
-              href={whatsAppHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-11 items-center justify-center rounded-md bg-primary px-5 text-sm font-medium text-primary-foreground no-underline hover:opacity-95 focus-visible:ring-2 focus-visible:ring-accent/40"
-            >
-              {copy.primaryCta}
-            </a>
-            <Link
-              href={`/${locale}/listings`}
-              className="inline-flex h-11 items-center justify-center rounded-md border border-primary/25 px-5 text-sm font-medium text-primary no-underline hover:bg-primary/5 focus-visible:ring-2 focus-visible:ring-accent/40"
-            >
-              {copy.secondaryCta}
-            </Link>
-          </div>
-        </div>
-
-        <aside className="rounded-[14px] bg-primary p-6 text-primary-foreground ring-1 ring-primary-foreground/10">
-          <h2 className="font-display text-3xl font-medium leading-[1.05] tracking-normal">
-            {copy.summaryTitle}
-          </h2>
-          <ul className="mt-5 space-y-3">
-            {copy.summaryItems.map((item) => (
-              <li key={item} className="flex gap-3 text-[15px] leading-[1.55] text-primary-foreground/85">
-                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </aside>
-      </section>
-
-      <section className="mt-16 grid gap-8 md:grid-cols-[0.9fr_1.1fr] md:items-start">
-        <div>
-          <h2 className="font-display text-3xl font-medium leading-[1.05] tracking-normal text-primary sm:text-4xl">
-            {copy.judgmentTitle}
-          </h2>
-          <p className="mt-4 text-[16px] leading-[1.75] text-foreground/82">
-            {copy.judgmentText}
-          </p>
-        </div>
-        <div className="grid gap-3 sm:grid-cols-2">
-          {copy.cards.map((card) => (
-            <div
-              key={card}
-              className="rounded-[12px] bg-paper p-5 ring-1 ring-primary/10 shadow-sm"
-            >
-              <h3 className="font-display text-[24px] font-medium leading-[1.08] tracking-normal text-primary">
-                {card}
-              </h3>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="mt-16 rounded-[14px] bg-primary p-6 text-primary-foreground ring-1 ring-primary-foreground/10 sm:p-8">
-        <div className="grid gap-8 md:grid-cols-[0.78fr_1.22fr] md:items-center">
-          <div>
-            <div className="font-display text-[84px] font-medium leading-none tracking-normal text-primary-foreground">
-              25%
-            </div>
-            <p className="mt-3 text-[13px] font-semibold uppercase tracking-[0.12em] text-primary-foreground/70">
-              {copy.downPaymentLabel}
-            </p>
-          </div>
-          <div>
-            <h2 className="font-display text-3xl font-medium leading-[1.05] tracking-normal sm:text-4xl">
-              {copy.programsTitle}
-            </h2>
-            <p className="mt-4 text-[16px] leading-[1.75] text-primary-foreground/84">
-              {copy.programsText}
-            </p>
-            <p className="mt-5 rounded-[10px] bg-primary-foreground/10 p-4 text-[14px] leading-[1.6] text-primary-foreground/86">
-              {copy.programsNote}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="mt-16 grid gap-8 md:grid-cols-[0.82fr_1.18fr] md:items-start">
-        <h2 className="font-display text-3xl font-medium leading-[1.05] tracking-normal text-primary sm:text-4xl">
-          {copy.reviewTitle}
-        </h2>
-        <ul className="grid gap-3">
-          {copy.reviewItems.map((item) => (
-            <li
-              key={item}
-              className="flex gap-3 rounded-[12px] bg-paper p-4 ring-1 ring-primary/10"
-            >
-              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
-              <span className="text-[15px] leading-[1.65] text-foreground/84">{item}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section className="mt-16">
-        <h2 className="max-w-[14ch] font-display text-3xl font-medium leading-[1.05] tracking-normal text-primary sm:text-4xl">
-          {copy.processTitle}
-        </h2>
-        <div className="mt-7 grid gap-4 md:grid-cols-4">
-          {copy.steps.map((step, index) => (
-            <article
-              key={step.title}
-              className="rounded-[12px] bg-surface p-5 ring-1 ring-primary/10"
-            >
-              <div className="mb-5 flex h-9 w-9 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">
-                {index + 1}
-              </div>
-              <h3 className="font-display text-[23px] font-medium leading-[1.08] tracking-normal text-primary">
-                {step.title}
-              </h3>
-              <p className="mt-3 text-[14px] leading-[1.65] text-foreground/78">
-                {step.text}
+    <div className="-mb-24 text-foreground">
+      <section
+        aria-labelledby="financing-hero-title"
+        className={FULL_BLEED + " bg-paper pt-7 pb-8 sm:py-10 lg:py-14"}
+      >
+        <div className={CONTAINER}>
+          <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-14">
+            <div>
+              <p className={EYEBROW}>{copy.eyebrow}</p>
+              <h1
+                id="financing-hero-title"
+                className="mt-4 max-w-[13ch] text-balance font-display text-[clamp(2.6rem,6vw,4.375rem)] font-medium leading-[0.99] tracking-[-0.035em] text-primary"
+              >
+                {copy.heroTitle}
+              </h1>
+              <p className="mt-5 max-w-[30ch] font-display text-[clamp(1.35rem,2.4vw,1.8rem)] leading-[1.16] tracking-[-0.012em] text-primary/82">
+                {copy.heroThesis}
               </p>
-            </article>
-          ))}
+            </div>
+
+            <div className="border-l-2 border-accent pl-5 sm:pl-7">
+              <p className="max-w-[48ch] text-[16px] leading-[1.7] text-foreground/80 sm:text-[18px]">
+                {copy.heroText}
+              </p>
+              <p className="mt-4 max-w-[46ch] text-[11px] font-semibold uppercase leading-[1.6] tracking-[0.14em] text-primary/72 sm:text-xs">
+                {copy.credential}
+              </p>
+              <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <a
+                  href={whatsAppHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={PRIMARY_CTA}
+                >
+                  {copy.primaryCta}
+                  <span className="sr-only"> {copy.newTabLabel}</span>
+                </a>
+                <Link href={contactHref} className={SECONDARY_CTA}>
+                  {copy.secondaryCta}
+                </Link>
+              </div>
+              <p className="mt-3 max-w-[48ch] text-[13px] leading-[1.6] text-foreground/68">
+                {copy.ctaHelper}
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="mt-16 rounded-[14px] bg-paper p-6 ring-1 ring-primary/10 shadow-sm sm:p-8">
-        <div className="max-w-[72ch]">
-          <h2 className="font-display text-3xl font-medium leading-[1.05] tracking-normal text-primary sm:text-4xl">
-            {copy.experienceTitle}
-          </h2>
-          <p className="mt-4 text-[16px] leading-[1.75] text-foreground/84">
-            {copy.experienceText}
-          </p>
+      <section
+        aria-labelledby="financing-structure-title"
+        className={FULL_BLEED + " bg-background py-8 sm:py-12 lg:py-14"}
+      >
+        <div className={CONTAINER}>
+          <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+            <div>
+              <p className={EYEBROW}>{copy.structureLabel}</p>
+              <h2 id="financing-structure-title" className={H2 + " mt-4 max-w-[15ch]"}>
+                {copy.structureTitle}
+              </h2>
+              <p className="mt-5 max-w-[58ch] text-[15px] leading-[1.72] text-foreground/74 sm:text-[16px]">
+                {copy.structureText}
+              </p>
+            </div>
+
+            <dl aria-labelledby="financing-structure-title" className="border-t border-primary/16">
+              {copy.variableItems.map((item) => (
+                <div
+                  key={item.title}
+                  className="grid gap-1.5 border-b border-primary/16 py-3.5 sm:py-4 lg:grid-cols-[0.92fr_1.08fr] lg:gap-7"
+                >
+                  <dt className="font-display text-[1.3rem] leading-[1.12] text-primary sm:text-[1.4rem]">
+                    {item.title}
+                  </dt>
+                  <dd className="text-[14px] leading-[1.62] text-foreground/72">
+                    {item.text}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         </div>
       </section>
 
-      <section className="mt-16 rounded-[14px] bg-primary p-6 text-center text-primary-foreground ring-1 ring-primary-foreground/10 sm:p-8">
-        <h2 className="mx-auto max-w-[18ch] font-display text-3xl font-medium leading-[1.05] tracking-normal sm:text-4xl">
-          {copy.finalTitle}
-        </h2>
-        <p className="mx-auto mt-3 max-w-[62ch] text-[15px] leading-[1.7] text-primary-foreground/82">
-          {copy.finalText}
-        </p>
-        <div className="mt-6">
-          <a
-            href={whatsAppHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex h-11 items-center justify-center rounded-md bg-primary-foreground/10 px-5 text-sm font-medium text-primary-foreground no-underline hover:bg-primary-foreground/20 focus-visible:ring-2 focus-visible:ring-accent/40"
-          >
-            {copy.finalCta}
-          </a>
+      <section
+        aria-labelledby="financing-experience-title"
+        className={FULL_BLEED + " bg-paper py-8 sm:py-12 lg:py-14"}
+      >
+        <div className={CONTAINER}>
+          <div className="grid gap-6 lg:grid-cols-2 lg:items-start lg:gap-16">
+            <div>
+              <p className={EYEBROW}>{copy.experienceLabel}</p>
+              <h2
+                id="financing-experience-title"
+                className={H2 + " mt-4 max-w-none"}
+              >
+                {copy.experienceTitle}
+              </h2>
+            </div>
+            <div className="lg:pt-6">
+              <p className="max-w-[65ch] text-[16px] leading-[1.72] text-foreground/78 sm:text-[17px]">
+                {copy.experienceText}
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-8 border-t border-primary/16 pt-8 sm:mt-10 sm:pt-10">
+            <div className="grid gap-8 lg:grid-cols-[1.32fr_0.68fr] lg:items-start lg:gap-14">
+              <div>
+                <p className={EYEBROW}>{copy.preparationLabel}</p>
+                <h2
+                  id="financing-preparation-title"
+                  className={H2 + " mt-4 max-w-[15ch]"}
+                >
+                  {copy.preparationTitle}
+                </h2>
+
+                <dl className="mt-6 grid gap-5 border-t border-primary/16 pt-5 sm:grid-cols-2 sm:gap-8">
+                  <div>
+                    <dt className="text-[11px] font-semibold uppercase tracking-[0.17em] text-primary/72">
+                      {copy.realtorRoleLabel}
+                    </dt>
+                    <dd className="mt-2.5 text-[14px] leading-[1.62] text-foreground/72 sm:text-[15px]">
+                      {copy.realtorRoleText}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="text-[11px] font-semibold uppercase tracking-[0.17em] text-primary/72">
+                      {copy.institutionRoleLabel}
+                    </dt>
+                    <dd className="mt-2.5 text-[14px] leading-[1.62] text-foreground/72 sm:text-[15px]">
+                      {copy.institutionRoleText}
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+
+              <aside
+                aria-labelledby="financing-reference-title"
+                className="rounded-[4px] bg-primary px-5 py-5 text-primary-foreground sm:px-6 sm:py-6 lg:max-w-[360px] lg:justify-self-end"
+              >
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-primary-foreground/72 sm:text-[11px]">
+                  {copy.referenceLabel}
+                </p>
+                <h3
+                  id="financing-reference-title"
+                  className="mt-3 text-balance font-display text-[clamp(1.35rem,2.3vw,1.85rem)] leading-[1.1] tracking-[-0.015em]"
+                >
+                  {copy.referenceTitle}
+                </h3>
+                <p className="mt-4 border-t border-primary-foreground/18 pt-4 text-[13px] leading-[1.62] text-primary-foreground/84 sm:text-[14px]">
+                  {copy.referenceDisclaimer}
+                </p>
+              </aside>
+            </div>
+          </div>
         </div>
       </section>
 
-      <p className="mx-auto mt-6 max-w-[90ch] text-center text-[12px] leading-[1.65] text-foreground/70">
-        {copy.disclaimer}
-      </p>
+      <section
+        aria-labelledby="financing-close-title"
+        className={
+          FULL_BLEED +
+          " bg-background pt-6 pb-12 sm:pt-8 sm:pb-16 lg:pt-10 lg:pb-[72px]"
+        }
+      >
+        <div className={CONTAINER}>
+          <div className="border-y border-primary/16 py-6 sm:py-8">
+            <div className="grid gap-5 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:gap-14">
+              <div>
+                <p className={EYEBROW}>{copy.closingLabel}</p>
+                <h2 id="financing-close-title" className={H2 + " mt-4 max-w-[15ch]"}>
+                  {copy.closingTitle}
+                </h2>
+              </div>
+              <div>
+                <p className="max-w-[58ch] text-[15px] leading-[1.68] text-foreground/76 sm:text-[16px]">
+                  {copy.closingText}
+                </p>
+                <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                  <a
+                    href={whatsAppHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={PRIMARY_CTA}
+                  >
+                    {copy.primaryCta}
+                    <span className="sr-only"> {copy.newTabLabel}</span>
+                  </a>
+                  <Link href={contactHref} className={SECONDARY_CTA}>
+                    {copy.secondaryCta}
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            <aside
+              aria-label={copy.roleDisclaimerLabel}
+              className="mt-6 border-t border-primary/16 pt-4 sm:mt-7 sm:pt-5"
+            >
+              <p className="text-[10px] font-semibold uppercase tracking-[0.17em] text-primary/72 sm:text-[11px]">
+                {copy.roleDisclaimerLabel}
+              </p>
+              <p className="mt-2.5 max-w-[105ch] text-[13px] leading-[1.62] text-foreground/70 sm:text-[14px]">
+                {copy.roleDisclaimer}
+              </p>
+            </aside>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
