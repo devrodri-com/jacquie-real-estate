@@ -40,7 +40,7 @@ function ProjectFaqRow({
         aria-label={`${String(index + 1).padStart(2, "0")} ${item.q} — ${
           isOpen ? labels.close : labels.open
         }`}
-        className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-5 py-4 text-left text-[15px] font-semibold leading-6 text-primary marker:content-none sm:min-h-16 sm:py-5 sm:text-[17px] [&::-webkit-details-marker]:hidden"
+        className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 py-3.5 text-left text-[15px] font-semibold leading-6 text-primary marker:content-none sm:text-[16px] [&::-webkit-details-marker]:hidden"
       >
         <span className="flex min-w-0 items-baseline gap-4">
           <span
@@ -53,7 +53,7 @@ function ProjectFaqRow({
         </span>
         <span
           aria-hidden
-          className="relative h-11 w-11 shrink-0 rounded-full border border-primary/20 transition-colors group-open:bg-primary group-open:text-primary-foreground motion-reduce:transition-none"
+          className="relative h-9 w-9 shrink-0 rounded-full border border-primary/20 transition-colors group-open:bg-primary group-open:text-primary-foreground motion-reduce:transition-none"
         >
           <span className="absolute left-1/2 top-1/2 h-px w-4 -translate-x-1/2 -translate-y-1/2 bg-current" />
           <span className="absolute left-1/2 top-1/2 h-4 w-px -translate-x-1/2 -translate-y-1/2 bg-current transition-transform group-open:rotate-90 group-open:opacity-0 motion-reduce:transition-none" />
@@ -61,7 +61,7 @@ function ProjectFaqRow({
       </summary>
       <div
         id={answerId}
-        className="pb-5 pr-2 text-[15px] leading-[1.75] text-foreground/76 sm:ml-10 sm:max-w-[72ch] sm:pb-6 sm:pr-16 sm:text-[16px]"
+        className="pb-4 pr-2 text-[14px] leading-[1.7] text-foreground/76 sm:ml-10 sm:max-w-[72ch] sm:pb-5 sm:pr-14 sm:text-[15px]"
       >
         <p>{item.a}</p>
       </div>

@@ -37,7 +37,6 @@ type ProjectDetailCopy = {
     primaryCta: string;
     secondaryCta: string;
     whatsappMessage: string;
-    disclaimer: string;
   };
   gallery: {
     eyebrow: string;
@@ -49,8 +48,7 @@ type ProjectDetailCopy = {
     eyebrow: string;
     title: string;
     intro: string;
-    references: string;
-    highlights: string;
+    attributes: string;
   };
   typologies: {
     eyebrow: string;
@@ -66,7 +64,6 @@ type ProjectDetailCopy = {
     eyebrow: string;
     title: string;
     intro: string;
-    disclaimer: string;
   };
   advisor: {
     eyebrow: string;
@@ -91,6 +88,9 @@ type ProjectDetailCopy = {
     primaryCta: string;
     secondaryCta: string;
   };
+  legal: {
+    disclaimer: string;
+  };
 };
 
 export const PROJECT_DETAIL_COPY: Record<SiteLocale, ProjectDetailCopy> = {
@@ -100,7 +100,7 @@ export const PROJECT_DETAIL_COPY: Record<SiteLocale, ProjectDetailCopy> = {
       share: "Compartir",
     },
     opening: {
-      eyebrow: "PROYECTO DE PRECONSTRUCCIÓN",
+      eyebrow: "PROYECTO EN PRECONSTRUCCIÓN",
       startingPrice: "Precio inicial",
       priceFallback: "Precio a consultar",
       delivery: "Entrega estimada",
@@ -113,18 +113,16 @@ export const PROJECT_DETAIL_COPY: Record<SiteLocale, ProjectDetailCopy> = {
       furnishing: "Amueblamiento",
       furnished: "Amueblado",
       unfurnished: "Sin amueblar",
-      primaryCta: "Conversar por WhatsApp",
-      secondaryCta: "Formulario de contacto",
+      primaryCta: "Consultar por WhatsApp",
+      secondaryCta: "Enviar una consulta",
       whatsappMessage:
-        "Hola Jacquie, quiero conversar sobre el proyecto {name}, su entrega, plan de pagos, tipologías y condiciones actuales.",
-      disclaimer:
-        "Precios, disponibilidad, fechas, políticas de renta, financiación y planes de pago pueden cambiar. Confirma las condiciones actuales y la documentación aplicable antes de avanzar. Esta información no constituye una oferta ni asesoramiento financiero, legal, fiscal o migratorio.",
+        "Hola Jacquie, quiero conocer más sobre {name}: entrega estimada, plan de pagos, tipologías y condiciones actuales.",
     },
     gallery: {
       eyebrow: "RECORRIDO VISUAL",
-      title: "Una mirada al proyecto",
+      title: "Conoce el proyecto",
       intro:
-        "Explora las imágenes disponibles del desarrollo y abre la secuencia completa para revisarlas con mayor detalle.",
+        "Explora las imágenes publicadas y abre la galería completa para verlas en orden.",
       labels: {
         dialogTitle: "Galería de {name}",
         viewAll: "Ver todas las imágenes ({total})",
@@ -141,57 +139,57 @@ export const PROJECT_DETAIL_COPY: Record<SiteLocale, ProjectDetailCopy> = {
       },
     },
     overview: {
-      eyebrow: "LECTURA DEL PROYECTO",
-      title: "El proyecto, en breve",
+      eyebrow: "EL PROYECTO",
+      title: "Sobre el proyecto",
       intro:
-        "Estas son las referencias y características publicadas para entender el desarrollo antes de revisar sus tipologías y condiciones.",
-      references: "Referencias del proyecto",
-      highlights: "Aspectos destacados",
+        "Una lectura de los atributos que definen el proyecto, organizada a partir de la información publicada.",
+      attributes: "Atributos destacados",
     },
     typologies: {
       eyebrow: "CONFIGURACIONES",
-      title: "Tipologías del proyecto",
-      intro:
-        "Revisa las configuraciones publicadas y sus superficies cuando el dato está disponible.",
+      title: "Tipologías y superficies",
+      intro: "Consulta las configuraciones y superficies publicadas.",
       note:
-        "La disponibilidad de cada tipología debe confirmarse al momento de la consulta.",
+        "La disponibilidad de cada tipología se verifica al momento de la consulta.",
     },
     features: {
       eyebrow: "CARACTERÍSTICAS",
-      title: "Detalles del desarrollo y las residencias",
+      title: "Residencias y amenidades",
     },
     payment: {
       eyebrow: "ESTRUCTURA DE COMPRA",
       title: "Plan de pagos",
       intro:
-        "La secuencia se presenta en el mismo orden publicado para facilitar su lectura y comparación.",
-      disclaimer:
-        "El plan puede cambiar. Confirma los porcentajes, hitos y condiciones vigentes antes de avanzar; esta información no constituye una oferta final.",
+        "Consulta la secuencia publicada en el orden previsto para el proyecto.",
     },
     advisor: {
-      eyebrow: "CÓMO EVALUARLO",
-      title: "Evalúalo según tus objetivos",
+      eyebrow: "ACOMPAÑAMIENTO DE JACQUIE",
+      title: "Conoce mejor este proyecto",
       text:
-        "Jacquie puede ayudarte a revisar la ubicación, la entrega estimada, la estructura de pagos, la política de renta y las tipologías según el uso que imaginas para la propiedad. Antes de avanzar, conviene confirmar la documentación y las condiciones actuales del proyecto.",
+        "Jacquie puede ayudarte a entender la ubicación, la entrega estimada, el plan de pagos, las tipologías y las condiciones actuales según lo que estás buscando.",
     },
     location: {
       eyebrow: "UBICACIÓN",
-      title: "Dónde se desarrolla el proyecto",
+      title: "Ubicación del proyecto",
       mapTitle: "Ubicación de {name}",
     },
     faq: {
       eyebrow: "PREGUNTAS FRECUENTES",
-      title: "Información para revisar antes de avanzar",
+      title: "Información sobre el proyecto",
       open: "Abrir respuesta",
       close: "Cerrar respuesta",
     },
     close: {
-      eyebrow: "CONVERSACIÓN DIRECTA",
-      title: "Aclara las condiciones antes de avanzar",
+      eyebrow: "PRÓXIMO PASO",
+      title: "Conversemos sobre este proyecto",
       text:
-        "Conversa con Jacquie sobre {name}, su entrega estimada, el plan de pagos, las tipologías y las condiciones actuales, o compáralo con otras alternativas.",
-      primaryCta: "Hablar con Jacquie",
-      secondaryCta: "Formulario de contacto",
+        "Puedes preguntarle a Jacquie por la entrega, el plan de pagos, las tipologías o las condiciones actuales, y comparar el proyecto con lo que estás buscando.",
+      primaryCta: "Consultar por WhatsApp",
+      secondaryCta: "Enviar una consulta",
+    },
+    legal: {
+      disclaimer:
+        "Los precios, la disponibilidad, las fechas de entrega, las políticas de renta, la financiación y los planes de pago pueden cambiar. Confirma la información, la documentación y las condiciones vigentes antes de tomar una decisión. Este contenido es informativo: no constituye una oferta ni asesoramiento financiero, legal, fiscal o migratorio.",
     },
   },
   en: {
@@ -213,18 +211,16 @@ export const PROJECT_DETAIL_COPY: Record<SiteLocale, ProjectDetailCopy> = {
       furnishing: "Furnishing",
       furnished: "Furnished",
       unfurnished: "Unfurnished",
-      primaryCta: "Message Jacquie on WhatsApp",
-      secondaryCta: "Contact form",
+      primaryCta: "Ask Jacquie on WhatsApp",
+      secondaryCta: "Send an inquiry",
       whatsappMessage:
-        "Hi Jacquie, I'd like to discuss {name}, its completion timeline, payment schedule, residence types, and current terms.",
-      disclaimer:
-        "Prices, availability, timelines, rental policies, financing, and payment schedules may change. Confirm current terms and applicable documents before moving forward. This information does not constitute an offer, nor is it financial, legal, tax, or immigration advice.",
+        "Hi Jacquie, I'd like to learn more about {name}, including its estimated completion, payment schedule, residence types, and current terms.",
     },
     gallery: {
-      eyebrow: "VISUAL OVERVIEW",
-      title: "A closer look at the project",
+      eyebrow: "VISUAL TOUR",
+      title: "Explore the project",
       intro:
-        "Explore the available development images and open the full sequence for a more detailed review.",
+        "Explore the published images and open the full gallery to view them in order.",
       labels: {
         dialogTitle: "{name} gallery",
         viewAll: "View all images ({total})",
@@ -241,38 +237,33 @@ export const PROJECT_DETAIL_COPY: Record<SiteLocale, ProjectDetailCopy> = {
       },
     },
     overview: {
-      eyebrow: "PROJECT OVERVIEW",
-      title: "The project, at a glance",
+      eyebrow: "THE PROJECT",
+      title: "About the project",
       intro:
-        "These are the published references and features available to understand the development before reviewing residence types and terms.",
-      references: "Project references",
-      highlights: "Highlights",
+        "A closer look at the attributes that define the project, based on the published information.",
+      attributes: "Key attributes",
     },
     typologies: {
       eyebrow: "CONFIGURATIONS",
-      title: "Residence types in the project",
-      intro:
-        "Review the published configurations and sizes whenever that information is available.",
-      note:
-        "Availability for each residence type must be confirmed when you inquire.",
+      title: "Residence types and sizes",
+      intro: "Review the published configurations and sizes.",
+      note: "Availability for each residence type is verified when you inquire.",
     },
     features: {
       eyebrow: "FEATURES",
-      title: "Development and residence details",
+      title: "Residences and amenities",
     },
     payment: {
       eyebrow: "PURCHASE STRUCTURE",
       title: "Payment schedule",
       intro:
-        "The sequence appears in its published order so the milestones are easier to read and compare.",
-      disclaimer:
-        "The schedule may change. Confirm current percentages, milestones, and terms before moving forward; this information is not a final offer.",
+        "Review the published sequence in the order provided for the project.",
     },
     advisor: {
-      eyebrow: "HOW TO EVALUATE IT",
-      title: "Evaluate it against your goals",
+      eyebrow: "GUIDANCE FROM JACQUIE",
+      title: "Get to know this project",
       text:
-        "Jacquie can help you review the location, estimated completion, payment structure, rental policy, and residence types in light of how you expect to use the property. Before moving forward, confirm the project's current documents and terms.",
+        "Jacquie can help you understand the location, estimated completion, payment schedule, residence types, and current terms in light of what you're looking for.",
     },
     location: {
       eyebrow: "LOCATION",
@@ -281,17 +272,21 @@ export const PROJECT_DETAIL_COPY: Record<SiteLocale, ProjectDetailCopy> = {
     },
     faq: {
       eyebrow: "FREQUENTLY ASKED QUESTIONS",
-      title: "Information to review before moving forward",
+      title: "Project information",
       open: "Open answer",
       close: "Close answer",
     },
     close: {
-      eyebrow: "DIRECT CONVERSATION",
-      title: "Clarify the current terms before moving forward",
+      eyebrow: "NEXT STEP",
+      title: "Let's talk about this project",
       text:
-        "Talk with Jacquie about {name}, its estimated completion, payment schedule, residence types, and current terms, or compare it with other alternatives.",
-      primaryCta: "Talk with Jacquie",
-      secondaryCta: "Contact form",
+        "Ask Jacquie about the estimated completion, payment schedule, residence types, or current terms, and compare the project with what you're looking for.",
+      primaryCta: "Ask Jacquie on WhatsApp",
+      secondaryCta: "Send an inquiry",
+    },
+    legal: {
+      disclaimer:
+        "Prices, availability, delivery timelines, rental policies, financing, and payment schedules may change. Confirm the latest information, applicable documents, and current terms before making a decision. This content is for informational purposes only and does not constitute an offer or financial, legal, tax, or immigration advice.",
     },
   },
   fr: {
@@ -313,18 +308,16 @@ export const PROJECT_DETAIL_COPY: Record<SiteLocale, ProjectDetailCopy> = {
       furnishing: "Ameublement",
       furnished: "Meublé",
       unfurnished: "Non meublé",
-      primaryCta: "Discuter sur WhatsApp",
-      secondaryCta: "Formulaire de contact",
+      primaryCta: "Écrire à Jacquie sur WhatsApp",
+      secondaryCta: "Envoyer une demande",
       whatsappMessage:
-        "Bonjour Jacquie, j’aimerais discuter du projet {name}, de sa livraison, de l’échéancier des dépôts, des types de résidences et des conditions actuelles.",
-      disclaimer:
-        "Les prix, la disponibilité, les échéanciers, les politiques de location, le financement et les calendriers de dépôts peuvent changer. Confirmez les conditions actuelles et les documents applicables avant d’aller plus loin. Ces renseignements ne constituent ni une offre ni des conseils financiers, juridiques, fiscaux ou en immigration.",
+        "Bonjour Jacquie, j’aimerais en savoir plus sur {name}, notamment sur la livraison prévue, l’échéancier des dépôts, les types de résidences et les conditions actuelles.",
     },
     gallery: {
-      eyebrow: "APERÇU VISUEL",
-      title: "Un regard sur le projet",
+      eyebrow: "VISITE EN IMAGES",
+      title: "Découvrez le projet",
       intro:
-        "Explorez les images disponibles du développement et ouvrez la séquence complète pour les examiner plus en détail.",
+        "Explorez les images publiées et ouvrez la galerie complète pour les parcourir dans l’ordre.",
       labels: {
         dialogTitle: "Galerie de {name}",
         viewAll: "Voir toutes les images ({total})",
@@ -341,38 +334,34 @@ export const PROJECT_DETAIL_COPY: Record<SiteLocale, ProjectDetailCopy> = {
       },
     },
     overview: {
-      eyebrow: "APERÇU DU PROJET",
-      title: "Le projet en bref",
+      eyebrow: "LE PROJET",
+      title: "À propos du projet",
       intro:
-        "Voici les références et caractéristiques publiées pour comprendre le développement avant d’examiner les types de résidences et les conditions.",
-      references: "Références du projet",
-      highlights: "Points forts",
+        "Un aperçu des caractéristiques qui définissent le projet, à partir des renseignements publiés.",
+      attributes: "Caractéristiques distinctives",
     },
     typologies: {
       eyebrow: "CONFIGURATIONS",
-      title: "Types de résidences du projet",
-      intro:
-        "Examinez les configurations publiées et les superficies lorsque ces renseignements sont disponibles.",
+      title: "Types de résidences et superficies",
+      intro: "Consultez les configurations et les superficies publiées.",
       note:
-        "La disponibilité de chaque type de résidence doit être confirmée au moment de la demande.",
+        "La disponibilité de chaque type de résidence est vérifiée au moment de la demande.",
     },
     features: {
       eyebrow: "CARACTÉRISTIQUES",
-      title: "Détails du développement et des résidences",
+      title: "Résidences et commodités",
     },
     payment: {
       eyebrow: "STRUCTURE D’ACHAT",
-      title: "Échéancier des paiements",
+      title: "Échéancier des dépôts",
       intro:
-        "La séquence est présentée dans l’ordre publié afin de faciliter la lecture et la comparaison des étapes.",
-      disclaimer:
-        "L’échéancier peut changer. Confirmez les pourcentages, les étapes et les conditions actuelles avant d’aller plus loin; ces renseignements ne constituent pas une offre finale.",
+        "Consultez la séquence publiée dans l’ordre prévu pour le projet.",
     },
     advisor: {
-      eyebrow: "COMMENT L’ÉVALUER",
-      title: "Évaluez-le selon vos objectifs",
+      eyebrow: "L’ACCOMPAGNEMENT DE JACQUIE",
+      title: "Mieux comprendre ce projet",
       text:
-        "Jacquie peut vous aider à examiner l’emplacement, la livraison prévue, la structure de paiement, la politique de location et les types de résidences selon l’usage que vous envisagez. Avant d’aller plus loin, il convient de confirmer les documents et les conditions actuelles du projet.",
+        "Jacquie peut vous aider à comprendre l’emplacement, la livraison prévue, l’échéancier des dépôts, les types de résidences et les conditions actuelles selon ce que vous recherchez.",
     },
     location: {
       eyebrow: "EMPLACEMENT",
@@ -381,17 +370,21 @@ export const PROJECT_DETAIL_COPY: Record<SiteLocale, ProjectDetailCopy> = {
     },
     faq: {
       eyebrow: "QUESTIONS FRÉQUENTES",
-      title: "Renseignements à examiner avant d’aller plus loin",
+      title: "Renseignements sur le projet",
       open: "Ouvrir la réponse",
       close: "Fermer la réponse",
     },
     close: {
-      eyebrow: "CONVERSATION DIRECTE",
-      title: "Clarifiez les conditions actuelles avant d’aller plus loin",
+      eyebrow: "PROCHAINE ÉTAPE",
+      title: "Parlons de ce projet",
       text:
-        "Discutez avec Jacquie de {name}, de sa livraison prévue, de l’échéancier des dépôts, des types de résidences et des conditions actuelles, ou comparez-le à d’autres options.",
-      primaryCta: "Parler avec Jacquie",
-      secondaryCta: "Formulaire de contact",
+        "Vous pouvez poser vos questions à Jacquie sur la livraison, l’échéancier des dépôts, les types de résidences ou les conditions actuelles, puis comparer le projet à ce que vous recherchez.",
+      primaryCta: "Écrire à Jacquie sur WhatsApp",
+      secondaryCta: "Envoyer une demande",
+    },
+    legal: {
+      disclaimer:
+        "Les prix, la disponibilité, les dates de livraison, les politiques de location, le financement et les échéanciers de dépôts peuvent changer. Confirmez les renseignements à jour, les documents applicables et les conditions en vigueur avant de prendre une décision. Ce contenu est fourni à titre informatif seulement; il ne constitue ni une offre ni des conseils financiers, juridiques, fiscaux ou en immigration.",
     },
   },
 };

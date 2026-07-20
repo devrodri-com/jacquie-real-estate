@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ShareButtons from "@/components/ShareButtons";
@@ -16,6 +17,8 @@ import { PROJECT_DETAIL_COPY } from "./content";
 import ProjectFaq from "./ProjectFaq";
 import ProjectGallery from "./ProjectGallery";
 import {
+  dedupeProjectPresentation,
+  parsePaymentPresentationLine,
   safePresentationFaqs,
   safePresentationLines,
   safePresentationPaymentLines,
@@ -33,7 +36,7 @@ const EYEBROW =
 const EYEBROW_LIGHT =
   "text-[10px] font-semibold uppercase tracking-[0.19em] text-primary-foreground/64 sm:text-[11px]";
 const SECTION_TITLE =
-  "font-display text-[clamp(2.25rem,4.8vw,3.8rem)] font-medium leading-[1.01] tracking-[-0.025em] text-primary";
+  "font-display text-[clamp(2rem,3.6vw,3.2rem)] font-medium leading-[1.02] tracking-[-0.025em] text-primary";
 const PRIMARY_CTA =
   "inline-flex min-h-11 w-full items-center justify-center border border-primary bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground no-underline transition-colors hover:bg-primary/90 motion-reduce:transition-none sm:w-auto";
 const SECONDARY_CTA =
@@ -158,11 +161,11 @@ function Fact({
   className?: string;
 }) {
   return (
-    <div className={`min-w-0 py-5 sm:py-6 ${className}`}>
-      <dt className="text-[10px] font-semibold uppercase tracking-[0.17em] text-primary/70">
+    <div className={`min-w-0 border-t border-primary/15 py-3 ${className}`}>
+      <dt className="text-[9px] font-semibold uppercase tracking-[0.16em] text-primary/68 sm:text-[10px]">
         {label}
       </dt>
-      <dd className="mt-2 break-words font-display text-[clamp(1.35rem,2.5vw,2rem)] leading-[1.12] text-primary">
+      <dd className="mt-1.5 break-words text-[14px] font-medium leading-[1.4] text-primary sm:text-[15px]">
         {children}
       </dd>
     </div>
@@ -299,7 +302,9 @@ export default async function Proyecto({ params }: Params) {
     : isFR
       ? pickFrArrays(frOverlay?.paymentPlanFr)
       : (project.paymentPlanEs ?? []);
-  const payment = safePresentationPaymentLines(rawPayment, locale);
+  const payment = safePresentationPaymentLines(rawPayment, locale).map(
+    parsePaymentPresentationLine
+  );
 
   const rawFaqs = isEN
     ? (project.faqsEn ?? [])
@@ -320,21 +325,21 @@ export default async function Proyecto({ params }: Params) {
     : isFR
       ? pickFrArrays(frOverlay?.featuresFr)
       : (project.featuresEs ?? []);
-  const features = safePresentationLines(rawFeatures);
+  const safeFeatures = safePresentationLines(rawFeatures);
 
   const rawHighlights = isEN
     ? (project.highlightsEn ?? project.highlights ?? [])
     : isFR
       ? (frOverlay?.highlightsFr ?? project.highlightsFr ?? [])
       : (project.highlights ?? []);
-  const highlights = safePresentationLines(rawHighlights);
+  const safeHighlights = safePresentationLines(rawHighlights);
 
   const rawMicroClaims = isEN
     ? (project.microClaimsEn ?? [])
     : isFR
       ? pickFrArrays(frOverlay?.microClaimsFr)
       : (project.microClaimsEs ?? []);
-  const microClaims = safePresentationLines(rawMicroClaims);
+  const safeMicroClaims = safePresentationLines(rawMicroClaims);
 
   const projectImages = project.images ?? [];
   const contactHref = `/${locale}/contacto`;
@@ -345,19 +350,30 @@ export default async function Proyecto({ params }: Params) {
   const shareUrl = localizedUrl(locale, `proyectos/${slug}`);
   const pricePerAreaSuffix =
     locale === "fr" ? "/pi²" : locale === "en" ? "/sq ft" : "/ft²";
-  const supportingFacts: Array<{ label: string; value: ReactNode }> = [];
+  const facts: Array<{
+    label: string;
+    value: ReactNode;
+    wide?: boolean;
+  }> = [
+    {
+      label: copy.opening.location,
+      value: city,
+      wide: city.length > 32,
+    },
+  ];
 
-  if (typeof project.pricePerSfApprox === "number") {
-    supportingFacts.push({
-      label: copy.opening.pricePerArea,
-      value: `~${fmtUSD(project.pricePerSfApprox, locale)}${pricePerAreaSuffix}`,
+  if (delivery) {
+    facts.push({ label: copy.opening.delivery, value: delivery });
+  }
+  if (rentalPolicy) {
+    facts.push({
+      label: copy.opening.rental,
+      value: rentalPolicy,
+      wide: String(rentalPolicy).length > 32,
     });
   }
-  if (project.hoa) {
-    supportingFacts.push({ label: copy.opening.hoa, value: project.hoa });
-  }
   if (typeof project.furnished === "boolean") {
-    supportingFacts.push({
+    facts.push({
       label: copy.opening.furnishing,
       value: project.furnished
         ? copy.opening.furnished
@@ -365,12 +381,48 @@ export default async function Proyecto({ params }: Params) {
     });
   }
 
-  const supportingFactsGrid =
-    supportingFacts.length === 3
-      ? "sm:grid-cols-3"
-      : supportingFacts.length === 2
-        ? "sm:grid-cols-2"
-        : "sm:grid-cols-1";
+  if (typeof project.pricePerSfApprox === "number") {
+    facts.push({
+      label: copy.opening.pricePerArea,
+      value: `~${fmtUSD(project.pricePerSfApprox, locale)}${pricePerAreaSuffix}`,
+    });
+  }
+  if (project.hoa) {
+    facts.push({
+      label: copy.opening.hoa,
+      value: project.hoa,
+      wide: project.hoa.length > 32,
+    });
+  }
+
+  const factValues = [
+    city,
+    delivery,
+    rentalPolicy,
+    typeof project.furnished === "boolean"
+      ? project.furnished
+        ? copy.opening.furnished
+        : copy.opening.unfurnished
+      : undefined,
+    typeof project.priceFromUsd === "number"
+      ? fmtUSD(project.priceFromUsd, locale)
+      : undefined,
+  ].filter((value): value is string => Boolean(value));
+  const {
+    microClaims,
+    highlights,
+    features,
+  } = dedupeProjectPresentation({
+    microClaims: safeMicroClaims,
+    highlights: safeHighlights,
+    features: safeFeatures,
+    factValues,
+    priceFromUsd: project.priceFromUsd,
+  });
+  const overviewLead = highlights[0] ?? microClaims[0];
+  const overviewAttributes = [...microClaims, ...highlights].filter(
+    (attribute) => attribute !== overviewLead
+  );
 
   const hasCoordinates =
     typeof project.lat === "number" && typeof project.lng === "number";
@@ -394,11 +446,11 @@ export default async function Proyecto({ params }: Params) {
         aria-labelledby="project-detail-title"
         className="border-b border-primary/15 bg-paper"
       >
-        <div className={`${CONTAINER} py-6 sm:py-10 lg:py-14`}>
-          <div className="flex items-center justify-between gap-5 border-b border-primary/12 pb-4">
+        <div className={`${CONTAINER} py-4 sm:py-5 lg:py-6`}>
+          <div className="grid min-h-11 grid-cols-[minmax(0,1fr)_auto] items-center gap-4 border-b border-primary/12 pb-3">
             <Link
               href={`/${locale}/proyectos`}
-              className="inline-flex min-h-11 items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.13em] text-primary no-underline"
+              className="inline-flex min-h-11 min-w-0 items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-primary no-underline sm:text-[12px]"
             >
               <span aria-hidden>←</span>
               {copy.utility.back}
@@ -414,30 +466,37 @@ export default async function Proyecto({ params }: Params) {
             />
           </div>
 
-          <div className="mt-8 grid gap-8 lg:mt-12 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-14">
-            <div className="min-w-0">
+          <div className="grid gap-6 pt-4 lg:min-h-[610px] lg:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)] lg:gap-10 lg:pt-6">
+            <div className="order-2 flex min-w-0 flex-col justify-center lg:order-1 lg:py-5 lg:pr-2">
               <p className={EYEBROW}>{copy.opening.eyebrow}</p>
-              <p className="mt-4 text-[13px] font-semibold uppercase tracking-[0.12em] text-primary/72">
-                {city}
-              </p>
               <h1
                 id="project-detail-title"
-                className="mt-3 max-w-[15ch] break-words font-display text-[clamp(2.7rem,7vw,5.45rem)] font-medium leading-[0.94] tracking-[-0.035em] text-primary"
+                className="mt-3 max-w-[13ch] break-words font-display text-[clamp(2.65rem,11vw,4.15rem)] font-medium leading-[0.94] tracking-[-0.035em] text-primary lg:text-[clamp(3.1rem,5.5vw,5.1rem)]"
               >
                 {project.name}
               </h1>
-            </div>
-
-            <div className="border-t border-primary/15 pt-6 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-3">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.17em] text-primary/70">
+              <p className="mt-5 text-[9px] font-semibold uppercase tracking-[0.16em] text-primary/68 sm:text-[10px]">
                 {copy.opening.startingPrice}
               </p>
-              <p className="mt-3 break-words font-display text-[clamp(2rem,4vw,3.1rem)] leading-none text-primary">
+              <p className="mt-1.5 break-words font-display text-[clamp(1.8rem,4vw,2.7rem)] leading-none text-primary">
                 {typeof project.priceFromUsd === "number"
                   ? fmtUSD(project.priceFromUsd, locale)
                   : copy.opening.priceFallback}
               </p>
-              <div className="mt-7 flex flex-col gap-3">
+
+              <dl className="mt-5 grid grid-cols-2 gap-x-5 border-b border-primary/15 lg:grid-cols-4">
+                {facts.map((fact) => (
+                  <Fact
+                    key={fact.label}
+                    label={fact.label}
+                    className={fact.wide ? "col-span-2 lg:col-span-2" : ""}
+                  >
+                    {fact.value}
+                  </Fact>
+                ))}
+              </dl>
+
+              <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:items-center">
                 <a
                   href={whatsappHref}
                   target="_blank"
@@ -451,75 +510,43 @@ export default async function Proyecto({ params }: Params) {
                 </Link>
               </div>
             </div>
+
+            <div className="relative order-1 h-[42svh] min-h-[260px] overflow-hidden bg-surface sm:h-[54svh] sm:min-h-[430px] lg:order-2 lg:h-auto lg:min-h-[560px]">
+              <Image
+                src={project.image}
+                alt={`${project.name} — ${city}`}
+                fill
+                priority
+                quality={85}
+                sizes="(min-width: 1280px) 680px, (min-width: 1024px) 55vw, calc(100vw - 40px)"
+                className="object-cover"
+              />
+              <div className="absolute inset-x-0 bottom-0 flex items-end justify-end bg-gradient-to-t from-black/55 to-transparent px-4 pb-4 pt-20 text-white sm:px-5 sm:pb-5">
+                <p className="text-[11px] tabular-nums text-white/80">
+                  01 / {String(projectImages.length + 1).padStart(2, "0")}
+                </p>
+              </div>
+            </div>
           </div>
-
-          <dl className="mt-10 grid border-y border-primary/15 sm:grid-cols-2 lg:mt-14">
-            <Fact
-              label={copy.opening.location}
-              className="border-b border-primary/12 sm:border-r"
-            >
-              {city}
-            </Fact>
-            <Fact
-              label={copy.opening.delivery}
-              className="border-b border-primary/12 sm:pl-8"
-            >
-              {delivery || copy.opening.deliveryFallback}
-            </Fact>
-            <Fact
-              label={copy.opening.rental}
-              className="sm:col-span-2"
-            >
-              {rentalPolicy || copy.opening.rentalFallback}
-            </Fact>
-          </dl>
-
-          {supportingFacts.length > 0 ? (
-            <dl
-              className={`grid border-b border-primary/15 ${supportingFactsGrid}`}
-            >
-              {supportingFacts.map((fact, index) => {
-                const hasNext = index < supportingFacts.length - 1;
-                const divider = hasNext
-                  ? "border-b border-primary/12 sm:border-b-0 sm:border-r sm:pr-8"
-                  : "";
-                const inset = index > 0 ? "sm:pl-8" : "";
-
-                return (
-                  <Fact
-                    key={fact.label}
-                    label={fact.label}
-                    className={`${divider} ${inset}`}
-                  >
-                    {fact.value}
-                  </Fact>
-                );
-              })}
-            </dl>
-          ) : null}
-
-          <p className="mt-5 max-w-[92ch] text-[12px] leading-[1.65] text-foreground/70 sm:text-[13px]">
-            {copy.opening.disclaimer}
-          </p>
         </div>
       </section>
 
       <section
         aria-labelledby="project-gallery-title"
-        className="bg-paper py-12 sm:py-16 lg:py-20"
+        className="bg-paper py-10 sm:py-12 lg:py-14"
       >
         <div className={CONTAINER}>
-          <div className="mb-7 grid gap-4 lg:grid-cols-[0.7fr_1.3fr] lg:items-end lg:gap-16">
+          <div className="mb-6 flex flex-col gap-3 border-b border-primary/12 pb-5 sm:flex-row sm:items-end sm:justify-between sm:gap-10">
             <div>
               <p className={EYEBROW}>{copy.gallery.eyebrow}</p>
               <h2
                 id="project-gallery-title"
-                className={`${SECTION_TITLE} mt-3 max-w-[12ch]`}
+                className="mt-2 font-display text-[clamp(1.9rem,3.3vw,2.8rem)] font-medium leading-[1.04] tracking-[-0.02em] text-primary"
               >
                 {copy.gallery.title}
               </h2>
             </div>
-            <p className="max-w-[58ch] text-[15px] leading-[1.75] text-foreground/72 sm:text-[17px] lg:pb-1">
+            <p className="max-w-[48ch] text-[14px] leading-[1.65] text-foreground/70 sm:text-[15px]">
               {copy.gallery.intro}
             </p>
           </div>
@@ -534,65 +561,58 @@ export default async function Proyecto({ params }: Params) {
 
       <section
         aria-labelledby="project-overview-title"
-        className="border-y border-primary/12 bg-surface py-12 sm:py-16 lg:py-20"
+        className="border-y border-primary/12 bg-surface py-10 sm:py-12 lg:py-14"
       >
         <div className={CONTENT_CONTAINER}>
-          <div className="grid gap-7 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20">
+          <div className="grid gap-8 lg:grid-cols-[0.78fr_1.22fr] lg:gap-16">
             <div>
               <p className={EYEBROW}>{copy.overview.eyebrow}</p>
               <h2
                 id="project-overview-title"
-                className={`${SECTION_TITLE} mt-3 max-w-[11ch]`}
+                className={`${SECTION_TITLE} mt-3 max-w-[12ch]`}
               >
                 {copy.overview.title}
               </h2>
+              <p className="mt-5 max-w-[43ch] text-[15px] leading-[1.7] text-foreground/72 sm:text-[16px]">
+                {copy.overview.intro}
+              </p>
+              {overviewLead ? (
+                <p className="mt-5 max-w-[34ch] border-l-2 border-accent pl-4 font-display text-[1.35rem] leading-[1.22] text-primary sm:text-[1.55rem]">
+                  {lineLabel(overviewLead)}
+                </p>
+              ) : null}
             </div>
-            <p className="max-w-[60ch] text-[15px] leading-[1.75] text-foreground/74 sm:text-[17px] lg:pt-7">
-              {copy.overview.intro}
+            {overviewAttributes.length > 0 ? (
+              <div className="lg:pt-1">
+                <h3 className="text-[10px] font-semibold uppercase tracking-[0.17em] text-primary/70">
+                  {copy.overview.attributes}
+                </h3>
+                <ul className="mt-3 grid border-b border-primary/15 sm:grid-cols-2">
+                  {overviewAttributes.map((attribute, index) => {
+                    const label = lineLabel(attribute);
+                    return (
+                      <li
+                        key={`${index}-${label}`}
+                        className="flex gap-3 border-t border-primary/15 py-3.5 text-[14px] leading-[1.58] text-foreground/78 sm:odd:pr-5 sm:even:border-l sm:even:pl-5"
+                      >
+                        <span
+                          aria-hidden
+                          className="mt-[0.67em] h-px w-5 shrink-0 bg-accent"
+                        />
+                        <span className="break-words">{label}</span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            ) : null}
+          </div>
+
+          {payment.length === 0 ? (
+            <p className="mt-8 max-w-[88ch] border-t border-primary/15 pt-4 text-[11px] leading-[1.65] text-foreground/72 sm:text-[12px]">
+              {copy.legal.disclaimer}
             </p>
-          </div>
-
-          <div className="mt-9 grid gap-8 border-t border-primary/15 pt-7 lg:grid-cols-2 lg:gap-16">
-            {microClaims.length > 0 ? (
-              <div>
-                <h3 className="text-[10px] font-semibold uppercase tracking-[0.17em] text-primary/70">
-                  {copy.overview.references}
-                </h3>
-                <ul className="mt-4 border-b border-primary/15" role="list">
-                  {microClaims.map((claim, index) => (
-                    <li
-                      key={`${index}-${claim}`}
-                      className="border-t border-primary/15 py-4 font-display text-[20px] leading-[1.22] text-primary sm:text-[23px]"
-                    >
-                      {claim}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : null}
-
-            {highlights.length > 0 ? (
-              <div>
-                <h3 className="text-[10px] font-semibold uppercase tracking-[0.17em] text-primary/70">
-                  {copy.overview.highlights}
-                </h3>
-                <ul className="mt-4 border-b border-primary/15" role="list">
-                  {highlights.map((highlight, index) => (
-                    <li
-                      key={`${index}-${highlight}`}
-                      className="flex gap-4 border-t border-primary/15 py-4 text-[15px] leading-[1.65] text-foreground/78"
-                    >
-                      <span
-                        aria-hidden
-                        className="mt-[0.67em] h-px w-7 shrink-0 bg-accent"
-                      />
-                      <span>{highlight}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : null}
-          </div>
+          ) : null}
         </div>
       </section>
 
@@ -600,46 +620,55 @@ export default async function Proyecto({ params }: Params) {
         <section
           id="tipologias"
           aria-labelledby="project-typologies-title"
-          className="bg-paper py-12 sm:py-16 lg:py-20"
+          className="bg-paper py-10 sm:py-12 lg:py-14"
         >
           <div className={CONTENT_CONTAINER}>
-            <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20">
-              <div>
+            <div className="flex flex-col gap-4 border-b border-primary/15 pb-5 sm:flex-row sm:items-end sm:justify-between sm:gap-10">
+              <div className="max-w-[560px]">
                 <p className={EYEBROW}>{copy.typologies.eyebrow}</p>
                 <h2
                   id="project-typologies-title"
-                  className={`${SECTION_TITLE} mt-3 max-w-[12ch]`}
+                  className={`${SECTION_TITLE} mt-3`}
                 >
                   {copy.typologies.title}
                 </h2>
-                <p className="mt-5 max-w-[40ch] text-[14px] leading-[1.7] text-foreground/68 sm:text-[15px]">
-                  {copy.typologies.intro}
-                </p>
               </div>
-              <div>
-                <ol className="border-b border-primary/15">
-                  {unitMix.map((item, index) => {
-                    const label = lineLabel(item);
-                    return (
-                      <li
-                        key={`${index}-${label}`}
-                        className="grid gap-2 border-t border-primary/15 py-5 sm:grid-cols-[52px_minmax(0,1fr)] sm:gap-5 sm:py-6"
-                      >
-                        <span className="text-[10px] font-semibold tabular-nums tracking-[0.16em] text-primary/70">
-                          {String(index + 1).padStart(2, "0")}
-                        </span>
-                        <span className="break-words font-display text-[clamp(1.25rem,2.4vw,1.8rem)] leading-[1.18] text-primary">
-                          {label}
-                        </span>
-                      </li>
-                    );
-                  })}
-                </ol>
-                <p className="mt-4 max-w-[58ch] text-[12px] leading-[1.65] text-foreground/70 sm:text-[13px]">
-                  {copy.typologies.note}
-                </p>
-              </div>
+              <p className="max-w-[45ch] text-[14px] leading-[1.65] text-foreground/68 sm:text-[15px]">
+                {copy.typologies.intro}
+              </p>
             </div>
+            <ol
+              className={`grid border-b border-primary/15 ${
+                unitMix.length > 4 ? "lg:grid-cols-2" : ""
+              }`}
+            >
+              {unitMix.map((item, index) => {
+                const label = lineLabel(item);
+                return (
+                  <li
+                    key={`${index}-${label}`}
+                    className={`grid grid-cols-[38px_minmax(0,1fr)] gap-3 border-t border-primary/15 py-3.5 sm:grid-cols-[44px_minmax(0,1fr)] sm:gap-4 ${
+                      unitMix.length > 4
+                        ? "lg:odd:pr-6 lg:even:border-l lg:even:pl-6"
+                        : ""
+                    }`}
+                  >
+                    <span
+                      aria-hidden
+                      className="pt-0.5 text-[9px] font-semibold tabular-nums tracking-[0.15em] text-primary/75 sm:text-[10px]"
+                    >
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className="break-words text-[14px] font-medium leading-[1.5] text-primary sm:text-[15px]">
+                      {label}
+                    </span>
+                  </li>
+                );
+              })}
+            </ol>
+            <p className="mt-3 max-w-[68ch] text-[11px] leading-[1.6] text-foreground/65 sm:text-[12px]">
+              {copy.typologies.note}
+            </p>
           </div>
         </section>
       ) : null}
@@ -647,40 +676,35 @@ export default async function Proyecto({ params }: Params) {
       {features.length > 0 ? (
         <section
           aria-labelledby="project-features-title"
-          className="border-t border-primary/12 bg-paper pb-12 pt-12 sm:pb-16 sm:pt-16 lg:pb-20 lg:pt-20"
+          className="border-t border-primary/12 bg-paper py-10 sm:py-12 lg:py-14"
         >
           <div className={CONTENT_CONTAINER}>
-            <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20">
-              <div>
-                <p className={EYEBROW}>{copy.features.eyebrow}</p>
-                <h2
-                  id="project-features-title"
-                  className={`${SECTION_TITLE} mt-3 max-w-[12ch]`}
-                >
-                  {copy.features.title}
-                </h2>
-              </div>
-              <ul
-                className="grid border-b border-primary/15 lg:grid-cols-2"
-                role="list"
+            <div className="flex flex-col gap-3 border-b border-primary/15 pb-5 sm:flex-row sm:items-end sm:justify-between">
+              <p className={EYEBROW}>{copy.features.eyebrow}</p>
+              <h2
+                id="project-features-title"
+                className="max-w-[18ch] font-display text-[clamp(1.9rem,3.4vw,2.9rem)] font-medium leading-[1.04] tracking-[-0.02em] text-primary sm:text-right"
               >
-                {features.map((item, index) => {
-                  const label = lineLabel(item);
-                  return (
-                    <li
-                      key={`${index}-${label}`}
-                      className="flex gap-4 border-t border-primary/15 py-5 text-[15px] leading-[1.7] text-foreground/78 lg:odd:pr-7 lg:even:border-l lg:even:pl-7"
-                    >
-                      <span
-                        aria-hidden
-                        className="mt-[0.72em] h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
-                      />
-                      <span className="break-words">{label}</span>
-                    </li>
-                  );
-                })}
-              </ul>
+                {copy.features.title}
+              </h2>
             </div>
+            <ul className="grid border-b border-primary/15 sm:grid-cols-2">
+              {features.map((item, index) => {
+                const label = lineLabel(item);
+                return (
+                  <li
+                    key={`${index}-${label}`}
+                    className="flex gap-3 border-t border-primary/15 py-3.5 text-[14px] leading-[1.58] text-foreground/78 sm:odd:pr-5 sm:even:border-l sm:even:pl-5"
+                  >
+                    <span
+                      aria-hidden
+                      className="mt-[0.66em] h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
+                    />
+                    <span className="break-words">{label}</span>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
         </section>
       ) : null}
@@ -689,62 +713,79 @@ export default async function Proyecto({ params }: Params) {
         <section
           id="pagos"
           aria-labelledby="project-payment-title"
-          className="bg-primary py-12 text-primary-foreground sm:py-16 lg:py-20"
+          className="bg-primary py-10 text-primary-foreground sm:py-12 lg:py-14"
         >
-          <div
-            className={`${CONTENT_CONTAINER} grid gap-9 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20`}
-          >
-            <div>
-              <p className={EYEBROW_LIGHT}>{copy.payment.eyebrow}</p>
-              <h2
-                id="project-payment-title"
-                className="mt-3 max-w-[11ch] font-display text-[clamp(2.3rem,4.8vw,3.8rem)] font-medium leading-[1.01] tracking-[-0.025em]"
-              >
-                {copy.payment.title}
-              </h2>
-              <p className="mt-5 max-w-[42ch] text-[14px] leading-[1.72] text-primary-foreground/70 sm:text-[15px]">
-                {copy.payment.intro}
-              </p>
-              <p className="mt-5 max-w-[46ch] border-l border-accent/70 pl-4 text-[12px] leading-[1.65] text-primary-foreground/60 sm:text-[13px]">
-                {copy.payment.disclaimer}
-              </p>
-            </div>
-            <ol className="border-b border-primary-foreground/20">
-              {payment.map((step, index) => (
-                <li
-                  key={`${index}-${step}`}
-                  className="grid gap-3 border-t border-primary-foreground/20 py-5 sm:grid-cols-[62px_minmax(0,1fr)] sm:gap-5 sm:py-6"
+          <div className={CONTENT_CONTAINER}>
+            <div className="grid gap-8 lg:grid-cols-[0.68fr_1.32fr] lg:gap-16">
+              <div>
+                <p className={EYEBROW_LIGHT}>{copy.payment.eyebrow}</p>
+                <h2
+                  id="project-payment-title"
+                  className="mt-3 max-w-[11ch] font-display text-[clamp(2.15rem,4vw,3.25rem)] font-medium leading-[1.02] tracking-[-0.025em]"
                 >
-                  <span className="text-[10px] font-semibold tabular-nums tracking-[0.16em] text-primary-foreground/60">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span className="break-words font-display text-[clamp(1.25rem,2.4vw,1.8rem)] leading-[1.18] text-primary-foreground">
-                    {step}
-                  </span>
-                </li>
-              ))}
-            </ol>
+                  {copy.payment.title}
+                </h2>
+                <p className="mt-4 max-w-[40ch] text-[14px] leading-[1.68] text-primary-foreground/70 sm:text-[15px]">
+                  {copy.payment.intro}
+                </p>
+              </div>
+              <ol className="border-b border-primary-foreground/20">
+                {payment.map((step, index) => (
+                  <li
+                    key={`${index}-${step.raw}`}
+                    className="grid grid-cols-[34px_minmax(0,1fr)] gap-x-3 border-t border-primary-foreground/20 py-3.5 sm:grid-cols-[44px_110px_minmax(0,1fr)] sm:gap-x-4 sm:py-4"
+                  >
+                    <span
+                      aria-hidden
+                      className="row-span-2 pt-1 text-[9px] font-semibold tabular-nums tracking-[0.15em] text-primary-foreground/55 sm:text-[10px]"
+                    >
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    {step.kind === "structured" ? (
+                      <>
+                        <p className="break-words font-display text-[1.45rem] leading-none text-primary-foreground sm:pt-0.5 sm:text-[1.65rem]">
+                          {step.percentage}
+                        </p>
+                        <div className="col-start-2 mt-1 min-w-0 sm:col-start-3 sm:row-start-1 sm:mt-0">
+                          <p className="break-words text-[14px] font-medium leading-[1.5] text-primary-foreground sm:text-[15px]">
+                            {step.milestone}
+                          </p>
+                          {step.condition ? (
+                            <p className="mt-1 break-words text-[11px] leading-[1.55] text-primary-foreground/62 sm:text-[12px]">
+                              {step.condition}
+                            </p>
+                          ) : null}
+                        </div>
+                      </>
+                    ) : (
+                      <p className="col-start-2 break-words text-[14px] font-medium leading-[1.55] text-primary-foreground sm:col-span-2 sm:text-[15px]">
+                        {step.raw}
+                      </p>
+                    )}
+                  </li>
+                ))}
+              </ol>
+            </div>
+            <p className="mt-6 max-w-[92ch] border-t border-primary-foreground/20 pt-4 text-[11px] leading-[1.65] text-primary-foreground/58 sm:text-[12px]">
+              {copy.legal.disclaimer}
+            </p>
           </div>
         </section>
       ) : null}
 
       <section
         aria-labelledby="project-advisor-title"
-        className="border-b border-primary/12 bg-surface py-12 sm:py-16 lg:py-20"
+        className="border-b border-primary/12 bg-surface py-8 sm:py-10"
       >
-        <div
-          className={`${CONTENT_CONTAINER} grid gap-7 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20`}
-        >
-          <div>
-            <p className={EYEBROW}>{copy.advisor.eyebrow}</p>
-            <h2
-              id="project-advisor-title"
-              className={`${SECTION_TITLE} mt-3 max-w-[12ch]`}
-            >
-              {copy.advisor.title}
-            </h2>
-          </div>
-          <p className="max-w-[64ch] border-l-2 border-accent pl-5 text-[16px] leading-[1.78] text-foreground/76 sm:text-[18px] lg:mt-8">
+        <div className={`${CONTENT_CONTAINER} grid gap-4 lg:grid-cols-[0.5fr_0.72fr_1.28fr] lg:items-center lg:gap-10`}>
+          <p className={EYEBROW}>{copy.advisor.eyebrow}</p>
+          <h2
+            id="project-advisor-title"
+            className="font-display text-[clamp(1.75rem,3vw,2.45rem)] font-medium leading-[1.06] tracking-[-0.02em] text-primary"
+          >
+            {copy.advisor.title}
+          </h2>
+          <p className="max-w-[64ch] border-l-2 border-accent pl-4 text-[14px] leading-[1.68] text-foreground/76 sm:text-[15px]">
             {copy.advisor.text}
           </p>
         </div>
@@ -753,30 +794,30 @@ export default async function Proyecto({ params }: Params) {
       <section
         id="ubicacion"
         aria-labelledby="project-location-title"
-        className="bg-paper py-12 sm:py-16 lg:py-20"
+        className="bg-paper py-10 sm:py-12 lg:py-14"
       >
-        <div className={CONTENT_CONTAINER}>
-          <div className="grid gap-7 lg:grid-cols-[0.6fr_1.4fr] lg:items-end lg:gap-20">
+        <div className={`${CONTENT_CONTAINER} grid gap-6 lg:grid-cols-[minmax(240px,0.36fr)_minmax(0,0.64fr)] lg:items-stretch lg:gap-10`}>
+          <div className="flex flex-col justify-between border-b border-primary/15 pb-5 lg:border-b-0 lg:border-r lg:pb-0 lg:pr-8">
             <div>
               <p className={EYEBROW}>{copy.location.eyebrow}</p>
               <h2
                 id="project-location-title"
-                className={`${SECTION_TITLE} mt-3 max-w-[11ch]`}
+                className="mt-3 max-w-[12ch] font-display text-[clamp(2rem,3.4vw,2.9rem)] font-medium leading-[1.04] tracking-[-0.02em] text-primary"
               >
                 {copy.location.title}
               </h2>
             </div>
-            <p className="break-words font-display text-[clamp(1.5rem,3vw,2.35rem)] leading-[1.12] text-primary lg:pb-1">
+            <p className="mt-6 break-words font-display text-[clamp(1.35rem,2.5vw,2rem)] leading-[1.15] text-primary">
               {city}
             </p>
           </div>
-          <div className="mt-8 overflow-hidden border border-primary/15 bg-surface sm:mt-10">
+          <div className="overflow-hidden border border-primary/15 bg-surface">
             <iframe
               src={mapSrc}
               title={mapTitle}
               width="100%"
-              height="500"
-              className="block h-[300px] w-full sm:h-[400px] lg:h-[500px]"
+              height="430"
+              className="block h-[280px] w-full sm:h-[340px] lg:h-[430px]"
               style={{ border: 0 }}
               allowFullScreen
               loading="lazy"
@@ -790,63 +831,58 @@ export default async function Proyecto({ params }: Params) {
         <section
           id="preguntas"
           aria-labelledby="project-faq-title"
-          className="border-t border-primary/12 bg-paper py-12 sm:py-16 lg:py-20"
+          className="border-t border-primary/12 bg-paper py-10 sm:py-12 lg:py-14"
         >
-          <div className={CONTENT_CONTAINER}>
-            <div className="grid gap-7 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20">
-              <div>
-                <p className={EYEBROW}>{copy.faq.eyebrow}</p>
-                <h2
-                  id="project-faq-title"
-                  className={`${SECTION_TITLE} mt-3 max-w-[12ch]`}
-                >
-                  {copy.faq.title}
-                </h2>
-              </div>
-              <div>
-                <ProjectFaq
-                  items={faqs}
-                  labels={{ open: copy.faq.open, close: copy.faq.close }}
-                />
-              </div>
+          <div className="mx-auto w-full max-w-[920px] px-5 sm:px-8">
+            <div className="mb-5 flex flex-col gap-3 border-b border-primary/15 pb-5 sm:flex-row sm:items-end sm:justify-between sm:gap-10">
+              <p className={EYEBROW}>{copy.faq.eyebrow}</p>
+              <h2
+                id="project-faq-title"
+                className="max-w-[18ch] font-display text-[clamp(1.9rem,3.4vw,2.85rem)] font-medium leading-[1.04] tracking-[-0.02em] text-primary sm:text-right"
+              >
+                {copy.faq.title}
+              </h2>
             </div>
+            <ProjectFaq
+              items={faqs}
+              labels={{ open: copy.faq.open, close: copy.faq.close }}
+            />
           </div>
         </section>
       ) : null}
 
       <section
         aria-labelledby="project-close-title"
-        className="border-t border-primary/15 bg-surface py-12 sm:py-16 lg:py-20"
+        className="border-t border-primary-foreground/15 bg-primary py-10 text-primary-foreground sm:py-12"
       >
-        <div
-          className={`${CONTENT_CONTAINER} grid gap-7 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20`}
-        >
+        <div className={`${CONTENT_CONTAINER} grid gap-7 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-14`}>
           <div>
-            <p className={EYEBROW}>{copy.close.eyebrow}</p>
+            <p className={EYEBROW_LIGHT}>{copy.close.eyebrow}</p>
             <h2
               id="project-close-title"
-              className={`${SECTION_TITLE} mt-3 max-w-[13ch]`}
+              className="mt-3 max-w-[18ch] font-display text-[clamp(2rem,4vw,3.25rem)] font-medium leading-[1.02] tracking-[-0.025em]"
             >
               {copy.close.title}
             </h2>
-          </div>
-          <div className="lg:pt-7">
-            <p className="max-w-[62ch] text-[16px] leading-[1.78] text-foreground/76 sm:text-[18px]">
+            <p className="mt-4 max-w-[66ch] text-[14px] leading-[1.68] text-primary-foreground/70 sm:text-[16px]">
               {fillTemplate(copy.close.text, { name: project.name })}
             </p>
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <a
-                href={whatsappHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={PRIMARY_CTA}
-              >
-                {copy.close.primaryCta}
-              </a>
-              <Link href={contactHref} className={SECONDARY_CTA}>
-                {copy.close.secondaryCta}
-              </Link>
-            </div>
+          </div>
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center lg:flex-col lg:items-stretch">
+            <a
+              href={whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center justify-center border border-primary-foreground bg-primary-foreground px-6 py-3 text-sm font-semibold text-primary no-underline transition-colors hover:bg-primary-foreground/90 motion-reduce:transition-none"
+            >
+              {copy.close.primaryCta}
+            </a>
+            <Link
+              href={contactHref}
+              className="inline-flex min-h-11 items-center justify-center border border-primary-foreground/55 px-6 py-3 text-sm font-semibold text-primary-foreground no-underline transition-colors hover:bg-primary-foreground/10 motion-reduce:transition-none"
+            >
+              {copy.close.secondaryCta}
+            </Link>
           </div>
         </div>
       </section>

@@ -72,23 +72,16 @@ function preloadOptimizedImage(src: string): Promise<void> {
 }
 
 function previewSpan(index: number, count: number): string {
-  if (count <= 1) return "sm:col-span-2 lg:col-span-12";
+  if (count <= 1) return "col-span-12 row-span-2";
   if (count === 2) {
     return index === 0
-      ? "sm:col-span-1 lg:col-span-7"
-      : "sm:col-span-1 lg:col-span-5";
-  }
-  if (count === 3) {
-    return index === 0
-      ? "sm:col-span-2 lg:col-span-6"
-      : "sm:col-span-1 lg:col-span-3";
+      ? "col-span-7 row-span-2"
+      : "col-span-5 row-span-2";
   }
 
   return index === 0
-    ? "sm:col-span-1 lg:col-span-5"
-    : index === 1
-      ? "sm:col-span-1 lg:col-span-3"
-      : "sm:col-span-1 lg:col-span-2";
+    ? "col-span-7 row-span-2"
+    : "col-span-5 row-span-1";
 }
 
 function ArrowIcon({ direction }: { direction: "left" | "right" }) {
@@ -117,7 +110,7 @@ export default function ProjectGallery({
   labels,
 }: ProjectGalleryProps) {
   const allImages = useMemo(() => [cover, ...images], [cover, images]);
-  const previewImages = images.slice(0, 4);
+  const previewImages = images.slice(0, 3);
   const imageCount = allImages.length;
   const [isOpen, setIsOpen] = useState(false);
   const [displayedIndex, setDisplayedIndex] = useState(0);
@@ -295,35 +288,10 @@ export default function ProjectGallery({
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
-      <div className="relative overflow-hidden bg-surface">
-        <button
-          type="button"
-          onClick={(event) => openAt(0, event.currentTarget)}
-          className="group relative block aspect-[4/3] w-full overflow-hidden sm:aspect-video lg:aspect-[2/1]"
-        >
-          <Image
-            src={cover.src}
-            alt=""
-            fill
-            quality={75}
-            sizes="(min-width: 1280px) 1240px, (min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)"
-            className="object-cover transition-transform duration-500 group-hover:scale-[1.01] motion-reduce:transition-none"
-          />
-          <span className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 bg-gradient-to-t from-black/60 via-black/15 to-transparent px-4 pb-4 pt-16 text-left text-white sm:px-6 sm:pb-6">
-            <span className="text-[11px] font-semibold uppercase tracking-[0.16em]">
-              {labels.viewImage}
-            </span>
-            <span className="text-xs tabular-nums text-white/85">
-              01 / {String(imageCount).padStart(2, "0")}
-            </span>
-          </span>
-        </button>
-      </div>
-
       {images.length > 0 ? (
         <>
           <ul
-            className="mt-3 flex snap-x snap-mandatory gap-3 overflow-x-auto pb-2 sm:hidden"
+            className="flex snap-x snap-mandatory gap-3 overflow-x-auto pb-2 sm:hidden"
             role="list"
           >
             {images.map((image, index) => {
@@ -356,7 +324,7 @@ export default function ProjectGallery({
             })}
           </ul>
 
-          <div className="mt-3 hidden grid-cols-2 gap-3 sm:grid lg:grid-cols-12">
+          <div className="hidden h-[360px] grid-cols-12 grid-rows-2 gap-2 sm:grid lg:h-[440px]">
             {previewImages.map((image, index) => {
               const allImagesIndex = index + 1;
               return (
@@ -367,7 +335,7 @@ export default function ProjectGallery({
                     openAt(allImagesIndex, event.currentTarget)
                   }
                   aria-label={openImageLabel(allImagesIndex)}
-                  className={`group relative aspect-[4/3] overflow-hidden bg-surface lg:h-[260px] lg:aspect-auto ${previewSpan(
+                  className={`group relative overflow-hidden bg-surface ${previewSpan(
                     index,
                     previewImages.length
                   )}`}
@@ -378,7 +346,11 @@ export default function ProjectGallery({
                     fill
                     quality={65}
                     loading="lazy"
-                    sizes="(min-width: 1024px) 320px, 50vw"
+                    sizes={
+                      index === 0
+                        ? "(min-width: 1024px) 700px, 58vw"
+                        : "(min-width: 1024px) 500px, 42vw"
+                    }
                     className="object-cover transition-transform duration-500 group-hover:scale-[1.02] motion-reduce:transition-none"
                   />
                 </button>
@@ -388,7 +360,7 @@ export default function ProjectGallery({
         </>
       ) : null}
 
-      <div className="mt-4 flex items-center justify-between gap-4 border-t border-primary/15 pt-4">
+      <div className="mt-3 flex items-center justify-between gap-4 border-t border-primary/15 pt-3">
         <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/70">
           {fillTemplate(labels.imageCount, { total: imageCount })}
         </p>
