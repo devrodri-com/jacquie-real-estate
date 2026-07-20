@@ -441,7 +441,7 @@ export default async function Proyecto({ params }: Params) {
   });
 
   return (
-    <div className={`${FULL_BLEED} pb-0`}>
+    <div className={`${FULL_BLEED} -mb-24 pb-0`}>
       <section
         aria-labelledby="project-detail-title"
         className="border-b border-primary/15 bg-paper"
@@ -564,12 +564,18 @@ export default async function Proyecto({ params }: Params) {
         className="border-y border-primary/12 bg-surface py-10 sm:py-12 lg:py-14"
       >
         <div className={CONTENT_CONTAINER}>
-          <div className="grid gap-8 lg:grid-cols-[0.78fr_1.22fr] lg:gap-16">
+          <div
+            className={`grid gap-8 ${
+              overviewAttributes.length > 0
+                ? "lg:grid-cols-[minmax(360px,0.9fr)_minmax(0,1.1fr)] lg:gap-12 xl:gap-16"
+                : "lg:max-w-[760px]"
+            }`}
+          >
             <div>
               <p className={EYEBROW}>{copy.overview.eyebrow}</p>
               <h2
                 id="project-overview-title"
-                className={`${SECTION_TITLE} mt-3 max-w-[12ch]`}
+                className={`${SECTION_TITLE} mt-3`}
               >
                 {copy.overview.title}
               </h2>
@@ -587,13 +593,13 @@ export default async function Proyecto({ params }: Params) {
                 <h3 className="text-[10px] font-semibold uppercase tracking-[0.17em] text-primary/70">
                   {copy.overview.attributes}
                 </h3>
-                <ul className="mt-3 grid border-b border-primary/15 sm:grid-cols-2">
+                <ul className="mt-5 grid gap-x-10 gap-y-6 lg:grid-cols-2">
                   {overviewAttributes.map((attribute, index) => {
                     const label = lineLabel(attribute);
                     return (
                       <li
                         key={`${index}-${label}`}
-                        className="flex gap-3 border-t border-primary/15 py-3.5 text-[14px] leading-[1.58] text-foreground/78 sm:odd:pr-5 sm:even:border-l sm:even:pl-5"
+                        className="grid grid-cols-[20px_minmax(0,1fr)] gap-3 py-1 text-[14px] leading-[1.58] text-foreground/78"
                       >
                         <span
                           aria-hidden
@@ -679,26 +685,26 @@ export default async function Proyecto({ params }: Params) {
           className="border-t border-primary/12 bg-paper py-10 sm:py-12 lg:py-14"
         >
           <div className={CONTENT_CONTAINER}>
-            <div className="flex flex-col gap-3 border-b border-primary/15 pb-5 sm:flex-row sm:items-end sm:justify-between">
+            <div className="border-b border-primary/15 pb-5">
               <p className={EYEBROW}>{copy.features.eyebrow}</p>
               <h2
                 id="project-features-title"
-                className="max-w-[18ch] font-display text-[clamp(1.9rem,3.4vw,2.9rem)] font-medium leading-[1.04] tracking-[-0.02em] text-primary sm:text-right"
+                className="mt-3 font-display text-[clamp(1.9rem,3.4vw,2.9rem)] font-medium leading-[1.04] tracking-[-0.02em] text-primary"
               >
                 {copy.features.title}
               </h2>
             </div>
-            <ul className="grid border-b border-primary/15 sm:grid-cols-2">
+            <ul className="mt-7 grid gap-x-12 gap-y-6 lg:grid-cols-2">
               {features.map((item, index) => {
                 const label = lineLabel(item);
                 return (
                   <li
                     key={`${index}-${label}`}
-                    className="flex gap-3 border-t border-primary/15 py-3.5 text-[14px] leading-[1.58] text-foreground/78 sm:odd:pr-5 sm:even:border-l sm:even:pl-5"
+                    className="flex gap-3 text-[14px] leading-[1.58] text-foreground/78"
                   >
                     <span
                       aria-hidden
-                      className="mt-[0.66em] h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
+                      className="mt-[0.67em] h-px w-5 shrink-0 bg-accent"
                     />
                     <span className="break-words">{label}</span>
                   </li>
@@ -775,17 +781,21 @@ export default async function Proyecto({ params }: Params) {
 
       <section
         aria-labelledby="project-advisor-title"
-        className="border-b border-primary/12 bg-surface py-8 sm:py-10"
+        className="border-b border-primary/12 bg-surface py-8 sm:py-9"
       >
-        <div className={`${CONTENT_CONTAINER} grid gap-4 lg:grid-cols-[0.5fr_0.72fr_1.28fr] lg:items-center lg:gap-10`}>
-          <p className={EYEBROW}>{copy.advisor.eyebrow}</p>
-          <h2
-            id="project-advisor-title"
-            className="font-display text-[clamp(1.75rem,3vw,2.45rem)] font-medium leading-[1.06] tracking-[-0.02em] text-primary"
-          >
-            {copy.advisor.title}
-          </h2>
-          <p className="max-w-[64ch] border-l-2 border-accent pl-4 text-[14px] leading-[1.68] text-foreground/76 sm:text-[15px]">
+        <div
+          className={`${CONTENT_CONTAINER} grid gap-4 lg:grid-cols-[minmax(280px,0.72fr)_minmax(0,1.28fr)] lg:items-start lg:gap-12`}
+        >
+          <div>
+            <p className={EYEBROW}>{copy.advisor.eyebrow}</p>
+            <h2
+              id="project-advisor-title"
+              className="mt-3 font-display text-[clamp(1.75rem,3vw,2.45rem)] font-medium leading-[1.06] tracking-[-0.02em] text-primary"
+            >
+              {copy.advisor.title}
+            </h2>
+          </div>
+          <p className="max-w-[64ch] border-l-2 border-accent pl-4 text-[14px] leading-[1.68] text-foreground/76 sm:text-[15px] lg:mt-7">
             {copy.advisor.text}
           </p>
         </div>
@@ -834,11 +844,11 @@ export default async function Proyecto({ params }: Params) {
           className="border-t border-primary/12 bg-paper py-10 sm:py-12 lg:py-14"
         >
           <div className="mx-auto w-full max-w-[920px] px-5 sm:px-8">
-            <div className="mb-5 flex flex-col gap-3 border-b border-primary/15 pb-5 sm:flex-row sm:items-end sm:justify-between sm:gap-10">
+            <div className="mb-6 border-b border-primary/15 pb-5">
               <p className={EYEBROW}>{copy.faq.eyebrow}</p>
               <h2
                 id="project-faq-title"
-                className="max-w-[18ch] font-display text-[clamp(1.9rem,3.4vw,2.85rem)] font-medium leading-[1.04] tracking-[-0.02em] text-primary sm:text-right"
+                className="mt-3 font-display text-[clamp(1.9rem,3.4vw,2.85rem)] font-medium leading-[1.04] tracking-[-0.02em] text-primary"
               >
                 {copy.faq.title}
               </h2>
@@ -853,9 +863,11 @@ export default async function Proyecto({ params }: Params) {
 
       <section
         aria-labelledby="project-close-title"
-        className="border-t border-primary-foreground/15 bg-primary py-10 text-primary-foreground sm:py-12"
+        className="border-t border-primary-foreground/15 bg-primary py-12 text-primary-foreground sm:py-16 lg:py-[72px]"
       >
-        <div className={`${CONTENT_CONTAINER} grid gap-7 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-14`}>
+        <div
+          className={`${CONTENT_CONTAINER} grid gap-7 lg:grid-cols-[minmax(0,1fr)_minmax(240px,280px)] lg:items-center lg:gap-14`}
+        >
           <div>
             <p className={EYEBROW_LIGHT}>{copy.close.eyebrow}</p>
             <h2
