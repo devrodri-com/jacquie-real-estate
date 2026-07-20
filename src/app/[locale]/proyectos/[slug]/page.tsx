@@ -589,23 +589,22 @@ export default async function Proyecto({ params }: Params) {
               ) : null}
             </div>
             {overviewAttributes.length > 0 ? (
-              <div className="lg:pt-1">
+              <div>
                 <h3 className="text-[10px] font-semibold uppercase tracking-[0.17em] text-primary/70">
                   {copy.overview.attributes}
                 </h3>
-                <ul className="mt-5 grid gap-x-10 gap-y-6 lg:grid-cols-2">
+                <ul
+                  role="list"
+                  className="mt-5 list-none columns-1 [column-fill:balance] xl:columns-2 xl:gap-x-10"
+                >
                   {overviewAttributes.map((attribute, index) => {
                     const label = lineLabel(attribute);
                     return (
                       <li
                         key={`${index}-${label}`}
-                        className="grid grid-cols-[20px_minmax(0,1fr)] gap-3 py-1 text-[14px] leading-[1.58] text-foreground/78"
+                        className="mb-5 max-w-[38ch] break-inside-avoid break-words text-[14px] leading-[1.65] text-foreground/78 [break-inside:avoid-column] last:mb-0"
                       >
-                        <span
-                          aria-hidden
-                          className="mt-[0.67em] h-px w-5 shrink-0 bg-accent"
-                        />
-                        <span className="break-words">{label}</span>
+                        {label}
                       </li>
                     );
                   })}
@@ -685,7 +684,7 @@ export default async function Proyecto({ params }: Params) {
           className="border-t border-primary/12 bg-paper py-10 sm:py-12 lg:py-14"
         >
           <div className={CONTENT_CONTAINER}>
-            <div className="border-b border-primary/15 pb-5">
+            <div>
               <p className={EYEBROW}>{copy.features.eyebrow}</p>
               <h2
                 id="project-features-title"
@@ -694,19 +693,18 @@ export default async function Proyecto({ params }: Params) {
                 {copy.features.title}
               </h2>
             </div>
-            <ul className="mt-7 grid gap-x-12 gap-y-6 lg:grid-cols-2">
+            <ul
+              role="list"
+              className="mt-8 list-none columns-1 [column-fill:balance] lg:columns-2 lg:gap-x-14 xl:gap-x-16"
+            >
               {features.map((item, index) => {
                 const label = lineLabel(item);
                 return (
                   <li
                     key={`${index}-${label}`}
-                    className="flex gap-3 text-[14px] leading-[1.58] text-foreground/78"
+                    className="mb-6 max-w-[48ch] break-inside-avoid break-words text-[15px] font-medium leading-[1.65] text-primary/82 [break-inside:avoid-column] last:mb-0"
                   >
-                    <span
-                      aria-hidden
-                      className="mt-[0.67em] h-px w-5 shrink-0 bg-accent"
-                    />
-                    <span className="break-words">{label}</span>
+                    {label}
                   </li>
                 );
               })}
