@@ -628,7 +628,7 @@ export default async function Proyecto({ params }: Params) {
           className="bg-paper py-10 sm:py-12 lg:py-14"
         >
           <div className={CONTENT_CONTAINER}>
-            <div className="flex flex-col gap-4 border-b border-primary/15 pb-5 sm:flex-row sm:items-end sm:justify-between sm:gap-10">
+            <div>
               <div className="max-w-[560px]">
                 <p className={EYEBROW}>{copy.typologies.eyebrow}</p>
                 <h2
@@ -638,40 +638,35 @@ export default async function Proyecto({ params }: Params) {
                   {copy.typologies.title}
                 </h2>
               </div>
-              <p className="max-w-[45ch] text-[14px] leading-[1.65] text-foreground/68 sm:text-[15px]">
+              <p className="mt-5 max-w-[45ch] text-[14px] leading-[1.65] text-foreground/68 sm:text-[15px]">
                 {copy.typologies.intro}
               </p>
             </div>
             <ol
-              className={`grid border-b border-primary/15 ${
-                unitMix.length > 4 ? "lg:grid-cols-2" : ""
-              }`}
+              role="list"
+              className="mt-8 list-none columns-1 [column-fill:balance] lg:columns-2 lg:gap-x-14 xl:gap-x-16"
             >
               {unitMix.map((item, index) => {
                 const label = lineLabel(item);
                 return (
                   <li
                     key={`${index}-${label}`}
-                    className={`grid grid-cols-[38px_minmax(0,1fr)] gap-3 border-t border-primary/15 py-3.5 sm:grid-cols-[44px_minmax(0,1fr)] sm:gap-4 ${
-                      unitMix.length > 4
-                        ? "lg:odd:pr-6 lg:even:border-l lg:even:pl-6"
-                        : ""
-                    }`}
+                    className="mb-6 flex max-w-[48ch] break-inside-avoid gap-4 [break-inside:avoid-column] last:mb-0"
                   >
                     <span
                       aria-hidden
-                      className="pt-0.5 text-[9px] font-semibold tabular-nums tracking-[0.15em] text-primary/75 sm:text-[10px]"
+                      className="w-8 shrink-0 pt-0.5 text-[9px] font-semibold tabular-nums tracking-[0.15em] text-primary/75 sm:text-[10px]"
                     >
                       {String(index + 1).padStart(2, "0")}
                     </span>
-                    <span className="break-words text-[14px] font-medium leading-[1.5] text-primary sm:text-[15px]">
+                    <span className="min-w-0 break-words text-[14px] font-medium leading-[1.55] text-primary sm:text-[15px]">
                       {label}
                     </span>
                   </li>
                 );
               })}
             </ol>
-            <p className="mt-3 max-w-[68ch] text-[11px] leading-[1.6] text-foreground/65 sm:text-[12px]">
+            <p className="mt-5 max-w-[68ch] text-[11px] leading-[1.6] text-foreground/65 sm:text-[12px]">
               {copy.typologies.note}
             </p>
           </div>
