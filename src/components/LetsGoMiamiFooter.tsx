@@ -1,6 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Mail, Phone } from "lucide-react";
+import {
+  buildLetsGoMiamiEmailHref,
+  buildLetsGoMiamiWhatsAppHref,
+  LETS_GO_MIAMI_COPY,
+  LETS_GO_MIAMI_EMAIL,
+  LETS_GO_MIAMI_PHONE_DISPLAY,
+  LETS_GO_MIAMI_PHONE_HREF,
+  type LetsGoMiamiLocale,
+} from "@/lib/letsGoMiami";
 
 function IconWhatsApp({ className }: { className?: string }) {
   return (
@@ -10,205 +19,101 @@ function IconWhatsApp({ className }: { className?: string }) {
   );
 }
 
-type Locale = "es" | "en" | "fr";
-
 type LetsGoMiamiFooterProps = {
-  locale: Locale;
-  logoSrc?: string;
+  locale: LetsGoMiamiLocale;
 };
 
-const COPY: Record<
-  Locale,
-  {
-    tagline: string;
-    areas: string;
-    inquiries: string;
-    whatsapp: string;
-    mainSite: string;
-    mainSiteLabel: string;
-    links: string;
-    emailLabel: string;
-    phoneLabel: string;
-    rights: string;
-    madeBy: string;
-    logoAlt: string;
-  }
-> = {
-  es: {
-    tagline: "Estadías y renta corta en Miami.",
-    areas: "Sunny Isles y zonas seleccionadas.",
-    inquiries: "Consultas",
-    whatsapp: "WhatsApp",
-    mainSite: "Sitio de Jacquie Zárate",
-    mainSiteLabel: "Jacquie Zárate",
-    links: "Enlaces",
-    emailLabel: "Email Let’s Go Miami",
-    phoneLabel: "Llamar a Let’s Go Miami",
-    rights: "Todos los derechos reservados.",
-    madeBy: "Diseño y desarrollo por Rodrigo Opalo",
-    logoAlt: "Logo de Let’s Go Miami",
-  },
-  en: {
-    tagline: "Short-term stays in Miami.",
-    areas: "Sunny Isles and selected areas.",
-    inquiries: "Inquiries",
-    whatsapp: "WhatsApp",
-    mainSite: "Jacquie Zárate website",
-    mainSiteLabel: "Jacquie Zárate",
-    links: "Links",
-    emailLabel: "Email Let’s Go Miami",
-    phoneLabel: "Call Let’s Go Miami",
-    rights: "All rights reserved.",
-    madeBy: "Designed and developed by Rodrigo Opalo",
-    logoAlt: "Let’s Go Miami logo",
-  },
-  fr: {
-    tagline: "Séjours et location de courte durée à Miami.",
-    areas: "Sunny Isles et secteurs sélectionnés.",
-    inquiries: "Demandes",
-    whatsapp: "WhatsApp",
-    mainSite: "Site de Jacquie Zárate",
-    mainSiteLabel: "Jacquie Zárate",
-    links: "Liens",
-    emailLabel: "Courriel Let’s Go Miami",
-    phoneLabel: "Appeler Let’s Go Miami",
-    rights: "Tous droits réservés.",
-    madeBy: "Conception et développement par Rodrigo Opalo",
-    logoAlt: "Logo de Let’s Go Miami",
-  },
-};
-
-export default function LetsGoMiamiFooter({ locale, logoSrc }: LetsGoMiamiFooterProps) {
-  const copy = COPY[locale];
+export default function LetsGoMiamiFooter({ locale }: LetsGoMiamiFooterProps) {
+  const copy = LETS_GO_MIAMI_COPY[locale].footer;
+  const emailHref = buildLetsGoMiamiEmailHref(locale);
+  const whatsappHref = buildLetsGoMiamiWhatsAppHref(locale);
 
   return (
-    <footer className="relative left-1/2 mt-16 mb-[-2rem] w-screen -translate-x-1/2 bg-primary text-primary-foreground">
-      <div className="mx-auto max-w-6xl px-4 py-12">
-        <div className="grid gap-10 md:grid-cols-3">
-          <div className="space-y-3">
-            {logoSrc ? (
-              <div className="relative h-24 w-40 overflow-hidden rounded-md bg-paper p-2">
+    <footer
+      className="bg-[var(--lgm-ink)] text-white"
+      data-section="footer"
+    >
+      <div className="mx-auto max-w-[1240px] px-5 py-10 sm:px-8 sm:py-12">
+        <div className="grid gap-8 md:grid-cols-[1.15fr_0.85fr] md:gap-16">
+          <div>
+            <div className="flex items-center gap-4">
+              <div className="relative h-16 w-16 shrink-0 overflow-hidden bg-white sm:h-[72px] sm:w-[72px]">
                 <Image
-                  src={logoSrc}
+                  src="/images/lets-go-miami/logo.png"
                   alt={copy.logoAlt}
                   fill
-                  sizes="192px"
-                  className="object-contain"
+                  sizes="(min-width: 640px) 72px, 64px"
+                  className="object-contain p-1"
                 />
               </div>
-            ) : (
               <div>
-                <p className="font-display text-3xl font-medium leading-none tracking-normal">
-                  Let’s Go Miami
-                </p>
-                <p className="mt-2 text-sm font-medium text-white/78">
-                  by Jacna Services LLC
-                </p>
-                <p className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-300/90">
+                <p className="text-lg font-semibold tracking-[-0.02em]">Let’s Go Miami</p>
+                <p className="mt-1 text-sm text-white/72">by Jacna Services LLC</p>
+                <p className="mt-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-white/58">
                   Vacation Condo Management
                 </p>
               </div>
-            )}
-
-            {logoSrc ? (
-              <div className="mt-4">
-                <p className="text-sm font-medium text-primary-foreground/90">by Jacna Services LLC</p>
-                <p className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground/75">
-                  Vacation Condo Management
-                </p>
-              </div>
-            ) : null}
-
-            <p className="mt-2 max-w-[38ch] text-sm leading-[1.7] text-primary-foreground/90">
+            </div>
+            <p className="mt-4 max-w-[34ch] text-[15px] leading-7 text-white/76">
               {copy.tagline}
-              <br />
-              {copy.areas}
             </p>
+            <Link
+              href={`/${locale}`}
+              className="mt-3 inline-flex min-h-11 items-center border-b border-white/35 text-sm font-medium text-white/82 no-underline transition-colors hover:border-white hover:text-white motion-reduce:transition-none"
+            >
+              {copy.mainSiteLink}
+            </Link>
           </div>
 
-          <div className="space-y-3">
-            <div>
-              <p className="text-sm font-medium">Let’s Go Miami</p>
-              <p className="text-xs opacity-90">by Jacna Services LLC</p>
-            </div>
-
-            <div className="mt-4 flex items-center gap-3">
+          <div>
+            <h2 className="text-xs font-semibold uppercase tracking-[0.16em] text-white/58">
+              {copy.contactTitle}
+            </h2>
+            <div className="mt-4 divide-y divide-white/14 border-y border-white/14">
               <a
-                href="mailto:jacnaservices@gmail.com"
-                className="text-primary-foreground hover:opacity-70 transition-opacity focus-visible:ring-2 focus-visible:ring-paper/50 focus-visible:ring-offset-2 focus-visible:ring-offset-primary rounded-sm"
-                aria-label={copy.emailLabel}
+                href={emailHref}
+                aria-label={`${copy.emailLabel}: ${LETS_GO_MIAMI_EMAIL}`}
+                className="flex min-h-12 items-center gap-3 py-2 text-sm text-white/84 no-underline transition-colors hover:text-white motion-reduce:transition-none"
               >
-                <Mail className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+                <Mail aria-hidden className="h-5 w-5 shrink-0" strokeWidth={1.6} />
+                <span className="break-all">{LETS_GO_MIAMI_EMAIL}</span>
               </a>
               <a
-                href="tel:+17864072591"
-                className="text-primary-foreground hover:opacity-70 transition-opacity focus-visible:ring-2 focus-visible:ring-paper/50 focus-visible:ring-offset-2 focus-visible:ring-offset-primary rounded-sm"
-                aria-label={copy.phoneLabel}
+                href={LETS_GO_MIAMI_PHONE_HREF}
+                aria-label={`${copy.phoneLabel}: ${LETS_GO_MIAMI_PHONE_DISPLAY}`}
+                className="flex min-h-12 items-center gap-3 py-2 text-sm text-white/84 no-underline transition-colors hover:text-white motion-reduce:transition-none"
               >
-                <Phone className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+                <Phone aria-hidden className="h-5 w-5 shrink-0" strokeWidth={1.6} />
+                <span>{LETS_GO_MIAMI_PHONE_DISPLAY}</span>
               </a>
               <a
-                href="https://wa.me/17864072591"
+                href={whatsappHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary-foreground hover:opacity-70 transition-opacity focus-visible:ring-2 focus-visible:ring-paper/50 focus-visible:ring-offset-2 focus-visible:ring-offset-primary rounded-sm"
-                aria-label="WhatsApp Let’s Go Miami"
+                aria-label={copy.whatsappLabel}
+                className="flex min-h-12 items-center gap-3 py-2 text-sm text-white/84 no-underline transition-colors hover:text-white motion-reduce:transition-none"
               >
-                <IconWhatsApp className="h-5 w-5" />
+                <IconWhatsApp className="h-5 w-5 shrink-0" />
+                <span>WhatsApp</span>
               </a>
             </div>
-
-            <p className="mt-2 text-sm opacity-90">jacnaservices@gmail.com</p>
-            <p className="text-sm opacity-90">Vacation Condo Management</p>
-          </div>
-
-          <div className="space-y-3">
-            <h2 className="text-xs font-semibold uppercase tracking-wider opacity-80">
-              {copy.links}
-            </h2>
-            <ul className="text-sm space-y-2">
-              <li>
-                <a href="mailto:jacnaservices@gmail.com" className="text-primary-foreground hover:opacity-90">
-                  {copy.inquiries}
-                </a>
-              </li>
-              <li>
-                <a href="https://wa.me/17864072591" target="_blank" rel="noopener noreferrer" className="text-primary-foreground hover:opacity-90">
-                  {copy.whatsapp}
-                </a>
-              </li>
-              <li>
-                <Link href={`/${locale}`} className="text-primary-foreground hover:opacity-90">
-                  {copy.mainSiteLabel}
-                </Link>
-              </li>
-            </ul>
-            <p className="max-w-[28ch] text-xs leading-[1.6] opacity-70">
-              {copy.mainSite}
-            </p>
           </div>
         </div>
       </div>
 
-      <div className="border-t border-paper/10">
-        <div className="mx-auto flex max-w-6xl flex-col items-center gap-2 px-4 py-4 text-center text-xs sm:flex-row sm:justify-between sm:text-left">
-          <p className="opacity-90">
-            © 2026 Let’s Go Miami by Jacna Services LLC. {copy.rights}
-          </p>
-          <p className="text-primary-foreground/70">
-            <a
-              href="https://www.devrodri.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline decoration-primary-foreground/35 underline-offset-2 hover:text-primary-foreground"
-            >
-              {copy.madeBy}
-            </a>
-          </p>
+      <div className="border-t border-white/14">
+        <div className="mx-auto flex max-w-[1240px] flex-col gap-2 px-5 py-4 text-xs text-white/58 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+          <p>© 2026 Let’s Go Miami by Jacna Services LLC. {copy.rights}</p>
+          <a
+            href="https://www.devrodri.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-6 w-fit items-center text-white/58 underline decoration-white/30 underline-offset-4 transition-colors hover:text-white motion-reduce:transition-none"
+          >
+            {copy.madeBy}
+          </a>
         </div>
       </div>
-
-      <div className="h-[3px] bg-accent" />
     </footer>
   );
 }
