@@ -14,6 +14,7 @@ export type LetsGoMiamiGalleryLabels = {
   previous: string;
   next: string;
   counter: string;
+  loading: string;
 };
 
 export type LetsGoMiamiImage = {
@@ -127,6 +128,7 @@ export const LETS_GO_MIAMI_COPY = {
         previous: "Foto anterior",
         next: "Foto siguiente",
         counter: "Foto {current} de {total}",
+        loading: "Cargando foto",
       },
     },
     practical: {
@@ -216,6 +218,7 @@ export const LETS_GO_MIAMI_COPY = {
         previous: "Previous photo",
         next: "Next photo",
         counter: "Photo {current} of {total}",
+        loading: "Loading photo",
       },
     },
     practical: {
@@ -305,6 +308,7 @@ export const LETS_GO_MIAMI_COPY = {
         previous: "Photo précédente",
         next: "Photo suivante",
         counter: "Photo {current} sur {total}",
+        loading: "Chargement de la photo",
       },
     },
     practical: {

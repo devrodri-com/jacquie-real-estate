@@ -112,8 +112,8 @@ export default async function LetsGoMiamiPage({
                   fill
                   priority
                   fetchPriority="high"
-                  quality={85}
-                  sizes="(min-width: 1240px) 720px, (min-width: 1024px) 58vw, 100vw"
+                  quality={75}
+                  sizes="(min-width: 640px) and (min-resolution: 2.5dppx) 640px, (min-width: 1240px) 720px, (min-width: 1024px) 58vw, (min-width: 640px) calc(100vw - 4rem), calc(100vw - 2rem)"
                   className="object-cover object-center"
                 />
               </div>
@@ -123,7 +123,7 @@ export default async function LetsGoMiamiPage({
       </section>
 
       <section
-        className="bg-white py-16 sm:py-24"
+        className="bg-white py-12 sm:py-16"
         aria-labelledby="lets-go-gallery-title"
         data-section="gallery"
       >
@@ -148,14 +148,14 @@ export default async function LetsGoMiamiPage({
           <LetsGoMiamiGallery images={galleryImages} labels={copy.gallery.labels} />
 
           <aside
-            className="mt-12 grid gap-3 border-y border-[var(--lgm-line)] py-6 sm:grid-cols-[0.3fr_1.7fr] sm:gap-10 sm:py-8"
+            className="mt-8 grid gap-2 border-t border-[var(--lgm-line)] pt-4 sm:grid-cols-[150px_minmax(0,1fr)] sm:gap-6"
             aria-label={copy.disclaimer.label}
             data-section="disclaimer"
           >
             <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--lgm-water)]">
               {copy.disclaimer.label}
             </p>
-            <p className="max-w-[82ch] text-[13px] leading-6 text-[var(--lgm-muted)] sm:text-sm sm:leading-7">
+            <p className="max-w-[84ch] text-[13px] leading-[1.7] text-[var(--lgm-muted)]">
               {copy.disclaimer.text}
             </p>
           </aside>
@@ -163,97 +163,102 @@ export default async function LetsGoMiamiPage({
       </section>
 
       <section
-        className="bg-[var(--lgm-sand)] py-16 sm:py-24"
+        className="bg-[var(--lgm-sand)] py-12 sm:py-16"
         aria-labelledby="lets-go-practical-title"
         data-section="practical"
       >
-        <div className="mx-auto grid max-w-[1240px] gap-12 px-4 sm:px-8 lg:grid-cols-[0.65fr_1.35fr] lg:gap-20">
-          <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--lgm-water)] sm:text-xs">
-              {copy.practical.eyebrow}
-            </p>
-            <h2
-              id="lets-go-practical-title"
-              className="mt-3 max-w-[12ch] text-[clamp(2rem,5vw,3.5rem)] font-medium leading-[1.02] tracking-[-0.045em]"
-            >
-              {copy.practical.title}
-            </h2>
-          </div>
-
-          <div className="grid gap-12 md:grid-cols-[1.2fr_0.8fr] md:gap-14">
+        <div className="mx-auto max-w-[1240px] px-4 sm:px-8">
+          <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr] lg:gap-20">
             <div>
-              <h3 className="text-lg font-semibold tracking-[-0.02em]">
-                {copy.practical.amenitiesTitle}
-              </h3>
-              <p className="mt-3 max-w-[44ch] text-sm leading-6 text-[var(--lgm-muted)]">
-                {copy.practical.amenitiesIntro}
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--lgm-water)] sm:text-xs">
+                {copy.practical.eyebrow}
               </p>
-              <ul className="mt-6 divide-y divide-[var(--lgm-line)] border-y border-[var(--lgm-line)]">
-                {copy.practical.amenities.map((amenity, index) => (
-                  <li key={amenity} className="flex min-h-14 items-center justify-between gap-6 py-3">
-                    <span className="text-[11px] font-semibold tabular-nums text-[var(--lgm-water)]">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <span className="text-right text-[15px] font-medium">{amenity}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-lg font-semibold tracking-[-0.02em]">
-                {copy.practical.stayTitle}
-              </h3>
-              <dl className="mt-6 border-y border-[var(--lgm-line)]">
-                <div className="grid gap-1 py-5">
-                  <dt className="text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--lgm-water)]">
-                    {copy.practical.stayLabel}
-                  </dt>
-                  <dd className="text-2xl font-medium tracking-[-0.03em]">
-                    {copy.practical.stayValue}
-                  </dd>
-                </div>
-              </dl>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section
-        className="bg-[var(--lgm-sea-glass)] py-16 sm:py-24"
-        aria-labelledby="lets-go-inquiry-title"
-        data-section="inquiry"
-      >
-        <div className="mx-auto grid max-w-[1240px] gap-12 px-4 sm:px-8 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20">
-          <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--lgm-water)] sm:text-xs">
-              {copy.inquiry.eyebrow}
-            </p>
-            <h2
-              id="lets-go-inquiry-title"
-              className="mt-3 max-w-[13ch] text-[clamp(2rem,5vw,3.5rem)] font-medium leading-[1.02] tracking-[-0.045em]"
-            >
-              {copy.inquiry.title}
-            </h2>
-            <p className="mt-5 max-w-[42ch] text-sm leading-7 text-[var(--lgm-muted)] sm:text-[15px]">
-              {copy.inquiry.body}
-            </p>
-          </div>
-
-          <ol className="divide-y divide-[var(--lgm-line)] border-y border-[var(--lgm-line)]">
-            {copy.inquiry.items.map((item, index) => (
-              <li
-                key={item.label}
-                className="grid gap-2 py-5 sm:grid-cols-[0.2fr_0.55fr_1.25fr] sm:items-baseline sm:gap-5"
+              <h2
+                id="lets-go-practical-title"
+                className="mt-3 max-w-[12ch] text-[clamp(2rem,5vw,3.5rem)] font-medium leading-[1.02] tracking-[-0.045em]"
               >
-                <span className="text-[11px] font-semibold tabular-nums text-[var(--lgm-water)]">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <span className="text-sm font-semibold">{item.label}</span>
-                <span className="text-sm leading-6 text-[var(--lgm-muted)]">{item.text}</span>
-              </li>
-            ))}
-          </ol>
+                {copy.practical.title}
+              </h2>
+            </div>
+
+            <div className="grid gap-8 md:grid-cols-[1.2fr_0.8fr] md:gap-14">
+              <div>
+                <h3 className="text-lg font-semibold tracking-[-0.02em]">
+                  {copy.practical.amenitiesTitle}
+                </h3>
+                <p className="mt-2 max-w-[44ch] text-sm leading-6 text-[var(--lgm-muted)]">
+                  {copy.practical.amenitiesIntro}
+                </p>
+                <ul className="mt-4 divide-y divide-[var(--lgm-line)] border-y border-[var(--lgm-line)]">
+                  {copy.practical.amenities.map((amenity, index) => (
+                    <li
+                      key={amenity}
+                      className="flex min-h-12 items-center justify-between gap-6 py-2.5"
+                    >
+                      <span className="text-[11px] font-semibold tabular-nums text-[var(--lgm-water)]">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <span className="text-right text-[15px] font-medium">{amenity}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="flex items-end justify-between gap-6 border-y border-[var(--lgm-line)] py-4 md:block md:border-y-0 md:py-0">
+                <h3 className="text-lg font-semibold tracking-[-0.02em]">
+                  {copy.practical.stayTitle}
+                </h3>
+                <dl className="md:mt-4 md:border-y md:border-[var(--lgm-line)]">
+                  <div className="grid gap-0.5 md:py-4">
+                    <dt className="text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--lgm-water)]">
+                      {copy.practical.stayLabel}
+                    </dt>
+                    <dd className="text-2xl font-medium tracking-[-0.03em]">
+                      {copy.practical.stayValue}
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+            </div>
+          </div>
+
+          <section
+            className="mt-10 grid gap-8 border-t border-[var(--lgm-line)] pt-10 sm:mt-12 sm:pt-12 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20"
+            aria-labelledby="lets-go-inquiry-title"
+            data-section="inquiry"
+          >
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--lgm-water)] sm:text-xs">
+                {copy.inquiry.eyebrow}
+              </p>
+              <h2
+                id="lets-go-inquiry-title"
+                className="mt-3 max-w-[13ch] text-[clamp(2rem,5vw,3.5rem)] font-medium leading-[1.02] tracking-[-0.045em]"
+              >
+                {copy.inquiry.title}
+              </h2>
+              <p className="mt-4 max-w-[42ch] text-sm leading-6 text-[var(--lgm-muted)] sm:text-[15px] sm:leading-7">
+                {copy.inquiry.body}
+              </p>
+            </div>
+
+            <ol className="divide-y divide-[var(--lgm-line)] border-y border-[var(--lgm-line)]">
+              {copy.inquiry.items.map((item, index) => (
+                <li
+                  key={item.label}
+                  className="grid grid-cols-[1.5rem_5.5rem_minmax(0,1fr)] items-baseline gap-3 py-3 sm:grid-cols-[0.2fr_0.55fr_1.25fr] sm:gap-5"
+                >
+                  <span className="text-[11px] font-semibold tabular-nums text-[var(--lgm-water)]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="text-[13px] font-semibold sm:text-sm">{item.label}</span>
+                  <span className="text-[13px] leading-5 text-[var(--lgm-muted)] sm:text-sm sm:leading-6">
+                    {item.text}
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </section>
         </div>
       </section>
 
