@@ -1,0 +1,46 @@
+.theme {
+  --lgm-paper: #fbf9f5;
+  --lgm-sand: #eee6db;
+  --lgm-sea-glass: #dce9e6;
+  --lgm-water: #3f6871;
+  --lgm-ink: #1c2d38;
+  --lgm-muted: #596870;
+  --lgm-line: rgb(28 45 56 / 16%);
+  --lgm-action: #4a2f50;
+  --lgm-action-hover: #38243d;
+  color: var(--lgm-ink);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+.fullBleed {
+  width: 100vw;
+  margin-right: calc(50% - 50vw);
+  margin-bottom: -2rem;
+  margin-left: calc(50% - 50vw);
+  background: var(--lgm-paper);
+}
+
+.galleryRail {
+  scrollbar-width: none;
+}
+
+.galleryRail::-webkit-scrollbar {
+  display: none;
+}
+
+.theme :where(a, button, [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: 3px solid var(--lgm-action);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 2px var(--lgm-paper);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme *,
+  .theme *::before,
+  .theme *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+  }
+}

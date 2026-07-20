@@ -73,6 +73,7 @@ type PageMetadataInput = {
   title: string;
   description: string;
   image?: string;
+  siteName?: string;
   robots?: Metadata["robots"];
 };
 
@@ -82,6 +83,7 @@ export function createPageMetadata({
   title,
   description,
   image,
+  siteName = "Jacquie Zarate Realtor · Miami",
   robots,
 }: PageMetadataInput): Metadata {
   const canonical = localizedUrl(locale, path);
@@ -94,7 +96,7 @@ export function createPageMetadata({
     ...(robots ? { robots } : {}),
     openGraph: {
       type: "website",
-      siteName: "Jacquie Zarate Realtor · Miami",
+      siteName,
       title,
       description,
       url: canonical,

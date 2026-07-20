@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useLocale } from "next-intl";
+import LetsGoMiamiHeader from "@/components/LetsGoMiamiHeader";
 import {
   buildJacquieWhatsAppHref,
   normalizeSiteLocale,
@@ -163,110 +163,7 @@ export default function NavBar() {
   };
 
   if (isLetsGoMiami) {
-    const letsGoCopy =
-      locale === "en"
-        ? {
-            mainSite: "Jacquie Zárate",
-            mainSiteMobile: "Back to Jacquie Zárate",
-            cta: "Check availability",
-            ariaLogo: "Let’s Go Miami by Jacna Services LLC",
-          }
-        : locale === "fr"
-          ? {
-              mainSite: "Site de Jacquie Zárate",
-              mainSiteMobile: "Retour à Jacquie Zárate",
-              cta: "Vérifier la disponibilité",
-              ariaLogo: "Let’s Go Miami par Jacna Services LLC",
-            }
-          : {
-              mainSite: "Sitio de Jacquie Zárate",
-              mainSiteMobile: "Volver a Jacquie Zárate",
-              cta: "Consultar disponibilidad",
-              ariaLogo: "Let’s Go Miami by Jacna Services LLC",
-            };
-    const letsGoMessage =
-      locale === "en"
-        ? "Hi Jacquie, I’d like to ask about availability for a Let’s Go Miami stay."
-        : locale === "fr"
-          ? "Bonjour Jacquie, j’aimerais vérifier la disponibilité pour un séjour avec Let’s Go Miami."
-          : "Hola Jacquie, quiero consultar disponibilidad para una estadía con Let’s Go Miami.";
-    const letsGoWhatsAppHref = buildJacquieWhatsAppHref(locale, letsGoMessage);
-
-    return (
-      <header className="w-full border-b border-primary/10 bg-paper text-primary">
-        <div className="mx-auto max-w-6xl px-4 py-3 sm:flex sm:min-h-16 sm:items-center sm:justify-between sm:gap-3">
-          <div className="flex items-center justify-between gap-3">
-            <Link
-              href={letsGoHref}
-              aria-label={letsGoCopy.ariaLogo}
-              className="flex items-center gap-3 text-primary no-underline"
-            >
-              <span className="relative h-14 w-24 overflow-hidden rounded-none bg-transparent ring-0 sm:h-12 sm:rounded-md sm:bg-white sm:ring-1 sm:ring-primary/10">
-                <Image
-                  src="/images/lets-go-miami/logo.png"
-                  alt={letsGoCopy.ariaLogo}
-                  fill
-                  sizes="96px"
-                  className="object-contain sm:p-1"
-                />
-              </span>
-              <span className="hidden sm:block">
-                <span className="block text-sm font-semibold leading-none">Let’s Go Miami</span>
-                <span className="mt-1 block text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/70">
-                  by Jacna Services LLC
-                </span>
-              </span>
-            </Link>
-            <a
-              href={letsGoWhatsAppHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-analytics="lets-go-header:whatsapp"
-              className="whitespace-nowrap rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground no-underline hover:opacity-95 sm:hidden"
-            >
-              {letsGoCopy.cta}
-            </a>
-          </div>
-
-          <nav className="mt-3 flex items-center justify-between gap-3 border-t border-primary/10 pt-3 text-sm font-medium sm:hidden">
-            <Link
-              href={base}
-              className="rounded-full px-1 py-2 text-sm text-primary/80 no-underline hover:text-primary"
-            >
-              {letsGoCopy.mainSiteMobile}
-            </Link>
-            <LocaleSwitcher
-              locale={locale}
-              pathWithoutLocale={pathWithoutLocale}
-              variant="light-mobile"
-            />
-          </nav>
-
-          <nav className="hidden flex-wrap items-center justify-end gap-3 text-sm font-medium sm:flex">
-            <Link
-              href={base}
-              className="rounded-full px-3 py-2 text-primary/80 no-underline hover:bg-surface hover:text-primary"
-            >
-              {letsGoCopy.mainSite}
-            </Link>
-            <a
-              href={letsGoWhatsAppHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-analytics="lets-go-header:whatsapp"
-              className="rounded-full bg-primary px-4 py-2 text-primary-foreground no-underline hover:opacity-95"
-            >
-              {letsGoCopy.cta}
-            </a>
-            <LocaleSwitcher
-              locale={locale}
-              pathWithoutLocale={pathWithoutLocale}
-              variant="light-desktop"
-            />
-          </nav>
-        </div>
-      </header>
-    );
+    return <LetsGoMiamiHeader locale={locale} pathWithoutLocale={pathWithoutLocale} />;
   }
 
   return (
