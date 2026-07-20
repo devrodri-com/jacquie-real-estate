@@ -1,132 +1,65 @@
-// src/app/[locale]/proyectos/[slug]/page.tsx
-import Image from "next/image";
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ALL_PROJECTS } from "@/data/projects/index";
-import type { Project } from "@/data/types";
-import GalleryLightbox from "@/components/GalleryLightbox";
-import HighlightsBlock, { type HighlightItem } from "@/components/HighlightsBlock";
-import FaqsBlock, { type FaqItem } from "@/components/FaqsBlock";
-import PaymentPlan from "@/components/PaymentPlan";
-import { Lock, WashingMachine, Tv, PawPrint, Palette, Dumbbell, Briefcase } from "lucide-react";
-import {
-  Sparkles,
-  LayoutGrid,
-  ListChecks,
-  MapPin,
-  Images as ImagesIcon,
-} from "lucide-react";
 import ShareButtons from "@/components/ShareButtons";
+import { ALL_PROJECTS } from "@/data/projects/index";
 import { getProjectFrOverlay } from "@/data/projectsFrOverlay";
-import { createPageMetadata, localizedUrl, normalizeLocale } from "@/lib/seo";
-function BedIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} {...props}>
-      <rect x="2" y="10" width="20" height="8" rx="2" />
-      <path d="M2 18v2M22 18v2M6 10V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4" />
-    </svg>
-  );
-}
-function BalconyIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} {...props}>
-      <rect x="4" y="10" width="16" height="8" rx="2" />
-      <path d="M4 14h16M9 10V6h6v4" />
-    </svg>
-  );
-}
-function RulerIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} {...props}>
-      <rect x="3" y="7" width="18" height="10" rx="2" />
-      <path d="M7 7v10M17 7v10M12 7v10" />
-    </svg>
-  );
-}
-
-function HeightIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} {...props}>
-      <path d="M12 3v18M8 7l4-4 4 4M8 17l4 4 4-4" />
-    </svg>
-  );
-}
-
-
-// Feature icons
-function PoolIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} {...props}>
-      <path d="M3 16c2 1.5 4 1.5 6 0 2 1.5 4 1.5 6 0 2 1.5 4 1.5 6 0" />
-      <path d="M8 12V7a2 2 0 0 1 4 0v5" />
-      <path d="M12 12V7a2 2 0 0 1 4 0v5" />
-    </svg>
-  );
-}
-function YogaIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} {...props}>
-      <circle cx="12" cy="5" r="2" />
-      <path d="M12 7v6l-4 4M12 13l4 4" />
-    </svg>
-  );
-}
-function WorkIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} {...props}>
-      <rect x="3" y="7" width="18" height="12" rx="2" />
-      <path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" />
-    </svg>
-  );
-}
-function StoreIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} {...props}>
-      <path d="M4 7h16l-1 3H5L4 7z" />
-      <path d="M5 10v7h14v-7" />
-    </svg>
-  );
-}
-
-function featureIconFor(label: string) {
-  const s = (label || "").toLowerCase();
-  const cls = "h-4 w-4";
-  // Priority: explicit keywords first
-  if (s.includes("cerradura")) return <Lock className={cls} />; // smart lock
-  if (s.includes("lavadora") || s.includes("secadora")) return <WashingMachine className={cls} />; // washer/dryer
-  if (s.includes("tv") || s.includes("audio") || s.includes("sonido")) return <Tv className={cls} />; // tv + audio
-  if (s.includes("pet") || s.includes("mascota")) return <PawPrint className={cls} />; // pet‑friendly
-  if (s.includes("arte") || s.includes("art")) return <Palette className={cls} />; // art exhibitions
-
-  // Generic amenities
-  if (s.includes("cowork") || s.includes("co‑working") || s.includes("co working")) return <Briefcase className={cls} />;
-  if (s.includes("gimnasio") || s.includes("gym")) return <Dumbbell className={cls} />;
-  if (s.includes("piscina") || s.includes("pool") || s.includes("jacuzzi")) return <PoolIcon className={cls} />;
-  if (s.includes("mercado") || s.includes("lobby") || s.includes("tienda")) return <StoreIcon className={cls} />;
-
-  // Fallback: no icon
-  return undefined;
-}
-
-
+import type { Project } from "@/data/types";
+import {
+  createPageMetadata,
+  localizedUrl,
+  normalizeLocale,
+  type SiteLocale,
+} from "@/lib/seo";
+import { buildJacquieWhatsAppHref } from "@/lib/whatsapp";
+import { PROJECT_DETAIL_COPY } from "./content";
+import ProjectFaq from "./ProjectFaq";
+import ProjectGallery from "./ProjectGallery";
+import {
+  safePresentationFaqs,
+  safePresentationLines,
+  safePresentationPaymentLines,
+} from "./presentation";
 
 type Params = { params: Promise<{ locale: string; slug: string }> };
-type LabelLine = string | { label?: string };
+type LabelLine = string | { label: string; iconKey?: string };
+type TemplateValues = Record<string, string | number>;
 
+const FULL_BLEED = "relative left-1/2 w-[100dvw] -translate-x-1/2";
+const CONTAINER = "mx-auto w-full max-w-[1240px] px-5 sm:px-8";
+const CONTENT_CONTAINER = "mx-auto w-full max-w-[1160px] px-5 sm:px-8";
+const EYEBROW =
+  "text-[10px] font-semibold uppercase tracking-[0.19em] text-primary/70 sm:text-[11px]";
+const EYEBROW_LIGHT =
+  "text-[10px] font-semibold uppercase tracking-[0.19em] text-primary-foreground/64 sm:text-[11px]";
+const SECTION_TITLE =
+  "font-display text-[clamp(2.25rem,4.8vw,3.8rem)] font-medium leading-[1.01] tracking-[-0.025em] text-primary";
+const PRIMARY_CTA =
+  "inline-flex min-h-11 w-full items-center justify-center border border-primary bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground no-underline transition-colors hover:bg-primary/90 motion-reduce:transition-none sm:w-auto";
+const SECONDARY_CTA =
+  "inline-flex min-h-11 w-full items-center justify-center border border-primary px-6 py-3 text-sm font-semibold text-primary no-underline transition-colors hover:bg-primary/5 motion-reduce:transition-none sm:w-auto";
 
-function pickBySlug(slug: string): Project | null {
-  // projects store slug like "/proyectos/72-park"; normalize for match
-  const want = `/proyectos/${slug}`;
-  return ALL_PROJECTS.find(p => p.slug === want) ?? null;
+function fillTemplate(template: string, values: TemplateValues): string {
+  return Object.entries(values).reduce(
+    (result, [key, value]) =>
+      result.replaceAll(`{${key}}`, String(value)),
+    template
+  );
 }
 
-function fmtUSD(n: number, locale: string) {
-  const loc = locale === "en" ? "en-US" : locale === "fr" ? "fr-CA" : "es-ES";
-  return new Intl.NumberFormat(loc, {
+function pickBySlug(slug: string): Project | null {
+  const normalizedSlug = `/proyectos/${slug}`;
+  return ALL_PROJECTS.find((project) => project.slug === normalizedSlug) ?? null;
+}
+
+function fmtUSD(value: number, locale: SiteLocale): string {
+  const numberLocale =
+    locale === "en" ? "en-US" : locale === "fr" ? "fr-CA" : "es-ES";
+  return new Intl.NumberFormat(numberLocale, {
     style: "currency",
     currency: "USD",
     maximumFractionDigits: 0,
-  }).format(n);
+  }).format(value);
 }
 
 function withoutTerminalPunctuation(value: string): string {
@@ -134,85 +67,208 @@ function withoutTerminalPunctuation(value: string): string {
 }
 
 function pickFrArrays<T>(
-  overlay: T[] | undefined,
-  en: T[] | undefined,
-  es: T[] | undefined
+  overlay: T[] | undefined
 ): T[] {
-  if (overlay && overlay.length > 0) return overlay;
-  if (en && en.length > 0) return en;
-  return es ?? [];
+  return overlay ?? [];
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+function localizedRentalPolicy(
+  value: string | undefined,
+  locale: SiteLocale
+): string | undefined {
+  const rental = value?.trim();
+  if (!rental) return undefined;
+
+  if (locale === "es") {
+    if (/^no restr\.?$/i.test(rental)) return "Sin restricciones";
+    const withoutPrefix = rental.replace(/^política de renta\s+/i, "");
+    if (/^uso flexible \(short-?\/long-term\)$/i.test(withoutPrefix)) {
+      return "Uso flexible (rentas de corta y larga duración)";
+    }
+    if (/^1 noche-6 meses\. \(<6 meses\)$/i.test(withoutPrefix)) {
+      return "Hospedaje: de 1 noche a menos de 6 meses";
+    }
+    return withoutPrefix;
+  }
+
+  if (locale === "en") {
+    const normalized = rental.toLowerCase().replace(/\.$/, "");
+    const translations: Record<string, string> = {
+      "no restr": "No rental restrictions",
+      "sin restricciones": "No rental restrictions",
+      "30 días": "30-day minimum",
+      "60 días": "60-day minimum",
+      "90 días": "90-day minimum",
+      "6 meses": "6-month minimum",
+      tradicional: "Traditional long-term rentals",
+      "flexible use (short-/long-term)":
+        "Flexible use (short- and long-term rentals)",
+      "lodging: nightly-6 months. (<6 months)":
+        "Lodging: stays from 1 night to under 6 months",
+    };
+    return translations[normalized] ?? rental;
+  }
+
+  if (/^(?:minimum|séjour minimum) 90 jours\.?$/i.test(rental)) {
+    return "Durée minimale de location : 90 jours";
+  }
+  return rental;
+}
+
+function localizedDelivery(
+  value: string | undefined,
+  locale: SiteLocale
+): string | undefined {
+  if (!value) return undefined;
+  const delivery = value.trim();
+
+  if (locale === "es") {
+    return delivery
+      .replace(/^(\d{4})\s+Q([1-4])$/i, "T$2 $1")
+      .replace(/^Q([1-4])\s+(\d{4})$/i, "T$1 $2")
+      .replace(/^Nov-Dec\s+(\d{4})$/i, "nov.–dic. de $1")
+      .replace(/^Dic\s+(\d{4})$/i, "dic. de $1")
+      .replace(/^(\d+)-(\d+)\s+meses$/i, "$1 a $2 meses")
+      .replace(/(\d{4})-(\d{4})/g, "$1–$2");
+  }
+
+  if (locale === "en") {
+    return delivery
+      .replace(/^(\d{4})\s+Q([1-4])$/i, "Q$2 $1")
+      .replace(/^Nov-Dec\s+(\d{4})$/i, "Nov–Dec $1")
+      .replace(/^Dic\s+(\d{4})$/i, "Dec $1")
+      .replace(/^(\d+)-(\d+)\s+meses$/i, "$1–$2 months")
+      .replace(/(\d{4})-(\d{4})/g, "$1–$2");
+  }
+
+  return delivery;
+}
+
+function lineLabel(line: LabelLine): string {
+  return typeof line === "string" ? line : line.label;
+}
+
+function Fact({
+  label,
+  children,
+  className = "",
+}: {
+  label: string;
+  children: ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={`min-w-0 py-5 sm:py-6 ${className}`}>
+      <dt className="text-[10px] font-semibold uppercase tracking-[0.17em] text-primary/70">
+        {label}
+      </dt>
+      <dd className="mt-2 break-words font-display text-[clamp(1.35rem,2.5vw,2rem)] leading-[1.12] text-primary">
+        {children}
+      </dd>
+    </div>
+  );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}) {
   const { locale: rawLocale, slug } = await params;
   const locale = normalizeLocale(rawLocale);
   const isEN = locale === "en";
   const isFR = locale === "fr";
-  const p = pickBySlug(slug);
-  if (!p) {
+  const project = pickBySlug(slug);
+
+  if (!project) {
     return {
-      title: isEN ? "Project not found" : isFR ? "Projet introuvable" : "Proyecto no encontrado",
+      title: isEN
+        ? "Project not found"
+        : isFR
+          ? "Projet introuvable"
+          : "Proyecto no encontrado",
       robots: { index: false, follow: false },
     };
   }
 
-  const frOv = isFR ? getProjectFrOverlay(p.slug) : undefined;
-  const city = isFR ? (frOv?.cityFr ?? p.city) : p.city;
-  const title = `${p.name} — ${city} | Jacquie Zarate Realtor`;
-  const deliveryMetaFr = frOv?.deliveryFr ?? p.delivery;
-  const rentalPolicy = isEN
-    ? (p.rentalPolicyEn ?? p.rentalPolicy)
+  const frOverlay = isFR ? getProjectFrOverlay(project.slug) : undefined;
+  const city = isFR ? (frOverlay?.cityFr ?? project.city) : project.city;
+  const title = `${project.name} — ${city} | Jacquie Zarate Realtor`;
+  const delivery = isFR
+    ? (frOverlay?.deliveryFr ?? project.delivery)
+    : localizedDelivery(project.delivery, locale);
+  const metadataDelivery = project.delivery ? delivery : undefined;
+  const rentalPolicySource = isEN
+    ? (project.rentalPolicyEn ?? project.rentalPolicy)
     : isFR
-      ? (frOv?.rentalPolicyFr ?? p.rentalPolicyEn ?? p.rentalPolicyEs ?? p.rentalPolicy)
-      : (p.rentalPolicyEs ?? p.rentalPolicy);
+      ? frOverlay?.rentalPolicyFr
+      : (project.rentalPolicyEs ?? project.rentalPolicy);
+  const rentalPolicy = localizedRentalPolicy(rentalPolicySource, locale);
 
-  const desc = isEN
+  const description = isEN
     ? [
-        `${p.name} in ${city}.`,
-        typeof p.priceFromUsd === "number" ? `From ${fmtUSD(p.priceFromUsd, "en")}.` : null,
-        p.delivery ? `Estimated completion: ${p.delivery}.` : null,
-        rentalPolicy ? `Rental policy: ${withoutTerminalPunctuation(String(rentalPolicy))}.` : null,
+        `${project.name} in ${city}.`,
+        typeof project.priceFromUsd === "number"
+          ? `From ${fmtUSD(project.priceFromUsd, "en")}.`
+          : null,
+        metadataDelivery
+          ? `Estimated completion: ${metadataDelivery}.`
+          : null,
+        rentalPolicy
+          ? `Rental policy: ${withoutTerminalPunctuation(String(rentalPolicy))}.`
+          : null,
         "Request floor plans and availability with Jacquie Zarate Realtor.",
-      ].filter(Boolean).join(" ")
+      ]
+        .filter(Boolean)
+        .join(" ")
     : isFR
       ? (() => {
-          const parts: string[] = [];
-          parts.push(`${p.name} — ${city}.`);
-          if (typeof p.priceFromUsd === "number") {
-            parts.push(
-              `À partir de ${fmtUSD(p.priceFromUsd, "fr")}.`
-            );
+          const parts: string[] = [`${project.name} — ${city}.`];
+          if (typeof project.priceFromUsd === "number") {
+            parts.push(`À partir de ${fmtUSD(project.priceFromUsd, "fr")}.`);
           }
-          if (typeof p.pricePerSfApprox === "number") {
-            parts.push(`Environ $${p.pricePerSfApprox}/pi².`);
+          if (typeof project.pricePerSfApprox === "number") {
+            parts.push(`Environ $${project.pricePerSfApprox}/pi².`);
           }
-          if (deliveryMetaFr) {
-            parts.push(`Livraison prévue : ${deliveryMetaFr}.`);
+          if (metadataDelivery) {
+            parts.push(`Livraison prévue : ${metadataDelivery}.`);
           }
           if (rentalPolicy) {
-            parts.push(`Politique de location : ${withoutTerminalPunctuation(String(rentalPolicy))}.`);
+            parts.push(
+              `Politique de location : ${withoutTerminalPunctuation(
+                String(rentalPolicy)
+              )}.`
+            );
           }
           parts.push(
             "Plans, disponibilité et accompagnement personnalisé avec Jacquie Zarate Realtor."
           );
           return parts.join(" ");
         })()
-    : [
-        `${p.name} en ${city}.`,
-        typeof p.priceFromUsd === "number" ? `Desde ${fmtUSD(p.priceFromUsd, "es")}.` : null,
-        p.delivery ? `Entrega estimada: ${p.delivery}.` : null,
-        rentalPolicy ? `Política de renta: ${withoutTerminalPunctuation(String(rentalPolicy))}.` : null,
-        "Solicitá planos y disponibilidad con Jacquie Zarate Realtor.",
-      ].filter(Boolean).join(" ");
-
-  const image = p.image || "/og-image.jpg";
+      : [
+          `${project.name} en ${city}.`,
+          typeof project.priceFromUsd === "number"
+            ? `Desde ${fmtUSD(project.priceFromUsd, "es")}.`
+            : null,
+          metadataDelivery
+            ? `Entrega estimada: ${metadataDelivery}.`
+            : null,
+          rentalPolicy
+            ? `Política de renta: ${withoutTerminalPunctuation(
+                String(rentalPolicy)
+              )}.`
+            : null,
+          "Solicita los planos y confirma la disponibilidad actual con Jacquie Zarate Realtor.",
+        ]
+          .filter(Boolean)
+          .join(" ");
 
   return createPageMetadata({
     locale,
     path: `proyectos/${slug}`,
     title,
-    description: desc,
-    image,
+    description,
+    image: project.image || "/og-image.jpg",
     robots: { index: true, follow: true },
   });
 }
@@ -222,605 +278,578 @@ export default async function Proyecto({ params }: Params) {
   const locale = normalizeLocale(rawLocale);
   const isEN = locale === "en";
   const isFR = locale === "fr";
-  const p = pickBySlug(slug);
-  if (!p) notFound();
+  const project = pickBySlug(slug);
+  if (!project) notFound();
 
-  const o = isFR ? getProjectFrOverlay(p.slug) : undefined;
-  const legacyRental = p.rentalPolicy != null ? String(p.rentalPolicy) : undefined;
-
-  const policy = isEN
-    ? (p.rentalPolicyEn ?? legacyRental)
+  const frOverlay = isFR ? getProjectFrOverlay(project.slug) : undefined;
+  const copy = PROJECT_DETAIL_COPY[locale];
+  const city = isFR ? (frOverlay?.cityFr ?? project.city) : project.city;
+  const delivery = isFR
+    ? (frOverlay?.deliveryFr ?? project.delivery)
+    : localizedDelivery(project.delivery, locale);
+  const rentalPolicySource = isEN
+    ? (project.rentalPolicyEn ?? project.rentalPolicy)
     : isFR
-      ? (o?.rentalPolicyFr ??
-          p.rentalPolicyEn ??
-          p.rentalPolicyEs ??
-          legacyRental)
-      : (p.rentalPolicyEs ?? legacyRental);
+      ? frOverlay?.rentalPolicyFr
+      : (project.rentalPolicyEs ?? project.rentalPolicy);
+  const rentalPolicy = localizedRentalPolicy(rentalPolicySource, locale);
 
-  const payment = isEN
-    ? (p.paymentPlanEn ?? [])
+  const rawPayment = isEN
+    ? (project.paymentPlanEn ?? [])
     : isFR
-      ? pickFrArrays(o?.paymentPlanFr, p.paymentPlanEn, p.paymentPlanEs)
-      : (p.paymentPlanEs ?? []);
+      ? pickFrArrays(frOverlay?.paymentPlanFr)
+      : (project.paymentPlanEs ?? []);
+  const payment = safePresentationPaymentLines(rawPayment, locale);
 
-  const faqs = isEN
-    ? (p.faqsEn ?? [])
+  const rawFaqs = isEN
+    ? (project.faqsEn ?? [])
     : isFR
-      ? pickFrArrays(o?.faqsFr, p.faqsEn, p.faqsEs)
-      : (p.faqsEs ?? []);
+      ? pickFrArrays(frOverlay?.faqsFr)
+      : (project.faqsEs ?? []);
+  const faqs = safePresentationFaqs(rawFaqs, locale);
 
-  const unitMix = isEN
-    ? (p.unitMixEn ?? [])
+  const rawUnitMix = isEN
+    ? (project.unitMixEn ?? [])
     : isFR
-      ? pickFrArrays(o?.unitMixFr, p.unitMixEn, p.unitMixEs)
-      : (p.unitMixEs ?? []);
+      ? pickFrArrays(frOverlay?.unitMixFr)
+      : (project.unitMixEs ?? []);
+  const unitMix = safePresentationLines(rawUnitMix);
 
-  const features = isEN
-    ? (p.featuresEn ?? [])
+  const rawFeatures = isEN
+    ? (project.featuresEn ?? [])
     : isFR
-      ? pickFrArrays(o?.featuresFr, p.featuresEn, p.featuresEs)
-      : (p.featuresEs ?? []);
+      ? pickFrArrays(frOverlay?.featuresFr)
+      : (project.featuresEs ?? []);
+  const features = safePresentationLines(rawFeatures);
 
-  const t = isEN
-    ? {
-        breadcrumb: "Projects",
-        from: "From",
-        inquire: "Inquire",
-        delivery: "Completion",
-        rental: "Rental policy",
-        gallery: "Gallery",
-        highlights: "Highlights",
-        mix: "Unit mix",
-        features: "Features",
-        payments: "Payment plan",
-        faqsTitle: "FAQs",
-        brochure: "Download brochure",
-        location: "Location",
-        why: (name: string) => `Why ${name}?`,
-        furnished: "Furnished",
-        unfurnished: "Unfurnished",
-        ctas: {
-          contact: "Send an inquiry",
-          whatsapp: "WhatsApp",
-          email: "Write by email",
-        },
-        requestPlans: "Request floor plans (PDF)",
-        checkAvail: "Check availability by typology",
-        requestMaterials: "Request materials (PDF)",
-        faqAvailLink: "Check availability by typology",
-        faqMatLink: "Request materials (PDF)",
-        faqMapLink: "See map",
-        shareLocale: "en" as const,
-        galleryLocale: "en" as const,
-        paymentLocale: "en" as const,
-        mailtoPlansSubject: (name: string) => `Floor plans (PDF) — ${name}`,
-        mailtoPlansBody: (name: string) =>
-          `Hi Jacquie,\n\nI'm interested in ${name}. Please send me floor plans (PDF).\n\nThanks.`,
-        mailtoAvailSubject: (name: string) => `Availability by typology — ${name}`,
-        mailtoAvailBody: (name: string) =>
-          `Hi Jacquie,\n\nI'm interested in ${name}. Please send availability by typology (Jr‑1 / 1BR / 2BR / 3BR).\n\nThanks.`,
-        mailtoMatSubject: (name: string) => `Materials list (PDF) — ${name}`,
-        mailtoMatBody: (name: string) =>
-          `Hi Jacquie,\n\nI'm interested in ${name}. Please send me the materials list (PDF).\n\nThanks.`,
-      }
+  const rawHighlights = isEN
+    ? (project.highlightsEn ?? project.highlights ?? [])
     : isFR
-      ? {
-          breadcrumb: "Projets",
-          from: "À partir de",
-          inquire: "Nous consulter",
-          delivery: "Livraison",
-          rental: "Politique de location",
-          gallery: "Galerie",
-          highlights: "Points forts",
-          mix: "Typologies",
-          features: "Caractéristiques",
-          payments: "Plan de paiement",
-          faqsTitle: "Questions fréquentes",
-          brochure: "Télécharger la brochure",
-          location: "Emplacement",
-          why: (name: string) => `Pourquoi ${name} ?`,
-          furnished: "Meublé",
-          unfurnished: "Non meublé",
-          ctas: {
-            contact: "Envoyer une demande",
-            whatsapp: "WhatsApp",
-            email: "Écrire par courriel",
-          },
-          requestPlans: "Demander les plans d'étage (PDF)",
-          checkAvail: "Disponibilité par typologie",
-          requestMaterials: "Demander la liste des matériaux (PDF)",
-          faqAvailLink: "Voir la disponibilité par typologie",
-          faqMatLink: "Demander la liste des matériaux (PDF)",
-          faqMapLink: "Voir la carte",
-          shareLocale: "fr" as const,
-          galleryLocale: "fr" as const,
-          paymentLocale: "fr" as const,
-          mailtoPlansSubject: (name: string) => `Plans d'étage (PDF) — ${name}`,
-          mailtoPlansBody: (name: string) =>
-            `Bonjour Jacquie,\n\nJe suis intéressé(e) par ${name}. Pourriez-vous m'envoyer les plans d'étage (PDF) ?\n\nMerci.`,
-          mailtoAvailSubject: (name: string) => `Disponibilité par typologie — ${name}`,
-          mailtoAvailBody: (name: string) =>
-            `Bonjour Jacquie,\n\nJe suis intéressé(e) par ${name}. Pourriez-vous m'indiquer la disponibilité par typologie (Jr‑1 / 1BR / 2BR / 3BR) ?\n\nMerci.`,
-          mailtoMatSubject: (name: string) => `Liste des matériaux (PDF) — ${name}`,
-          mailtoMatBody: (name: string) =>
-            `Bonjour Jacquie,\n\nJe suis intéressé(e) par ${name}. Pourriez-vous m'envoyer la liste des matériaux (PDF) ?\n\nMerci.`,
-        }
-      : {
-          breadcrumb: "Proyectos",
-          from: "Desde",
-          inquire: "Consultar",
-          delivery: "Entrega",
-          rental: "Política de renta",
-          gallery: "Galería",
-          highlights: "Destacados",
-          mix: "Tipologías",
-          features: "Características",
-          payments: "Plan de pagos",
-          faqsTitle: "Preguntas frecuentes",
-          brochure: "Descargar brochure",
-          location: "Ubicación",
-          why: (name: string) => `¿Por qué ${name}?`,
-          furnished: "Amueblado",
-          unfurnished: "Sin amueblar",
-          ctas: {
-            contact: "Enviar una consulta",
-            whatsapp: "WhatsApp",
-            email: "Escribir por email",
-          },
-          requestPlans: "Solicitar planos (PDF)",
-          checkAvail: "Ver disponibilidad por tipología",
-          requestMaterials: "Solicitar materiales (PDF)",
-          faqAvailLink: "Ver disponibilidad por tipología",
-          faqMatLink: "Solicitar materiales (PDF)",
-          faqMapLink: "Ver mapa",
-          shareLocale: "es" as const,
-          galleryLocale: "es" as const,
-          paymentLocale: "es" as const,
-          mailtoPlansSubject: (name: string) => `Planos (PDF) — ${name}`,
-          mailtoPlansBody: (name: string) =>
-            `Hola Jacquie,\n\nEstoy interesado/a en ${name}. Por favor envíame los planos (PDF).\n\nGracias.`,
-          mailtoAvailSubject: (name: string) => `Disponibilidad por tipología — ${name}`,
-          mailtoAvailBody: (name: string) =>
-            `Hola Jacquie,\n\nEstoy interesado/a en ${name}. Por favor envíame disponibilidad por tipología (Jr‑1 / 1BR / 2BR / 3BR).\n\nGracias.`,
-          mailtoMatSubject: (name: string) => `Lista de materiales (PDF) — ${name}`,
-          mailtoMatBody: (name: string) =>
-            `Hola Jacquie,\n\nEstoy interesado/a en ${name}. Por favor envíame la lista de materiales (PDF).\n\nGracias.`,
-        };
+      ? (frOverlay?.highlightsFr ?? project.highlightsFr ?? [])
+      : (project.highlights ?? []);
+  const highlights = safePresentationLines(rawHighlights);
 
-  const contactUrl = `/${locale}/contacto`;
-  const hasCoords = typeof (p as Project).lat === "number" && typeof (p as Project).lng === "number";
-  const addressQuery = p.city && /\d/.test(p.city) ? p.city : `${p.name} ${p.city}`;
-  const mapHl = isEN ? "en" : isFR ? "fr" : "es";
-  const mapSrc = hasCoords
-    ? `https://www.google.com/maps?q=${p.lat},${p.lng}&hl=${mapHl}&z=15&output=embed`
-    : `https://www.google.com/maps?q=${encodeURIComponent(addressQuery)}&hl=${mapHl}&z=15&output=embed`;
-  const mapTitle = isEN
-    ? `Location of ${p.name}`
+  const rawMicroClaims = isEN
+    ? (project.microClaimsEn ?? [])
     : isFR
-      ? `Emplacement de ${p.name}`
-      : `Ubicación de ${p.name}`;
-  const waNumber = "17864072591";
-  const waHref = `https://wa.me/${waNumber}?text=${encodeURIComponent(
-    isEN
-      ? `Hi Jacquie, I'm interested in ${p.name}. Could you please send me more information?`
-      : isFR
-        ? `Bonjour Jacquie, je suis intéressé(e) par ${p.name}. Pourriez-vous m'envoyer plus d'informations ?`
-        : `Hola Jacquie, estoy interesado/a en ${p.name}. ¿Podés enviarme más información?`
-  )}`;
+      ? pickFrArrays(frOverlay?.microClaimsFr)
+      : (project.microClaimsEs ?? []);
+  const microClaims = safePresentationLines(rawMicroClaims);
+
+  const projectImages = project.images ?? [];
+  const contactHref = `/${locale}/contacto`;
+  const whatsappMessage = fillTemplate(copy.opening.whatsappMessage, {
+    name: project.name,
+  });
+  const whatsappHref = buildJacquieWhatsAppHref(locale, whatsappMessage);
   const shareUrl = localizedUrl(locale, `proyectos/${slug}`);
+  const pricePerAreaSuffix =
+    locale === "fr" ? "/pi²" : locale === "en" ? "/sq ft" : "/ft²";
+  const supportingFacts: Array<{ label: string; value: ReactNode }> = [];
 
-  const deliveryShown = isFR ? (o?.deliveryFr ?? p.delivery) : p.delivery;
-  const priceSfSuffix = isFR ? "/pi²" : isEN ? "/sf" : "/ft²";
-  const lightSectionClass = "mt-8 rounded-[10px] bg-surface p-6 sm:p-7 max-w-[1100px] mx-auto ring-1 ring-primary/10 text-foreground relative overflow-hidden";
-  const lightTopLineClass = "pointer-events-none absolute inset-x-5 sm:inset-x-6 top-0 h-[1.5px] rounded-full bg-gradient-to-r from-transparent via-accent/35 to-transparent";
-  const lightHeadingClass = "font-display text-[16px] font-medium leading-[1.08] tracking-normal text-primary sm:text-[17px]";
-  const lightIconClass = "h-4 w-4 shrink-0 text-primary/70 stroke-[1.5]";
-  const typologyIconClass = `${lightIconClass} -translate-y-[2px]`;
-  const raisedLightIconClass = `${lightIconClass} -translate-y-px`;
-  const lightBulletClass = "relative top-[9px] inline-block h-[6px] w-[6px] sm:h-[7px] sm:w-[7px] rounded-full bg-accent flex-shrink-0";
-  const lightBodyClass = "text-[16px] leading-[26px] text-foreground/85";
-  const secondaryLightButtonClass = "inline-flex h-10 items-center justify-center rounded-md border border-primary/15 bg-white/70 px-4 text-sm font-medium text-primary hover:bg-white focus-visible:ring-2 focus-visible:ring-accent/40";
+  if (typeof project.pricePerSfApprox === "number") {
+    supportingFacts.push({
+      label: copy.opening.pricePerArea,
+      value: `~${fmtUSD(project.pricePerSfApprox, locale)}${pricePerAreaSuffix}`,
+    });
+  }
+  if (project.hoa) {
+    supportingFacts.push({ label: copy.opening.hoa, value: project.hoa });
+  }
+  if (typeof project.furnished === "boolean") {
+    supportingFacts.push({
+      label: copy.opening.furnishing,
+      value: project.furnished
+        ? copy.opening.furnished
+        : copy.opening.unfurnished,
+    });
+  }
 
-  const policyChips = [
-    ...(policy ? [policy] : []),
-    ...(p.hoa ? [`HOA ${p.hoa}`] : []),
-    ...(typeof p.furnished === "boolean"
-      ? [p.furnished ? t.furnished : t.unfurnished]
-      : []),
-  ];
+  const supportingFactsGrid =
+    supportingFacts.length === 3
+      ? "sm:grid-cols-3"
+      : supportingFacts.length === 2
+        ? "sm:grid-cols-2"
+        : "sm:grid-cols-1";
+
+  const hasCoordinates =
+    typeof project.lat === "number" && typeof project.lng === "number";
+  const addressQuery =
+    project.city && /\d/.test(project.city)
+      ? project.city
+      : `${project.name} ${project.city}`;
+  const mapLanguage = isEN ? "en" : isFR ? "fr" : "es";
+  const mapSrc = hasCoordinates
+    ? `https://www.google.com/maps?q=${project.lat},${project.lng}&hl=${mapLanguage}&z=15&output=embed`
+    : `https://www.google.com/maps?q=${encodeURIComponent(
+        addressQuery
+      )}&hl=${mapLanguage}&z=15&output=embed`;
+  const mapTitle = fillTemplate(copy.location.mapTitle, {
+    name: project.name,
+  });
 
   return (
-    <div className="mx-auto max-w-[1100px] px-4 py-12">
-      {/* Breadcrumb */}
-      <div className="mb-6">
-        <Link
-          href={`/${locale}/proyectos`}
-          className="text-[14px] text-foreground/70 no-underline hover:underline"
-        >
-          &larr; {t.breadcrumb}
-        </Link>
-      </div>
+    <div className={`${FULL_BLEED} pb-0`}>
+      <section
+        aria-labelledby="project-detail-title"
+        className="border-b border-primary/15 bg-paper"
+      >
+        <div className={`${CONTAINER} py-6 sm:py-10 lg:py-14`}>
+          <div className="flex items-center justify-between gap-5 border-b border-primary/12 pb-4">
+            <Link
+              href={`/${locale}/proyectos`}
+              className="inline-flex min-h-11 items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.13em] text-primary no-underline"
+            >
+              <span aria-hidden>←</span>
+              {copy.utility.back}
+            </Link>
+            <ShareButtons
+              url={shareUrl}
+              text={project.name}
+              locale={locale}
+              label={copy.utility.share}
+              variant="light"
+              showSystemShare
+              buttonClassName="h-11 min-h-11 w-auto border-0 px-0 text-primary shadow-none hover:bg-transparent"
+            />
+          </div>
 
-      {/* Title + meta */}
-      <h1 className="font-display text-[36px] font-medium leading-[1.02] tracking-normal text-primary sm:text-[48px]">
-        {p.name}
-      </h1>
-      {/* Meta — mobile condensed */}
-      <p className="mt-1 text-sm text-foreground/70 sm:hidden">
-        {typeof p.priceFromUsd === "number" ? (
-          <>
-            {t.from} {fmtUSD(p.priceFromUsd, locale)}
-            {typeof p.pricePerSfApprox === "number" && (
-              <span className="opacity-60"> · ~${p.pricePerSfApprox}{priceSfSuffix}</span>
-            )}
-          </>
-        ) : (
-          t.inquire
-        )}
-        {deliveryShown ? <span className="opacity-60"> · {t.delivery} {deliveryShown}</span> : null}
-      </p>
-      {/* Meta — desktop/full */}
-      <p className="hidden sm:block mt-2 text-base text-foreground/70">
-        {typeof p.priceFromUsd === "number" ? (
-          <>
-            {t.from} {fmtUSD(p.priceFromUsd, locale)}
-            {typeof p.pricePerSfApprox === "number" && (
-              <span className="opacity-60"> · ~${p.pricePerSfApprox}{priceSfSuffix}</span>
-            )}
-          </>
-        ) : (
-          t.inquire
-        )}
-        {deliveryShown ? <> · {t.delivery} {deliveryShown}</> : null}
-        {policy ? <> · {t.rental} {policy}</> : null}
-        {p.hoa ? <> · HOA {p.hoa}</> : null}
-        {typeof p.furnished === "boolean" ? (
-          <> · {p.furnished ? t.furnished : t.unfurnished}</>
-        ) : null}
-      </p>
-
-
-      {/* Micro‑claims / Chips */}
-      {(() => {
-        type WithClaims = Project & { microClaimsEs?: string[]; microClaimsEn?: string[] };
-        const pp = p as WithClaims;
-        const claims = isEN
-          ? (pp.microClaimsEn ?? [])
-          : isFR
-            ? (o?.microClaimsFr ?? pp.microClaimsEn ?? pp.microClaimsEs ?? [])
-            : (pp.microClaimsEs ?? []);
-        if (!Array.isArray(claims) || claims.length === 0) return null;
-
-        // Desktop (wrap) + Mobile (horizontal scroll)
-        const Chip = ({ children }: { children: React.ReactNode }) => (
-          <span className="inline-flex items-center rounded-full bg-white text-primary ring-1 ring-primary/15 px-3 py-[6px] text-[12.5px] font-medium leading-tight whitespace-nowrap">
-            {children}
-          </span>
-        );
-
-        // Combine extra policy chips for mobile only
-        const mobileChips = [...claims, ...policyChips];
-
-        return (
-          <>
-            {/* Desktop / tablet: tidy wrap */}
-            <div className="mt-2 hidden sm:flex sm:flex-wrap sm:gap-2.5">
-              {claims.map((c, i) => (
-                <Chip key={`claim-d-${i}`}>{c}</Chip>
-              ))}
+          <div className="mt-8 grid gap-8 lg:mt-12 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-14">
+            <div className="min-w-0">
+              <p className={EYEBROW}>{copy.opening.eyebrow}</p>
+              <p className="mt-4 text-[13px] font-semibold uppercase tracking-[0.12em] text-primary/72">
+                {city}
+              </p>
+              <h1
+                id="project-detail-title"
+                className="mt-3 max-w-[15ch] break-words font-display text-[clamp(2.7rem,7vw,5.45rem)] font-medium leading-[0.94] tracking-[-0.035em] text-primary"
+              >
+                {project.name}
+              </h1>
             </div>
 
-            {/* Mobile: single-row horizontal carousel (no wrap) */}
-            <div className="sm:hidden mt-2 -mx-4 px-4 overflow-x-auto">
-              <ul className="flex gap-2 snap-x snap-mandatory">
-                {mobileChips.map((c, i) => (
-                  <li key={`claim-m-${i}`} className="snap-start shrink-0">
-                    <Chip>{c}</Chip>
-                  </li>
-                ))}
+            <div className="border-t border-primary/15 pt-6 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-3">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.17em] text-primary/70">
+                {copy.opening.startingPrice}
+              </p>
+              <p className="mt-3 break-words font-display text-[clamp(2rem,4vw,3.1rem)] leading-none text-primary">
+                {typeof project.priceFromUsd === "number"
+                  ? fmtUSD(project.priceFromUsd, locale)
+                  : copy.opening.priceFallback}
+              </p>
+              <div className="mt-7 flex flex-col gap-3">
+                <a
+                  href={whatsappHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={PRIMARY_CTA}
+                >
+                  {copy.opening.primaryCta}
+                </a>
+                <Link href={contactHref} className={SECONDARY_CTA}>
+                  {copy.opening.secondaryCta}
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          <dl className="mt-10 grid border-y border-primary/15 sm:grid-cols-2 lg:mt-14">
+            <Fact
+              label={copy.opening.location}
+              className="border-b border-primary/12 sm:border-r"
+            >
+              {city}
+            </Fact>
+            <Fact
+              label={copy.opening.delivery}
+              className="border-b border-primary/12 sm:pl-8"
+            >
+              {delivery || copy.opening.deliveryFallback}
+            </Fact>
+            <Fact
+              label={copy.opening.rental}
+              className="sm:col-span-2"
+            >
+              {rentalPolicy || copy.opening.rentalFallback}
+            </Fact>
+          </dl>
+
+          {supportingFacts.length > 0 ? (
+            <dl
+              className={`grid border-b border-primary/15 ${supportingFactsGrid}`}
+            >
+              {supportingFacts.map((fact, index) => {
+                const hasNext = index < supportingFacts.length - 1;
+                const divider = hasNext
+                  ? "border-b border-primary/12 sm:border-b-0 sm:border-r sm:pr-8"
+                  : "";
+                const inset = index > 0 ? "sm:pl-8" : "";
+
+                return (
+                  <Fact
+                    key={fact.label}
+                    label={fact.label}
+                    className={`${divider} ${inset}`}
+                  >
+                    {fact.value}
+                  </Fact>
+                );
+              })}
+            </dl>
+          ) : null}
+
+          <p className="mt-5 max-w-[92ch] text-[12px] leading-[1.65] text-foreground/70 sm:text-[13px]">
+            {copy.opening.disclaimer}
+          </p>
+        </div>
+      </section>
+
+      <section
+        aria-labelledby="project-gallery-title"
+        className="bg-paper py-12 sm:py-16 lg:py-20"
+      >
+        <div className={CONTAINER}>
+          <div className="mb-7 grid gap-4 lg:grid-cols-[0.7fr_1.3fr] lg:items-end lg:gap-16">
+            <div>
+              <p className={EYEBROW}>{copy.gallery.eyebrow}</p>
+              <h2
+                id="project-gallery-title"
+                className={`${SECTION_TITLE} mt-3 max-w-[12ch]`}
+              >
+                {copy.gallery.title}
+              </h2>
+            </div>
+            <p className="max-w-[58ch] text-[15px] leading-[1.75] text-foreground/72 sm:text-[17px] lg:pb-1">
+              {copy.gallery.intro}
+            </p>
+          </div>
+          <ProjectGallery
+            projectName={project.name}
+            cover={{ src: project.image }}
+            images={projectImages}
+            labels={copy.gallery.labels}
+          />
+        </div>
+      </section>
+
+      <section
+        aria-labelledby="project-overview-title"
+        className="border-y border-primary/12 bg-surface py-12 sm:py-16 lg:py-20"
+      >
+        <div className={CONTENT_CONTAINER}>
+          <div className="grid gap-7 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20">
+            <div>
+              <p className={EYEBROW}>{copy.overview.eyebrow}</p>
+              <h2
+                id="project-overview-title"
+                className={`${SECTION_TITLE} mt-3 max-w-[11ch]`}
+              >
+                {copy.overview.title}
+              </h2>
+            </div>
+            <p className="max-w-[60ch] text-[15px] leading-[1.75] text-foreground/74 sm:text-[17px] lg:pt-7">
+              {copy.overview.intro}
+            </p>
+          </div>
+
+          <div className="mt-9 grid gap-8 border-t border-primary/15 pt-7 lg:grid-cols-2 lg:gap-16">
+            {microClaims.length > 0 ? (
+              <div>
+                <h3 className="text-[10px] font-semibold uppercase tracking-[0.17em] text-primary/70">
+                  {copy.overview.references}
+                </h3>
+                <ul className="mt-4 border-b border-primary/15" role="list">
+                  {microClaims.map((claim, index) => (
+                    <li
+                      key={`${index}-${claim}`}
+                      className="border-t border-primary/15 py-4 font-display text-[20px] leading-[1.22] text-primary sm:text-[23px]"
+                    >
+                      {claim}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+
+            {highlights.length > 0 ? (
+              <div>
+                <h3 className="text-[10px] font-semibold uppercase tracking-[0.17em] text-primary/70">
+                  {copy.overview.highlights}
+                </h3>
+                <ul className="mt-4 border-b border-primary/15" role="list">
+                  {highlights.map((highlight, index) => (
+                    <li
+                      key={`${index}-${highlight}`}
+                      className="flex gap-4 border-t border-primary/15 py-4 text-[15px] leading-[1.65] text-foreground/78"
+                    >
+                      <span
+                        aria-hidden
+                        className="mt-[0.67em] h-px w-7 shrink-0 bg-accent"
+                      />
+                      <span>{highlight}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+          </div>
+        </div>
+      </section>
+
+      {unitMix.length > 0 ? (
+        <section
+          id="tipologias"
+          aria-labelledby="project-typologies-title"
+          className="bg-paper py-12 sm:py-16 lg:py-20"
+        >
+          <div className={CONTENT_CONTAINER}>
+            <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20">
+              <div>
+                <p className={EYEBROW}>{copy.typologies.eyebrow}</p>
+                <h2
+                  id="project-typologies-title"
+                  className={`${SECTION_TITLE} mt-3 max-w-[12ch]`}
+                >
+                  {copy.typologies.title}
+                </h2>
+                <p className="mt-5 max-w-[40ch] text-[14px] leading-[1.7] text-foreground/68 sm:text-[15px]">
+                  {copy.typologies.intro}
+                </p>
+              </div>
+              <div>
+                <ol className="border-b border-primary/15">
+                  {unitMix.map((item, index) => {
+                    const label = lineLabel(item);
+                    return (
+                      <li
+                        key={`${index}-${label}`}
+                        className="grid gap-2 border-t border-primary/15 py-5 sm:grid-cols-[52px_minmax(0,1fr)] sm:gap-5 sm:py-6"
+                      >
+                        <span className="text-[10px] font-semibold tabular-nums tracking-[0.16em] text-primary/70">
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                        <span className="break-words font-display text-[clamp(1.25rem,2.4vw,1.8rem)] leading-[1.18] text-primary">
+                          {label}
+                        </span>
+                      </li>
+                    );
+                  })}
+                </ol>
+                <p className="mt-4 max-w-[58ch] text-[12px] leading-[1.65] text-foreground/70 sm:text-[13px]">
+                  {copy.typologies.note}
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      {features.length > 0 ? (
+        <section
+          aria-labelledby="project-features-title"
+          className="border-t border-primary/12 bg-paper pb-12 pt-12 sm:pb-16 sm:pt-16 lg:pb-20 lg:pt-20"
+        >
+          <div className={CONTENT_CONTAINER}>
+            <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20">
+              <div>
+                <p className={EYEBROW}>{copy.features.eyebrow}</p>
+                <h2
+                  id="project-features-title"
+                  className={`${SECTION_TITLE} mt-3 max-w-[12ch]`}
+                >
+                  {copy.features.title}
+                </h2>
+              </div>
+              <ul
+                className="grid border-b border-primary/15 lg:grid-cols-2"
+                role="list"
+              >
+                {features.map((item, index) => {
+                  const label = lineLabel(item);
+                  return (
+                    <li
+                      key={`${index}-${label}`}
+                      className="flex gap-4 border-t border-primary/15 py-5 text-[15px] leading-[1.7] text-foreground/78 lg:odd:pr-7 lg:even:border-l lg:even:pl-7"
+                    >
+                      <span
+                        aria-hidden
+                        className="mt-[0.72em] h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
+                      />
+                      <span className="break-words">{label}</span>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
-          </>
-        );
-      })()}
-
-      {/* Hero */}
-      <section className="mt-3 sm:mt-6">
-        <div className="relative aspect-[21/9] w-full overflow-hidden rounded-[14px] ring-1 ring-black/10">
-          <Image
-            src={p.image}
-            alt={p.name}
-            fill
-            sizes="(min-width:1024px) 960px, 100vw"
-            className="object-cover"
-            priority
-            fetchPriority="high"
-          />
-        </div>
-      </section>
-
-      {/* Sticky CTA */}
-      <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-start">
-        <a
-          href={waHref}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-5 text-sm font-medium text-primary-foreground hover:opacity-95 focus-visible:ring-2 focus-visible:ring-accent/40"
-        >
-          {t.ctas.whatsapp}
-        </a>
-        <Link
-          href={contactUrl}
-          className="inline-flex h-10 items-center justify-center rounded-md border border-primary/25 px-5 text-sm font-medium text-primary hover:bg-muted focus-visible:ring-2 focus-visible:ring-accent/40"
-        >
-          {t.ctas.contact}
-        </Link>
-        <ShareButtons
-          url={shareUrl}
-          text={p.name}
-          locale={t.shareLocale}
-          variant="light"
-          iconSrc="/icons/whatsapp.svg"
-          label={isEN ? "Share" : isFR ? "Partager" : "Compartir"}
-          className="self-start sm:self-auto"
-          buttonClassName="h-9 w-auto rounded-md border border-transparent px-2.5 text-sm font-medium text-primary/70 shadow-none hover:bg-transparent hover:text-primary focus-visible:ring-2 focus-visible:ring-accent/30 sm:h-10 sm:px-3"
-        />
-      </div>
-
-      {/* Gallery */}
-      {Array.isArray(p.images) && p.images.length > 0 && (
-        <section className="mt-8 rounded-[10px] bg-primary p-6 sm:p-7 max-w-[1100px] mx-auto ring-1 ring-primary-foreground/10 text-primary-foreground relative overflow-hidden">
-          <div className="pointer-events-none absolute inset-x-5 sm:inset-x-6 top-0 h-[1.5px] rounded-full bg-gradient-to-r from-transparent via-accent/25 to-transparent" />
-          <div className="mb-2.5 flex items-center gap-2">
-            <ImagesIcon className="h-4 w-4 shrink-0 text-primary-foreground/85 stroke-[1.5]" aria-hidden />
-            <h2 className="font-display text-[16px] font-medium leading-[1.08] tracking-normal text-primary-foreground sm:text-[17px]">{t.gallery}</h2>
           </div>
-          <GalleryLightbox images={p.images} name={p.name} locale={t.galleryLocale} />
         </section>
-      )}
+      ) : null}
 
-      {(() => {
-        const lines = isEN
-          ? (p.highlightsEn ?? p.highlights ?? [])
-          : isFR
-            ? (o?.highlightsFr ?? p.highlightsEn ?? p.highlights ?? [])
-            : (p.highlights ?? []);
-        if (!Array.isArray(lines) || lines.length === 0) return null;
-        const items: HighlightItem[] = lines.map((line: string) => ({ title: line }));
-        return (
-          <HighlightsBlock title={t.highlights} items={items} />
-        );
-      })()}
-
-
-      {unitMix.length > 0 && (() => {
-        const items = unitMix;
-        const mailtoPlans = `mailto:jacqueline@miamiliferealty.com?subject=${encodeURIComponent(
-          t.mailtoPlansSubject(p.name)
-        )}&body=${encodeURIComponent(t.mailtoPlansBody(p.name))}`;
-        const mailtoAvail = `mailto:jacqueline@miamiliferealty.com?subject=${encodeURIComponent(
-          t.mailtoAvailSubject(p.name)
-        )}&body=${encodeURIComponent(t.mailtoAvailBody(p.name))}`;
-        return (
-          <section className={lightSectionClass}>
-            <div className={lightTopLineClass} />
-            <div className="mb-2.5 flex items-center gap-2">
-              <LayoutGrid className={typologyIconClass} aria-hidden />
-              <h2 className={lightHeadingClass}>{t.mix}</h2>
+      {payment.length > 0 ? (
+        <section
+          id="pagos"
+          aria-labelledby="project-payment-title"
+          className="bg-primary py-12 text-primary-foreground sm:py-16 lg:py-20"
+        >
+          <div
+            className={`${CONTENT_CONTAINER} grid gap-9 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20`}
+          >
+            <div>
+              <p className={EYEBROW_LIGHT}>{copy.payment.eyebrow}</p>
+              <h2
+                id="project-payment-title"
+                className="mt-3 max-w-[11ch] font-display text-[clamp(2.3rem,4.8vw,3.8rem)] font-medium leading-[1.01] tracking-[-0.025em]"
+              >
+                {copy.payment.title}
+              </h2>
+              <p className="mt-5 max-w-[42ch] text-[14px] leading-[1.72] text-primary-foreground/70 sm:text-[15px]">
+                {copy.payment.intro}
+              </p>
+              <p className="mt-5 max-w-[46ch] border-l border-accent/70 pl-4 text-[12px] leading-[1.65] text-primary-foreground/60 sm:text-[13px]">
+                {copy.payment.disclaimer}
+              </p>
             </div>
-            <ul className="mt-2 sm:mt-3 space-y-[11px] max-w-[1000px] lg:max-w-[960px] mx-auto" role="list">
-              {items.map((line: LabelLine, i: number) => {
-                const label = typeof line === 'string' ? line : line?.label;
-                if (!label) return null;
-                return (
-                  <li key={`mix-${i}`} role="listitem" className="flex items-start gap-3">
-                    <span className={lightBulletClass} aria-hidden />
-                    <p className={lightBodyClass}>{label}</p>
-                  </li>
-                );
-              })}
-            </ul>
-            {/* CTAs */}
-            <div className="mt-4 flex flex-col gap-2 sm:flex-row">
-              <a href={mailtoPlans} className={secondaryLightButtonClass}>
-                {t.requestPlans}
-              </a>
-              <a href={mailtoAvail} className={secondaryLightButtonClass}>
-                {t.checkAvail}
-              </a>
-            </div>
-          </section>
-        );
-      })()}
-
-      {features.length > 0 && (() => {
-        const items = features;
-        const mailtoMaterials = `mailto:jacqueline@miamiliferealty.com?subject=${encodeURIComponent(
-          t.mailtoMatSubject(p.name)
-        )}&body=${encodeURIComponent(t.mailtoMatBody(p.name))}`;
-        return (
-          <section className={lightSectionClass}>
-            <div className={lightTopLineClass} />
-            <div className="mb-2.5 flex items-center gap-2">
-              <ListChecks className={lightIconClass} aria-hidden />
-              <h2 className={lightHeadingClass}>{t.features}</h2>
-            </div>
-            <ul className="mt-2 sm:mt-3 space-y-[11px] max-w-[1000px] lg:max-w-[960px] mx-auto" role="list">
-              {items.map((line: LabelLine, i: number) => {
-                const label = typeof line === 'string' ? line : line?.label;
-                if (!label) return null;
-                return (
-                  <li key={`feat-${i}`} role="listitem" className="flex items-start gap-3">
-                    <span className={lightBulletClass} aria-hidden />
-                    <p className={lightBodyClass}>{label}</p>
-                  </li>
-                );
-              })}
-            </ul>
-            <div className="mt-4">
-              <a href={mailtoMaterials} className={secondaryLightButtonClass}>
-                {t.requestMaterials}
-              </a>
-            </div>
-          </section>
-        );
-      })()}
-
-      {/* WhyBlock */}
-      {(() => {
-        type WithClaims = Project & { microClaimsEs?: string[]; microClaimsEn?: string[] };
-        const pp = p as WithClaims;
-        const whyClaims = isEN
-          ? (pp.microClaimsEn ?? [])
-          : isFR
-            ? (o?.microClaimsFr ?? pp.microClaimsEn ?? pp.microClaimsEs ?? [])
-            : (pp.microClaimsEs ?? []);
-        if (!Array.isArray(whyClaims) || whyClaims.length === 0) return null;
-        return (
-          <section className={lightSectionClass}>
-            <div className={lightTopLineClass} />
-            <div className="mb-2.5 flex items-center gap-2">
-              <Sparkles className={lightIconClass} aria-hidden />
-              <h2 className={lightHeadingClass}>{t.why(p.name)}</h2>
-            </div>
-            <ul className="mt-2 sm:mt-3 space-y-[11px] max-w-[1000px] lg:max-w-[960px] mx-auto" role="list">
-              {whyClaims.map((c, i) => (
-                <li key={`why-${i}`} role="listitem" className="flex items-start gap-3">
-                  <span className={lightBulletClass} aria-hidden />
-                  <p className={lightBodyClass}>{c}</p>
+            <ol className="border-b border-primary-foreground/20">
+              {payment.map((step, index) => (
+                <li
+                  key={`${index}-${step}`}
+                  className="grid gap-3 border-t border-primary-foreground/20 py-5 sm:grid-cols-[62px_minmax(0,1fr)] sm:gap-5 sm:py-6"
+                >
+                  <span className="text-[10px] font-semibold tabular-nums tracking-[0.16em] text-primary-foreground/60">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="break-words font-display text-[clamp(1.25rem,2.4vw,1.8rem)] leading-[1.18] text-primary-foreground">
+                    {step}
+                  </span>
                 </li>
               ))}
-            </ul>
-          </section>
-        );
-      })()}
+            </ol>
+          </div>
+        </section>
+      ) : null}
 
-      {/* FAQs */}
-      {faqs.length > 0 && (() => {
-        const mailtoAvail = `mailto:jacqueline@miamiliferealty.com?subject=${encodeURIComponent(
-          t.mailtoAvailSubject(p.name)
-        )}&body=${encodeURIComponent(t.mailtoAvailBody(p.name))}`;
-        const mailtoMaterials = `mailto:jacqueline@miamiliferealty.com?subject=${encodeURIComponent(
-          t.mailtoMatSubject(p.name)
-        )}&body=${encodeURIComponent(t.mailtoMatBody(p.name))}`;
-
-        const rank = (q: string) => {
-          const s = q.toLowerCase();
-          if (
-            s.includes("renta") ||
-            s.includes("short") ||
-            s.includes("location") ||
-            s.includes("courte durée") ||
-            s.includes("corta")
-          )
-            return 0;
-          if (s.includes("playa") || s.includes("beach") || s.includes("plage")) return 1;
-          if (s.includes("amoblad") || s.includes("furnish") || s.includes("meubl")) return 2;
-          if (s.includes("ubic") || s.includes("where") || s.includes("où") || s.includes("dónde")) return 3;
-          if (s.includes("entreg") || s.includes("deliver") || s.includes("livraison")) return 4;
-          if (s.includes("cowork")) return 5;
-          if (s.includes("mascota") || s.includes("pets") || s.includes("animaux")) return 6;
-          if (s.includes("certific") || s.includes("leed")) return 7;
-          if (s.includes("diferenc") || s.includes("differ") || s.includes("différen")) return 8;
-          return 99;
-        };
-
-        const sorted = [...faqs].sort((a: { q: string }, b: { q: string }) => rank(a.q) - rank(b.q));
-
-        const faqItems: FaqItem[] = sorted.map((f: { q: string; a: string }, i: number) => {
-          const ql = f.q.toLowerCase();
-          let answer: React.ReactNode = <span>{f.a}</span>;
-          // Inject inline CTAs in critical answers
-          if (
-            ql.includes("renta") ||
-            ql.includes("short") ||
-            ql.includes("location") ||
-            ql.includes("courte") ||
-            ql.includes("corta")
-          ) {
-            answer = (
-              <span>
-                {f.a}{" "}
-                <a href={mailtoAvail} className="underline">{t.faqAvailLink}</a>
-              </span>
-            );
-          } else if (ql.includes("playa") || ql.includes("beach") || ql.includes("plage")) {
-            answer = (
-              <span>
-                {f.a}{" "}
-                <a href={mailtoAvail} className="underline">{t.faqAvailLink}</a>
-              </span>
-            );
-          } else if (ql.includes("amoblad") || ql.includes("furnish") || ql.includes("meubl")) {
-            answer = (
-              <span>
-                {f.a}{" "}
-                <a href={mailtoMaterials} className="underline">{t.faqMatLink}</a>
-              </span>
-            );
-          } else if (ql.includes("ubic") || ql.includes("where") || ql.includes("où") || ql.includes("dónde")) {
-            answer = (
-              <span>
-                {f.a}{" "}
-                <a href="#ubicacion" className="underline">{t.faqMapLink}</a>
-              </span>
-            );
-          }
-          return {
-            id: rank(f.q) === 0 ? "faq-str" : undefined,
-            q: f.q,
-            a: answer,
-            defaultOpen: i === 0, // STR open after sort
-          } as FaqItem;
-        });
-
-        return (
-          <FaqsBlock id="faqs" title={t.faqsTitle} items={faqItems} className="mt-8" />
-        );
-      })()}
-
-      {/* CTAs */}
-      <section className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
-        <a href={waHref} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:opacity-95">
-          {t.ctas.whatsapp}
-        </a>
-        <Link href={contactUrl} className="w-full sm:w-auto inline-flex h-10 items-center justify-center rounded-md border border-primary/20 px-4 text-sm font-medium text-primary hover:bg-muted">
-          {t.ctas.contact}
-        </Link>
+      <section
+        aria-labelledby="project-advisor-title"
+        className="border-b border-primary/12 bg-surface py-12 sm:py-16 lg:py-20"
+      >
+        <div
+          className={`${CONTENT_CONTAINER} grid gap-7 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20`}
+        >
+          <div>
+            <p className={EYEBROW}>{copy.advisor.eyebrow}</p>
+            <h2
+              id="project-advisor-title"
+              className={`${SECTION_TITLE} mt-3 max-w-[12ch]`}
+            >
+              {copy.advisor.title}
+            </h2>
+          </div>
+          <p className="max-w-[64ch] border-l-2 border-accent pl-5 text-[16px] leading-[1.78] text-foreground/76 sm:text-[18px] lg:mt-8">
+            {copy.advisor.text}
+          </p>
+        </div>
       </section>
 
-      {/* Payment plan */}
-      <PaymentPlan
-        title={t.payments}
-        headingLevel="h2"
-        steps={payment.map((label: string) => ({ label }))}
-        project={p.name}
-        locale={t.paymentLocale}
-        className="mt-8"
-      />
-
-      {/* Location */}
-      <section id="ubicacion" className={lightSectionClass}>
-        <div className={lightTopLineClass} />
-        <div className="mb-2.5 flex items-center gap-2">
-          <MapPin className={raisedLightIconClass} aria-hidden />
-          <h2 className={lightHeadingClass}>{t.location}</h2>
+      <section
+        id="ubicacion"
+        aria-labelledby="project-location-title"
+        className="bg-paper py-12 sm:py-16 lg:py-20"
+      >
+        <div className={CONTENT_CONTAINER}>
+          <div className="grid gap-7 lg:grid-cols-[0.6fr_1.4fr] lg:items-end lg:gap-20">
+            <div>
+              <p className={EYEBROW}>{copy.location.eyebrow}</p>
+              <h2
+                id="project-location-title"
+                className={`${SECTION_TITLE} mt-3 max-w-[11ch]`}
+              >
+                {copy.location.title}
+              </h2>
+            </div>
+            <p className="break-words font-display text-[clamp(1.5rem,3vw,2.35rem)] leading-[1.12] text-primary lg:pb-1">
+              {city}
+            </p>
+          </div>
+          <div className="mt-8 overflow-hidden border border-primary/15 bg-surface sm:mt-10">
+            <iframe
+              src={mapSrc}
+              title={mapTitle}
+              width="100%"
+              height="500"
+              className="block h-[300px] w-full sm:h-[400px] lg:h-[500px]"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
         </div>
-        <div className="overflow-hidden rounded-2xl bg-white ring-1 ring-primary/10">
-          <iframe
-            src={mapSrc}
-            title={mapTitle}
-            width="100%"
-            height="360"
-            style={{ border: 0 }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
+      </section>
+
+      {faqs.length > 0 ? (
+        <section
+          id="preguntas"
+          aria-labelledby="project-faq-title"
+          className="border-t border-primary/12 bg-paper py-12 sm:py-16 lg:py-20"
+        >
+          <div className={CONTENT_CONTAINER}>
+            <div className="grid gap-7 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20">
+              <div>
+                <p className={EYEBROW}>{copy.faq.eyebrow}</p>
+                <h2
+                  id="project-faq-title"
+                  className={`${SECTION_TITLE} mt-3 max-w-[12ch]`}
+                >
+                  {copy.faq.title}
+                </h2>
+              </div>
+              <div>
+                <ProjectFaq
+                  items={faqs}
+                  labels={{ open: copy.faq.open, close: copy.faq.close }}
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      <section
+        aria-labelledby="project-close-title"
+        className="border-t border-primary/15 bg-surface py-12 sm:py-16 lg:py-20"
+      >
+        <div
+          className={`${CONTENT_CONTAINER} grid gap-7 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20`}
+        >
+          <div>
+            <p className={EYEBROW}>{copy.close.eyebrow}</p>
+            <h2
+              id="project-close-title"
+              className={`${SECTION_TITLE} mt-3 max-w-[13ch]`}
+            >
+              {copy.close.title}
+            </h2>
+          </div>
+          <div className="lg:pt-7">
+            <p className="max-w-[62ch] text-[16px] leading-[1.78] text-foreground/76 sm:text-[18px]">
+              {fillTemplate(copy.close.text, { name: project.name })}
+            </p>
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <a
+                href={whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={PRIMARY_CTA}
+              >
+                {copy.close.primaryCta}
+              </a>
+              <Link href={contactHref} className={SECONDARY_CTA}>
+                {copy.close.secondaryCta}
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
     </div>
   );
 }
-
-// EditorialRow is unused and not needed; removed image usage from Tipologías and Características sections.
