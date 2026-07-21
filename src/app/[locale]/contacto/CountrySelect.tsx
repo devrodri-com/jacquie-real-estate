@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useMemo } from "react";
+import { useState, useRef, useEffect, useId, useMemo } from "react";
 import type { Country } from "react-phone-number-input";
 import { getCountryCallingCode } from "react-phone-number-input";
 
@@ -30,7 +30,6 @@ export default function CountrySelect({
   onChange,
   options,
   labels,
-  countries,
   isEN,
   isFR = false,
   ...props
@@ -38,7 +37,9 @@ export default function CountrySelect({
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [activeIndex, setActiveIndex] = useState<number>(0);
+  const listboxId = useId();
   const containerRef = useRef<HTMLDivElement>(null);
+  const selectorButtonRef = useRef<HTMLButtonElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const listboxRef = useRef<HTMLDivElement>(null);
   const optionRefs = useRef<Map<string | number, HTMLButtonElement>>(new Map());
@@ -128,7 +129,7 @@ export default function CountrySelect({
     const element = optionRefs.current.get(key);
     
     if (element) {
-      element.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      element.scrollIntoView({ block: 'nearest' });
     }
   }, [activeIndex, allOptions, open]);
 
@@ -163,6 +164,7 @@ export default function CountrySelect({
         e.preventDefault();
         setOpen(false);
         setSearch("");
+        selectorButtonRef.current?.focus();
         break;
       case "Home":
         e.preventDefault();
@@ -179,6 +181,31 @@ export default function CountrySelect({
     onChange(country);
     setOpen(false);
     setSearch("");
+    requestAnimationFrame(() => selectorButtonRef.current?.focus());
+  };
+
+  const handleTriggerKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+      event.preventDefault();
+      setOpen(true);
+    }
+
+    if (event.key === "Escape" && open) {
+      event.preventDefault();
+      setOpen(false);
+      setSearch("");
+    }
+  };
+
+  const handleBlur = (event: React.FocusEvent<HTMLDivElement>) => {
+    if (
+      open &&
+      event.relatedTarget instanceof Node &&
+      !event.currentTarget.contains(event.relatedTarget)
+    ) {
+      setOpen(false);
+      setSearch("");
+    }
   };
 
   // Helper para obtener ID de opción
@@ -197,24 +224,36 @@ export default function CountrySelect({
   const noCountriesLabel = isEN ? "No countries found" : isFR ? "Aucun pays trouvé" : "No se encontraron países";
   const selectCountryAria = isEN ? "Select country" : isFR ? "Sélectionner un pays" : "Seleccionar país";
   
-  // ID del listbox
-  const listboxId = "country-listbox";
-
   return (
-    <div ref={containerRef} className={`relative min-w-0 ${props.className || ""}`}>
+    <div
+      ref={containerRef}
+      className={`relative min-w-0 ${props.className || ""}`}
+      onBlur={handleBlur}
+    >
       {/* Botón selector */}
       <button
+        ref={selectorButtonRef}
         type="button"
         onClick={() => setOpen(!open)}
+        onKeyDown={handleTriggerKeyDown}
         disabled={props.disabled}
-        className="flex min-w-0 items-center gap-2 h-11 px-3 rounded-md border border-primary-foreground/20 bg-white text-primary text-sm font-medium hover:bg-white/95 focus:outline-none focus:ring-2 focus:ring-accent/40 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-        aria-label={selectCountryAria}
+        className="flex h-12 min-w-0 items-center gap-2 rounded-lg border border-primary/55 bg-white px-3 text-sm font-medium text-primary transition-colors hover:bg-surface focus:outline-none focus:ring-2 focus:ring-primary/65 disabled:cursor-not-allowed disabled:opacity-50 motion-reduce:transition-none"
+        aria-label={
+          value
+            ? selectCountryAria +
+              ": " +
+              (labels?.[value] ?? value) +
+              " +" +
+              getCountryCallingCode(value)
+            : selectCountryAria + ": " + internationalLabel
+        }
         aria-expanded={open}
         aria-haspopup="listbox"
+        aria-controls={open ? listboxId : undefined}
       >
         {value ? (
           <>
-            <span className="shrink-0 text-xl">{getCountryEmoji(value)}</span>
+            <span aria-hidden="true" className="shrink-0 text-xl">{getCountryEmoji(value)}</span>
             <span className="hidden min-w-0 flex-1 truncate sm:inline">
               {labels?.[value] ?? value}
             </span>
@@ -222,7 +261,7 @@ export default function CountrySelect({
           </>
         ) : (
           <>
-            <span className="shrink-0 text-xl">🌐</span>
+            <span aria-hidden="true" className="shrink-0 text-xl">🌐</span>
             <span className="hidden min-w-0 flex-1 truncate sm:inline">
               {internationalLabel}
             </span>
@@ -230,7 +269,8 @@ export default function CountrySelect({
           </>
         )}
         <svg
-          className={`w-4 h-4 shrink-0 ml-auto transition-transform ${open ? "rotate-180" : ""}`}
+          aria-hidden="true"
+          className={`w-4 h-4 shrink-0 ml-auto transition-transform motion-reduce:transition-none ${open ? "rotate-180" : ""}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -241,7 +281,7 @@ export default function CountrySelect({
 
       {/* Popover */}
       {open && (
-        <div className="absolute z-50 top-full left-0 mt-1 w-[280px] sm:w-[320px] bg-white rounded-md border border-primary/10 shadow-xl ring-1 ring-black/5 max-h-[320px] flex flex-col">
+        <div className="absolute left-0 top-full z-50 mt-1 flex max-h-[320px] w-[min(20rem,calc(100vw-4rem))] flex-col rounded-lg border border-primary/15 bg-white shadow-xl ring-1 ring-black/5">
           {/* Búsqueda */}
           <div className="p-2 border-b border-primary/10">
             <input
@@ -251,10 +291,13 @@ export default function CountrySelect({
               onChange={(e) => setSearch(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder={searchPlaceholder}
-              className="w-full h-9 px-3 rounded-md border border-primary/10 bg-white text-primary text-sm placeholder-primary/40 focus:outline-none focus:ring-2 focus:ring-accent/40"
+              className="h-11 w-full rounded-md border border-primary/55 bg-white px-3 text-sm text-primary placeholder-primary/68 focus:outline-none focus:ring-2 focus:ring-primary/65"
               aria-controls={listboxId}
               aria-activedescendant={activeOptionId}
               aria-autocomplete="list"
+              aria-expanded={open}
+              aria-label={searchPlaceholder}
+              role="combobox"
             />
           </div>
 
@@ -264,6 +307,7 @@ export default function CountrySelect({
             id={listboxId}
             className="overflow-y-auto flex-1"
             role="listbox"
+            aria-label={selectCountryAria}
           >
             {/* Opción International (siempre primera) */}
             <button
@@ -273,15 +317,16 @@ export default function CountrySelect({
                 else optionRefs.current.delete('intl');
               }}
               type="button"
+              tabIndex={-1}
               id={getOptionId(undefined)}
               onClick={() => handleSelect(undefined)}
-              className={`w-full flex items-center gap-3 px-3 py-2 text-left text-sm hover:bg-primary/5 transition-colors ${
+              className={`flex min-h-11 w-full items-center gap-3 px-3 py-2.5 text-left text-sm transition-colors hover:bg-primary/5 motion-reduce:transition-none ${
                 value === undefined ? "bg-accent/10 font-medium" : ""
               } ${activeIndex === 0 ? "bg-accent/20" : ""}`}
               role="option"
               aria-selected={value === undefined}
             >
-              <span className="text-xl">🌐</span>
+              <span aria-hidden="true" className="text-xl">🌐</span>
               <div className="flex-1 min-w-0">
                 <div className="font-medium text-primary">{internationalLabel}</div>
                 <div className="text-xs text-primary/70">{manualEntryLabel}</div>
@@ -310,15 +355,16 @@ export default function CountrySelect({
                     else optionRefs.current.delete(country);
                   }}
                   type="button"
+                  tabIndex={-1}
                   id={optionId}
                   onClick={() => handleSelect(country)}
-                  className={`w-full flex items-center gap-3 px-3 py-2 text-left text-sm hover:bg-primary/5 transition-colors ${
+                  className={`flex min-h-11 w-full items-center gap-3 px-3 py-2.5 text-left text-sm transition-colors hover:bg-primary/5 motion-reduce:transition-none ${
                     isSelected ? "bg-accent/10 font-medium" : ""
                   } ${isActive ? "bg-accent/20" : ""}`}
                   role="option"
                   aria-selected={isSelected}
                 >
-                  <span className="text-xl flex-shrink-0">{getCountryEmoji(country)}</span>
+                  <span aria-hidden="true" className="text-xl flex-shrink-0">{getCountryEmoji(country)}</span>
                   <div className="flex-1 min-w-0">
                     <div className="font-medium text-primary truncate">{label}</div>
                   </div>

@@ -14,24 +14,24 @@
 .phoneWrapper :global(.PhoneInputInput) {
   min-width: 0;
   flex: 1 1 auto;
-  height: 44px !important;
-  border-radius: 6px;
-  border: 1px solid rgba(59, 39, 74, 0.1) !important;
+  height: 48px !important;
+  border-radius: 8px;
+  border: 1px solid rgba(59, 39, 74, 0.55) !important;
   background: white !important;
   padding: 0 12px !important;
   color: #2B2530 !important;
   font-size: 16px !important;
   outline: none !important;
-  transition: all 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .phoneWrapper :global(.PhoneInputInput)::placeholder {
-  color: rgba(43, 37, 48, 0.4) !important;
+  color: rgba(43, 37, 48, 0.68) !important;
 }
 
 .phoneWrapper :global(.PhoneInputInput):focus {
-  box-shadow: 0 0 0 2px rgba(169, 139, 184, 0.35) !important;
-  border-color: rgba(59, 39, 74, 0.2) !important;
+  box-shadow: 0 0 0 2px rgba(59, 39, 74, 0.65) !important;
+  border-color: rgba(59, 39, 74, 0.8) !important;
 }
 
 .phoneWrapper :global(.PhoneInputCountry) {
@@ -46,6 +46,23 @@
   border-right: 1px solid rgba(59, 39, 74, 0.12);
 }
 
+.phoneWrapper :global(.PhoneInput--disabled) {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+@media (max-width: 380px) {
+  .phoneWrapper :global(.PhoneInputCountry) {
+    max-width: 5.75rem;
+    margin-right: 6px;
+    padding-right: 6px;
+  }
+
+  .phoneWrapper :global(.PhoneInputInput) {
+    padding-inline: 10px !important;
+  }
+}
+
 .phoneWrapper :global(.PhoneInputCountryIcon) {
   width: 20px;
   height: 15px;
@@ -56,7 +73,7 @@
 .phoneWrapper :global(.PhoneInputCountrySelect) {
   height: 44px;
   border-radius: 6px;
-  border: 1px solid rgba(59, 39, 74, 0.1);
+  border: 1px solid rgba(59, 39, 74, 0.55);
   background: white;
   padding: 0 24px 0 8px;
   color: #2B2530;
@@ -67,15 +84,22 @@
   background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%233B274A' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 8px center;
-  transition: all 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
   min-width: 60px;
 }
 
 .phoneWrapper :global(.PhoneInputCountrySelect):focus {
-  box-shadow: 0 0 0 2px rgba(169, 139, 184, 0.35);
-  border-color: rgba(59, 39, 74, 0.2);
+  box-shadow: 0 0 0 2px rgba(59, 39, 74, 0.65);
+  border-color: rgba(59, 39, 74, 0.8);
 }
 
 .phoneWrapper :global(.PhoneInputCountrySelectArrow) {
   display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .phoneWrapper :global(.PhoneInputInput),
+  .phoneWrapper :global(.PhoneInputCountrySelect) {
+    transition: none !important;
+  }
 }

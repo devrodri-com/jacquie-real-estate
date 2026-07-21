@@ -98,9 +98,6 @@ export default function NavBar() {
     { href: `${base}/listings`, label: copy.properties },
     { href: `${base}/financiacion`, label: copy.financing },
     { href: `${base}/sobre-mi`, label: copy.about },
-  ];
-  const mobileItems = [
-    ...coreItems,
     { href: `${base}/contacto`, label: copy.contact },
   ];
   const letsGoHref = `${base}/lets-go-miami`;
@@ -288,7 +285,7 @@ export default function NavBar() {
 
             <div className="mt-3 min-h-0 flex-1 overflow-y-auto pb-5">
               <div className="divide-y divide-paper/10">
-                {mobileItems.map((item) => (
+                {coreItems.map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}
