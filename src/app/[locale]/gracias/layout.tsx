@@ -4,16 +4,19 @@ import { createPageMetadata, normalizeLocale } from "@/lib/seo";
 
 const THANK_YOU_META = {
   es: {
-    title: "Gracias por tu mensaje | Jacquie Zarate Realtor",
-    description: "Recibimos tu consulta y te contactaremos a la brevedad.",
+    title: "Gracias | Jacquie Zárate",
+    description:
+      "Continúa una conversación inmobiliaria con Jacquie Zárate por WhatsApp o desde la página de Contacto.",
   },
   en: {
-    title: "Thanks for your message | Jacquie Zarate Realtor",
-    description: "We received your request and will get back to you shortly.",
+    title: "Thank you | Jacquie Zárate",
+    description:
+      "Continue a real estate conversation with Jacquie Zárate on WhatsApp or from the Contact page.",
   },
   fr: {
-    title: "Merci pour votre message | Jacquie Zarate Realtor",
-    description: "Nous avons bien reçu votre demande et nous vous recontacterons sous peu.",
+    title: "Merci | Jacquie Zárate",
+    description:
+      "Poursuivez une conversation immobilière avec Jacquie Zárate sur WhatsApp ou depuis la page Contact.",
   },
 };
 

@@ -1,8 +1,9 @@
 // Usamos los JSON en /src/i18n/messages
 import {getRequestConfig} from 'next-intl/server';
 
-export default getRequestConfig(async ({locale}) => {
-  const l = locale === 'en' ? 'en' : locale === 'fr' ? 'fr' : 'es';
+export default getRequestConfig(async ({locale, requestLocale}) => {
+  const requestedLocale = locale ?? (await requestLocale);
+  const l = requestedLocale === 'en' ? 'en' : requestedLocale === 'fr' ? 'fr' : 'es';
 
   let messages: Record<string, unknown>;
   if (l === 'en') {
