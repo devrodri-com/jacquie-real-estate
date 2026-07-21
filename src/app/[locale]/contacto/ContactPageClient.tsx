@@ -41,11 +41,11 @@ export default function ContactPageClient({
     t("whatsappMessage")
   );
 
-  const trackWhatsApp = (placement: "direct" | "form_unavailable") => {
+  const trackWhatsApp = () => {
     try {
       window.gtag?.("event", "click_whatsapp", {
         event_category: "engagement",
-        event_label: "contact_whatsapp_" + placement + "_" + locale,
+        event_label: "contact_whatsapp_direct_" + locale,
       });
     } catch {
       // Tracking must not block the real contact channel.
@@ -105,7 +105,7 @@ export default function ContactPageClient({
             href={whatsappHref}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => trackWhatsApp("direct")}
+            onClick={trackWhatsApp}
             data-analytics="contact:whatsapp"
             className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2.5 rounded-lg bg-primary px-5 text-sm font-semibold text-white no-underline transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 sm:w-auto motion-reduce:transition-none"
           >
@@ -143,30 +143,28 @@ export default function ContactPageClient({
         </div>
       </section>
 
-      <section
-        aria-labelledby="contact-form-title"
-        className="relative mt-14 max-w-[880px] overflow-hidden rounded-xl border border-primary/12 bg-surface/72 p-5 sm:mt-16 sm:p-7 lg:p-8"
-      >
-        <div className="pointer-events-none absolute inset-x-7 top-0 h-px bg-gradient-to-r from-transparent via-accent/60 to-transparent" />
-        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary/72">
-          {t("formEyebrow")}
-        </p>
-        <h2
-          id="contact-form-title"
-          className="mt-2 font-display text-[30px] font-medium leading-tight text-primary sm:text-[36px]"
+      {transportConfigured ? (
+        <section
+          aria-labelledby="contact-form-title"
+          className="relative mt-14 max-w-[880px] overflow-hidden rounded-xl border border-primary/12 bg-surface/72 p-5 sm:mt-16 sm:p-7 lg:p-8"
         >
-          {t("formTitle")}
-        </h2>
-        <p className="mt-3 max-w-[65ch] text-[15px] leading-7 text-foreground/72">
-          {t("formIntro")}
-        </p>
+          <div className="pointer-events-none absolute inset-x-7 top-0 h-px bg-gradient-to-r from-transparent via-accent/60 to-transparent" />
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary/72">
+            {t("formEyebrow")}
+          </p>
+          <h2
+            id="contact-form-title"
+            className="mt-2 font-display text-[30px] font-medium leading-tight text-primary sm:text-[36px]"
+          >
+            {t("formTitle")}
+          </h2>
+          <p className="mt-3 max-w-[65ch] text-[15px] leading-7 text-foreground/72">
+            {t("formIntro")}
+          </p>
 
-        <ContactForm
-          locale={locale}
-          transportConfigured={transportConfigured}
-          whatsappHref={whatsappHref}
-        />
-      </section>
+          <ContactForm locale={locale} />
+        </section>
+      ) : null}
 
       <section
         aria-labelledby="stays-title"

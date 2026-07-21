@@ -27,7 +27,6 @@ declare global {
   }
 }
 
-const CONTACT_EMAIL = "jacqueline@miamiliferealty.com";
 const NAME_MAX_LENGTH = 100;
 const EMAIL_MAX_LENGTH = 254;
 const PHONE_MAX_LENGTH = 32;
@@ -67,8 +66,6 @@ const UTM_KEYS: ContactUtmKey[] = [
 
 type ContactFormProps = {
   locale: ContactLocale;
-  transportConfigured: boolean;
-  whatsappHref: string;
 };
 
 type FormValues = {
@@ -148,45 +145,7 @@ function isValidEmail(value: string): boolean {
   );
 }
 
-export default function ContactForm({
-  locale,
-  transportConfigured,
-  whatsappHref,
-}: ContactFormProps) {
-  const t = useTranslations("contact");
-
-  if (!transportConfigured) {
-    return (
-      <div
-        className="mt-6 border-l-2 border-accent/60 pl-4 sm:pl-5"
-        role="status"
-      >
-        <h3 className="text-base font-semibold text-primary">
-          {t("unavailableTitle")}
-        </h3>
-        <p className="mt-2 max-w-[58ch] text-sm leading-6 text-foreground/72">
-          {t("unavailableBody")}
-        </p>
-        <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
-          <a
-            href={whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex min-h-11 items-center justify-center rounded-lg border border-primary/55 bg-white px-4 text-sm font-semibold text-primary no-underline transition-colors hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 motion-reduce:transition-none"
-          >
-            {t("unavailableWhatsapp")}
-          </a>
-          <a
-            href={"mailto:" + CONTACT_EMAIL}
-            className="inline-flex min-h-11 items-center justify-center px-1 text-sm font-semibold text-primary underline decoration-primary/40 underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 sm:justify-start"
-          >
-            {t("unavailableEmail")}
-          </a>
-        </div>
-      </div>
-    );
-  }
-
+export default function ContactForm({ locale }: ContactFormProps) {
   return <ConfiguredContactForm locale={locale} />;
 }
 
@@ -194,6 +153,7 @@ function ConfiguredContactForm({ locale }: { locale: ContactLocale }) {
   const t = useTranslations("contact");
   const router = useRouter();
   const noticeRef = useRef<HTMLDivElement>(null);
+  const isMountedRef = useRef(true);
   const [form, setForm] = useState<FormValues>(EMPTY_FORM);
   const [phoneInputValue, setPhoneInputValue] = useState("");
   const [selectedCountry, setSelectedCountry] = useState<
@@ -205,9 +165,17 @@ function ConfiguredContactForm({ locale }: { locale: ContactLocale }) {
   const [deliveryNotice, setDeliveryNotice] = useState<string | null>(null);
   const [noticeVersion, setNoticeVersion] = useState(0);
   const [sending, setSending] = useState(false);
+  const [redirecting, setRedirecting] = useState(false);
   const [utms, setUtms] = useState<
     Partial<Record<ContactUtmKey, string>>
   >({});
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -476,9 +444,17 @@ function ConfiguredContactForm({ locale }: { locale: ContactLocale }) {
       }
 
       if (confirmationStored) {
+        setRedirecting(true);
+        showDeliveryNotice(t("successBeforeRedirect"));
+        await new Promise<void>((resolve) => {
+          window.setTimeout(resolve, 800);
+        });
+        if (!isMountedRef.current) return;
+
         try {
           router.push("/" + locale + "/gracias");
         } catch {
+          setRedirecting(false);
           setSending(false);
           showDeliveryNotice(t("successWithoutRedirect"));
         }
@@ -498,14 +474,14 @@ function ConfiguredContactForm({ locale }: { locale: ContactLocale }) {
       className="mt-6"
       onSubmit={handleSubmit}
       noValidate
-      aria-busy={sending}
+      aria-busy={sending && !redirecting}
     >
       <p className="text-xs font-medium text-foreground/72">
         {t("requiredNote")}
       </p>
 
       <span className="sr-only" role="status" aria-live="polite">
-        {sending ? t("sending") : ""}
+        {sending && !redirecting ? t("sending") : ""}
       </span>
 
       {displayedNotice ? (
@@ -717,7 +693,11 @@ function ConfiguredContactForm({ locale }: { locale: ContactLocale }) {
           disabled={sending}
           className="inline-flex min-h-12 shrink-0 items-center justify-center rounded-lg bg-primary px-5 text-sm font-semibold text-white transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-wait disabled:opacity-65 motion-reduce:transition-none"
         >
-          {sending ? t("sending") : t("submit")}
+          {redirecting
+            ? t("openingConfirmation")
+            : sending
+              ? t("sending")
+              : t("submit")}
         </button>
       </div>
     </form>
