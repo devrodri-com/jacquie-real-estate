@@ -371,7 +371,7 @@ export default function ProjectGallery({
       </div>
 
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-[119] bg-[#120f16]/95 backdrop-blur-sm data-[state=closed]:animate-out data-[state=open]:animate-in motion-reduce:animate-none" />
+        <Dialog.Overlay className="fixed inset-0 z-[119] bg-[#120f16]/95 backdrop-blur-sm motion-safe:data-[state=closed]:animate-out motion-safe:data-[state=open]:animate-in" />
         <Dialog.Content
           aria-describedby={undefined}
           onCloseAutoFocus={(event) => {
