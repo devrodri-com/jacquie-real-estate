@@ -593,7 +593,7 @@ export default async function Proyecto({ params }: Params) {
                 <h3 className="text-[10px] font-semibold uppercase tracking-[0.17em] text-primary/70">
                   {copy.overview.attributes}
                 </h3>
-                <ul
+                <ol
                   role="list"
                   className="mt-5 list-none columns-1 [column-fill:balance] xl:columns-2 xl:gap-x-10"
                 >
@@ -602,13 +602,19 @@ export default async function Proyecto({ params }: Params) {
                     return (
                       <li
                         key={`${index}-${label}`}
-                        className="mb-5 max-w-[38ch] break-inside-avoid break-words text-[14px] leading-[1.65] text-foreground/78 [break-inside:avoid-column] last:mb-0"
+                        className="mb-5 flex max-w-[38ch] break-inside-avoid gap-3 text-[14px] leading-[1.65] text-foreground/78 [break-inside:avoid-column] last:mb-0"
                       >
-                        {label}
+                        <span
+                          aria-hidden
+                          className="w-6 shrink-0 pt-0.5 text-[9px] font-semibold tabular-nums tracking-[0.14em] text-primary/70 sm:text-[10px]"
+                        >
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                        <span className="min-w-0 break-words">{label}</span>
                       </li>
                     );
                   })}
-                </ul>
+                </ol>
               </div>
             ) : null}
           </div>
@@ -697,9 +703,13 @@ export default async function Proyecto({ params }: Params) {
                 return (
                   <li
                     key={`${index}-${label}`}
-                    className="mb-6 max-w-[48ch] break-inside-avoid break-words text-[15px] font-medium leading-[1.65] text-primary/82 [break-inside:avoid-column] last:mb-0"
+                    className="mb-6 flex max-w-[48ch] break-inside-avoid gap-3 text-[15px] font-medium leading-[1.65] text-primary/82 [break-inside:avoid-column] last:mb-0"
                   >
-                    {label}
+                    <span
+                      aria-hidden
+                      className="mt-[0.68em] h-1 w-1 shrink-0 rounded-full bg-primary/60"
+                    />
+                    <span className="min-w-0 break-words">{label}</span>
                   </li>
                 );
               })}
@@ -800,17 +810,15 @@ export default async function Proyecto({ params }: Params) {
         className="bg-paper py-10 sm:py-12 lg:py-14"
       >
         <div className={`${CONTENT_CONTAINER} grid gap-6 lg:grid-cols-[minmax(240px,0.36fr)_minmax(0,0.64fr)] lg:items-stretch lg:gap-10`}>
-          <div className="flex flex-col justify-between border-b border-primary/15 pb-5 lg:border-b-0 lg:border-r lg:pb-0 lg:pr-8">
-            <div>
-              <p className={EYEBROW}>{copy.location.eyebrow}</p>
-              <h2
-                id="project-location-title"
-                className="mt-3 max-w-[12ch] font-display text-[clamp(2rem,3.4vw,2.9rem)] font-medium leading-[1.04] tracking-[-0.02em] text-primary"
-              >
-                {copy.location.title}
-              </h2>
-            </div>
-            <p className="mt-6 break-words font-display text-[clamp(1.35rem,2.5vw,2rem)] leading-[1.15] text-primary">
+          <div className="border-b border-primary/15 pb-5 lg:border-b-0 lg:border-r lg:pb-0 lg:pr-8">
+            <p className={EYEBROW}>{copy.location.eyebrow}</p>
+            <h2
+              id="project-location-title"
+              className="mt-3 max-w-[12ch] font-display text-[clamp(2rem,3.4vw,2.9rem)] font-medium leading-[1.04] tracking-[-0.02em] text-primary"
+            >
+              {copy.location.title}
+            </h2>
+            <p className="mt-5 break-words font-display text-[clamp(1.35rem,2.5vw,2rem)] leading-[1.15] text-primary">
               {city}
             </p>
           </div>
