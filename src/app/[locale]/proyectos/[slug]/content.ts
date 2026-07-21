@@ -4,7 +4,6 @@ export type ProjectGalleryLabels = Readonly<{
   dialogTitle: string;
   viewAll: string;
   viewImage: string;
-  imageCount: string;
   openImage: string;
   counter: string;
   close: string;
@@ -47,13 +46,18 @@ type ProjectDetailCopy = {
   overview: {
     eyebrow: string;
     title: string;
-    intro: string;
     attributes: string;
   };
   typologies: {
     eyebrow: string;
-    title: string;
-    intro: string;
+    withSurfaces: {
+      title: string;
+      intro: string;
+    };
+    withoutSurfaces: {
+      title: string;
+      intro: string;
+    };
     note: string;
   };
   features: {
@@ -127,7 +131,6 @@ export const PROJECT_DETAIL_COPY: Record<SiteLocale, ProjectDetailCopy> = {
         dialogTitle: "Galería de {name}",
         viewAll: "Ver todas las imágenes ({total})",
         viewImage: "Ver imagen",
-        imageCount: "{total} imágenes",
         openImage: "Abrir imagen {current} de {total}",
         counter: "{current} de {total}",
         close: "Cerrar galería",
@@ -141,14 +144,18 @@ export const PROJECT_DETAIL_COPY: Record<SiteLocale, ProjectDetailCopy> = {
     overview: {
       eyebrow: "EL PROYECTO",
       title: "Sobre el proyecto",
-      intro:
-        "Una lectura de los atributos que definen el proyecto, organizada a partir de la información publicada.",
       attributes: "Atributos destacados",
     },
     typologies: {
       eyebrow: "CONFIGURACIONES",
-      title: "Tipologías y superficies",
-      intro: "Consulta las configuraciones y superficies publicadas.",
+      withSurfaces: {
+        title: "Tipologías y superficies",
+        intro: "Consulta las configuraciones y superficies publicadas.",
+      },
+      withoutSurfaces: {
+        title: "Tipologías del proyecto",
+        intro: "Consulta las configuraciones publicadas.",
+      },
       note:
         "La disponibilidad de cada tipología se verifica al momento de la consulta.",
     },
@@ -225,7 +232,6 @@ export const PROJECT_DETAIL_COPY: Record<SiteLocale, ProjectDetailCopy> = {
         dialogTitle: "{name} gallery",
         viewAll: "View all images ({total})",
         viewImage: "View image",
-        imageCount: "{total} images",
         openImage: "Open image {current} of {total}",
         counter: "{current} of {total}",
         close: "Close gallery",
@@ -239,14 +245,18 @@ export const PROJECT_DETAIL_COPY: Record<SiteLocale, ProjectDetailCopy> = {
     overview: {
       eyebrow: "THE PROJECT",
       title: "About the project",
-      intro:
-        "A closer look at the attributes that define the project, based on the published information.",
       attributes: "Key attributes",
     },
     typologies: {
       eyebrow: "CONFIGURATIONS",
-      title: "Residence types and sizes",
-      intro: "Review the published configurations and sizes.",
+      withSurfaces: {
+        title: "Unit types and sizes",
+        intro: "Explore the published unit configurations and sizes.",
+      },
+      withoutSurfaces: {
+        title: "Project unit types",
+        intro: "Explore the published unit configurations.",
+      },
       note: "Availability for each residence type is verified when you inquire.",
     },
     features: {
@@ -322,7 +332,6 @@ export const PROJECT_DETAIL_COPY: Record<SiteLocale, ProjectDetailCopy> = {
         dialogTitle: "Galerie de {name}",
         viewAll: "Voir toutes les images ({total})",
         viewImage: "Voir l’image",
-        imageCount: "{total} images",
         openImage: "Ouvrir l’image {current} sur {total}",
         counter: "{current} sur {total}",
         close: "Fermer la galerie",
@@ -336,14 +345,18 @@ export const PROJECT_DETAIL_COPY: Record<SiteLocale, ProjectDetailCopy> = {
     overview: {
       eyebrow: "LE PROJET",
       title: "À propos du projet",
-      intro:
-        "Un aperçu des caractéristiques qui définissent le projet, à partir des renseignements publiés.",
       attributes: "Caractéristiques distinctives",
     },
     typologies: {
       eyebrow: "CONFIGURATIONS",
-      title: "Types de résidences et superficies",
-      intro: "Consultez les configurations et les superficies publiées.",
+      withSurfaces: {
+        title: "Types de résidences et superficies",
+        intro: "Consultez les configurations et les superficies publiées.",
+      },
+      withoutSurfaces: {
+        title: "Types de résidences du projet",
+        intro: "Consultez les configurations publiées.",
+      },
       note:
         "La disponibilité de chaque type de résidence est vérifiée au moment de la demande.",
     },

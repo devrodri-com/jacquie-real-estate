@@ -360,10 +360,7 @@ export default function ProjectGallery({
         </>
       ) : null}
 
-      <div className="mt-3 flex items-center justify-between gap-4 border-t border-primary/15 pt-3">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/70">
-          {fillTemplate(labels.imageCount, { total: imageCount })}
-        </p>
+      <div className="mt-3 flex items-center justify-end gap-4 border-t border-primary/15 pt-3">
         <button
           type="button"
           onClick={(event) => openAt(0, event.currentTarget)}

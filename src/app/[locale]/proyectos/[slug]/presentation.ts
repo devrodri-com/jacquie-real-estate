@@ -21,7 +21,25 @@ type ProjectPresentationGroups = Readonly<{
   highlights: readonly LabelItem[];
   features: readonly LabelItem[];
   factValues: readonly string[];
+  rentalPolicy?: string;
   priceFromUsd?: number;
+}>;
+
+type RentalFacet =
+  | "no-restrictions"
+  | "no-minimum"
+  | "short-term"
+  | "daily"
+  | "long-term"
+  | "on-site-management"
+  | "approved"
+  | `duration:${number}:${"day" | "night" | "month"}`
+  | `max-leases:${number}`;
+
+type ParsedRentalMeaning = Readonly<{
+  facets: ReadonlySet<RentalFacet>;
+  hasRentalAnchor: boolean;
+  residue: ReadonlySet<string>;
 }>;
 
 const FINANCING_ANSWER: Record<SiteLocale, string> = {
@@ -48,6 +66,14 @@ function normalizeClaim(value: string): string {
 
 function labelValue(item: LabelItem): string {
   return typeof item === "string" ? item : item.label;
+}
+
+const EXPLICIT_SURFACE_PATTERN =
+  /\d[\d\s,.]*(?:\s*[‐‑‒–—―-]\s*\d[\d\s,.]*)?\s*\+?\s*(?:m²|m2|pi²|pi2|ft²|ft2|sq\.?\s*ft|sqft|sf)(?![\p{L}\d])/iu;
+
+/** A surface is present only when a localized unit-mix line has a number and area unit. */
+export function hasPublishedUnitSurface(items: readonly LabelItem[]): boolean {
+  return items.some((item) => EXPLICIT_SURFACE_PATTERN.test(labelValue(item)));
 }
 
 function meaningfulTokens(value: string): string[] {
@@ -155,7 +181,7 @@ function rentalSignature(value: string): string | null {
   }
 
   const duration = claim.match(
-    /(?:minimum|minimo|minima|duracion minimale|renta minima|location minimale)?\s*(\d+)\s*[- ]?(day|days|dia|dias|jour|jours|month|months|mes|mois)/
+    /(?:minimum|minimo|minima|duracion minimale|renta minima|location minimale)?\s*(\d+)\s*[- ]?(days?|dias?|jours?|months?|mes|mois)/
   );
   if (!duration) return null;
   const residual = claim
@@ -168,6 +194,287 @@ function rentalSignature(value: string): string | null {
     .trim();
   if (residual) return null;
   return `rental:${duration[1]}:${duration[2].slice(0, 3)}`;
+}
+
+function normalizedRentalText(value: string): string {
+  return normalizeClaim(value)
+    .replace(/[^a-z0-9]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function parseRentalMeaning(value: string): ParsedRentalMeaning {
+  const text = normalizedRentalText(value);
+  const facets = new Set<RentalFacet>();
+  let residue = ` ${text} `;
+
+  const consume = (
+    facet: RentalFacet,
+    testPattern: RegExp,
+    replacePattern: RegExp
+  ) => {
+    if (!testPattern.test(text)) return;
+    facets.add(facet);
+    residue = residue.replace(replacePattern, " ");
+  };
+
+  consume(
+    "no-minimum",
+    /\b(?:sin (?:restriccion de )?(?:alquiler )?minim[oa]|sin minimo(?: de alquiler)?|no minimum(?: rental)? restrictions?|no rental minimum|aucune duree minimale(?: de location)?|sans duree minimale|aucun minimum(?: de location)?)\b/,
+    /\b(?:sin (?:restriccion de )?(?:alquiler )?minim[oa]|sin minimo(?: de alquiler)?|no minimum(?: rental)? restrictions?|no rental minimum|aucune duree minimale(?: de location)?|sans duree minimale|aucun minimum(?: de location)?)\b/g
+  );
+  consume(
+    "no-restrictions",
+    /\b(?:sin restricciones(?: de (?:alquiler|renta))?|no (?:rental )?restrictions?|aucune restriction(?: de location)?|sans restriction(?: de location)?)\b/,
+    /\b(?:sin restricciones(?: de (?:alquiler|renta))?|no (?:rental )?restrictions?|aucune restriction(?: de location)?|sans restriction(?: de location)?)\b/g
+  );
+
+  const hasShortTerm =
+    /\bstr\b/.test(text) ||
+    /\bshort(?: and long)? term\b/.test(text) ||
+    /\b(?:renta|rentas|alquiler|alquileres)?\s*(?:de )?cort[oa]s? plazo\b/.test(
+      text
+    ) ||
+    /\bestancias? cortas?\b/.test(text) ||
+    /\b(?:location|locations)?\s*courtes? duree\b/.test(text) ||
+    /\bsejours? courts?\b/.test(text) ||
+    /\b(?:airbnb|booking|vrbo)\b/.test(text);
+  if (hasShortTerm) {
+    facets.add("short-term");
+    residue = residue
+      .replace(/\bstr\b/g, " ")
+      .replace(/\bshort(?: and long)? term\b/g, " ")
+      .replace(
+        /\b(?:renta|rentas|alquiler|alquileres)?\s*(?:de )?cort[oa]s? plazo\b/g,
+        " "
+      )
+      .replace(/\bestancias? cortas?\b/g, " ")
+      .replace(/\b(?:location|locations)?\s*courtes? duree\b/g, " ")
+      .replace(/\bsejours? courts?\b/g, " ")
+      .replace(/\b(?:airbnb|booking|vrbo)\b/g, " ");
+  }
+
+  const hasLongTerm =
+    /\b(?:short and )?long term\b/.test(text) ||
+    /\b(?:renta|rentas|alquiler|alquileres)?\s*(?:de )?larg[oa]s? plazo\b/.test(
+      text
+    ) ||
+    /\b(?:location|locations)?\s*longues? duree\b/.test(text);
+  if (hasLongTerm) {
+    facets.add("long-term");
+    residue = residue
+      .replace(/\b(?:short and )?long term\b/g, " ")
+      .replace(
+        /\b(?:renta|rentas|alquiler|alquileres)?\s*(?:de )?larg[oa]s? plazo\b/g,
+        " "
+      )
+      .replace(/\b(?:location|locations)?\s*longues? duree\b/g, " ");
+  }
+
+  const hasDaily =
+    /\b(?:renta|alquiler|hospedaje) diari[oa]\b/.test(text) ||
+    /\bdaily rentals?\b/.test(text) ||
+    /\bnightly(?: lodging)?\b/.test(text) ||
+    /\blocations? a la journee\b/.test(text) ||
+    /\blocation quotidienne\b/.test(text) ||
+    /\bhebergement nuit\b/.test(text);
+  if (hasDaily) {
+    facets.add("daily");
+    residue = residue
+      .replace(/\b(?:renta|alquiler|hospedaje) diari[oa]\b/g, " ")
+      .replace(/\bdaily rentals?\b/g, " ")
+      .replace(/\bnightly(?: lodging)?\b/g, " ")
+      .replace(/\blocations? a la journee\b/g, " ")
+      .replace(/\blocation quotidienne\b/g, " ");
+  }
+
+  if (
+    /\bnightly\b/.test(text) ||
+    /\b(?:hebergement )?nuit (?:a|jusqu a) \d+ mois\b/.test(text)
+  ) {
+    facets.add("duration:1:night");
+  }
+
+  const hasManagement =
+    /\bgestion (?:hotelera|hoteliere(?: sur place)?|interna|in house|sur place)\b/.test(
+      text
+    ) ||
+    /\b(?:hotel|in house|on site) management\b/.test(text);
+  if (hasManagement) {
+    facets.add("on-site-management");
+  }
+
+  consume(
+    "approved",
+    /\b(?:approved|aprobad[oa]s?|approuvee?s?)\b/,
+    /\b(?:approved|aprobad[oa]s?|approuvee?s?)\b/g
+  );
+
+  for (const match of text.matchAll(
+    /\b(\d+)\s*(days?|dias?|jours?|nights?|noches?|nuits?|months?|mes|mois)\b/g
+  )) {
+    const amount = Number(match[1]);
+    const unit = match[2];
+    const normalizedUnit = /^(?:day|dia|jour)/.test(unit)
+      ? "day"
+      : /^(?:night|noche|nuit)/.test(unit)
+        ? "night"
+        : "month";
+    facets.add(`duration:${amount}:${normalizedUnit}`);
+  }
+  residue = residue.replace(
+    /\b\d+\s*(?:days?|dias?|jours?|nights?|noches?|nuits?|months?|mes|mois)\b/g,
+    " "
+  );
+
+  for (const match of text.matchAll(
+    /\b(?:up to|hasta|jusqu a)?\s*(\d+)\s*(?:leases?|alquileres?|baux)\s*(?:per|por|par)?\s*(?:year|ano|an)\b/g
+  )) {
+    facets.add(`max-leases:${Number(match[1])}`);
+  }
+  residue = residue.replace(
+    /\b(?:up to|hasta|jusqu a)?\s*\d+\s*(?:leases?|alquileres?|baux)\s*(?:per|por|par)?\s*(?:year|ano|an)\b/g,
+    " "
+  );
+
+  const gloss = new Set([
+    "allowed",
+    "alquiler",
+    "alquileres",
+    "and",
+    "apto",
+    "autorise",
+    "autorisee",
+    "autorisees",
+    "autorizada",
+    "autorizadas",
+    "avec",
+    "compatible",
+    "con",
+    "courte",
+    "daily",
+    "de",
+    "desde",
+    "duree",
+    "environ",
+    "estadia",
+    "estancias",
+    "et",
+    "flexible",
+    "friendly",
+    "from",
+    "hospedaje",
+    "location",
+    "locations",
+    "mas",
+    "min",
+    "minima",
+    "minimum",
+    "more",
+    "permitida",
+    "permitidas",
+    "permitted",
+    "plus",
+    "partir",
+    "policy",
+    "politica",
+    "politique",
+    "renta",
+    "rental",
+    "rentals",
+    "rentas",
+    "sejour",
+    "sejours",
+    "short",
+    "stay",
+    "stays",
+    "term",
+    "with",
+    "y",
+  ]);
+  if (hasManagement) {
+    [
+      "building",
+      "edificio",
+      "gestion",
+      "hotel",
+      "hotelera",
+      "hoteliere",
+      "house",
+      "in",
+      "management",
+      "on",
+      "place",
+      "site",
+      "sur",
+    ].forEach((token) => gloss.add(token));
+  }
+  if (hasDaily) {
+    ["hebergement", "journee", "lodging", "nightly", "nuit"].forEach(
+      (token) => gloss.add(token)
+    );
+  }
+
+  const residueTokens = new Set(
+    meaningfulTokens(residue).filter((token) => !gloss.has(token))
+  );
+  const hasRentalAnchor =
+    (
+      [
+        "no-restrictions",
+        "no-minimum",
+        "short-term",
+        "daily",
+        "long-term",
+      ] as const
+    ).some((facet) => facets.has(facet)) ||
+    [...facets].some((facet) => facet.startsWith("max-leases:")) ||
+    /\b(?:airbnb|booking|vrbo|str|alquiler(?:es)?|rentas?|rentals?|leases?|baux|bail|hospedaje|estadias?|estancias?|sejours?)\b/.test(
+      text
+    ) ||
+    /\blocations?\b.*\b(?:autorisee?s?|duree|jours?|longues?|minimale|mois|nuits?|restriction)\b/.test(
+      text
+    );
+
+  return { facets, hasRentalAnchor, residue: residueTokens };
+}
+
+function impliedRentalFacets(
+  facets: ReadonlySet<RentalFacet>
+): ReadonlySet<RentalFacet> {
+  const implied = new Set(facets);
+  if (facets.has("no-restrictions")) {
+    implied.add("no-minimum");
+    implied.add("short-term");
+  }
+  if (facets.has("daily")) implied.add("short-term");
+  if (facets.has("duration:1:night")) implied.add("short-term");
+  return implied;
+}
+
+/** Removes a rental claim only when its full meaning is entailed by the fact. */
+export function isRentalClaimCoveredByPolicy(
+  claim: string,
+  rentalPolicy?: string
+): boolean {
+  if (!rentalPolicy) return false;
+  const claimMeaning = parseRentalMeaning(claim);
+  const policyMeaning = parseRentalMeaning(rentalPolicy);
+  if (
+    !claimMeaning.hasRentalAnchor ||
+    claimMeaning.facets.size === 0 ||
+    policyMeaning.facets.size === 0
+  ) {
+    return false;
+  }
+
+  const policyFacets = impliedRentalFacets(policyMeaning.facets);
+  if ([...claimMeaning.facets].some((facet) => !policyFacets.has(facet))) {
+    return false;
+  }
+
+  const policyTokens = new Set(meaningfulTokens(rentalPolicy));
+  return [...claimMeaning.residue].every((token) => policyTokens.has(token));
 }
 
 function deliverySignature(value: string): string | null {
@@ -278,6 +585,7 @@ export function dedupeProjectPresentation({
   highlights,
   features,
   factValues,
+  rentalPolicy,
   priceFromUsd,
 }: ProjectPresentationGroups): {
   microClaims: LabelItem[];
@@ -318,7 +626,7 @@ export function dedupeProjectPresentation({
         [...factCandidates, ...featureCandidates],
         featureSignatures,
         priceFromUsd
-      )
+      ) && !isRentalClaimCoveredByPolicy(labelValue(item), rentalPolicy)
   );
   const highlightCandidates = uniqueHighlights.map(labelValue);
   const highlightSignatures = new Set([
@@ -335,7 +643,7 @@ export function dedupeProjectPresentation({
         [...factCandidates, ...featureCandidates, ...highlightCandidates],
         highlightSignatures,
         priceFromUsd
-      )
+      ) && !isRentalClaimCoveredByPolicy(labelValue(item), rentalPolicy)
   );
 
   return {

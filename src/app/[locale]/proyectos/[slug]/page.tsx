@@ -18,6 +18,7 @@ import ProjectFaq from "./ProjectFaq";
 import ProjectGallery from "./ProjectGallery";
 import {
   dedupeProjectPresentation,
+  hasPublishedUnitSurface,
   parsePaymentPresentationLine,
   safePresentationFaqs,
   safePresentationLines,
@@ -319,6 +320,9 @@ export default async function Proyecto({ params }: Params) {
       ? pickFrArrays(frOverlay?.unitMixFr)
       : (project.unitMixEs ?? []);
   const unitMix = safePresentationLines(rawUnitMix);
+  const typologiesCopy = hasPublishedUnitSurface(unitMix)
+    ? copy.typologies.withSurfaces
+    : copy.typologies.withoutSurfaces;
 
   const rawFeatures = isEN
     ? (project.featuresEn ?? [])
@@ -417,6 +421,7 @@ export default async function Proyecto({ params }: Params) {
     highlights: safeHighlights,
     features: safeFeatures,
     factValues,
+    rentalPolicy,
     priceFromUsd: project.priceFromUsd,
   });
   const overviewLead = highlights[0] ?? microClaims[0];
@@ -579,9 +584,6 @@ export default async function Proyecto({ params }: Params) {
               >
                 {copy.overview.title}
               </h2>
-              <p className="mt-5 max-w-[43ch] text-[15px] leading-[1.7] text-foreground/72 sm:text-[16px]">
-                {copy.overview.intro}
-              </p>
               {overviewLead ? (
                 <p className="mt-5 max-w-[34ch] border-l-2 border-accent pl-4 font-display text-[1.35rem] leading-[1.22] text-primary sm:text-[1.55rem]">
                   {lineLabel(overviewLead)}
@@ -641,11 +643,11 @@ export default async function Proyecto({ params }: Params) {
                   id="project-typologies-title"
                   className={`${SECTION_TITLE} mt-3`}
                 >
-                  {copy.typologies.title}
+                  {typologiesCopy.title}
                 </h2>
               </div>
               <p className="mt-5 max-w-[45ch] text-[14px] leading-[1.65] text-foreground/68 sm:text-[15px]">
-                {copy.typologies.intro}
+                {typologiesCopy.intro}
               </p>
             </div>
             <ol
