@@ -234,13 +234,13 @@ const COPY: Record<Locale, FinancingCopy> = {
 const FULL_BLEED = "relative left-1/2 w-[100dvw] -translate-x-1/2";
 const CONTAINER = "mx-auto w-full max-w-[1160px] px-5 sm:px-8";
 const EYEBROW =
-  "text-[11px] font-semibold uppercase tracking-[0.19em] text-primary/70 sm:text-xs";
+  "text-[11px] font-semibold uppercase tracking-[0.19em] text-primary sm:text-xs";
 const H2 =
   "text-balance font-display text-[clamp(2rem,4.2vw,3.35rem)] font-medium leading-[1.02] tracking-[-0.025em] text-primary";
 const PRIMARY_CTA =
-  "inline-flex min-h-11 items-center justify-center rounded-[6px] bg-primary px-6 py-3 text-center text-sm font-semibold text-primary-foreground no-underline transition hover:-translate-y-0.5 hover:bg-primary/92 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary motion-reduce:transform-none motion-reduce:transition-none";
+  "inline-flex min-h-11 items-center justify-center rounded-[6px] bg-primary px-6 py-3 text-center text-sm font-semibold text-primary-foreground no-underline transition hover:-translate-y-0.5 hover:bg-brand-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-focus motion-reduce:transform-none motion-reduce:transition-none";
 const SECONDARY_CTA =
-  "inline-flex min-h-11 items-center justify-center rounded-[6px] border border-primary px-6 py-3 text-center text-sm font-semibold text-primary no-underline transition hover:bg-primary/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary motion-reduce:transition-none";
+  "inline-flex min-h-11 items-center justify-center rounded-[6px] border border-primary px-6 py-3 text-center text-sm font-semibold text-primary no-underline transition hover:bg-brand-subtle focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-focus motion-reduce:transition-none";
 
 export async function generateMetadata({
   params,
@@ -286,16 +286,16 @@ export default async function FinancingPage({
               >
                 {copy.heroTitle}
               </h1>
-              <p className="mt-5 max-w-[30ch] font-display text-[clamp(1.35rem,2.4vw,1.8rem)] leading-[1.16] tracking-[-0.012em] text-primary/82">
+              <p className="mt-5 max-w-[30ch] font-display text-[clamp(1.35rem,2.4vw,1.8rem)] leading-[1.16] tracking-[-0.012em] text-primary">
                 {copy.heroThesis}
               </p>
             </div>
 
-            <div className="border-l-2 border-accent pl-5 sm:pl-7">
+            <div className="border-l-2 border-border-brand pl-5 sm:pl-7">
               <p className="max-w-[48ch] text-[16px] leading-[1.7] text-foreground/80 sm:text-[18px]">
                 {copy.heroText}
               </p>
-              <p className="mt-4 max-w-[46ch] text-[11px] font-semibold uppercase leading-[1.6] tracking-[0.14em] text-primary/72 sm:text-xs">
+              <p className="mt-4 max-w-[46ch] text-[11px] font-semibold uppercase leading-[1.6] tracking-[0.14em] text-primary sm:text-xs">
                 {copy.credential}
               </p>
               <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
@@ -390,7 +390,7 @@ export default async function FinancingPage({
 
                 <dl className="mt-6 grid gap-5 border-t border-primary/16 pt-5 sm:grid-cols-2 sm:gap-8">
                   <div>
-                    <dt className="text-[11px] font-semibold uppercase tracking-[0.17em] text-primary/72">
+                    <dt className="text-[11px] font-semibold uppercase tracking-[0.17em] text-primary">
                       {copy.realtorRoleLabel}
                     </dt>
                     <dd className="mt-2.5 text-[14px] leading-[1.62] text-foreground/72 sm:text-[15px]">
@@ -398,7 +398,7 @@ export default async function FinancingPage({
                     </dd>
                   </div>
                   <div>
-                    <dt className="text-[11px] font-semibold uppercase tracking-[0.17em] text-primary/72">
+                    <dt className="text-[11px] font-semibold uppercase tracking-[0.17em] text-primary">
                       {copy.institutionRoleLabel}
                     </dt>
                     <dd className="mt-2.5 text-[14px] leading-[1.62] text-foreground/72 sm:text-[15px]">
@@ -412,7 +412,7 @@ export default async function FinancingPage({
                 aria-labelledby="financing-reference-title"
                 className="rounded-[4px] bg-primary px-5 py-5 text-primary-foreground sm:px-6 sm:py-6 lg:max-w-[360px] lg:justify-self-end"
               >
-                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-primary-foreground/72 sm:text-[11px]">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-primary-foreground sm:text-[11px]">
                   {copy.referenceLabel}
                 </p>
                 <h3
@@ -421,7 +421,7 @@ export default async function FinancingPage({
                 >
                   {copy.referenceTitle}
                 </h3>
-                <p className="mt-4 border-t border-primary-foreground/18 pt-4 text-[13px] leading-[1.62] text-primary-foreground/84 sm:text-[14px]">
+                <p className="mt-4 border-t border-primary-foreground/18 pt-4 text-[13px] leading-[1.62] text-primary-foreground sm:text-[14px]">
                   {copy.referenceDisclaimer}
                 </p>
               </aside>
@@ -471,7 +471,7 @@ export default async function FinancingPage({
               aria-label={copy.roleDisclaimerLabel}
               className="mt-6 border-t border-primary/16 pt-4 sm:mt-7 sm:pt-5"
             >
-              <p className="text-[10px] font-semibold uppercase tracking-[0.17em] text-primary/72 sm:text-[11px]">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.17em] text-primary sm:text-[11px]">
                 {copy.roleDisclaimerLabel}
               </p>
               <p className="mt-2.5 max-w-[105ch] text-[13px] leading-[1.62] text-foreground/70 sm:text-[14px]">

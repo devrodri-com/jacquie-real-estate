@@ -62,7 +62,7 @@ function WhyCard({ icon, iconKey, heading, text, href, analytics }: WhyItem) {
   const content = (
     <div className="relative overflow-hidden rounded-lg border border-primary/15 bg-white p-4 shadow-[0_1px_2px_rgba(0,0,0,.03)] transition-colors hover:bg-muted">
       {/* hairline acento */}
-      <div className="mb-2 h-px w-full bg-gradient-to-r from-transparent via-accent/25 to-transparent" />
+      <div className="mb-2 h-px w-full bg-gradient-to-r from-transparent via-border-brand/55 to-transparent" />
       <div className="flex items-center gap-3">
         {typeof icon === "string" ? (
           <span aria-hidden className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary/5 text-lg">
@@ -99,7 +99,7 @@ function WhyCard({ icon, iconKey, heading, text, href, analytics }: WhyItem) {
         href={href}
         target={target}
         rel={rel}
-        className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 rounded-xl"
+        className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-focus rounded-xl"
         {...aria}
         {...dataAttrs}
       >
@@ -111,7 +111,7 @@ function WhyCard({ icon, iconKey, heading, text, href, analytics }: WhyItem) {
   return (
     <Link
       href={href}
-      className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 rounded-xl"
+      className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-focus rounded-xl"
       {...aria}
       {...dataAttrs}
     >

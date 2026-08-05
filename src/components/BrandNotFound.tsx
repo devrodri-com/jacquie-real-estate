@@ -53,7 +53,7 @@ export default function BrandNotFound({
             >
               Jacquie Zárate
             </Link>
-            <p className="mt-8 text-xs font-semibold uppercase tracking-[0.18em] text-primary/70">
+            <p className="mt-8 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
               404
             </p>
             <h1 className="mt-3 font-display text-[42px] font-medium leading-[0.98] text-primary sm:text-[58px]">
@@ -65,7 +65,7 @@ export default function BrandNotFound({
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
               <Link
                 href={`/${locale}`}
-                className="inline-flex min-h-11 items-center justify-center rounded-lg bg-primary px-5 text-sm font-semibold text-primary-foreground no-underline transition-colors hover:bg-primary/90"
+                className="inline-flex min-h-11 items-center justify-center rounded-lg bg-primary px-5 text-sm font-semibold text-primary-foreground no-underline transition-colors hover:bg-brand-dark"
               >
                 {copy.home}
               </Link>

@@ -110,7 +110,7 @@ function SpecCard({ icon, iconKey, label, subLabel, href }: SpecItem) {
   const content = (
     <div className="relative rounded-lg border border-primary/15 bg-white p-3 shadow-[0_1px_2px_rgba(0,0,0,.03)] transition-colors hover:bg-muted">
       {/* hairline acento */}
-      <div className="mb-2 h-[2px] w-full rounded-full bg-gradient-to-r from-transparent via-accent/35 to-transparent" />
+      <div className="mb-2 h-[2px] w-full rounded-full bg-gradient-to-r from-transparent via-border-brand/55 to-transparent" />
       <div className="flex items-center gap-2 w-full text-[14px] text-primary">
         <span className="inline-flex h-4 w-4 items-center justify-center text-primary" aria-hidden>
           {icon ? icon : <AutoIcon keyName={iconKey} text={label} />}
@@ -140,7 +140,7 @@ function SpecCard({ icon, iconKey, label, subLabel, href }: SpecItem) {
         href={href}
         target={target}
         rel={rel}
-        className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 rounded-xl"
+        className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-focus rounded-xl"
         aria-label={label}
       >
         {content}
@@ -150,7 +150,7 @@ function SpecCard({ icon, iconKey, label, subLabel, href }: SpecItem) {
   return li(
     <Link
       href={href}
-      className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 rounded-xl"
+      className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-focus rounded-xl"
       aria-label={label}
     >
       {content}
@@ -161,7 +161,7 @@ function SpecCard({ icon, iconKey, label, subLabel, href }: SpecItem) {
 /** Botón con foco visible y aria-label */
 function CtaButton({ label, href, variant = "ghost", ariaLabel }: SpecCta) {
   const base =
-    "inline-flex h-9 items-center justify-center rounded-md px-3 text-xs sm:text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40";
+    "inline-flex h-9 items-center justify-center rounded-md px-3 text-xs sm:text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-focus";
   const styles =
     variant === "solid"
       ? " bg-primary text-primary-foreground hover:opacity-95"

@@ -53,7 +53,7 @@ export function ListingCatalogCard({
       <Link
         href={detailHref}
         aria-label={copy.ariaLabel(item.title)}
-        className={`group flex h-full min-w-0 flex-col overflow-hidden rounded-[6px] border border-primary/15 bg-paper text-foreground no-underline transition-colors duration-300 hover:border-primary/30 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary ${
+        className={`group flex h-full min-w-0 flex-col overflow-hidden rounded-[6px] border border-primary/15 bg-paper text-foreground no-underline transition-colors duration-300 hover:border-primary/30 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focus ${
           isSingle
             ? "lg:grid lg:grid-cols-[minmax(0,1.12fr)_minmax(340px,0.88fr)]"
             : ""
@@ -84,7 +84,7 @@ export function ListingCatalogCard({
         </div>
 
         <div className="flex min-w-0 flex-1 flex-col p-5 sm:p-6">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/75">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
             {item.city}
           </p>
           <h3
@@ -99,7 +99,7 @@ export function ListingCatalogCard({
             ${item.price.toLocaleString("en-US")}
           </p>
 
-          <ul className="mt-4 flex flex-wrap gap-x-3 gap-y-1 border-y border-primary/10 py-3 text-[13px] leading-5 text-primary/75 sm:text-[14px]">
+          <ul className="mt-4 flex flex-wrap gap-x-3 gap-y-1 border-y border-primary/10 py-3 text-[13px] leading-5 text-primary sm:text-[14px]">
             <li>{quantityLabel(item.beds, copy.bedroom)}</li>
             <li aria-hidden="true">·</li>
             <li>{quantityLabel(item.baths, copy.bathroom)}</li>
@@ -109,7 +109,7 @@ export function ListingCatalogCard({
             </li>
           </ul>
 
-          <p className="mt-3 text-[11px] font-medium uppercase tracking-[0.14em] text-primary/70">
+          <p className="mt-3 text-[11px] font-medium uppercase tracking-[0.14em] text-primary">
             {copy.mls} {item.mls}
           </p>
 

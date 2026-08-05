@@ -24,7 +24,7 @@ export function ListingsPersonalizedSearch({
     >
       <div className="relative mx-auto grid max-w-6xl gap-10 overflow-hidden px-4 py-14 sm:py-16 lg:grid-cols-[minmax(0,1.05fr)_minmax(380px,0.95fr)] lg:gap-16 lg:py-20">
         <div className="relative min-w-0">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary/75">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary">
             {copy.eyebrow}
           </p>
           <h2
@@ -42,13 +42,13 @@ export function ListingsPersonalizedSearch({
               href={whatsAppHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-11 w-full items-center justify-center rounded-[4px] bg-primary px-5 py-3 text-center text-[14px] font-semibold text-primary-foreground no-underline transition-colors hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:w-auto"
+              className="inline-flex min-h-11 w-full items-center justify-center rounded-[4px] bg-primary px-5 py-3 text-center text-[14px] font-semibold text-primary-foreground no-underline transition-colors hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focus sm:w-auto"
             >
               {copy.primaryCta}
             </a>
             <Link
               href={`/${locale}/contacto`}
-              className="inline-flex min-h-11 w-full items-center justify-center rounded-[4px] border border-primary/25 px-5 py-3 text-center text-[14px] font-semibold text-primary no-underline transition-colors hover:bg-primary/5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:w-auto"
+              className="inline-flex min-h-11 w-full items-center justify-center rounded-[4px] border border-primary/25 px-5 py-3 text-center text-[14px] font-semibold text-primary no-underline transition-colors hover:bg-brand-subtle focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focus sm:w-auto"
             >
               {copy.secondaryCta}
             </Link>
@@ -56,7 +56,7 @@ export function ListingsPersonalizedSearch({
         </div>
 
         <div className="relative min-w-0 lg:border-l lg:border-primary/12 lg:pl-12">
-          <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-primary/70">
+          <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-primary">
             {copy.criteriaLabel}
           </p>
           <ul className="mt-4 border-t border-primary/15">
@@ -67,7 +67,7 @@ export function ListingsPersonalizedSearch({
               >
                 <span
                   aria-hidden="true"
-                  className="font-display text-[17px] text-primary/70"
+                  className="font-display text-[17px] text-primary"
                 >
                   {String(index + 1).padStart(2, "0")}
                 </span>

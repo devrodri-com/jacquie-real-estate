@@ -7,17 +7,17 @@ import { HOME_CONTENT, type HomeLocale } from "./home-content";
 
 const FULL_BLEED = "relative left-1/2 w-[100dvw] -translate-x-1/2";
 const CONTAINER = "mx-auto w-full max-w-[1180px] px-5 sm:px-8";
-const EYEBROW = "text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/70 sm:text-xs";
-const EYEBROW_LIGHT = "text-[11px] font-semibold uppercase tracking-[0.18em] text-primary-foreground/65 sm:text-xs";
+const EYEBROW = "text-[11px] font-semibold uppercase tracking-[0.18em] text-primary sm:text-xs";
+const EYEBROW_LIGHT = "text-[11px] font-semibold uppercase tracking-[0.18em] text-primary-foreground sm:text-xs";
 const H2 = "font-display text-[clamp(2.25rem,4.6vw,3.6rem)] font-medium leading-[0.98] tracking-[-0.02em] text-primary";
 const BODY = "text-[16px] leading-[1.75] text-foreground/78 sm:text-[17px]";
 const PRIMARY_CTA =
-  "inline-flex min-h-11 items-center justify-center rounded-[6px] bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground no-underline transition hover:-translate-y-0.5 hover:bg-primary/92 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary motion-reduce:transform-none motion-reduce:transition-none";
+  "inline-flex min-h-11 items-center justify-center rounded-[6px] bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground no-underline transition hover:-translate-y-0.5 hover:bg-brand-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-focus motion-reduce:transform-none motion-reduce:transition-none";
 const SECONDARY_CTA =
-  "inline-flex min-h-11 items-center justify-center rounded-[6px] border border-primary px-6 py-3 text-sm font-semibold text-primary no-underline transition hover:bg-primary/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary motion-reduce:transition-none";
+  "inline-flex min-h-11 items-center justify-center rounded-[6px] border border-primary px-6 py-3 text-sm font-semibold text-primary no-underline transition hover:bg-brand-subtle focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-focus motion-reduce:transition-none";
 const CREDIBILITY_ICON_IDS = ["finance", "companies", "miami", "affiliation"] as const;
 const CREDIBILITY_STYLES =
-  ".home-cred-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.home-cred-item{display:flex;min-height:96px;align-items:center;gap:.75rem;padding:1rem .75rem;border-color:#3b274a26;color:#3b274ad1;font-size:14px;font-weight:500;line-height:1.45}.home-cred-item:nth-child(even){border-left:1px solid #3b274a26}.home-cred-item:nth-child(n+3){border-top:1px solid #3b274a26}.home-cred-item svg{width:17px;height:17px;flex:none}.home-cred-item span{max-width:24ch}@media(min-width:640px){.home-cred-item{min-height:100px;padding-right:1.25rem;padding-left:1.25rem}}@media(min-width:1024px){.home-cred-list{grid-template-columns:repeat(4,minmax(0,1fr))}.home-cred-item{min-height:108px;padding:1.25rem 1.75rem;border-left:1px solid #3b274a26}.home-cred-item:nth-child(n+3){border-top-width:0}.home-cred-item:first-child{border-left-width:0}}";
+  ".home-cred-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.home-cred-item{display:flex;min-height:96px;align-items:center;gap:.75rem;padding:1rem .75rem;border-color:#315f7226;color:#315f72d1;font-size:14px;font-weight:500;line-height:1.45}.home-cred-item:nth-child(even){border-left:1px solid #315f7226}.home-cred-item:nth-child(n+3){border-top:1px solid #315f7226}.home-cred-item svg{width:17px;height:17px;flex:none}.home-cred-item span{max-width:24ch}@media(min-width:640px){.home-cred-item{min-height:100px;padding-right:1.25rem;padding-left:1.25rem}}@media(min-width:1024px){.home-cred-list{grid-template-columns:repeat(4,minmax(0,1fr))}.home-cred-item{min-height:108px;padding:1.25rem 1.75rem;border-left:1px solid #315f7226}.home-cred-item:nth-child(n+3){border-top-width:0}.home-cred-item:first-child{border-left-width:0}}";
 
 function HeroBackgroundImage() {
   const common = {
@@ -158,7 +158,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           </div>
 
           <figure className="relative ml-auto w-full max-w-[220px] justify-self-end sm:max-w-[320px] lg:max-w-[410px]">
-            <span aria-hidden className="absolute -left-5 top-10 h-[55%] w-px bg-accent lg:-left-8" />
+            <span aria-hidden className="absolute -left-5 top-10 h-[55%] w-px bg-brand lg:-left-8" />
             <div className="relative aspect-[4/5] overflow-hidden rounded-[3px] bg-surface">
               <Image
                 src="/images/jacquie-zarate.jpg"
@@ -170,8 +170,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                 className="object-cover object-center"
               />
             </div>
-            <figcaption className="mt-4 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.15em] text-primary/72">
-              <span aria-hidden className="h-px w-8 bg-accent" />
+            <figcaption className="mt-4 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.15em] text-primary">
+              <span aria-hidden className="h-px w-8 bg-brand" />
               {content.hero.portraitCaption}
             </figcaption>
           </figure>
@@ -211,7 +211,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             </div>
             <div className="lg:pt-6">
               <p className={`${BODY} max-w-[60ch]`}>{content.decision.intro}</p>
-              <p className="mt-7 max-w-[33ch] font-display text-[clamp(1.55rem,2.3vw,2rem)] leading-[1.15] text-primary/88">
+              <p className="mt-7 max-w-[33ch] font-display text-[clamp(1.55rem,2.3vw,2rem)] leading-[1.15] text-primary">
                 {content.decision.close}
               </p>
             </div>
@@ -221,8 +221,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             {content.decision.items.map((item, index) => (
               <article key={item.label} className="grid grid-cols-[84px_minmax(0,1fr)] gap-4 border-b border-primary/15 py-6 last:border-b-0 md:block md:border-b-0 md:px-7 lg:py-8 first:pl-0 last:pr-0">
                 <div className="flex flex-col items-start gap-2 md:flex-row md:items-center md:justify-between md:gap-4">
-                  <span className="text-xs font-semibold tracking-[0.18em] text-primary/75">0{index + 1}</span>
-                  <span className="text-[11px] font-semibold uppercase tracking-[0.15em] text-primary/75">{item.label}</span>
+                  <span className="text-xs font-semibold tracking-[0.18em] text-primary">0{index + 1}</span>
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.15em] text-primary">{item.label}</span>
                 </div>
                 <p className="max-w-[24ch] font-display text-[clamp(1.4rem,2.3vw,2rem)] leading-[1.12] text-primary md:mt-5 lg:mt-8">
                   {item.question}
@@ -261,7 +261,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                 {content.buying.preconstruction.title}
               </h3>
               <p className={`${BODY} mt-4 max-w-[58ch] flex-1`}>{content.buying.preconstruction.text}</p>
-              <Link href={projectsHref} className="mt-6 inline-flex items-center gap-3 border-b border-primary/30 pb-1 text-sm font-semibold text-primary no-underline transition hover:border-accent hover:text-primary/80">
+              <Link href={projectsHref} className="mt-6 inline-flex items-center gap-3 border-b border-primary/30 pb-1 text-sm font-semibold text-primary no-underline transition hover:border-brand hover:text-primary">
                 {content.buying.preconstruction.cta}
                 <span aria-hidden>↗</span>
               </Link>
@@ -282,7 +282,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                 {content.buying.properties.title}
               </h3>
               <p className={`${BODY} mt-4 max-w-[58ch] flex-1`}>{content.buying.properties.text}</p>
-              <Link href={listingsHref} className="mt-6 inline-flex items-center gap-3 border-b border-primary/30 pb-1 text-sm font-semibold text-primary no-underline transition hover:border-accent hover:text-primary/80">
+              <Link href={listingsHref} className="mt-6 inline-flex items-center gap-3 border-b border-primary/30 pb-1 text-sm font-semibold text-primary no-underline transition hover:border-brand hover:text-primary">
                 {propertiesCta}
                 <span aria-hidden>↗</span>
               </Link>
@@ -298,20 +298,20 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <h2 id="financing-home-title" className="mt-4 max-w-[16ch] font-display text-[clamp(2.15rem,4.8vw,3.9rem)] font-medium leading-[0.98] tracking-[-0.025em]">
               {content.financing.title}
             </h2>
-            <p className="mt-4 max-w-[62ch] text-[15px] leading-[1.68] text-primary-foreground/78 sm:mt-6 sm:text-[17px]">
+            <p className="mt-4 max-w-[62ch] text-[15px] leading-[1.68] text-primary-foreground sm:mt-6 sm:text-[17px]">
               {content.financing.text}
             </p>
-            <Link href={financingHref} className="mt-6 inline-flex min-h-11 items-center justify-center rounded-[6px] bg-paper px-6 py-3 text-sm font-semibold text-primary no-underline transition hover:-translate-y-0.5 hover:bg-paper/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary-foreground motion-reduce:transform-none motion-reduce:transition-none sm:mt-8">
+            <Link href={financingHref} className="mt-6 inline-flex min-h-11 items-center justify-center rounded-[6px] bg-paper px-6 py-3 text-sm font-semibold text-primary no-underline transition hover:-translate-y-0.5 hover:bg-paper/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-on-brand motion-reduce:transform-none motion-reduce:transition-none sm:mt-8">
               {content.financing.cta}
             </Link>
           </div>
 
           <div className="border-y border-primary-foreground/18 py-6 lg:border-y-0 lg:border-l lg:py-2 lg:pl-12">
             <p className="font-display text-[clamp(3.1rem,7vw,5.75rem)] leading-[0.82] tracking-[-0.05em] text-primary-foreground">25%</p>
-            <p className="mt-3 max-w-[26ch] text-[11px] font-semibold uppercase tracking-[0.15em] text-primary-foreground/68 sm:text-xs">
+            <p className="mt-3 max-w-[26ch] text-[11px] font-semibold uppercase tracking-[0.15em] text-primary-foreground sm:text-xs">
               {content.financing.reference}
             </p>
-            <p className="mt-5 max-w-[44ch] border-t border-primary-foreground/14 pt-5 text-[12px] leading-[1.6] text-primary-foreground/62 sm:text-[13px]">{content.financing.note}</p>
+            <p className="mt-5 max-w-[44ch] border-t border-primary-foreground/14 pt-5 text-[12px] leading-[1.6] text-primary-foreground sm:text-[13px]">{content.financing.note}</p>
           </div>
         </div>
       </section>
@@ -325,7 +325,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                 {content.method.title}
               </h2>
               <p className={`${BODY} mt-4 max-w-[45ch] sm:mt-6`}>{content.method.intro}</p>
-              <Link href={aboutHref} className="mt-7 inline-flex items-center gap-3 border-b border-primary/30 pb-1 text-sm font-semibold text-primary no-underline transition hover:border-accent">
+              <Link href={aboutHref} className="mt-7 inline-flex items-center gap-3 border-b border-primary/30 pb-1 text-sm font-semibold text-primary no-underline transition hover:border-brand">
                 {content.method.cta}
                 <span aria-hidden>↗</span>
               </Link>
@@ -334,7 +334,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <ol className="border-t border-primary/15">
               {content.method.items.map((item, index) => (
                 <li key={item.title} className="grid gap-3 border-b border-primary/15 py-4 sm:grid-cols-[64px_0.8fr_1.2fr] sm:items-start sm:gap-6 lg:py-7">
-                  <span className="text-xs font-semibold tracking-[0.18em] text-primary/75">0{index + 1}</span>
+                  <span className="text-xs font-semibold tracking-[0.18em] text-primary">0{index + 1}</span>
                   <h3 className="font-display text-[1.55rem] leading-[1.1] text-primary">{item.title}</h3>
                   <p className="text-[15px] leading-[1.7] text-foreground/72">{item.text}</p>
                 </li>
@@ -355,7 +355,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               <p className={EYEBROW}>{content.stays.eyebrow}</p>
               <h2 id="lets-go-title" className="mt-2 font-display text-[clamp(2.2rem,4vw,3.4rem)] leading-none text-primary">{content.stays.title}</h2>
               <p className={`${BODY} mt-4 max-w-[58ch]`}>{content.stays.text}</p>
-              <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.16em] text-primary/75">{content.stays.signature}</p>
+              <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.16em] text-primary">{content.stays.signature}</p>
             </div>
             <Link href={letsGoHref} className={`${SECONDARY_CTA} md:justify-self-end`}>
               {content.stays.cta}

@@ -307,7 +307,7 @@ export default async function ListingDetailPage({
       <nav aria-label={copy.breadcrumb}>
         <Link
           href={`/${locale}/listings`}
-          className="inline-flex min-h-11 items-center text-[13px] font-medium text-foreground/72 no-underline transition-colors hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary motion-reduce:transition-none"
+          className="inline-flex min-h-11 items-center text-[13px] font-medium text-foreground/72 no-underline transition-colors hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-focus motion-reduce:transition-none"
         >
           <span aria-hidden>←</span>
           <span className="ml-2">{copy.breadcrumb}</span>
@@ -320,7 +320,7 @@ export default async function ListingDetailPage({
       >
         <div className="grid gap-9 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-end lg:gap-16">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/75">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
               {copy.residenceLabel(propertyType, item.city)}
             </p>
             <h1
@@ -392,13 +392,13 @@ export default async function ListingDetailPage({
                 href={whatsappHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-12 items-center justify-center rounded-[6px] bg-primary px-5 py-3 text-center text-sm font-semibold text-primary-foreground no-underline transition hover:bg-primary/92 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary motion-reduce:transition-none"
+                className="inline-flex min-h-12 items-center justify-center rounded-[6px] bg-primary px-5 py-3 text-center text-sm font-semibold text-primary-foreground no-underline transition hover:bg-brand-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-focus motion-reduce:transition-none"
               >
                 {copy.whatsapp}
               </a>
               <Link
                 href={`/${locale}/contacto`}
-                className="inline-flex min-h-12 items-center justify-center rounded-[6px] border border-primary/25 px-5 py-3 text-center text-sm font-semibold text-primary no-underline transition hover:bg-primary/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary motion-reduce:transition-none"
+                className="inline-flex min-h-12 items-center justify-center rounded-[6px] border border-primary/25 px-5 py-3 text-center text-sm font-semibold text-primary no-underline transition hover:bg-brand-subtle focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-focus motion-reduce:transition-none"
               >
                 {copy.contact}
               </Link>
@@ -414,7 +414,7 @@ export default async function ListingDetailPage({
       >
         <div className="mb-5 flex items-end justify-between gap-5 sm:mb-7">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/75">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary">
               {copy.gallery.eyebrow}
             </p>
             <h2
@@ -443,7 +443,7 @@ export default async function ListingDetailPage({
             aria-labelledby="listing-overview-title"
             data-listing-section="description"
           >
-            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/75">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary">
               {copy.overview.eyebrow}
             </p>
             <h2
@@ -463,7 +463,7 @@ export default async function ListingDetailPage({
               aria-labelledby="listing-amenities-title"
               data-listing-section="features"
             >
-              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/75">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary">
                 {copy.amenities.eyebrow}
               </p>
               <h2
@@ -478,7 +478,7 @@ export default async function ListingDetailPage({
                     key={amenity}
                     className="flex min-w-0 items-start border-t border-primary/12 py-3 text-[14px] leading-[1.5] text-foreground/76 first:border-t-0 sm:py-4 sm:text-[15px] sm:first:border-t"
                   >
-                    <span className="mr-3 mt-[0.6em] h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
+                    <span className="mr-3 mt-[0.6em] h-1.5 w-1.5 shrink-0 rounded-full bg-brand" aria-hidden />
                     <span>{amenity}</span>
                   </li>
                 ))}
@@ -488,12 +488,12 @@ export default async function ListingDetailPage({
         </div>
 
         <aside
-          className="mt-8 max-w-[980px] border-l-2 border-accent/70 pl-5 sm:mt-10 sm:pl-6 lg:mt-12 lg:grid lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:items-center lg:gap-12"
+          className="mt-8 max-w-[980px] border-l-2 border-border-brand pl-5 sm:mt-10 sm:pl-6 lg:mt-12 lg:grid lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:items-center lg:gap-12"
           aria-labelledby="listing-advisor-title"
           data-listing-section="advisor"
         >
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/75">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary">
               {copy.advisor.eyebrow}
             </p>
             <h2
@@ -515,7 +515,7 @@ export default async function ListingDetailPage({
         data-listing-section="details"
       >
         <div className="max-w-[720px]">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/75">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary">
             {copy.details.eyebrow}
           </p>
           <h2
@@ -575,7 +575,7 @@ export default async function ListingDetailPage({
             data-listing-section="location"
           >
             <div className="flex min-w-0 flex-col justify-center px-5 py-8 sm:px-9 sm:py-12 lg:px-10">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/75">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary">
                 {copy.location.eyebrow}
               </p>
               <h2
@@ -616,7 +616,7 @@ export default async function ListingDetailPage({
         data-listing-section="closing"
       >
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/75">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary">
             {copy.close.eyebrow}
           </p>
           <h2
@@ -635,13 +635,13 @@ export default async function ListingDetailPage({
               href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-12 items-center justify-center rounded-[6px] bg-primary px-5 py-3 text-center text-sm font-semibold text-primary-foreground no-underline transition hover:bg-primary/92 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary motion-reduce:transition-none"
+              className="inline-flex min-h-12 items-center justify-center rounded-[6px] bg-primary px-5 py-3 text-center text-sm font-semibold text-primary-foreground no-underline transition hover:bg-brand-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-focus motion-reduce:transition-none"
             >
               {copy.whatsapp}
             </a>
             <Link
               href={`/${locale}/contacto`}
-              className="inline-flex min-h-12 items-center justify-center rounded-[6px] border border-primary/25 px-5 py-3 text-center text-sm font-semibold text-primary no-underline transition hover:bg-primary/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary motion-reduce:transition-none"
+              className="inline-flex min-h-12 items-center justify-center rounded-[6px] border border-primary/25 px-5 py-3 text-center text-sm font-semibold text-primary no-underline transition hover:bg-brand-subtle focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-focus motion-reduce:transition-none"
             >
               {copy.contact}
             </Link>

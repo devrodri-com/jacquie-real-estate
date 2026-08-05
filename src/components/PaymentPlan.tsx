@@ -49,7 +49,7 @@ const PaymentPlan: React.FC<PaymentPlanProps> = ({
       aria-label={title ?? "Plan de pagos"}
       data-project={project || undefined}
     >
-      <div className="pointer-events-none absolute inset-x-5 sm:inset-x-6 top-0 h-[1.5px] rounded-full bg-gradient-to-r from-transparent via-accent/25 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-5 sm:inset-x-6 top-0 h-[1.5px] rounded-full bg-gradient-to-r from-transparent via-border-brand/55 to-transparent" />
       {title ? (
         <Heading className="mb-2.5 font-display text-[16px] font-medium leading-[1.08] tracking-normal text-primary-foreground sm:text-[17px]">{title}</Heading>
       ) : null}
@@ -88,9 +88,9 @@ const PaymentPlan: React.FC<PaymentPlanProps> = ({
                 {index + 1}
               </span>
               <div>
-                <p className="text-[16px] leading-[26px] text-primary-foreground/95">{labelContent}</p>
+                <p className="text-[16px] leading-[26px] text-primary-foreground">{labelContent}</p>
                 {step.description ? (
-                  <p className="mt-1 text-[14px] leading-[22px] text-primary-foreground/80">
+                  <p className="mt-1 text-[14px] leading-[22px] text-primary-foreground">
                     {step.description}
                   </p>
                 ) : null}
@@ -100,7 +100,7 @@ const PaymentPlan: React.FC<PaymentPlanProps> = ({
         })}
       </ol>
       {steps.length > 0 ? (
-        <p className="mt-4 text-[12px] leading-[18px] text-primary-foreground/60">
+        <p className="mt-4 text-[12px] leading-[18px] text-primary-foreground">
           {locale === "en" ? DISCLAIMER_EN : locale === "fr" ? DISCLAIMER_FR : DISCLAIMER_ES}
         </p>
       ) : null}

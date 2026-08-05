@@ -121,7 +121,7 @@ export function ProjectsFilters({
             strokeWidth="1.7"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="mt-0.5 h-5 w-5 shrink-0 text-primary/70"
+            className="mt-0.5 h-5 w-5 shrink-0 text-primary"
           >
             <path d="M3 5h18l-7 8v5l-4 2v-7L3 5Z" />
           </svg>
@@ -134,7 +134,7 @@ export function ProjectsFilters({
             >
               {copy.filters.title}
             </h2>
-            <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-primary/68">
+            <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-primary">
               {copy.filters.activeCount(activeFilters.length)}
             </p>
           </div>
@@ -145,7 +145,7 @@ export function ProjectsFilters({
             <button
               type="button"
               onClick={onReset}
-              className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-[8px] border border-primary/18 bg-paper px-3 text-[12px] font-semibold text-primary underline decoration-primary/25 underline-offset-4 outline-none transition-colors hover:border-primary/40 hover:decoration-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-[8px] border border-primary/18 bg-paper px-3 text-[12px] font-semibold text-primary underline decoration-primary/25 underline-offset-4 outline-none transition-colors hover:border-primary/40 hover:decoration-primary focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
             >
               {copy.filters.reset}
             </button>
@@ -156,7 +156,7 @@ export function ProjectsFilters({
             aria-expanded={open}
             aria-label={open ? copy.filters.hideAria : copy.filters.showAria}
             onClick={() => setOpen((current) => !current)}
-            className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-[8px] border border-primary/55 bg-surface px-4 text-sm font-semibold text-primary outline-none transition-colors hover:border-primary/70 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 md:hidden"
+            className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-[8px] border border-primary/55 bg-surface px-4 text-sm font-semibold text-primary outline-none transition-colors hover:border-primary/70 focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 md:hidden"
           >
             {copy.filters.button}
             {activeFilters.length > 0 ? (
@@ -185,7 +185,7 @@ export function ProjectsFilters({
         className={`${open ? "grid" : "hidden"} gap-5 border-t border-primary/10 py-5 md:grid md:grid-cols-2 xl:grid-cols-[minmax(280px,1.35fr)_minmax(210px,.85fr)_minmax(360px,1fr)] xl:items-start`}
       >
         <label className="block min-w-0">
-          <span className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.14em] text-primary/68">
+          <span className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.14em] text-primary">
             {copy.filters.searchLabel}
           </span>
           <span className="relative block">
@@ -194,13 +194,13 @@ export function ProjectsFilters({
               value={value.q}
               placeholder={copy.filters.searchPlaceholder}
               onChange={(event) => onChange({ ...value, q: event.target.value })}
-              className="min-h-11 w-full rounded-[8px] border border-primary/55 bg-surface py-2 pl-3 pr-10 text-[15px] text-foreground outline-none transition-colors placeholder:text-foreground/68 hover:border-primary/70 focus:border-primary/75 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              className="min-h-11 w-full rounded-[8px] border border-primary/55 bg-surface py-2 pl-3 pr-10 text-[15px] text-foreground outline-none transition-colors placeholder:text-foreground/68 hover:border-primary/70 focus:border-focus focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
             />
             <svg
               aria-hidden="true"
               viewBox="0 0 20 20"
               fill="currentColor"
-              className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-primary/55"
+              className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-primary"
             >
               <path
                 fillRule="evenodd"
@@ -222,7 +222,7 @@ export function ProjectsFilters({
           <legend className="sr-only">{copy.filters.priceHint}</legend>
           <div className="grid grid-cols-2 gap-4">
             <label className="block min-w-0">
-              <span className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.14em] text-primary/68">
+              <span className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.14em] text-primary">
                 {copy.filters.minBudget}
               </span>
               <input
@@ -236,11 +236,11 @@ export function ProjectsFilters({
                 onChange={(event) =>
                   onChange({ ...value, min: parseBudgetInput(event.target.value) })
                 }
-                className="min-h-11 w-full min-w-0 rounded-[8px] border border-primary/55 bg-surface px-3 py-2 text-[15px] text-foreground outline-none transition-colors placeholder:text-foreground/68 hover:border-primary/70 focus:border-primary/75 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 aria-invalid:border-red-700"
+                className="min-h-11 w-full min-w-0 rounded-[8px] border border-primary/55 bg-surface px-3 py-2 text-[15px] text-foreground outline-none transition-colors placeholder:text-foreground/68 hover:border-primary/70 focus:border-focus focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 aria-invalid:border-red-700"
               />
             </label>
             <label className="block min-w-0">
-              <span className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.14em] text-primary/68">
+              <span className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.14em] text-primary">
                 {copy.filters.maxBudget}
               </span>
               <input
@@ -254,7 +254,7 @@ export function ProjectsFilters({
                 onChange={(event) =>
                   onChange({ ...value, max: parseBudgetInput(event.target.value) })
                 }
-                className="min-h-11 w-full min-w-0 rounded-[8px] border border-primary/55 bg-surface px-3 py-2 text-[15px] text-foreground outline-none transition-colors placeholder:text-foreground/68 hover:border-primary/70 focus:border-primary/75 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 aria-invalid:border-red-700"
+                className="min-h-11 w-full min-w-0 rounded-[8px] border border-primary/55 bg-surface px-3 py-2 text-[15px] text-foreground outline-none transition-colors placeholder:text-foreground/68 hover:border-primary/70 focus:border-focus focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 aria-invalid:border-red-700"
               />
             </label>
           </div>
@@ -272,7 +272,7 @@ export function ProjectsFilters({
       {activeFilters.length > 0 ? (
         <div className="flex flex-wrap items-center gap-2 border-t border-primary/10 py-3">
           {activeFilters.length > 0 ? (
-            <p className="mr-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-primary/72">
+            <p className="mr-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-primary">
               {copy.filters.activeLabel}
             </p>
           ) : null}
@@ -285,7 +285,7 @@ export function ProjectsFilters({
                 focusControlsTitle();
               }}
               aria-label={copy.filters.removeFilterAria(filter.label)}
-              className="inline-flex min-h-11 max-w-full items-center gap-2 rounded-full border border-primary/18 bg-surface px-3 text-left text-[12px] font-medium leading-4 text-primary outline-none transition-colors hover:border-primary/45 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              className="inline-flex min-h-11 max-w-full items-center gap-2 rounded-full border border-primary/18 bg-surface px-3 text-left text-[12px] font-medium leading-4 text-primary outline-none transition-colors hover:border-primary/45 focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
             >
               <span className="min-w-0 break-words">{filter.label}</span>
               <span aria-hidden="true" className="text-base leading-none">

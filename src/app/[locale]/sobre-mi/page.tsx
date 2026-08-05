@@ -6,15 +6,15 @@ import type { AboutLocale } from "./content";
 const FULL_BLEED = "relative left-1/2 w-[100dvw] -translate-x-1/2";
 const PROFILE_CONTAINER = "mx-auto w-full max-w-[1160px] px-5 sm:px-8";
 const EYEBROW =
-  "text-[11px] font-semibold uppercase tracking-[0.19em] text-primary/70 sm:text-xs";
+  "text-[11px] font-semibold uppercase tracking-[0.19em] text-primary sm:text-xs";
 const EYEBROW_LIGHT =
-  "text-[11px] font-semibold uppercase tracking-[0.19em] text-primary-foreground/65 sm:text-xs";
+  "text-[11px] font-semibold uppercase tracking-[0.19em] text-primary-foreground sm:text-xs";
 const H2 =
   "font-display text-[clamp(2.25rem,4.6vw,3.65rem)] font-medium leading-[1.02] tracking-[-0.025em] text-primary";
 const PRIMARY_CTA =
-  "inline-flex min-h-11 items-center justify-center rounded-[6px] bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground no-underline transition hover:-translate-y-0.5 hover:bg-primary/92 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary motion-reduce:transform-none motion-reduce:transition-none";
+  "inline-flex min-h-11 items-center justify-center rounded-[6px] bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground no-underline transition hover:-translate-y-0.5 hover:bg-brand-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-focus motion-reduce:transform-none motion-reduce:transition-none";
 const SECONDARY_CTA =
-  "inline-flex min-h-11 items-center justify-center rounded-[6px] border border-primary px-6 py-3 text-sm font-semibold text-primary no-underline transition hover:bg-primary/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary motion-reduce:transition-none";
+  "inline-flex min-h-11 items-center justify-center rounded-[6px] border border-primary px-6 py-3 text-sm font-semibold text-primary no-underline transition hover:bg-brand-subtle focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-focus motion-reduce:transition-none";
 
 export default async function SobreMi({
   params,
@@ -72,7 +72,7 @@ export default async function SobreMi({
               </a>
               <a
                 href="#recorrido"
-                className="inline-flex min-h-11 items-center justify-center gap-2 px-2 py-3 text-sm font-semibold text-primary underline decoration-accent/50 underline-offset-4 transition hover:decoration-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary motion-reduce:transition-none sm:justify-start"
+                className="inline-flex min-h-11 items-center justify-center gap-2 px-2 py-3 text-sm font-semibold text-primary underline decoration-border-brand underline-offset-4 transition hover:decoration-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-focus motion-reduce:transition-none sm:justify-start"
               >
                 {content.hero.secondaryCta}
                 <span aria-hidden>↓</span>
@@ -83,7 +83,7 @@ export default async function SobreMi({
           <figure className="relative order-1 w-full max-w-[240px] sm:max-w-[380px] lg:max-w-[430px]">
             <div
               aria-hidden
-              className="absolute -right-5 -top-5 h-32 w-32 border-r border-t border-accent/70 sm:-right-8 sm:-top-8 sm:h-36 sm:w-36"
+              className="absolute -right-5 -top-5 h-32 w-32 border-r border-t border-border-brand sm:-right-8 sm:-top-8 sm:h-36 sm:w-36"
             />
             <div className="relative aspect-square overflow-hidden rounded-[3px] bg-primary sm:aspect-[4/5]">
               <Image
@@ -96,8 +96,8 @@ export default async function SobreMi({
                 className="object-cover object-center"
               />
             </div>
-            <figcaption className="mt-4 flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-primary/75 sm:text-[11px]">
-              <span aria-hidden className="h-px w-8 bg-accent sm:w-10" />
+            <figcaption className="mt-4 flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-primary sm:text-[11px]">
+              <span aria-hidden className="h-px w-8 bg-brand sm:w-10" />
               {content.hero.imageCaption}
             </figcaption>
           </figure>
@@ -128,7 +128,7 @@ export default async function SobreMi({
 
             <div>
               <div className="max-w-[650px]">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-primary/70">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-primary">
                   {content.journey.originLabel}
                 </p>
                 <p className="mt-3 font-display text-[clamp(1.45rem,2.8vw,2.25rem)] leading-[1.12] tracking-[-0.015em] text-primary">
@@ -138,7 +138,7 @@ export default async function SobreMi({
 
               <div className="mt-6 grid gap-6 border-t border-primary/15 pt-6 sm:grid-cols-[1.08fr_0.92fr] sm:gap-10 lg:mt-10 lg:gap-14">
                 <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-primary/70">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-primary">
                     {content.journey.financeLabel}
                   </p>
                   <p className="mt-3 max-w-[36ch] text-[15px] leading-[1.7] text-foreground/76 sm:text-[17px]">
@@ -146,7 +146,7 @@ export default async function SobreMi({
                   </p>
                 </div>
                 <div className="sm:border-l sm:border-primary/15 sm:pl-10">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-primary/70">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-primary">
                     {content.journey.miamiLabel}
                   </p>
                   <p className="mt-3 max-w-[34ch] text-[15px] leading-[1.7] text-foreground/76 sm:text-[17px]">
@@ -155,7 +155,7 @@ export default async function SobreMi({
                 </div>
               </div>
 
-              <p className="mt-6 max-w-[34ch] border-l-2 border-accent pl-5 font-display text-[clamp(1.25rem,2.4vw,1.9rem)] leading-[1.18] text-primary/88 lg:mt-10">
+              <p className="mt-6 max-w-[34ch] border-l-2 border-border-brand pl-5 font-display text-[clamp(1.25rem,2.4vw,1.9rem)] leading-[1.18] text-primary lg:mt-10">
                 {content.journey.bridge}
               </p>
             </div>
@@ -188,7 +188,7 @@ export default async function SobreMi({
           </div>
 
           <div className="mt-7 border-t border-primary-foreground/20 pt-5 sm:mt-10 sm:pt-7">
-            <p className="max-w-[62ch] text-[15px] leading-[1.7] text-primary-foreground/72 sm:ml-auto sm:text-[17px]">
+            <p className="max-w-[62ch] text-[15px] leading-[1.7] text-primary-foreground sm:ml-auto sm:text-[17px]">
               {content.lens.body}
             </p>
           </div>
@@ -213,7 +213,7 @@ export default async function SobreMi({
             </div>
 
             <div className="lg:pt-7">
-              <p className="max-w-[29ch] border-l-2 border-accent pl-5 font-display text-[clamp(1.5rem,3vw,2.5rem)] leading-[1.12] tracking-[-0.015em] text-primary">
+              <p className="max-w-[29ch] border-l-2 border-border-brand pl-5 font-display text-[clamp(1.5rem,3vw,2.5rem)] leading-[1.12] tracking-[-0.015em] text-primary">
                 {content.relationship.intro}
               </p>
               <p className="mt-6 max-w-[58ch] text-[15px] leading-[1.72] text-foreground/76 sm:text-[17px]">
@@ -226,7 +226,7 @@ export default async function SobreMi({
             className="mt-8 grid gap-3 border-t border-primary/15 pt-5 sm:mt-12 sm:grid-cols-[180px_1fr] sm:items-start sm:gap-8 sm:pt-6 lg:ml-[32%]"
             aria-label={content.relationship.ownerNoteLabel}
           >
-            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-primary/70">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-primary">
               {content.relationship.ownerNoteLabel}
             </p>
             <p className="max-w-[58ch] text-[14px] leading-[1.65] text-foreground/70 sm:text-[15px]">
@@ -277,12 +277,12 @@ export default async function SobreMi({
                 </span>
                 <span
                   aria-hidden
-                  className="h-px w-6 bg-accent"
+                  className="h-px w-6 bg-brand"
                 />
-                <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-primary/75">
+                <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-primary">
                   {content.close.credentialLabel}
                 </span>
-                <span className="font-display text-base text-primary/85">
+                <span className="font-display text-base text-primary">
                   {content.close.credential}
                 </span>
               </div>

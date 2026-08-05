@@ -59,7 +59,7 @@ export default function ContactPageClient({
         className="grid items-start gap-9 min-[1100px]:grid-cols-[1.12fr_0.88fr] min-[1100px]:gap-14"
       >
         <header className="max-w-[760px]">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary/78">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
             {t("eyebrow")}
           </p>
           <h1
@@ -74,7 +74,7 @@ export default function ContactPageClient({
         </header>
 
         <div className="border-t border-primary/12 pt-7 min-[1100px]:border-l min-[1100px]:border-t-0 min-[1100px]:pl-10 min-[1100px]:pt-1">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary/72">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
             {t("directEyebrow")}
           </p>
           <div className="mt-4 flex items-center gap-4">
@@ -92,7 +92,7 @@ export default function ContactPageClient({
               <p className="font-display text-[26px] font-medium leading-tight text-primary">
                 {t("directTitle")}
               </p>
-              <p className="mt-1 text-sm font-semibold text-primary/72">
+              <p className="mt-1 text-sm font-semibold text-primary">
                 Jacquie Zárate
               </p>
             </div>
@@ -107,7 +107,7 @@ export default function ContactPageClient({
             rel="noopener noreferrer"
             onClick={trackWhatsApp}
             data-analytics="contact:whatsapp"
-            className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2.5 rounded-lg bg-primary px-5 text-sm font-semibold text-white no-underline transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 sm:w-auto motion-reduce:transition-none"
+            className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2.5 rounded-lg bg-primary px-5 text-sm font-semibold text-white no-underline transition-colors hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 sm:w-auto motion-reduce:transition-none"
           >
             <WhatsAppIcon className="h-[18px] w-[18px]" />
             {t("whatsappCta")}
@@ -128,7 +128,7 @@ export default function ContactPageClient({
             </p>
             <a
               href={"mailto:" + CONTACT_EMAIL}
-              className="mt-3 inline-flex min-h-11 max-w-full items-center gap-2 text-sm font-semibold text-primary underline decoration-primary/40 underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              className="mt-3 inline-flex min-h-11 max-w-full items-center gap-2 text-sm font-semibold text-primary underline decoration-primary/40 underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
             >
               <Mail
                 aria-hidden="true"
@@ -148,8 +148,8 @@ export default function ContactPageClient({
           aria-labelledby="contact-form-title"
           className="relative mt-14 max-w-[880px] overflow-hidden rounded-xl border border-primary/12 bg-surface/72 p-5 sm:mt-16 sm:p-7 lg:p-8"
         >
-          <div className="pointer-events-none absolute inset-x-7 top-0 h-px bg-gradient-to-r from-transparent via-accent/60 to-transparent" />
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary/72">
+          <div className="pointer-events-none absolute inset-x-7 top-0 h-px bg-gradient-to-r from-transparent via-border-brand to-transparent" />
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
             {t("formEyebrow")}
           </p>
           <h2
@@ -171,7 +171,7 @@ export default function ContactPageClient({
         className="mt-14 flex flex-col gap-5 border-t border-primary/14 pt-7 sm:mt-16 sm:flex-row sm:items-end sm:justify-between"
       >
         <div className="max-w-[68ch]">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary/72">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
             {t("staysEyebrow")}
           </p>
           <h2
@@ -186,7 +186,7 @@ export default function ContactPageClient({
         </div>
         <Link
           href={"/" + locale + "/lets-go-miami"}
-          className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 self-start rounded-lg border border-primary/55 bg-white px-4 text-sm font-semibold text-primary no-underline transition-colors hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 sm:self-auto motion-reduce:transition-none"
+          className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 self-start rounded-lg border border-primary/55 bg-white px-4 text-sm font-semibold text-primary no-underline transition-colors hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 sm:self-auto motion-reduce:transition-none"
         >
           {t("staysCta")}
           <ArrowUpRight

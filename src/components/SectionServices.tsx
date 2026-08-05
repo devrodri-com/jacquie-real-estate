@@ -66,14 +66,14 @@ export default function SectionServices({ locale }: Props) {
           <Link
             key={card.href + card.title}
             href={card.href}
-            className="group flex flex-col h-full overflow-hidden rounded-[16px] ring-1 ring-primary-foreground/10 bg-primary text-left no-underline shadow-md transition-all hover:shadow-2xl hover:-translate-y-[3px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            className="group flex flex-col h-full overflow-hidden rounded-[16px] ring-1 ring-primary-foreground/10 bg-primary text-left no-underline shadow-md transition-all hover:shadow-2xl hover:-translate-y-[3px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-on-brand"
           >
-            <div className="h-[3px] w-full bg-accent/90 shrink-0" aria-hidden />
+            <div className="h-[3px] w-full bg-border-brand shrink-0" aria-hidden />
             <div className="flex flex-col flex-1 min-h-0 p-6 pt-5">
               <h3 className="text-[17px] font-semibold tracking-tight text-primary-foreground">
                 {card.title}
               </h3>
-              <p className="mt-3 flex-1 min-h-0 text-[14px] leading-[1.5] text-primary-foreground/80">
+              <p className="mt-3 flex-1 min-h-0 text-[14px] leading-[1.5] text-primary-foreground">
                 {card.description}
               </p>
               <span className="mt-5 pt-4 inline-flex items-center gap-1.5 text-[14px] font-semibold text-primary-foreground">

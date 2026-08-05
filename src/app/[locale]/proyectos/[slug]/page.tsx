@@ -33,15 +33,15 @@ const FULL_BLEED = "relative left-1/2 w-[100dvw] -translate-x-1/2";
 const CONTAINER = "mx-auto w-full max-w-[1240px] px-5 sm:px-8";
 const CONTENT_CONTAINER = "mx-auto w-full max-w-[1160px] px-5 sm:px-8";
 const EYEBROW =
-  "text-[10px] font-semibold uppercase tracking-[0.19em] text-primary/70 sm:text-[11px]";
+  "text-[10px] font-semibold uppercase tracking-[0.19em] text-primary sm:text-[11px]";
 const EYEBROW_LIGHT =
-  "text-[10px] font-semibold uppercase tracking-[0.19em] text-primary-foreground/64 sm:text-[11px]";
+  "text-[10px] font-semibold uppercase tracking-[0.19em] text-primary-foreground sm:text-[11px]";
 const SECTION_TITLE =
   "font-display text-[clamp(2rem,3.6vw,3.2rem)] font-medium leading-[1.02] tracking-[-0.025em] text-primary";
 const PRIMARY_CTA =
-  "inline-flex min-h-11 w-full items-center justify-center border border-primary bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground no-underline transition-colors hover:bg-primary/90 motion-reduce:transition-none sm:w-auto";
+  "inline-flex min-h-11 w-full items-center justify-center border border-primary bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground no-underline transition-colors hover:bg-brand-dark motion-reduce:transition-none sm:w-auto";
 const SECONDARY_CTA =
-  "inline-flex min-h-11 w-full items-center justify-center border border-primary px-6 py-3 text-sm font-semibold text-primary no-underline transition-colors hover:bg-primary/5 motion-reduce:transition-none sm:w-auto";
+  "inline-flex min-h-11 w-full items-center justify-center border border-primary px-6 py-3 text-sm font-semibold text-primary no-underline transition-colors hover:bg-brand-subtle motion-reduce:transition-none sm:w-auto";
 
 function fillTemplate(template: string, values: TemplateValues): string {
   return Object.entries(values).reduce(
@@ -163,7 +163,7 @@ function Fact({
 }) {
   return (
     <div className={`min-w-0 border-t border-primary/15 py-3 ${className}`}>
-      <dt className="text-[9px] font-semibold uppercase tracking-[0.16em] text-primary/68 sm:text-[10px]">
+      <dt className="text-[9px] font-semibold uppercase tracking-[0.16em] text-primary sm:text-[10px]">
         {label}
       </dt>
       <dd className="mt-1.5 break-words text-[14px] font-medium leading-[1.4] text-primary sm:text-[15px]">
@@ -480,7 +480,7 @@ export default async function Proyecto({ params }: Params) {
               >
                 {project.name}
               </h1>
-              <p className="mt-5 text-[9px] font-semibold uppercase tracking-[0.16em] text-primary/68 sm:text-[10px]">
+              <p className="mt-5 text-[9px] font-semibold uppercase tracking-[0.16em] text-primary sm:text-[10px]">
                 {copy.opening.startingPrice}
               </p>
               <p className="mt-1.5 break-words font-display text-[clamp(1.8rem,4vw,2.7rem)] leading-none text-primary">
@@ -585,14 +585,14 @@ export default async function Proyecto({ params }: Params) {
                 {copy.overview.title}
               </h2>
               {overviewLead ? (
-                <p className="mt-5 max-w-[34ch] border-l-2 border-accent pl-4 font-display text-[1.35rem] leading-[1.22] text-primary sm:text-[1.55rem]">
+                <p className="mt-5 max-w-[34ch] border-l-2 border-border-brand pl-4 font-display text-[1.35rem] leading-[1.22] text-primary sm:text-[1.55rem]">
                   {lineLabel(overviewLead)}
                 </p>
               ) : null}
             </div>
             {overviewAttributes.length > 0 ? (
               <div>
-                <h3 className="text-[10px] font-semibold uppercase tracking-[0.17em] text-primary/70">
+                <h3 className="text-[10px] font-semibold uppercase tracking-[0.17em] text-primary">
                   {copy.overview.attributes}
                 </h3>
                 <ol
@@ -608,7 +608,7 @@ export default async function Proyecto({ params }: Params) {
                       >
                         <span
                           aria-hidden
-                          className="w-6 shrink-0 pt-0.5 text-[9px] font-semibold tabular-nums tracking-[0.14em] text-primary/70 sm:text-[10px]"
+                          className="w-6 shrink-0 pt-0.5 text-[9px] font-semibold tabular-nums tracking-[0.14em] text-primary sm:text-[10px]"
                         >
                           {String(index + 1).padStart(2, "0")}
                         </span>
@@ -663,7 +663,7 @@ export default async function Proyecto({ params }: Params) {
                   >
                     <span
                       aria-hidden
-                      className="w-8 shrink-0 pt-0.5 text-[9px] font-semibold tabular-nums tracking-[0.15em] text-primary/75 sm:text-[10px]"
+                      className="w-8 shrink-0 pt-0.5 text-[9px] font-semibold tabular-nums tracking-[0.15em] text-primary sm:text-[10px]"
                     >
                       {String(index + 1).padStart(2, "0")}
                     </span>
@@ -705,7 +705,7 @@ export default async function Proyecto({ params }: Params) {
                 return (
                   <li
                     key={`${index}-${label}`}
-                    className="mb-6 flex max-w-[48ch] break-inside-avoid gap-3 text-[15px] font-medium leading-[1.65] text-primary/82 [break-inside:avoid-column] last:mb-0"
+                    className="mb-6 flex max-w-[48ch] break-inside-avoid gap-3 text-[15px] font-medium leading-[1.65] text-primary [break-inside:avoid-column] last:mb-0"
                   >
                     <span
                       aria-hidden
@@ -736,7 +736,7 @@ export default async function Proyecto({ params }: Params) {
                 >
                   {copy.payment.title}
                 </h2>
-                <p className="mt-4 max-w-[40ch] text-[14px] leading-[1.68] text-primary-foreground/70 sm:text-[15px]">
+                <p className="mt-4 max-w-[40ch] text-[14px] leading-[1.68] text-primary-foreground sm:text-[15px]">
                   {copy.payment.intro}
                 </p>
               </div>
@@ -748,7 +748,7 @@ export default async function Proyecto({ params }: Params) {
                   >
                     <span
                       aria-hidden
-                      className="row-span-2 pt-1 text-[9px] font-semibold tabular-nums tracking-[0.15em] text-primary-foreground/55 sm:text-[10px]"
+                      className="row-span-2 pt-1 text-[9px] font-semibold tabular-nums tracking-[0.15em] text-primary-foreground sm:text-[10px]"
                     >
                       {String(index + 1).padStart(2, "0")}
                     </span>
@@ -762,7 +762,7 @@ export default async function Proyecto({ params }: Params) {
                             {step.milestone}
                           </p>
                           {step.condition ? (
-                            <p className="mt-1 break-words text-[11px] leading-[1.55] text-primary-foreground/62 sm:text-[12px]">
+                            <p className="mt-1 break-words text-[11px] leading-[1.55] text-primary-foreground sm:text-[12px]">
                               {step.condition}
                             </p>
                           ) : null}
@@ -777,7 +777,7 @@ export default async function Proyecto({ params }: Params) {
                 ))}
               </ol>
             </div>
-            <p className="mt-6 max-w-[92ch] border-t border-primary-foreground/20 pt-4 text-[11px] leading-[1.65] text-primary-foreground/58 sm:text-[12px]">
+            <p className="mt-6 max-w-[92ch] border-t border-primary-foreground/20 pt-4 text-[11px] leading-[1.65] text-primary-foreground sm:text-[12px]">
               {copy.legal.disclaimer}
             </p>
           </div>
@@ -800,7 +800,7 @@ export default async function Proyecto({ params }: Params) {
               {copy.advisor.title}
             </h2>
           </div>
-          <p className="max-w-[64ch] border-l-2 border-accent pl-4 text-[14px] leading-[1.68] text-foreground/76 sm:text-[15px] lg:mt-7">
+          <p className="max-w-[64ch] border-l-2 border-border-brand pl-4 text-[14px] leading-[1.68] text-foreground/76 sm:text-[15px] lg:mt-7">
             {copy.advisor.text}
           </p>
         </div>
@@ -879,7 +879,7 @@ export default async function Proyecto({ params }: Params) {
             >
               {copy.close.title}
             </h2>
-            <p className="mt-4 max-w-[66ch] text-[14px] leading-[1.68] text-primary-foreground/70 sm:text-[16px]">
+            <p className="mt-4 max-w-[66ch] text-[14px] leading-[1.68] text-primary-foreground sm:text-[16px]">
               {fillTemplate(copy.close.text, { name: project.name })}
             </p>
           </div>
