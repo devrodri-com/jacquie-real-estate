@@ -10,6 +10,7 @@ import {
   LETS_GO_MIAMI_PHONE_HREF,
   type LetsGoMiamiLocale,
 } from "@/lib/letsGoMiami";
+import styles from "@/components/LetsGoMiami.module.css";
 
 function IconWhatsApp({ className }: { className?: string }) {
   return (
@@ -30,7 +31,7 @@ export default function LetsGoMiamiFooter({ locale }: LetsGoMiamiFooterProps) {
 
   return (
     <footer
-      className="bg-[var(--lgm-ink)] text-white"
+      className={`${styles.tokens} bg-[var(--lgm-ink)] text-white`}
       data-section="footer"
     >
       <div className="mx-auto max-w-[1240px] px-5 py-10 sm:px-8 sm:py-12">
