@@ -161,13 +161,14 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <span aria-hidden className="absolute -left-5 top-10 h-[55%] w-px bg-brand lg:-left-8" />
             <div className="relative aspect-[4/5] overflow-hidden rounded-[3px] bg-surface">
               <Image
-                src="/images/jacquie-zarate.jpg"
+                src="/images/jacquie-zarate-editorial-2026.jpeg"
                 alt={content.hero.portraitAlt}
                 fill
                 sizes="(min-width: 1024px) 410px, (min-width: 640px) 320px, 220px"
                 quality={85}
                 loading="lazy"
-                className="object-cover object-center"
+                className="object-cover"
+                style={{ objectPosition: "60% 18%" }}
               />
             </div>
             <figcaption className="mt-4 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.15em] text-primary">
