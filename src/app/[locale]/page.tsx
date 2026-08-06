@@ -159,16 +159,16 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
           <figure className="relative ml-auto w-full max-w-[220px] justify-self-end sm:max-w-[320px] lg:max-w-[410px]">
             <span aria-hidden className="absolute -left-5 top-10 h-[55%] w-px bg-brand lg:-left-8" />
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[3px] bg-surface">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-[3px] bg-transparent">
               <Image
-                src="/images/jacquie-zarate-editorial-2026.jpeg"
+                src="/images/jacquie-zarate-editorial-transparent-2026.avif"
                 alt={content.hero.portraitAlt}
                 fill
                 sizes="(min-width: 1024px) 410px, (min-width: 640px) 320px, 220px"
                 quality={85}
                 loading="lazy"
-                className="object-cover"
-                style={{ objectPosition: "60% 18%" }}
+                className="object-contain object-bottom"
+                style={{ transform: "scale(1.14)", transformOrigin: "center bottom" }}
               />
             </div>
             <figcaption className="mt-4 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.15em] text-primary">
