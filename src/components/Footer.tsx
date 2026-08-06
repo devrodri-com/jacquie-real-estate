@@ -129,7 +129,7 @@ export default function Footer() {
             <div className="mt-5 flex items-center gap-3">
               <div className="relative h-12 w-12 overflow-hidden rounded-full border border-border-brand/80">
                 <Image
-                  src="/images/jacquie-zarate.jpg"
+                  src="/images/jacquie-zarate-headshot-2026.jpeg"
                   alt={copy.photoAlt}
                   fill
                   className="object-cover"

@@ -87,7 +87,7 @@ export default async function SobreMi({
             />
             <div className="relative aspect-square overflow-hidden rounded-[3px] bg-primary sm:aspect-[4/5]">
               <Image
-                src="/images/jacquie-zarate1.jpg"
+                src="/images/jacquie-zarate-headshot-2026.jpeg"
                 alt={content.hero.portraitAlt}
                 fill
                 sizes="(min-width: 1024px) 430px, (min-width: 640px) 380px, 240px"
