@@ -518,7 +518,7 @@ function ConfiguredContactForm({ locale }: { locale: ContactLocale }) {
             aria-describedby={
               fieldErrors.nombre ? "contact-name-error" : undefined
             }
-            className="mt-2 h-12 w-full rounded-lg border border-primary/55 bg-white px-3.5 text-base text-foreground outline-none transition-colors placeholder:text-foreground/68 focus:border-primary focus:ring-2 focus:ring-primary/65 disabled:cursor-wait disabled:opacity-65 motion-reduce:transition-none"
+            className="mt-2 h-12 w-full rounded-lg border border-primary/55 bg-white px-3.5 text-base text-foreground outline-none transition-colors placeholder:text-foreground/68 focus:border-focus focus:ring-2 focus:ring-focus disabled:cursor-wait disabled:opacity-65 motion-reduce:transition-none"
             placeholder={t("namePlaceholder")}
           />
           {fieldErrors.nombre ? (
@@ -553,7 +553,7 @@ function ConfiguredContactForm({ locale }: { locale: ContactLocale }) {
             aria-describedby={
               fieldErrors.email ? "contact-email-error" : undefined
             }
-            className="mt-2 h-12 w-full rounded-lg border border-primary/55 bg-white px-3.5 text-base text-foreground outline-none transition-colors placeholder:text-foreground/68 focus:border-primary focus:ring-2 focus:ring-primary/65 disabled:cursor-wait disabled:opacity-65 motion-reduce:transition-none"
+            className="mt-2 h-12 w-full rounded-lg border border-primary/55 bg-white px-3.5 text-base text-foreground outline-none transition-colors placeholder:text-foreground/68 focus:border-focus focus:ring-2 focus:ring-focus disabled:cursor-wait disabled:opacity-65 motion-reduce:transition-none"
             placeholder={t("emailPlaceholder")}
           />
           {fieldErrors.email ? (
@@ -655,7 +655,7 @@ function ConfiguredContactForm({ locale }: { locale: ContactLocale }) {
           aria-describedby={
             fieldErrors.mensaje ? "contact-message-error" : undefined
           }
-          className="mt-2 min-h-36 w-full resize-y rounded-lg border border-primary/55 bg-white p-3.5 text-base leading-6 text-foreground outline-none transition-colors placeholder:text-foreground/68 focus:border-primary focus:ring-2 focus:ring-primary/65 disabled:cursor-wait disabled:opacity-65 motion-reduce:transition-none"
+          className="mt-2 min-h-36 w-full resize-y rounded-lg border border-primary/55 bg-white p-3.5 text-base leading-6 text-foreground outline-none transition-colors placeholder:text-foreground/68 focus:border-focus focus:ring-2 focus:ring-focus disabled:cursor-wait disabled:opacity-65 motion-reduce:transition-none"
           placeholder={t("messagePlaceholder")}
         />
         {fieldErrors.mensaje ? (
@@ -691,7 +691,7 @@ function ConfiguredContactForm({ locale }: { locale: ContactLocale }) {
         <button
           type="submit"
           disabled={sending}
-          className="inline-flex min-h-12 shrink-0 items-center justify-center rounded-lg bg-primary px-5 text-sm font-semibold text-white transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-wait disabled:opacity-65 motion-reduce:transition-none"
+          className="inline-flex min-h-12 shrink-0 items-center justify-center rounded-lg bg-primary px-5 text-sm font-semibold text-white transition-colors hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 disabled:cursor-wait disabled:opacity-65 motion-reduce:transition-none"
         >
           {redirecting
             ? t("openingConfirmation")

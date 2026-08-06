@@ -306,7 +306,7 @@ export function ListingGallery({ images, name, labels }: ListingGalleryProps) {
         <button
           type="button"
           className={[
-            "group relative aspect-[4/3] min-h-11 overflow-hidden bg-surface focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary",
+            "group relative aspect-[4/3] min-h-11 overflow-hidden bg-surface focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus",
             supportingImages.length > 0
               ? "sm:row-span-2 sm:aspect-auto"
               : "",
@@ -337,7 +337,7 @@ export function ListingGallery({ images, name, labels }: ListingGalleryProps) {
               key={`${src}-${imageIndex}`}
               type="button"
               className={[
-                "group relative hidden min-h-11 overflow-hidden bg-surface focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary sm:block",
+                "group relative hidden min-h-11 overflow-hidden bg-surface focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus sm:block",
                 supportingImages.length === 1 ? "sm:row-span-2" : "",
               ].join(" ")}
               onClick={(event) =>
@@ -367,7 +367,7 @@ export function ListingGallery({ images, name, labels }: ListingGalleryProps) {
               <li key={`${src}-${index}`}>
                 <button
                   type="button"
-                  className="relative h-16 w-[86px] shrink-0 overflow-hidden rounded-[10px] bg-surface ring-1 ring-primary/12 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:h-[72px] sm:w-24 motion-safe:transition-[opacity,box-shadow] motion-safe:duration-200 motion-safe:[@media(hover:hover)]:hover:opacity-85 motion-reduce:transition-none"
+                  className="relative h-16 w-[86px] shrink-0 overflow-hidden rounded-[10px] bg-surface ring-1 ring-primary/12 focus:outline-none focus-visible:ring-2 focus-visible:ring-focus sm:h-[72px] sm:w-24 motion-safe:transition-[opacity,box-shadow] motion-safe:duration-200 motion-safe:[@media(hover:hover)]:hover:opacity-85 motion-reduce:transition-none"
                   onClick={(event) =>
                     openLightbox(index, event.currentTarget)
                   }
@@ -391,7 +391,7 @@ export function ListingGallery({ images, name, labels }: ListingGalleryProps) {
 
         <button
           type="button"
-          className="inline-flex min-h-11 shrink-0 items-center justify-center gap-3 rounded-full border border-primary/20 bg-paper px-5 text-sm font-semibold text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-safe:transition-colors motion-safe:duration-200 motion-safe:[@media(hover:hover)]:hover:bg-surface motion-reduce:transition-none"
+          className="inline-flex min-h-11 shrink-0 items-center justify-center gap-3 rounded-full border border-primary/20 bg-paper px-5 text-sm font-semibold text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-focus motion-safe:transition-colors motion-safe:duration-200 motion-safe:[@media(hover:hover)]:hover:bg-surface motion-reduce:transition-none"
           onClick={(event) => openLightbox(0, event.currentTarget)}
           aria-label={labels.viewAll}
           data-gallery-open="all"

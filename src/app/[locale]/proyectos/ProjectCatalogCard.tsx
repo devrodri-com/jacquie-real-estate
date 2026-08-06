@@ -33,12 +33,12 @@ export function ProjectCatalogCard({
   const rental = project.rentalPolicy || copy.rentalFallback;
 
   return (
-    <article className="h-full min-w-0 overflow-hidden rounded-[12px] border border-primary/18 bg-paper shadow-[0_10px_28px_rgba(59,39,74,0.045)] transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-px hover:border-primary/32 hover:shadow-[0_14px_32px_rgba(59,39,74,0.07)] focus-within:border-primary/35 motion-reduce:transform-none">
+    <article className="h-full min-w-0 overflow-hidden rounded-[12px] border border-primary/18 bg-paper shadow-[0_10px_28px_rgba(49,95,114,0.045)] transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-px hover:border-primary/32 hover:shadow-[0_14px_32px_rgba(49,95,114,0.07)] focus-within:border-primary/35 motion-reduce:transform-none">
       <Link
         href={`/${locale}${project.slug}`}
         prefetch={false}
         data-project-link
-        className="group flex h-full min-w-0 flex-col rounded-[11px] text-foreground no-underline outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+        className="group flex h-full min-w-0 flex-col rounded-[11px] text-foreground no-underline outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus"
       >
         <div className="relative aspect-[3/2] w-full overflow-hidden bg-surface">
           {visible ? (
@@ -61,7 +61,7 @@ export function ProjectCatalogCard({
             <p
               data-project-location
               title={project.city}
-              className="line-clamp-2 min-w-0 break-words text-[12px] font-semibold uppercase leading-4 tracking-[0.12em] text-primary/72 md:min-h-8"
+              className="line-clamp-2 min-w-0 break-words text-[12px] font-semibold uppercase leading-4 tracking-[0.12em] text-primary md:min-h-8"
             >
               {project.city}
             </p>
@@ -87,7 +87,7 @@ export function ProjectCatalogCard({
               className="mt-4 grid grid-cols-2 items-start border-t border-primary/10 pt-3 text-[14px]"
             >
               <div className="min-w-0 pr-3 sm:pr-4">
-                <dt className="text-[10px] font-semibold uppercase leading-4 tracking-[0.13em] text-primary/72">
+                <dt className="text-[10px] font-semibold uppercase leading-4 tracking-[0.13em] text-primary">
                   {copy.delivery}
                 </dt>
                 <dd
@@ -98,7 +98,7 @@ export function ProjectCatalogCard({
                 </dd>
               </div>
               <div className="min-w-0 border-l border-primary/10 pl-3 sm:pl-4">
-                <dt className="text-[10px] font-semibold uppercase leading-4 tracking-[0.13em] text-primary/72">
+                <dt className="text-[10px] font-semibold uppercase leading-4 tracking-[0.13em] text-primary">
                   {copy.rental}
                 </dt>
                 <dd

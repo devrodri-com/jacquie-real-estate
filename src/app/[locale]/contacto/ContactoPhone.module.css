@@ -16,7 +16,7 @@
   flex: 1 1 auto;
   height: 48px !important;
   border-radius: 8px;
-  border: 1px solid rgba(59, 39, 74, 0.55) !important;
+  border: 1px solid rgba(49, 95, 114, 0.55) !important;
   background: white !important;
   padding: 0 12px !important;
   color: #2B2530 !important;
@@ -30,8 +30,8 @@
 }
 
 .phoneWrapper :global(.PhoneInputInput):focus {
-  box-shadow: 0 0 0 2px rgba(59, 39, 74, 0.65) !important;
-  border-color: rgba(59, 39, 74, 0.8) !important;
+  box-shadow: 0 0 0 2px rgba(58, 112, 135, 0.35) !important;
+  border-color: #3A7087 !important;
 }
 
 .phoneWrapper :global(.PhoneInputCountry) {
@@ -43,7 +43,7 @@
   gap: 6px;
   margin-right: 8px;
   padding-right: 8px;
-  border-right: 1px solid rgba(59, 39, 74, 0.12);
+  border-right: 1px solid rgba(49, 95, 114, 0.18);
 }
 
 .phoneWrapper :global(.PhoneInput--disabled) {
@@ -73,7 +73,7 @@
 .phoneWrapper :global(.PhoneInputCountrySelect) {
   height: 44px;
   border-radius: 6px;
-  border: 1px solid rgba(59, 39, 74, 0.55);
+  border: 1px solid rgba(49, 95, 114, 0.55);
   background: white;
   padding: 0 24px 0 8px;
   color: #2B2530;
@@ -81,7 +81,7 @@
   outline: none;
   cursor: pointer;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%233B274A' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23315F72' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 8px center;
   transition: border-color 0.2s, box-shadow 0.2s;
@@ -89,8 +89,8 @@
 }
 
 .phoneWrapper :global(.PhoneInputCountrySelect):focus {
-  box-shadow: 0 0 0 2px rgba(59, 39, 74, 0.65);
-  border-color: rgba(59, 39, 74, 0.8);
+  box-shadow: 0 0 0 2px rgba(58, 112, 135, 0.35);
+  border-color: #3A7087;
 }
 
 .phoneWrapper :global(.PhoneInputCountrySelectArrow) {

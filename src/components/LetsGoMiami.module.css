@@ -1,3 +1,4 @@
+.tokens,
 .theme {
   --lgm-paper: #fbf9f5;
   --lgm-sand: #eee6db;
@@ -8,6 +9,9 @@
   --lgm-line: rgb(28 45 56 / 16%);
   --lgm-action: #4a2f50;
   --lgm-action-hover: #38243d;
+}
+
+.theme {
   color: var(--lgm-ink);
   font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }

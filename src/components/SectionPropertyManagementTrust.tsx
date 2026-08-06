@@ -81,7 +81,7 @@ export default function SectionPropertyManagementTrust({ locale }: Props) {
             <h3 className="text-[15px] font-semibold tracking-tight">
               {item.title}
             </h3>
-            <p className="mt-2 text-[14px] leading-[1.6] text-primary-foreground/80">
+            <p className="mt-2 text-[14px] leading-[1.6] text-primary-foreground">
               {item.text}
             </p>
           </div>

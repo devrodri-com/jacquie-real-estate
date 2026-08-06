@@ -165,7 +165,7 @@ export default function NavBar() {
 
   return (
     <header
-      className={`w-full bg-primary text-primary-foreground transition-shadow ${
+      className={`focus-on-brand w-full bg-brand text-on-brand transition-shadow ${
         scrolled
           ? "border-b border-paper/10 shadow-[0_1px_8px_rgba(0,0,0,.08)]"
           : "border-b border-paper/5"
@@ -175,7 +175,7 @@ export default function NavBar() {
         <Link
           href={base}
           aria-current={pathname === base ? "page" : undefined}
-          className="shrink-0 font-display text-[20px] font-medium leading-none text-primary-foreground no-underline hover:opacity-90"
+          className="shrink-0 font-display text-[20px] font-medium leading-none text-on-brand no-underline hover:opacity-90"
         >
           Jacquie Zárate
         </Link>
@@ -218,7 +218,7 @@ export default function NavBar() {
           <Link
             href={letsGoHref}
             aria-current={isActive(letsGoHref) ? "page" : undefined}
-            className="border-l border-paper/20 pl-4 text-sm font-medium text-primary-foreground/78 no-underline transition-colors hover:text-primary-foreground"
+            className="border-l border-paper/20 pl-4 text-sm font-medium text-on-brand no-underline transition-colors hover:text-on-brand"
           >
             Let’s Go Miami
           </Link>
@@ -228,7 +228,7 @@ export default function NavBar() {
             rel="noopener noreferrer"
             onClick={() => trackWhatsApp("desktop")}
             data-analytics="navigation:whatsapp"
-            className="inline-flex min-h-9 items-center justify-center whitespace-nowrap rounded-full bg-paper px-4 text-sm font-semibold text-primary no-underline transition-colors hover:bg-surface"
+            className="inline-flex min-h-9 items-center justify-center whitespace-nowrap rounded-full bg-paper px-4 text-sm font-semibold text-brand no-underline transition-colors hover:bg-brand-subtle"
           >
             {copy.whatsapp}
           </a>
@@ -244,7 +244,7 @@ export default function NavBar() {
         <nav
           ref={mobileNavRef}
           id="mobile-main-navigation"
-          className="fixed inset-0 z-50 bg-primary/98 text-primary-foreground backdrop-blur-sm min-[1180px]:hidden"
+          className="fixed inset-0 z-50 bg-brand/98 text-on-brand backdrop-blur-sm min-[1180px]:hidden"
           aria-label={copy.nav}
         >
           <div className="mx-auto flex h-full max-w-6xl flex-col px-4 py-4">
@@ -252,7 +252,7 @@ export default function NavBar() {
               <Link
                 href={base}
                 onClick={() => setOpen(false)}
-                className="font-display text-[20px] font-medium leading-none text-primary-foreground no-underline hover:opacity-90"
+                className="font-display text-[20px] font-medium leading-none text-on-brand no-underline hover:opacity-90"
               >
                 Jacquie Zárate
               </Link>
@@ -293,8 +293,8 @@ export default function NavBar() {
                     onClick={() => setOpen(false)}
                     className={`block py-3.5 text-lg no-underline transition-colors ${
                       isActive(item.href)
-                        ? "text-primary-foreground underline decoration-primary-foreground/55 decoration-2 underline-offset-[6px]"
-                        : "text-primary-foreground/85 hover:text-primary-foreground"
+                        ? "text-on-brand underline decoration-on-brand/55 decoration-2 underline-offset-[6px]"
+                        : "text-on-brand hover:text-on-brand"
                     }`}
                   >
                     {item.label}
@@ -303,14 +303,14 @@ export default function NavBar() {
               </div>
 
               <div className="mt-5 border-t border-paper/20 pt-5">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary-foreground/65">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-on-brand">
                   {copy.staysGroup}
                 </p>
                 <Link
                   href={letsGoHref}
                   aria-current={isActive(letsGoHref) ? "page" : undefined}
                   onClick={() => setOpen(false)}
-                  className="mt-2 block min-h-11 py-2 text-lg font-medium text-primary-foreground no-underline"
+                  className="mt-2 block min-h-11 py-2 text-lg font-medium text-on-brand no-underline"
                 >
                   Let’s Go Miami
                 </Link>
@@ -322,7 +322,7 @@ export default function NavBar() {
                 rel="noopener noreferrer"
                 onClick={() => trackWhatsApp("mobile")}
                 data-analytics="navigation:whatsapp"
-                className="mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-lg bg-paper px-5 text-base font-semibold text-primary no-underline transition-colors hover:bg-surface"
+                className="mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-lg bg-paper px-5 text-base font-semibold text-brand no-underline transition-colors hover:bg-brand-subtle"
               >
                 {copy.whatsapp}
               </a>
@@ -356,9 +356,9 @@ function NavLink({
     <Link
       href={href}
       aria-current={active ? "page" : undefined}
-      className={`text-primary-foreground/84 no-underline underline-offset-[12px] transition-colors hover:text-primary-foreground ${
+      className={`text-on-brand no-underline underline-offset-[12px] transition-colors hover:text-on-brand ${
         active
-          ? "text-primary-foreground underline decoration-primary-foreground/55 decoration-1"
+          ? "text-on-brand underline decoration-on-brand/55 decoration-1"
           : ""
       }`}
     >
@@ -386,8 +386,8 @@ function LocaleSwitcher({
       {LOCALES.map(({ code, label, aria, title }) => {
         const sizeClass = mobile ? "h-11 flex-1" : "h-8 w-10";
         const colorClass = dark
-          ? "border-paper/25 text-primary-foreground hover:bg-paper/10"
-          : "border-primary/20 text-primary hover:bg-surface";
+          ? "border-paper/25 text-on-brand hover:bg-paper/10"
+          : "border-brand/20 text-brand hover:bg-brand-subtle";
 
         return code === locale ? (
           <span

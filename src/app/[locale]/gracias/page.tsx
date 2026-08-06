@@ -102,11 +102,11 @@ export default function GraciasPage() {
       <div className="w-full py-12 sm:py-16 lg:py-20">
         <section
           aria-busy="true"
-          className="mx-auto min-h-40 max-w-[780px] border-t border-accent/55 pt-7 sm:pt-9"
+          className="mx-auto min-h-40 max-w-[780px] border-t border-border-brand pt-7 sm:pt-9"
         >
-          <p role="status" aria-live="polite" className="text-sm text-primary/78">
+          <h1 aria-live="polite" className="text-sm font-normal text-primary">
             {t("checkingStatus")}
-          </p>
+          </h1>
         </section>
       </div>
     );
@@ -120,18 +120,18 @@ export default function GraciasPage() {
         <p className="sr-only" role="status" aria-live="polite">
           {title}
         </p>
-        <div className="border-t border-accent/55 pt-7 sm:pt-9">
-          <div className="flex items-center gap-3 text-primary/78">
+        <div className="border-t border-border-brand pt-7 sm:pt-9">
+          <div className="flex items-center gap-3 text-primary">
             {confirmed ? (
               <Check
                 aria-hidden="true"
-                className="h-5 w-5 text-accent"
+                className="h-5 w-5 text-brand"
                 strokeWidth={1.9}
               />
             ) : (
               <MessageCircle
                 aria-hidden="true"
-                className="h-5 w-5 text-accent"
+                className="h-5 w-5 text-brand"
                 strokeWidth={1.8}
               />
             )}
@@ -153,7 +153,7 @@ export default function GraciasPage() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={trackWhatsApp}
-              className="inline-flex min-h-12 items-center justify-center rounded-lg bg-primary px-5 text-sm font-semibold text-white no-underline transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 motion-reduce:transition-none"
+              className="inline-flex min-h-12 items-center justify-center rounded-lg bg-primary px-5 text-sm font-semibold text-white no-underline transition-colors hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 motion-reduce:transition-none"
             >
               {t("whatsappCta")}
             </a>
@@ -163,7 +163,7 @@ export default function GraciasPage() {
                   ? "/" + locale + "/proyectos"
                   : "/" + locale + "/contacto"
               }
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-primary/55 bg-white px-5 text-sm font-semibold text-primary no-underline transition-colors hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 motion-reduce:transition-none"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-primary/55 bg-white px-5 text-sm font-semibold text-primary no-underline transition-colors hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 motion-reduce:transition-none"
             >
               {confirmed ? t("projectsCta") : t("contactCta")}
               <ArrowRight
@@ -176,7 +176,7 @@ export default function GraciasPage() {
 
           <Link
             href={"/" + locale}
-            className="mt-6 inline-flex min-h-11 items-center text-sm font-semibold text-primary/78 underline decoration-primary/40 underline-offset-4 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            className="mt-6 inline-flex min-h-11 items-center text-sm font-semibold text-primary underline decoration-primary/40 underline-offset-4 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
           >
             {t("homeCta")}
           </Link>

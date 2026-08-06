@@ -388,7 +388,7 @@ export function buildContactEmailMessage(
   ].join("\n");
 
   const row = (label: string, rowValue: string) =>
-    '<tr><td style="padding:8px 0;color:#6f6475;font-size:13px;">' +
+    '<tr><td style="padding:8px 0;color:#315F72;font-size:13px;">' +
     escapeHtml(label) +
     '</td><td style="padding:8px 0;color:#2B2530;font-size:15px;font-weight:600;">' +
     escapeHtml(rowValue || "No informado") +
@@ -403,19 +403,19 @@ export function buildContactEmailMessage(
     .join("");
 
   const html =
-    '<div style="margin:0;padding:0;background:#F8F5FA;font-family:Inter,Arial,sans-serif;color:#2B2530;">' +
+    '<div style="margin:0;padding:0;background:#F3F5F7;font-family:Inter,Arial,sans-serif;color:#2B2530;">' +
     '<div style="max-width:640px;margin:0 auto;padding:28px 18px;">' +
-    '<div style="background:#FFFFFF;border:1px solid rgba(59,39,74,.12);border-radius:14px;padding:28px;">' +
-    '<p style="margin:0 0 8px;color:#A98BB8;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;">Nuevo lead web</p>' +
-    '<h1 style="margin:0 0 22px;color:#3B274A;font-size:28px;line-height:1.12;font-family:Georgia,serif;font-weight:500;">Jacquie Zárate</h1>' +
+    '<div style="background:#FFFFFF;border:1px solid #A2B7C0;border-radius:14px;padding:28px;">' +
+    '<p style="margin:0 0 8px;color:#315F72;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;">Nuevo lead web</p>' +
+    '<h1 style="margin:0 0 22px;color:#315F72;font-size:28px;line-height:1.12;font-family:Georgia,serif;font-weight:500;">Jacquie Zárate</h1>' +
     '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">' +
     row("Nombre", lead.nombre) +
     row("Email", lead.email) +
     row("Teléfono", lead.telefonoE164) +
     row("País del teléfono", lead.country) +
     "</table>" +
-    '<div style="margin:20px 0;padding:18px;border-radius:12px;background:#F8F5FA;border:1px solid rgba(59,39,74,.10);">' +
-    '<p style="margin:0 0 8px;color:#6f6475;font-size:13px;">Mensaje</p>' +
+    '<div style="margin:20px 0;padding:18px;border-radius:12px;background:#F3F5F7;border:1px solid #A2B7C0;">' +
+    '<p style="margin:0 0 8px;color:#315F72;font-size:13px;">Mensaje</p>' +
     '<p style="margin:0;color:#2B2530;font-size:16px;line-height:1.65;">' +
     formatMultilineHtml(lead.mensaje) +
     "</p></div>" +

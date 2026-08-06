@@ -147,7 +147,7 @@ export default function GalleryLightbox({
             key={`${g.src}-${i}`}
             type="button"
             onClick={(event) => openAt(i, event.currentTarget)}
-            className="relative aspect-[16/10] overflow-hidden rounded-xl ring-1 ring-primary-foreground/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 [@media(hover:hover)]:hover:ring-primary-foreground/30 transition"
+            className="relative aspect-[16/10] overflow-hidden rounded-xl ring-1 ring-primary-foreground/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-on-brand [@media(hover:hover)]:hover:ring-primary-foreground/30 transition"
             aria-label={L.openThumb(i + 1, displayImages.length)}
           >
             <Image
@@ -172,7 +172,7 @@ export default function GalleryLightbox({
               <button
                 type="button"
                 onClick={(event) => openAt(i, event.currentTarget)}
-                className="relative h-48 w-[85vw] overflow-hidden rounded-xl ring-1 ring-primary-foreground/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+                className="relative h-48 w-[85vw] overflow-hidden rounded-xl ring-1 ring-primary-foreground/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-on-brand"
                 aria-label={L.openThumb(i + 1, displayImages.length)}
               >
                 <Image
@@ -229,7 +229,7 @@ export default function GalleryLightbox({
                   e.stopPropagation();
                   close();
                 }}
-                className="absolute -right-2 -top-2 h-8 w-8 rounded-full bg-primary/90 text-primary-foreground hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+                className="absolute -right-2 -top-2 h-8 w-8 rounded-full bg-primary/90 text-primary-foreground hover:bg-brand-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-on-brand"
                 aria-label={L.close}
               >
                 ✕
@@ -244,7 +244,7 @@ export default function GalleryLightbox({
                       e.stopPropagation();
                       prev();
                     }}
-                    className="absolute top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-primary/80 text-2xl leading-none text-primary-foreground shadow-lg backdrop-blur-sm hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 sm:-left-14 sm:flex lg:-left-16"
+                    className="absolute top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-primary/80 text-2xl leading-none text-primary-foreground shadow-lg backdrop-blur-sm hover:bg-brand-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-on-brand sm:-left-14 sm:flex lg:-left-16"
                     aria-label={L.prev}
                   >
                     ‹
@@ -255,7 +255,7 @@ export default function GalleryLightbox({
                       e.stopPropagation();
                       next();
                     }}
-                    className="absolute top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-primary/80 text-2xl leading-none text-primary-foreground shadow-lg backdrop-blur-sm hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 sm:-right-14 sm:flex lg:-right-16"
+                    className="absolute top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-primary/80 text-2xl leading-none text-primary-foreground shadow-lg backdrop-blur-sm hover:bg-brand-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-on-brand sm:-right-14 sm:flex lg:-right-16"
                     aria-label={L.next}
                   >
                     ›

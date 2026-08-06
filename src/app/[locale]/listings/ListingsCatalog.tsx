@@ -22,16 +22,16 @@ export function ListingsCatalog({ items, locale, copy }: ListingsCatalogProps) {
       <header className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden border-b border-primary/10 bg-paper">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-24 top-8 size-72 rounded-full border border-accent/15 sm:-right-10 sm:size-96"
+          className="pointer-events-none absolute -right-24 top-8 size-72 rounded-full border border-border-brand/35 sm:-right-10 sm:size-96"
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute right-12 top-32 size-32 rounded-full bg-accent/[0.07] blur-2xl sm:right-32"
+          className="pointer-events-none absolute right-12 top-32 size-32 rounded-full bg-brand-soft/55 blur-2xl sm:right-32"
         />
 
         <div className="relative mx-auto grid max-w-6xl gap-8 px-4 py-14 sm:py-18 lg:grid-cols-[minmax(0,1.18fr)_minmax(320px,0.82fr)] lg:items-end lg:gap-16 lg:py-24">
           <div className="min-w-0">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.21em] text-primary/75">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.21em] text-primary">
               {copy.eyebrow}
             </p>
             <h1 className="mt-3 max-w-[16ch] text-balance font-display text-[46px] font-medium leading-[0.96] tracking-[-0.025em] text-primary sm:text-[60px] lg:text-[72px]">
@@ -39,11 +39,11 @@ export function ListingsCatalog({ items, locale, copy }: ListingsCatalogProps) {
             </h1>
           </div>
 
-          <div className="min-w-0 border-l border-accent/45 pl-5 sm:pl-6">
+          <div className="min-w-0 border-l border-border-brand pl-5 sm:pl-6">
             <p className="max-w-[58ch] text-[16px] leading-7 text-foreground/82">
               {copy.intro}
             </p>
-            <p className="mt-5 max-w-[58ch] text-[13px] leading-6 text-primary/70">
+            <p className="mt-5 max-w-[58ch] text-[13px] leading-6 text-primary">
               {copy.availabilityNote}
             </p>
           </div>
@@ -61,7 +61,7 @@ export function ListingsCatalog({ items, locale, copy }: ListingsCatalogProps) {
           >
             {copy.inventoryTitle}
           </h2>
-          <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-primary/70">
+          <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-primary">
             {copy.inventoryCount(listingCount)}
           </p>
         </div>
@@ -95,7 +95,7 @@ export function ListingsCatalog({ items, locale, copy }: ListingsCatalogProps) {
             </div>
             <a
               href="#personalized-search"
-              className="inline-flex min-h-11 items-center justify-between gap-4 border-b border-primary/30 py-2 text-[14px] font-semibold text-primary no-underline hover:border-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+              className="inline-flex min-h-11 items-center justify-between gap-4 border-b border-primary/30 py-2 text-[14px] font-semibold text-primary no-underline hover:border-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focus"
             >
               {copy.emptyLink}
               <span aria-hidden="true">↓</span>

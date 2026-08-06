@@ -51,7 +51,7 @@ export default function SectionHowItWorks({ locale }: Props) {
             key={step}
             className="rounded-[14px] border border-primary/10 bg-primary/[0.03] p-5 shadow-sm"
           >
-            <span className="inline-flex h-6 min-w-6 items-center justify-center rounded-full bg-primary/10 px-2 text-[11px] font-semibold text-primary/75">
+            <span className="inline-flex h-6 min-w-6 items-center justify-center rounded-full bg-primary/10 px-2 text-[11px] font-semibold text-primary">
               {idx + 1}
             </span>
             <p className="mt-3 text-[18px] leading-[1.55] font-medium tracking-tight text-primary">

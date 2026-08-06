@@ -50,7 +50,7 @@ export default function SectionAccommodationHome({ locale }: Props) {
             <h3 className="text-[17px] font-semibold tracking-tight text-primary-foreground">
               {card.title}
             </h3>
-            <p className="mt-3 text-[14px] leading-[1.5] text-primary-foreground/80">
+            <p className="mt-3 text-[14px] leading-[1.5] text-primary-foreground">
               {card.text}
             </p>
           </div>
@@ -59,7 +59,7 @@ export default function SectionAccommodationHome({ locale }: Props) {
       <div className="mt-6 flex flex-wrap gap-3">
         <Link
           href={`/${locale}/contacto`}
-          className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-5 text-sm font-medium text-primary-foreground no-underline hover:opacity-95 focus-visible:ring-2 focus-visible:ring-accent/40"
+          className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-5 text-sm font-medium text-primary-foreground no-underline hover:opacity-95 focus-visible:ring-2 focus-visible:ring-focus"
         >
           {isEN ? "Ask about accommodation" : isFR ? "Consulter pour l'hébergement" : "Consultar alojamiento"}
         </Link>
@@ -67,7 +67,7 @@ export default function SectionAccommodationHome({ locale }: Props) {
           href="https://wa.me/17864072591"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex h-10 items-center justify-center rounded-md border border-primary/25 px-5 text-sm font-medium text-primary no-underline hover:bg-primary/5 focus-visible:ring-2 focus-visible:ring-accent/40"
+          className="inline-flex h-10 items-center justify-center rounded-md border border-primary/25 px-5 text-sm font-medium text-primary no-underline hover:bg-brand-subtle focus-visible:ring-2 focus-visible:ring-focus"
         >
           {isEN ? "Talk on WhatsApp" : isFR ? "Parler sur WhatsApp" : "Hablar por WhatsApp"}
         </a>

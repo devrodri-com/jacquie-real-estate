@@ -138,7 +138,7 @@ export default async function ProyectosPage({
       >
         <div className="mx-auto grid w-full max-w-[1280px] px-5 py-6 sm:px-8 sm:py-12 lg:grid-cols-[190px_minmax(0,1fr)] lg:gap-10 lg:py-14">
           <div className="order-1 min-w-0 lg:order-2">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/72 lg:hidden">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary lg:hidden">
               {copy.header.eyebrow}
             </p>
             <h1
@@ -153,7 +153,7 @@ export default async function ProyectosPage({
 
             <dl className="mt-4 grid gap-3 border-t border-primary/15 pt-3 sm:mt-6 sm:grid-cols-2 sm:gap-7 sm:pt-4">
               <div>
-                <dt className="text-[10px] font-semibold uppercase tracking-[0.16em] text-primary/72">
+                <dt className="text-[10px] font-semibold uppercase tracking-[0.16em] text-primary">
                   {copy.header.scopeLabel}
                 </dt>
                 <dd className="mt-2 max-w-[38ch] text-[13px] leading-5 text-foreground/72">
@@ -161,7 +161,7 @@ export default async function ProyectosPage({
                 </dd>
               </div>
               <div>
-                <dt className="text-[10px] font-semibold uppercase tracking-[0.16em] text-primary/72">
+                <dt className="text-[10px] font-semibold uppercase tracking-[0.16em] text-primary">
                   {copy.header.compareLabel}
                 </dt>
                 <dd className="mt-2 max-w-[48ch] text-[13px] leading-5 text-foreground/72">
@@ -172,10 +172,10 @@ export default async function ProyectosPage({
           </div>
 
           <aside className="order-2 mt-4 border-t border-primary/15 pt-3 sm:mt-6 sm:pt-4 lg:order-1 lg:mt-0 lg:border-r lg:border-t-0 lg:pr-8 lg:pt-0">
-            <p className="hidden text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/72 lg:block">
+            <p className="hidden text-[11px] font-semibold uppercase tracking-[0.18em] text-primary lg:block">
               {copy.header.eyebrow}
             </p>
-            <p className="mt-0 text-[10px] font-semibold uppercase tracking-[0.16em] text-primary/72 lg:mt-5">
+            <p className="mt-0 text-[10px] font-semibold uppercase tracking-[0.16em] text-primary lg:mt-5">
               {copy.header.availabilityLabel}
             </p>
             <p className="mt-2 max-w-[28ch] text-[13px] leading-[1.7] text-foreground/74 sm:leading-6">
@@ -193,7 +193,7 @@ export default async function ProyectosPage({
       >
         <div className="mx-auto grid w-full max-w-[1180px] gap-7 px-5 py-14 sm:px-8 sm:py-16 md:grid-cols-[minmax(0,.9fr)_minmax(320px,1.1fr)] md:items-start md:gap-14">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/72">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
               {copy.close.eyebrow}
             </p>
             <h2
@@ -211,7 +211,7 @@ export default async function ProyectosPage({
               href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-6 inline-flex min-h-11 w-full items-center justify-center border border-primary bg-primary px-5 text-sm font-semibold text-primary-foreground no-underline outline-none transition-colors hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 sm:w-auto"
+              className="mt-6 inline-flex min-h-11 w-full items-center justify-center border border-primary bg-primary px-5 text-sm font-semibold text-primary-foreground no-underline outline-none transition-colors hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 sm:w-auto"
             >
               {copy.close.cta}
             </a>

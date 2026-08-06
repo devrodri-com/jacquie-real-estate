@@ -214,7 +214,7 @@ export default function ProyectosPageClient({
             <button
               type="button"
               onClick={resetFilters}
-              className="mt-6 inline-flex min-h-11 items-center justify-center border border-primary px-5 text-sm font-semibold text-primary outline-none transition-colors hover:bg-primary hover:text-primary-foreground focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              className="mt-6 inline-flex min-h-11 items-center justify-center border border-primary px-5 text-sm font-semibold text-primary outline-none transition-colors hover:bg-brand-dark hover:text-primary-foreground focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
             >
               {copy.filters.reset}
             </button>
@@ -257,7 +257,7 @@ export default function ProyectosPageClient({
                   type="button"
                   data-load-more
                   onClick={showMore}
-                  className="inline-flex min-h-11 items-center justify-center border border-primary bg-primary px-6 text-sm font-semibold text-primary-foreground outline-none transition-colors hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                  className="inline-flex min-h-11 items-center justify-center border border-primary bg-primary px-6 text-sm font-semibold text-primary-foreground outline-none transition-colors hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
                 >
                   {copy.results.showMore}
                 </button>

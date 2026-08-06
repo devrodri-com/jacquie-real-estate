@@ -124,7 +124,7 @@ export default function ProjectCard({ p, showMonthlyEstimate = false, variant = 
         </p>
         <Link
           href={p.slug}
-          className="mt-auto inline-flex h-9 w-full items-center justify-center rounded-md border border-primary/25 px-3 text-sm font-medium text-primary hover:bg-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2"
+          className="mt-auto inline-flex h-9 w-full items-center justify-center rounded-md border border-primary/25 px-3 text-sm font-medium text-primary hover:bg-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
         >
           {isEN ? "View details" : "Ver ficha"}
         </Link>

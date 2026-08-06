@@ -45,7 +45,7 @@ function ProjectFaqRow({
         <span className="flex min-w-0 items-baseline gap-4">
           <span
             aria-hidden
-            className="hidden w-6 shrink-0 text-[10px] font-semibold tabular-nums tracking-[0.14em] text-primary/70 sm:inline"
+            className="hidden w-6 shrink-0 text-[10px] font-semibold tabular-nums tracking-[0.14em] text-primary sm:inline"
           >
             {String(index + 1).padStart(2, "0")}
           </span>

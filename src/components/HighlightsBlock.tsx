@@ -45,10 +45,10 @@ export default function HighlightsBlock({
 
   return (
     <section className={"mt-10 rounded-[10px] bg-surface p-6 sm:p-7 max-w-[1100px] mx-auto ring-1 ring-primary/10 text-foreground relative overflow-hidden " + className}>
-      <div className="pointer-events-none absolute inset-x-5 sm:inset-x-6 top-0 h-[1.5px] rounded-full bg-gradient-to-r from-transparent via-accent/35 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-5 sm:inset-x-6 top-0 h-[1.5px] rounded-full bg-gradient-to-r from-transparent via-border-brand/55 to-transparent" />
       {title ? (
         <h2 id="highlights-heading" className="mb-2.5 flex items-center gap-2 font-display text-[16px] font-medium leading-[1.08] tracking-normal text-primary sm:text-[17px]">
-          <svg className="h-4 w-4 shrink-0 text-primary/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <svg className="h-4 w-4 shrink-0 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
             <path d="M12 3l1.5 3.5L17 8l-3.5 1.5L12 13l-1.5-3.5L7 8l3.5-1.5L12 3z" />
             <path d="M18 14l.8 1.8L21 16l-1.8.8L18 19l-.8-2.2L15 16l2.2-.2L18 14z" />
           </svg>
@@ -58,7 +58,7 @@ export default function HighlightsBlock({
       <ul className="mt-2 sm:mt-3 space-y-[11px] max-w-[1000px] lg:max-w-[960px] mx-auto" role="list" aria-labelledby="highlights-heading">
         {normalized.map((it, i) => (
           <li key={`${it.title}-${i}`} role="listitem" className="flex items-start gap-3">
-            <span className="relative top-[9px] sm:top-[9px] inline-block h-[6px] w-[6px] sm:h-[7px] sm:w-[7px] rounded-full bg-accent flex-shrink-0" aria-hidden />
+            <span className="relative top-[9px] sm:top-[9px] inline-block h-[6px] w-[6px] sm:h-[7px] sm:w-[7px] rounded-full bg-brand flex-shrink-0" aria-hidden />
             <div>
               <p className="text-[16px] leading-[26px] text-foreground/85">{it.title}</p>
               {it.desc ? (

@@ -237,7 +237,7 @@ export default function CountrySelect({
         onClick={() => setOpen(!open)}
         onKeyDown={handleTriggerKeyDown}
         disabled={props.disabled}
-        className="flex h-12 min-w-0 items-center gap-2 rounded-lg border border-primary/55 bg-white px-3 text-sm font-medium text-primary transition-colors hover:bg-surface focus:outline-none focus:ring-2 focus:ring-primary/65 disabled:cursor-not-allowed disabled:opacity-50 motion-reduce:transition-none"
+        className="flex h-12 min-w-0 items-center gap-2 rounded-lg border border-primary/55 bg-white px-3 text-sm font-medium text-primary transition-colors hover:bg-surface focus:outline-none focus:ring-2 focus:ring-focus disabled:cursor-not-allowed disabled:opacity-50 motion-reduce:transition-none"
         aria-label={
           value
             ? selectCountryAria +
@@ -257,7 +257,7 @@ export default function CountrySelect({
             <span className="hidden min-w-0 flex-1 truncate sm:inline">
               {labels?.[value] ?? value}
             </span>
-            <span className="shrink-0 text-primary/70">+{getCountryCallingCode(value)}</span>
+            <span className="shrink-0 text-primary">+{getCountryCallingCode(value)}</span>
           </>
         ) : (
           <>
@@ -265,7 +265,7 @@ export default function CountrySelect({
             <span className="hidden min-w-0 flex-1 truncate sm:inline">
               {internationalLabel}
             </span>
-            <span className="shrink-0 text-primary/70">+</span>
+            <span className="shrink-0 text-primary">+</span>
           </>
         )}
         <svg
@@ -291,7 +291,7 @@ export default function CountrySelect({
               onChange={(e) => setSearch(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder={searchPlaceholder}
-              className="h-11 w-full rounded-md border border-primary/55 bg-white px-3 text-sm text-primary placeholder-primary/68 focus:outline-none focus:ring-2 focus:ring-primary/65"
+              className="h-11 w-full rounded-md border border-primary/55 bg-white px-3 text-sm text-primary placeholder-primary/68 focus:outline-none focus:ring-2 focus:ring-focus"
               aria-controls={listboxId}
               aria-activedescendant={activeOptionId}
               aria-autocomplete="list"
@@ -320,16 +320,16 @@ export default function CountrySelect({
               tabIndex={-1}
               id={getOptionId(undefined)}
               onClick={() => handleSelect(undefined)}
-              className={`flex min-h-11 w-full items-center gap-3 px-3 py-2.5 text-left text-sm transition-colors hover:bg-primary/5 motion-reduce:transition-none ${
-                value === undefined ? "bg-accent/10 font-medium" : ""
-              } ${activeIndex === 0 ? "bg-accent/20" : ""}`}
+              className={`flex min-h-11 w-full items-center gap-3 px-3 py-2.5 text-left text-sm transition-colors hover:bg-brand-subtle motion-reduce:transition-none ${
+                value === undefined ? "bg-brand-soft font-medium" : ""
+              } ${activeIndex === 0 ? "bg-border-brand/35" : ""}`}
               role="option"
               aria-selected={value === undefined}
             >
               <span aria-hidden="true" className="text-xl">🌐</span>
               <div className="flex-1 min-w-0">
                 <div className="font-medium text-primary">{internationalLabel}</div>
-                <div className="text-xs text-primary/70">{manualEntryLabel}</div>
+                <div className="text-xs text-primary">{manualEntryLabel}</div>
               </div>
             </button>
 
@@ -358,9 +358,9 @@ export default function CountrySelect({
                   tabIndex={-1}
                   id={optionId}
                   onClick={() => handleSelect(country)}
-                  className={`flex min-h-11 w-full items-center gap-3 px-3 py-2.5 text-left text-sm transition-colors hover:bg-primary/5 motion-reduce:transition-none ${
-                    isSelected ? "bg-accent/10 font-medium" : ""
-                  } ${isActive ? "bg-accent/20" : ""}`}
+                  className={`flex min-h-11 w-full items-center gap-3 px-3 py-2.5 text-left text-sm transition-colors hover:bg-brand-subtle motion-reduce:transition-none ${
+                    isSelected ? "bg-brand-soft font-medium" : ""
+                  } ${isActive ? "bg-border-brand/35" : ""}`}
                   role="option"
                   aria-selected={isSelected}
                 >
@@ -368,13 +368,13 @@ export default function CountrySelect({
                   <div className="flex-1 min-w-0">
                     <div className="font-medium text-primary truncate">{label}</div>
                   </div>
-                  <span className="text-xs text-primary/70 flex-shrink-0">+{callingCode}</span>
+                  <span className="text-xs text-primary flex-shrink-0">+{callingCode}</span>
                 </button>
               );
             })}
             
             {filteredOptions.length === 0 && (
-              <div className="px-3 py-4 text-center text-sm text-primary/70">
+              <div className="px-3 py-4 text-center text-sm text-primary">
                 {noCountriesLabel}
               </div>
             )}
