@@ -43,15 +43,15 @@ type FinancingCopy = {
 
 const COPY: Record<Locale, FinancingCopy> = {
   es: {
-    metaTitle: "Financiación para comprar en Miami | Jacquie Zarate Realtor",
+    metaTitle: "Financiación para comprar tu propiedad en Florida | Jacquie Zarate Realtor",
     metaDescription:
-      "Financiación para compradores e inversores que consideran una compra en Miami, con una mirada prudente sobre el contexto, las variables y los próximos pasos.",
-    eyebrow: "Financiación inmobiliaria",
-    heroTitle: "Financiación para comprar en Miami",
-    heroThesis: "Una mirada más completa sobre la estructura de la compra.",
+      "Acompañamiento inmobiliario para ordenar una compra en Florida y conectarte con profesionales hipotecarios autorizados.",
+    eyebrow: "FINANCIACIÓN INMOBILIARIA",
+    heroTitle: "Financiación para comprar tu propiedad en Florida",
+    heroThesis: "Hacer realidad la compra de tu propiedad empieza con una buena estrategia financiera.",
     heroText:
-      "Puedo ayudarte a reunir la información relevante y ubicar la financiación dentro de la decisión inmobiliaria antes de avanzar.",
-    credential: "Realtor en Miami",
+      "Conseguir una hipoteca puede parecer complejo, sobre todo si es tu primera compra o si comprás desde otro país. Mi rol es ayudarte a ordenar el proceso inmobiliario y conectarte con profesionales hipotecarios autorizados que puedan evaluar tu perfil y las alternativas disponibles.",
+    credential: "Realtor en la Florida",
     primaryCta: "Hablar por WhatsApp",
     secondaryCta: "Contacto",
     ctaHelper: "No hace falta tener todo definido para empezar.",
@@ -83,13 +83,13 @@ const COPY: Record<Locale, FinancingCopy> = {
     experienceText:
       "Cuento con más de 15 años de experiencia en Finanzas trabajando en empresas del S&P 500. Esa trayectoria me permite aportar claridad a la información disponible, considerar escenarios de compra y formular preguntas más precisas dentro del proceso inmobiliario.",
     preparationLabel: "Antes de avanzar",
-    preparationTitle: "Preparar la información antes de avanzar",
-    realtorRoleLabel: "Jacquie puede ayudar a",
+    preparationTitle: "Preparar la información y separar funciones",
+    realtorRoleLabel: "Mi rol inmobiliario",
     realtorRoleText:
-      "Relacionar las variables relevantes, preparar preguntas y coordinar próximos pasos inmobiliarios.",
-    institutionRoleLabel: "La entidad financiera determina",
+      "Ordenamos la información inicial de tu compra, enfocamos la búsqueda según tu objetivo y el presupuesto informado, y te acompaño durante el proceso inmobiliario. Si comprás para renta, también podemos conversar sobre Property Management.",
+    institutionRoleLabel: "Separación de funciones",
     institutionRoleText:
-      "Evaluar el perfil, la documentación y la propiedad; definir las condiciones y tomar la decisión final.",
+      "Los profesionales hipotecarios y las entidades financieras evalúan el perfil, solicitan la documentación, definen las condiciones y deciden la aprobación.",
     referenceLabel: "Referencia posible",
     referenceTitle: "En algunos casos, un pago inicial del 25% puede servir como referencia.",
     referenceDisclaimer:
@@ -100,7 +100,7 @@ const COPY: Record<Locale, FinancingCopy> = {
     closingLabel: "Próximo paso",
     closingTitle: "Conversemos sobre la estructura de tu compra",
     closingText:
-      "Cuéntame tu objetivo y las preguntas de financiación relacionadas con tu compra. Puedo ayudarte a coordinar los próximos pasos inmobiliarios.",
+      "Contame qué tipo de propiedad estás buscando y conversemos sobre el próximo paso.",
     whatsAppMessage:
       "Hola Jacquie, quisiera conversar sobre la financiación para una compra que estoy considerando en Miami.",
   },

@@ -82,20 +82,20 @@ export const HOME_CONTENT: Record<HomeLocale, HomeContent> = {
   es: {
     hero: {
       eyebrow: "REAL ESTATE EN MIAMI · COMPRA E INVERSIÓN",
-      title: "Compra o invierte en Miami con criterio financiero y guía local.",
+      title: "Comprá o invertí en Miami con criterio financiero y guía local.",
       intro:
-        "Soy Jacquie Zárate, Realtor en Miami. Te ayudo a comparar propiedades, proyectos de preconstrucción y opciones de financiación según tu objetivo, tu presupuesto y la forma en que quieres usar la propiedad.",
+        "Soy Jacquie Zárate, Realtor en la Florida. Te ayudo a comprar, vender o invertir en propiedades, evaluar proyectos de preconstrucción y entender las opciones de financiación según tu objetivo, tu presupuesto y la forma en que querés usar la propiedad.",
       primaryCta: "Hablar por WhatsApp",
       secondaryCta: "Explorar opciones",
-      portraitAlt: "Jacquie Zárate, Realtor en Miami",
-      portraitCaption: "Jacquie Zárate · Realtor en Miami",
+      portraitAlt: "Jacquie Zárate, Realtor en la Florida",
+      portraitCaption: "Jacquie Zárate · Realtor en la Florida",
     },
     credibility: {
       label: "Experiencia profesional de Jacquie Zárate",
       items: [
+        "Real Estate en Miami desde 2023",
         "Más de 15 años en Finanzas",
         "Experiencia en empresas S&P 500",
-        "Real Estate en Miami desde 2023",
         "Asociada a Miami Life Realty",
       ],
     },
@@ -104,7 +104,7 @@ export const HOME_CONTENT: Record<HomeLocale, HomeContent> = {
       title: "Objetivo, números y propiedad: una sola decisión.",
       intro: "Antes de avanzar, ordenamos las variables que realmente pueden cambiar una compra.",
       items: [
-        { label: "Objetivo", question: "¿La buscas para vivir, invertir, alquilar o combinar usos?" },
+        { label: "Objetivo", question: "¿La buscás para vivir, invertir, alquilar o combinar usos?" },
         { label: "Estructura", question: "¿Qué presupuesto, capital disponible y financiación forman un escenario razonable?" },
         { label: "Propiedad", question: "¿Qué ubicación, edificio y condiciones responden mejor a ese objetivo?" },
       ],
@@ -113,18 +113,18 @@ export const HOME_CONTENT: Record<HomeLocale, HomeContent> = {
     buying: {
       eyebrow: "FORMAS DE COMPRAR",
       title: "Dos caminos. Preguntas distintas.",
-      intro: "Puedes evaluar un proyecto en desarrollo o una propiedad ya disponible. Cada camino requiere su propio criterio.",
+      intro: "Podés evaluar un proyecto en desarrollo o una propiedad ya disponible. Cada camino requiere su propio criterio.",
       preconstruction: {
         eyebrow: "01 · PRECONSTRUCCIÓN",
         title: "Evaluar un proyecto antes de su entrega.",
-        text: "Compara ubicación, fecha de entrega, esquema de pagos, flexibilidad de renta y condiciones del proyecto antes de reservar.",
+        text: "Compará ubicación, fecha de entrega, esquema de pagos, flexibilidad de renta y condiciones del proyecto antes de reservar.",
         cta: "Ver proyectos",
         imageAlt: "Proyecto residencial de preconstrucción en Miami",
       },
       properties: {
         eyebrow: "02 · PROPIEDADES DISPONIBLES",
         title: "Evaluar una propiedad ya construida.",
-        text: "Explora las propiedades publicadas y revisa precio, edificio, condiciones y potencial de uso antes de avanzar.",
+        text: "Explorá las propiedades publicadas y revisá precio, edificio, condiciones y potencial de uso antes de avanzar.",
         cta: "Ver propiedades",
         imageAlt: "Interior de una propiedad disponible en South Florida",
       },
@@ -142,9 +142,9 @@ export const HOME_CONTENT: Record<HomeLocale, HomeContent> = {
       title: "Criterio personal en cada etapa.",
       intro: "Mi experiencia en finanzas y mi trabajo inmobiliario en Miami ayudan a organizar la conversación desde el objetivo hasta el siguiente paso.",
       items: [
-        { title: "Definimos el objetivo", text: "Entiendo qué quieres comprar, para qué y qué condiciones son importantes para ti." },
+        { title: "Definimos el objetivo", text: "Entiendo qué querés comprar, para qué y qué condiciones son importantes para vos." },
         { title: "Comparamos escenarios", text: "Ordenamos propiedad, presupuesto, financiación y tiempos para ver qué alternativa encaja mejor." },
-        { title: "Coordinamos el siguiente paso", text: "Si decides avanzar, te acompaño en la búsqueda, la oferta y la coordinación del proceso." },
+        { title: "Coordinamos el siguiente paso", text: "Si decidís avanzar, te acompaño en la búsqueda, la oferta y la coordinación del proceso." },
       ],
       cta: "Conocer a Jacquie",
     },
@@ -158,8 +158,8 @@ export const HOME_CONTENT: Record<HomeLocale, HomeContent> = {
     },
     close: {
       eyebrow: "SIGUIENTE PASO",
-      title: "Cuéntame qué quieres resolver en Miami.",
-      text: "Si estás comparando una compra, un proyecto o una opción de financiación, comparte tu objetivo y el punto en el que estás.",
+      title: "Contame qué querés resolver en Miami.",
+      text: "Si estás comparando una compra, un proyecto o una opción de financiación, compartí tu objetivo y el punto en el que estás.",
       primaryCta: "Hablar por WhatsApp",
       secondaryCta: "Enviar una consulta",
     },

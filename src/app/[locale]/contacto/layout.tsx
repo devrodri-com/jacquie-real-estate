@@ -6,7 +6,7 @@ const CONTACT_META = {
   es: {
     title: "Contacto | Jacquie Zárate",
     description:
-      "Conversa con Jacquie Zárate sobre comprar, invertir, financiar una compra o consultar por una propiedad en Miami, por WhatsApp o email.",
+      "Conversá con Jacquie Zárate sobre comprar, vender, invertir, financiar una compra o consultar por una propiedad en Miami, por WhatsApp o email.",
   },
   en: {
     title: "Contact | Jacquie Zárate",

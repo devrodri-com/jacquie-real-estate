@@ -4,9 +4,9 @@ import { createPageMetadata, normalizeLocale } from "@/lib/seo";
 
 const ABOUT_META = {
   es: {
-    title: "Sobre Jacquie Zárate | Realtor en Miami",
+    title: "Sobre Jacquie Zárate | Realtor en la Florida",
     description:
-      "Conoce a Jacquie Zárate, Realtor en Miami con más de 15 años de experiencia en Finanzas y una mirada aplicada a decisiones inmobiliarias.",
+      "Conocé a Jacquie Zárate, Realtor en la Florida, con más de 15 años de experiencia en Finanzas y una mirada aplicada a decisiones inmobiliarias.",
   },
   en: {
     title: "About Jacquie Zárate | Miami Realtor",

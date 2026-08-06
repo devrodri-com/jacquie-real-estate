@@ -6,7 +6,7 @@ const THANK_YOU_META = {
   es: {
     title: "Gracias | Jacquie Zárate",
     description:
-      "Continúa una conversación inmobiliaria con Jacquie Zárate por WhatsApp o desde la página de Contacto.",
+      "Continuá una conversación inmobiliaria con Jacquie Zárate por WhatsApp o desde la página de Contacto.",
   },
   en: {
     title: "Thank you | Jacquie Zárate",

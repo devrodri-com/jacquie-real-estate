@@ -50,13 +50,13 @@ export type AboutContent = {
 export const ABOUT_CONTENT: Record<AboutLocale, AboutContent> = {
   es: {
     hero: {
-      eyebrow: "JACQUIE ZÁRATE · REALTOR EN MIAMI",
+      eyebrow: "JACQUIE ZÁRATE · REALTOR EN LA FLORIDA",
       title: "Experiencia financiera aplicada a decisiones inmobiliarias en Miami.",
       intro:
-        "Soy Jacquie Zárate. Mi recorrido entre Buenos Aires, las Finanzas y Miami forma la mirada personal que aporto a mi trabajo en Real Estate.",
+        "Soy Jacquie Zárate, Realtor en la Florida. Acompaño decisiones de compra, venta e inversión con una mirada formada entre Buenos Aires, las Finanzas y Miami.",
       primaryCta: "Hablar por WhatsApp",
       secondaryCta: "Leer mi recorrido",
-      portraitAlt: "Retrato de Jacquie Zárate, Realtor en Miami",
+      portraitAlt: "Retrato de Jacquie Zárate, Realtor en la Florida",
       imageCaption: "Buenos Aires · Finanzas · Miami",
     },
     journey: {
@@ -87,7 +87,7 @@ export const ABOUT_CONTENT: Record<AboutLocale, AboutContent> = {
       intro:
         "La comunicación y el seguimiento son directamente conmigo.",
       body:
-        "Trabajo con compradores, inversores y propietarios, explicando con claridad y coordinando personalmente los próximos pasos.",
+        "Trabajo con compradores, vendedores, inversores y propietarios, explicando con claridad y coordinando personalmente los próximos pasos.",
       ownerNoteLabel: "PARA PROPIETARIOS",
       ownerNote:
         "También trabajo con propietarios en el área de Property Management.",
@@ -96,11 +96,11 @@ export const ABOUT_CONTENT: Record<AboutLocale, AboutContent> = {
       eyebrow: "JACQUIE ZÁRATE",
       title: "Podemos empezar con una conversación.",
       text:
-        "Si quieres conversar sobre una propiedad en Miami, puedes escribirme directamente.",
-      role: "Realtor en Miami",
+        "Si querés conversar sobre una compra, una venta o una inversión en Miami, podés escribirme directamente.",
+      role: "Realtor en la Florida",
       credentialLabel: "RESPALDO PROFESIONAL",
       credential: "Miami Life Realty",
-      primaryCta: "Escribirme por WhatsApp",
+      primaryCta: "Escribime por WhatsApp",
       secondaryCta: "Enviar una consulta",
     },
   },
