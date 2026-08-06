@@ -81,7 +81,7 @@ export type HomeContent = {
 export const HOME_CONTENT: Record<HomeLocale, HomeContent> = {
   es: {
     hero: {
-      eyebrow: "REAL ESTATE EN MIAMI · COMPRA E INVERSIÓN",
+      eyebrow: "REAL ESTATE EN MIAMI · COMPRA, VENTA E INVERSIÓN",
       title: "Comprá o invertí en Miami con criterio financiero y guía local.",
       intro:
         "Soy Jacquie Zárate, Realtor en la Florida. Te ayudo a comprar, vender o invertir en propiedades, evaluar proyectos de preconstrucción y entender las opciones de financiación según tu objetivo, tu presupuesto y la forma en que querés usar la propiedad.",
@@ -95,7 +95,7 @@ export const HOME_CONTENT: Record<HomeLocale, HomeContent> = {
       items: [
         "Real Estate en Miami desde 2023",
         "Más de 15 años en Finanzas",
-        "Experiencia en empresas S&P 500",
+        "Experiencia en empresas del S&P 500",
         "Asociada a Miami Life Realty",
       ],
     },

@@ -42,7 +42,7 @@ const FOOTER_COPY: Record<
   }
 > = {
   es: {
-    role: "Realtor en Miami para compradores e inversores que buscan claridad, criterio y seguimiento personal.",
+    role: "Realtor en la Florida para compradores, vendedores e inversores que buscan claridad, criterio y seguimiento personal.",
     contactHeading: "Hablemos",
     whatsapp: "Hablar por WhatsApp",
     email: "Escribir por email",

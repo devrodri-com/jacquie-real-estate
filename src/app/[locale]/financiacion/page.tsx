@@ -86,7 +86,7 @@ const COPY: Record<Locale, FinancingCopy> = {
     preparationTitle: "Preparar la información y separar funciones",
     realtorRoleLabel: "Mi rol inmobiliario",
     realtorRoleText:
-      "Ordenamos la información inicial de tu compra, enfocamos la búsqueda según tu objetivo y el presupuesto informado, y te acompaño durante el proceso inmobiliario. Si comprás para renta, también podemos conversar sobre Property Management.",
+      "Te ayudo a ordenar la información inicial de tu compra y a enfocar la búsqueda según tu objetivo y el presupuesto informado. También te acompaño durante el proceso inmobiliario. Si comprás para renta, podemos conversar sobre Property Management.",
     institutionRoleLabel: "Separación de funciones",
     institutionRoleText:
       "Los profesionales hipotecarios y las entidades financieras evalúan el perfil, solicitan la documentación, definen las condiciones y deciden la aprobación.",
