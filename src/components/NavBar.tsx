@@ -172,7 +172,7 @@ export default function NavBar() {
           : "border-b border-paper/5"
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-5 px-4">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-5 min-[1180px]:gap-4 px-4">
         <Link
           href={base}
           aria-current={pathname === base ? "page" : undefined}
@@ -208,10 +208,10 @@ export default function NavBar() {
         </button>
 
         <nav
-          className="hidden min-[1180px]:flex min-[1180px]:items-center min-[1180px]:gap-4"
+          className="hidden min-[1180px]:flex min-[1180px]:items-center min-[1180px]:gap-3"
           aria-label={copy.nav}
         >
-          <div className="flex items-center gap-5 text-sm font-medium">
+          <div className="flex items-center gap-5 min-[1180px]:gap-4 text-sm font-medium">
             {coreItems.map((item) => (
               <NavLink key={item.href} {...item} active={isActive(item.href)} />
             ))}
@@ -219,7 +219,7 @@ export default function NavBar() {
           <Link
             href={letsGoHref}
             aria-current={isActive(letsGoHref) ? "page" : undefined}
-            className="border-l border-paper/20 pl-4 text-sm font-medium text-on-brand no-underline transition-colors hover:text-on-brand"
+            className="whitespace-nowrap border-l border-paper/20 pl-4 text-sm font-medium text-on-brand no-underline transition-colors hover:text-on-brand"
           >
             Let’s Go Miami
           </Link>
@@ -378,7 +378,7 @@ function NavLink({
     <Link
       href={href}
       aria-current={active ? "page" : undefined}
-      className={`text-on-brand no-underline underline-offset-[12px] transition-colors hover:text-on-brand ${
+      className={`whitespace-nowrap text-on-brand no-underline underline-offset-[12px] transition-colors hover:text-on-brand ${
         active
           ? "text-on-brand underline decoration-on-brand/55 decoration-1"
           : ""

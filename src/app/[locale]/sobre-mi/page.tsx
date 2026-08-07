@@ -136,8 +136,8 @@ export default async function SobreMi({
                 </p>
               </div>
 
-              <div className="mt-6 grid gap-6 border-t border-primary/15 pt-6 sm:grid-cols-[1.08fr_0.92fr] sm:gap-10 lg:mt-10 lg:gap-14">
-                <div>
+              <div className="mt-6 grid gap-6 border-t border-primary/15 pt-6 sm:grid-cols-2 sm:gap-10 lg:mt-10 lg:gap-14">
+                <div className="sm:pr-10">
                   <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-primary">
                     {content.journey.financeLabel}
                   </p>
@@ -149,7 +149,7 @@ export default async function SobreMi({
                   <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-primary">
                     {content.journey.miamiLabel}
                   </p>
-                  <p className="mt-3 max-w-[34ch] text-[15px] leading-[1.7] text-foreground/76 sm:text-[17px]">
+                  <p className="mt-3 max-w-[36ch] text-[15px] leading-[1.7] text-foreground/76 sm:text-[17px]">
                     {content.journey.miamiText}
                   </p>
                 </div>
@@ -173,7 +173,7 @@ export default async function SobreMi({
         }
       >
         <div className={PROFILE_CONTAINER}>
-          <div className="grid gap-7 lg:grid-cols-[0.62fr_1.38fr] lg:gap-20">
+          <div className="grid gap-7 lg:grid-cols-[0.55fr_1.45fr] lg:gap-20">
             <div>
               <p className={EYEBROW_LIGHT}>{content.lens.eyebrow}</p>
               <h2
@@ -184,7 +184,7 @@ export default async function SobreMi({
               </h2>
             </div>
 
-            <blockquote className="max-w-[27ch] font-display text-[clamp(1.75rem,3.8vw,3.2rem)] leading-[1.07] tracking-[-0.022em] text-primary-foreground">
+            <blockquote className="max-w-[31ch] text-pretty font-display text-[clamp(1.75rem,3.8vw,3.2rem)] leading-[1.07] tracking-[-0.022em] text-primary-foreground">
               “{content.lens.quote}”
             </blockquote>
           </div>
