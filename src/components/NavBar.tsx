@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useLocale } from "next-intl";
@@ -175,9 +176,9 @@ export default function NavBar() {
         <Link
           href={base}
           aria-current={pathname === base ? "page" : undefined}
-          className="shrink-0 font-display text-[20px] font-medium leading-none text-on-brand no-underline hover:opacity-90"
+          className="shrink-0 no-underline hover:opacity-90"
         >
-          Jacquie Zárate
+          <JacquieBrandLogo />
         </Link>
 
         <button
@@ -252,9 +253,9 @@ export default function NavBar() {
               <Link
                 href={base}
                 onClick={() => setOpen(false)}
-                className="font-display text-[20px] font-medium leading-none text-on-brand no-underline hover:opacity-90"
+                className="no-underline hover:opacity-90"
               >
-                Jacquie Zárate
+                <JacquieBrandLogo mobile />
               </Link>
               <button
                 ref={menuCloseButtonRef}
@@ -340,6 +341,27 @@ export default function NavBar() {
         </nav>
       ) : null}
     </header>
+  );
+}
+
+function JacquieBrandLogo({ mobile = false }: { mobile?: boolean }) {
+  return (
+    <span
+      className={`inline-flex items-center justify-center overflow-hidden rounded-[4px] border border-brand bg-paper ${
+        mobile ? "h-11 w-[162px]" : "h-[50px] w-[194px]"
+      }`}
+    >
+      <Image
+        src="/images/jacquie-zarate-navbar-horizontal.png"
+        alt=""
+        width={1610}
+        height={470}
+        sizes={mobile ? "162px" : "194px"}
+        priority={!mobile}
+        className="h-full w-full object-contain"
+      />
+      <span className="sr-only">Jacquie Zárate, Realtor en la Florida</span>
+    </span>
   );
 }
 
