@@ -143,7 +143,7 @@ export const HOME_CONTENT: Record<HomeLocale, HomeContent> = {
       intro: "Mi experiencia en finanzas y mi trabajo inmobiliario en Miami ayudan a organizar la conversación desde el objetivo hasta el siguiente paso.",
       items: [
         { title: "Definimos el objetivo", text: "Entiendo qué querés comprar, para qué y qué condiciones son importantes para vos." },
-        { title: "Comparamos escenarios", text: "Ordenamos propiedad, presupuesto, financiación y tiempos para ver qué alternativa encaja mejor." },
+        { title: "Comparamos escenarios", text: "Analizamos distintas propiedades y/o proyectos, las opciones de financiación y los tiempos para definir la alternativa que mejor se adapte a vos." },
         { title: "Coordinamos el siguiente paso", text: "Si decidís avanzar, te acompaño en la búsqueda, la oferta y la coordinación del proceso." },
       ],
       cta: "Conocer a Jacquie",

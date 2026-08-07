@@ -51,9 +51,9 @@ export const ABOUT_CONTENT: Record<AboutLocale, AboutContent> = {
   es: {
     hero: {
       eyebrow: "JACQUIE ZÁRATE · REALTOR EN LA FLORIDA",
-      title: "Experiencia financiera aplicada a decisiones inmobiliarias en Miami.",
+      title: "Invertir en Florida es más simple cuando tenés a la persona indicada a tu lado.",
       intro:
-        "Soy Jacquie Zárate, Realtor en la Florida. Acompaño decisiones de compra, venta e inversión con una mirada formada entre Buenos Aires, las Finanzas y Miami.",
+        "Mi trabajo va más allá de encontrar una propiedad. Ayudo a mis clientes a tomar decisiones inmobiliarias inteligentes, respaldadas por criterio financiero, conocimiento del mercado y una atención cercana de principio a fin. Ya sea para vivir, invertir o generar ingresos con una propiedad, mi compromiso es acompañarte con transparencia, estrategia y confianza.",
       primaryCta: "Hablar por WhatsApp",
       secondaryCta: "Leer mi recorrido",
       portraitAlt: "Retrato de Jacquie Zárate, Realtor en la Florida",
@@ -63,21 +63,21 @@ export const ABOUT_CONTENT: Record<AboutLocale, AboutContent> = {
       eyebrow: "MI RECORRIDO",
       title: "Buenos Aires, Finanzas, Miami.",
       originLabel: "BUENOS AIRES",
-      originText: "Nací en Buenos Aires, Argentina. Allí comienza mi historia.",
+      originText:
+        "Nací en Buenos Aires, Argentina. Allí comenzó mi pasión por los números, la estrategia y la toma de decisiones. Esa base financiera es la que hoy aplico para ayudar a mis clientes a invertir con confianza en el mercado inmobiliario de Florida.",
       financeLabel: "MÁS DE 15 AÑOS EN FINANZAS",
       financeText:
-        "Mi recorrido incluye más de 15 años de experiencia en Finanzas trabajando en empresas S&P 500.",
+        "Durante más de 15 años desarrollé mi carrera en el área financiera, trabajando en compañías multinacionales y adquiriendo una visión analítica que hoy me permite evaluar cada operación inmobiliaria desde una perspectiva estratégica y orientada al largo plazo.",
       miamiLabel: "MIAMI · DESDE 2023",
       miamiText:
-        "Desde 2023 trabajo en Miami con compradores, inversores y propietarios en Real Estate.",
-      bridge:
-        "Buenos Aires es el origen; las Finanzas, la experiencia; Miami, el presente.",
+        "Desde 2023 acompaño a compradores, vendedores e inversores en el sur de Florida. Mi objetivo no es solo encontrar una propiedad, sino brindar un acompañamiento integral para que cada cliente tome una decisión bien fundamentada y alineada con sus objetivos.",
+      bridge: "",
     },
     lens: {
       eyebrow: "UNA PERSPECTIVA FINANCIERA",
       title: "Mirar más allá de la propiedad.",
       quote:
-        "La experiencia financiera me enseñó a entender el contexto, ordenar la información y abordar cada decisión con responsabilidad.",
+        "Buenos Aires me dio mis raíces. Las finanzas, el criterio. Miami, el lugar donde hoy ayudo a mis clientes a construir su patrimonio.",
       body:
         "Esa perspectiva ayuda a distinguir lo que está claro, lo que falta confirmar y las preguntas que requieren más atención.",
     },

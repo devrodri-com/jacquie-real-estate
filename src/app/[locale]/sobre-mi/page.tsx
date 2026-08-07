@@ -155,9 +155,11 @@ export default async function SobreMi({
                 </div>
               </div>
 
-              <p className="mt-6 max-w-[34ch] border-l-2 border-border-brand pl-5 font-display text-[clamp(1.25rem,2.4vw,1.9rem)] leading-[1.18] text-primary lg:mt-10">
-                {content.journey.bridge}
-              </p>
+              {content.journey.bridge ? (
+                <p className="mt-6 max-w-[34ch] border-l-2 border-border-brand pl-5 font-display text-[clamp(1.25rem,2.4vw,1.9rem)] leading-[1.18] text-primary lg:mt-10">
+                  {content.journey.bridge}
+                </p>
+              ) : null}
             </div>
           </div>
         </div>
