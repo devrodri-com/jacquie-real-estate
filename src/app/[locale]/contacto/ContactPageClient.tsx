@@ -80,7 +80,7 @@ export default function ContactPageClient({
           <div className="mt-4 flex items-center gap-4">
             <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl ring-1 ring-primary/12">
               <Image
-                src="/images/jacquie-zarate.jpg"
+                src="/images/jacquie-zarate-headshot-2026.jpeg"
                 alt="Jacquie Zárate"
                 fill
                 className="object-cover"

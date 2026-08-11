@@ -15,7 +15,7 @@ const PRIMARY_CTA =
   "inline-flex min-h-11 items-center justify-center rounded-[6px] bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground no-underline transition hover:-translate-y-0.5 hover:bg-brand-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-focus motion-reduce:transform-none motion-reduce:transition-none";
 const SECONDARY_CTA =
   "inline-flex min-h-11 items-center justify-center rounded-[6px] border border-primary px-6 py-3 text-sm font-semibold text-primary no-underline transition hover:bg-brand-subtle focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-focus motion-reduce:transition-none";
-const CREDIBILITY_ICON_IDS = ["finance", "companies", "miami", "affiliation"] as const;
+const CREDIBILITY_ICON_IDS = ["miami", "finance", "companies", "affiliation"] as const;
 const CREDIBILITY_STYLES =
   ".home-cred-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.home-cred-item{display:flex;min-height:96px;align-items:center;gap:.75rem;padding:1rem .75rem;border-color:#315f7226;color:#315f72d1;font-size:14px;font-weight:500;line-height:1.45}.home-cred-item:nth-child(even){border-left:1px solid #315f7226}.home-cred-item:nth-child(n+3){border-top:1px solid #315f7226}.home-cred-item svg{width:17px;height:17px;flex:none}.home-cred-item span{max-width:24ch}@media(min-width:640px){.home-cred-item{min-height:100px;padding-right:1.25rem;padding-left:1.25rem}}@media(min-width:1024px){.home-cred-list{grid-template-columns:repeat(4,minmax(0,1fr))}.home-cred-item{min-height:108px;padding:1.25rem 1.75rem;border-left:1px solid #315f7226}.home-cred-item:nth-child(n+3){border-top-width:0}.home-cred-item:first-child{border-left-width:0}}";
 
@@ -75,12 +75,12 @@ const HOME_META: Record<HomeLocale, { title: string; description: string }> = {
   en: {
     title: "Jacquie Zárate | Miami Real Estate & Investment",
     description:
-      "Personal guidance for buying or investing in Miami properties and pre-construction projects, with financing options subject to review.",
+      "Personal guidance for buying, selling, or investing in Miami properties and pre-construction projects, with financing options subject to review.",
   },
   fr: {
     title: "Jacquie Zárate | Immobilier et investissement à Miami",
     description:
-      "Accompagnement personnalisé pour acheter ou investir dans des propriétés et des projets en préconstruction à Miami, avec des options de financement sous réserve d’évaluation.",
+      "Accompagnement personnalisé pour acheter, vendre ou investir dans des propriétés et des projets en préconstruction à Miami, avec des options de financement sous réserve d’évaluation.",
   },
 };
 
@@ -159,15 +159,16 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
           <figure className="relative ml-auto w-full max-w-[220px] justify-self-end sm:max-w-[320px] lg:max-w-[410px]">
             <span aria-hidden className="absolute -left-5 top-10 h-[55%] w-px bg-brand lg:-left-8" />
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[3px] bg-surface">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-[3px] bg-transparent">
               <Image
-                src="/images/jacquie-zarate.jpg"
+                src="/images/jacquie-zarate-editorial-transparent-2026.avif"
                 alt={content.hero.portraitAlt}
                 fill
                 sizes="(min-width: 1024px) 410px, (min-width: 640px) 320px, 220px"
                 quality={85}
                 loading="lazy"
-                className="object-cover object-center"
+                className="object-contain object-bottom"
+                style={{ transform: "scale(1.14)", transformOrigin: "center bottom" }}
               />
             </div>
             <figcaption className="mt-4 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.15em] text-primary">

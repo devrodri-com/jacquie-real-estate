@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useLocale } from "next-intl";
@@ -171,13 +172,13 @@ export default function NavBar() {
           : "border-b border-paper/5"
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-5 px-4">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-5 min-[1180px]:gap-4 px-4">
         <Link
           href={base}
           aria-current={pathname === base ? "page" : undefined}
-          className="shrink-0 font-display text-[20px] font-medium leading-none text-on-brand no-underline hover:opacity-90"
+          className="shrink-0 no-underline hover:opacity-90"
         >
-          Jacquie Zárate
+          <JacquieBrandLogo />
         </Link>
 
         <button
@@ -207,10 +208,10 @@ export default function NavBar() {
         </button>
 
         <nav
-          className="hidden min-[1180px]:flex min-[1180px]:items-center min-[1180px]:gap-4"
+          className="hidden min-[1180px]:flex min-[1180px]:items-center min-[1180px]:gap-3"
           aria-label={copy.nav}
         >
-          <div className="flex items-center gap-5 text-sm font-medium">
+          <div className="flex items-center gap-5 min-[1180px]:gap-4 text-sm font-medium">
             {coreItems.map((item) => (
               <NavLink key={item.href} {...item} active={isActive(item.href)} />
             ))}
@@ -218,7 +219,7 @@ export default function NavBar() {
           <Link
             href={letsGoHref}
             aria-current={isActive(letsGoHref) ? "page" : undefined}
-            className="border-l border-paper/20 pl-4 text-sm font-medium text-on-brand no-underline transition-colors hover:text-on-brand"
+            className="whitespace-nowrap border-l border-paper/20 pl-4 text-sm font-medium text-on-brand no-underline transition-colors hover:text-on-brand"
           >
             Let’s Go Miami
           </Link>
@@ -252,9 +253,9 @@ export default function NavBar() {
               <Link
                 href={base}
                 onClick={() => setOpen(false)}
-                className="font-display text-[20px] font-medium leading-none text-on-brand no-underline hover:opacity-90"
+                className="no-underline hover:opacity-90"
               >
-                Jacquie Zárate
+                <JacquieBrandLogo mobile />
               </Link>
               <button
                 ref={menuCloseButtonRef}
@@ -343,6 +344,27 @@ export default function NavBar() {
   );
 }
 
+function JacquieBrandLogo({ mobile = false }: { mobile?: boolean }) {
+  return (
+    <span
+      className={`inline-flex items-center justify-center overflow-hidden rounded-[4px] border border-brand bg-paper ${
+        mobile ? "h-11 w-[162px]" : "h-[50px] w-[194px]"
+      }`}
+    >
+      <Image
+        src="/images/jacquie-zarate-navbar-horizontal.png"
+        alt=""
+        width={1610}
+        height={470}
+        sizes={mobile ? "162px" : "194px"}
+        priority={!mobile}
+        className="h-full w-full object-contain"
+      />
+      <span className="sr-only">Jacquie Zárate, Realtor en la Florida</span>
+    </span>
+  );
+}
+
 function NavLink({
   href,
   label,
@@ -356,7 +378,7 @@ function NavLink({
     <Link
       href={href}
       aria-current={active ? "page" : undefined}
-      className={`text-on-brand no-underline underline-offset-[12px] transition-colors hover:text-on-brand ${
+      className={`whitespace-nowrap text-on-brand no-underline underline-offset-[12px] transition-colors hover:text-on-brand ${
         active
           ? "text-on-brand underline decoration-on-brand/55 decoration-1"
           : ""

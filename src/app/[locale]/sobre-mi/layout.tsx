@@ -4,19 +4,19 @@ import { createPageMetadata, normalizeLocale } from "@/lib/seo";
 
 const ABOUT_META = {
   es: {
-    title: "Sobre Jacquie Zárate | Realtor en Miami",
+    title: "Sobre Jacquie Zárate | Realtor en la Florida",
     description:
-      "Conoce a Jacquie Zárate, Realtor en Miami con más de 15 años de experiencia en Finanzas y una mirada aplicada a decisiones inmobiliarias.",
+      "Conocé a Jacquie Zárate, Realtor en la Florida, con más de 15 años de experiencia en Finanzas y una mirada aplicada a decisiones inmobiliarias.",
   },
   en: {
     title: "About Jacquie Zárate | Miami Realtor",
     description:
-      "Meet Jacquie Zárate, a Miami Realtor. She has more than 15 years of experience in Finance and now works in real estate in Miami.",
+      "Meet Jacquie Zárate, a Miami Realtor who helps buyers, sellers, and investors make informed real estate decisions with more than 15 years of experience in Finance.",
   },
   fr: {
     title: "À propos de Jacquie Zárate | Courtière immobilière à Miami",
     description:
-      "Découvrez Jacquie Zárate, courtière immobilière à Miami. Elle compte plus de 15 ans d’expérience en finances et travaille aujourd’hui en immobilier à Miami.",
+      "Découvrez Jacquie Zárate, courtière immobilière à Miami. Elle accompagne acheteurs, vendeurs et investisseurs et compte plus de 15 ans d’expérience en finances.",
   },
 };
 

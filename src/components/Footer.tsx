@@ -42,7 +42,7 @@ const FOOTER_COPY: Record<
   }
 > = {
   es: {
-    role: "Realtor en Miami para compradores e inversores que buscan claridad, criterio y seguimiento personal.",
+    role: "Realtor en la Florida para compradores, vendedores e inversores que buscan claridad, criterio y seguimiento personal.",
     contactHeading: "Hablemos",
     whatsapp: "Hablar por WhatsApp",
     email: "Escribir por email",
@@ -62,7 +62,7 @@ const FOOTER_COPY: Record<
     instagram: "Instagram de Jacquie",
   },
   en: {
-    role: "Miami Realtor for buyers and investors seeking clarity, sound criteria, and personal follow-through.",
+    role: "Miami Realtor for buyers, sellers, and investors seeking clarity, sound criteria, and personal follow-through.",
     contactHeading: "Let’s talk",
     whatsapp: "Chat on WhatsApp",
     email: "Email Jacquie",
@@ -82,7 +82,7 @@ const FOOTER_COPY: Record<
     instagram: "Jacquie’s Instagram",
   },
   fr: {
-    role: "Courtière immobilière à Miami auprès d’acheteurs et d’investisseurs qui recherchent clarté, rigueur et suivi personnalisé.",
+    role: "Courtière immobilière à Miami auprès d’acheteurs, de vendeurs et d’investisseurs qui recherchent clarté, rigueur et suivi personnalisé.",
     contactHeading: "Parlons de votre projet",
     whatsapp: "Écrire sur WhatsApp",
     email: "Écrire par courriel",
@@ -129,7 +129,7 @@ export default function Footer() {
             <div className="mt-5 flex items-center gap-3">
               <div className="relative h-12 w-12 overflow-hidden rounded-full border border-border-brand/80">
                 <Image
-                  src="/images/jacquie-zarate.jpg"
+                  src="/images/jacquie-zarate-headshot-2026.jpeg"
                   alt={copy.photoAlt}
                   fill
                   className="object-cover"
