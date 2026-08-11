@@ -1,25 +1,6 @@
 import type { Metadata } from "next";
 
-export const SITE_URL_FALLBACK = "https://jacquie-real-estate.vercel.app";
-
-function normalizeSiteUrl(value: string | undefined): string {
-  const candidate = value?.trim();
-  if (!candidate || candidate === "undefined" || candidate === "null") {
-    return SITE_URL_FALLBACK;
-  }
-
-  try {
-    const url = new URL(candidate);
-    if (url.protocol !== "https:" && url.protocol !== "http:") {
-      return SITE_URL_FALLBACK;
-    }
-    return url.toString().replace(/\/+$/, "");
-  } catch {
-    return SITE_URL_FALLBACK;
-  }
-}
-
-export const SITE_URL = normalizeSiteUrl(process.env.NEXT_PUBLIC_SITE_URL);
+export const SITE_URL = "https://jacquiezarate.com";
 export const DEFAULT_SOCIAL_IMAGE = `${SITE_URL}/og-image.jpg`;
 
 export const SITE_LOCALES = ["es", "en", "fr"] as const;
