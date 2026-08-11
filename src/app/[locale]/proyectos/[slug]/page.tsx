@@ -8,6 +8,7 @@ import { getProjectFrOverlay } from "@/data/projectsFrOverlay";
 import type { Project } from "@/data/types";
 import {
   createPageMetadata,
+  DEFAULT_SOCIAL_IMAGE,
   localizedUrl,
   normalizeLocale,
   type SiteLocale,
@@ -272,7 +273,7 @@ export async function generateMetadata({
     path: `proyectos/${slug}`,
     title,
     description,
-    image: project.image || "/og-image.jpg",
+    image: project.image || DEFAULT_SOCIAL_IMAGE,
     robots: { index: true, follow: true },
   });
 }
