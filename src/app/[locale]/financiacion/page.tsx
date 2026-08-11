@@ -110,9 +110,9 @@ const COPY: Record<Locale, FinancingCopy> = {
       "Financing for buyers and investors considering a Miami purchase, with a careful look at context, relevant factors, and next steps.",
     eyebrow: "Real estate financing",
     heroTitle: "Financing a Miami property purchase",
-    heroThesis: "A broader view of how the purchase can be structured.",
+    heroThesis: "Making your property purchase a reality starts with a sound financial strategy.",
     heroText:
-      "I can help you gather the relevant information, identify the factors worth clarifying, and understand how financing fits into the broader real estate decision before moving forward.",
+      "Getting a mortgage can feel complicated, especially if this is your first purchase or you are buying from another country. My role is to help you organize the real estate process and connect you with licensed mortgage professionals who can review your profile and available alternatives.",
     credential: "Miami Realtor",
     primaryCta: "Message Jacquie on WhatsApp",
     secondaryCta: "Contact",
@@ -145,13 +145,13 @@ const COPY: Record<Locale, FinancingCopy> = {
     experienceText:
       "I bring more than 15 years of experience in finance at S&P 500 companies. That background helps me bring clarity to the available information, consider purchase scenarios, and frame more precise questions within the real estate process.",
     preparationLabel: "Before moving forward",
-    preparationTitle: "Preparing the information before moving forward",
+    preparationTitle: "Preparing the information and separating roles",
     realtorRoleLabel: "Jacquie can help",
     realtorRoleText:
-      "Clarify relevant factors, prepare questions, and coordinate real estate next steps.",
+      "I help you organize the initial information for your purchase and focus the search around your goal and stated budget. I also support you through the real estate process. If you are buying for rental use, we can discuss Property Management.",
     institutionRoleLabel: "The financial institution determines",
     institutionRoleText:
-      "Review the buyer profile, documentation, and property; set the terms and make the final decision.",
+      "Mortgage professionals and financial institutions review the profile, request documentation, set terms, and make the approval decision.",
     referenceLabel: "Possible reference",
     referenceTitle: "In some cases, a 25% down payment may serve as an initial reference.",
     referenceDisclaimer:
@@ -162,7 +162,7 @@ const COPY: Record<Locale, FinancingCopy> = {
     closingLabel: "Next step",
     closingTitle: "Let’s talk about the structure of your purchase",
     closingText:
-      "Tell me about your goal and the financing questions related to your purchase. I can help coordinate the next real estate steps.",
+      "Tell me what type of property you are looking for, and we can discuss the next step.",
     whatsAppMessage:
       "Hi Jacquie, I’d like to discuss financing for a purchase I’m considering in Miami.",
   },
@@ -172,9 +172,9 @@ const COPY: Record<Locale, FinancingCopy> = {
       "Financement pour les acheteurs et investisseurs qui envisagent un achat à Miami, avec une approche rigoureuse du contexte, des facteurs à considérer et des prochaines étapes.",
     eyebrow: "Financement immobilier",
     heroTitle: "Financer l’achat d’une propriété à Miami",
-    heroThesis: "Une vision plus complète de la structure de l’achat.",
+    heroThesis: "Réaliser l’achat de votre propriété commence par une bonne stratégie financière.",
     heroText:
-      "Je peux vous aider à rassembler les renseignements pertinents et à situer le financement dans l’ensemble de la décision immobilière avant d’aller plus loin.",
+      "Obtenir un prêt hypothécaire peut sembler complexe, surtout s’il s’agit de votre premier achat ou si vous achetez depuis l’étranger. Mon rôle consiste à vous aider à structurer le processus immobilier et à vous mettre en contact avec des professionnels hypothécaires autorisés qui pourront évaluer votre profil et les options disponibles.",
     credential: "Realtor à Miami",
     primaryCta: "Écrire à Jacquie sur WhatsApp",
     secondaryCta: "Contact",
@@ -207,13 +207,13 @@ const COPY: Record<Locale, FinancingCopy> = {
     experienceText:
       "Je compte plus de 15 ans d’expérience en finance au sein d’entreprises du S&P 500. Cette expérience m’aide à clarifier les renseignements disponibles, à examiner différents scénarios d’achat et à formuler des questions plus précises dans le cadre du processus immobilier.",
     preparationLabel: "Avant d’aller plus loin",
-    preparationTitle: "Préparer les renseignements avant d’aller plus loin",
+    preparationTitle: "Préparer les renseignements et distinguer les rôles",
     realtorRoleLabel: "Jacquie peut aider à",
     realtorRoleText:
-      "Clarifier les facteurs pertinents, préparer les questions et coordonner les prochaines étapes immobilières.",
+      "Je vous aide à organiser les premiers renseignements liés à votre achat et à orienter la recherche selon votre objectif et le budget indiqué. Je vous accompagne aussi tout au long du processus immobilier. Si vous achetez pour louer, nous pouvons parler de gestion immobilière.",
     institutionRoleLabel: "L’institution financière détermine",
     institutionRoleText:
-      "Analyser le profil de l’acheteur, les documents et la propriété; établir les conditions et prendre la décision finale.",
+      "Les professionnels hypothécaires et les institutions financières évaluent le profil, demandent les documents, établissent les conditions et prennent la décision d’approbation.",
     referenceLabel: "Point de repère possible",
     referenceTitle:
       "Dans certains cas, une mise de fonds de 25 % peut servir de point de repère initial.",
@@ -225,7 +225,7 @@ const COPY: Record<Locale, FinancingCopy> = {
     closingLabel: "Prochaine étape",
     closingTitle: "Parlons de la structure de votre achat",
     closingText:
-      "Parlez-moi de votre objectif et des questions de financement liées à votre achat. Je peux vous aider à coordonner les prochaines étapes immobilières.",
+      "Parlez-moi du type de propriété que vous recherchez et discutons de la prochaine étape.",
     whatsAppMessage:
       "Bonjour Jacquie, j’aimerais discuter du financement pour un achat que j’envisage à Miami.",
   },

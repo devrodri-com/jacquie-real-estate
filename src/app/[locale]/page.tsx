@@ -75,12 +75,12 @@ const HOME_META: Record<HomeLocale, { title: string; description: string }> = {
   en: {
     title: "Jacquie Zárate | Miami Real Estate & Investment",
     description:
-      "Personal guidance for buying or investing in Miami properties and pre-construction projects, with financing options subject to review.",
+      "Personal guidance for buying, selling, or investing in Miami properties and pre-construction projects, with financing options subject to review.",
   },
   fr: {
     title: "Jacquie Zárate | Immobilier et investissement à Miami",
     description:
-      "Accompagnement personnalisé pour acheter ou investir dans des propriétés et des projets en préconstruction à Miami, avec des options de financement sous réserve d’évaluation.",
+      "Accompagnement personnalisé pour acheter, vendre ou investir dans des propriétés et des projets en préconstruction à Miami, avec des options de financement sous réserve d’évaluation.",
   },
 };
 

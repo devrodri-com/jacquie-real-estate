@@ -38,7 +38,7 @@ export function generateStaticParams() {
 export const metadata: Metadata = {
   title: "Jacquie Zárate | Miami Real Estate",
   description:
-    "Personalized guidance for buying and investing in Miami real estate with Jacquie Zárate.",
+    "Personalized guidance for buying, selling, and investing in Miami real estate with Jacquie Zárate.",
   icons: {
     icon: "/favicon.ico",
     apple: "/apple-touch-icon.png",

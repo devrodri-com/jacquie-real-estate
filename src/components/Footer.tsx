@@ -62,7 +62,7 @@ const FOOTER_COPY: Record<
     instagram: "Instagram de Jacquie",
   },
   en: {
-    role: "Miami Realtor for buyers and investors seeking clarity, sound criteria, and personal follow-through.",
+    role: "Miami Realtor for buyers, sellers, and investors seeking clarity, sound criteria, and personal follow-through.",
     contactHeading: "Let’s talk",
     whatsapp: "Chat on WhatsApp",
     email: "Email Jacquie",
@@ -82,7 +82,7 @@ const FOOTER_COPY: Record<
     instagram: "Jacquie’s Instagram",
   },
   fr: {
-    role: "Courtière immobilière à Miami auprès d’acheteurs et d’investisseurs qui recherchent clarté, rigueur et suivi personnalisé.",
+    role: "Courtière immobilière à Miami auprès d’acheteurs, de vendeurs et d’investisseurs qui recherchent clarté, rigueur et suivi personnalisé.",
     contactHeading: "Parlons de votre projet",
     whatsapp: "Écrire sur WhatsApp",
     email: "Écrire par courriel",

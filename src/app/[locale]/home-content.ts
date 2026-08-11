@@ -166,10 +166,10 @@ export const HOME_CONTENT: Record<HomeLocale, HomeContent> = {
   },
   en: {
     hero: {
-      eyebrow: "MIAMI REAL ESTATE · BUYING & INVESTING",
-      title: "Buy or invest in Miami with a financial perspective and local guidance.",
+      eyebrow: "MIAMI REAL ESTATE · BUY · SELL · INVEST",
+      title: "Buy, sell, or invest in Miami with a financial perspective and local guidance.",
       intro:
-        "I’m Jacquie Zárate, a Miami Realtor. I help you compare properties, pre-construction projects, and financing options based on your goals, budget, and intended use.",
+        "I’m Jacquie Zárate, a Realtor in Florida. I help you buy, sell, or invest in properties, evaluate pre-construction projects, and understand financing options according to your goals, budget, and intended use.",
       primaryCta: "Chat on WhatsApp",
       secondaryCta: "Explore your options",
       portraitAlt: "Jacquie Zárate, Miami Realtor",
@@ -178,9 +178,9 @@ export const HOME_CONTENT: Record<HomeLocale, HomeContent> = {
     credibility: {
       label: "Jacquie Zárate’s professional experience",
       items: [
+        "Miami real estate since 2023",
         "More than 15 years in Finance",
         "Experience at S&P 500 companies",
-        "Miami real estate since 2023",
         "Affiliated with Miami Life Realty",
       ],
     },
@@ -228,7 +228,7 @@ export const HOME_CONTENT: Record<HomeLocale, HomeContent> = {
       intro: "My background in Finance and my real estate work in Miami help me organize the conversation from your goal to the next step.",
       items: [
         { title: "Define the goal", text: "I learn what you want to buy, why, and which conditions matter to you." },
-        { title: "Compare scenarios", text: "We organize property, budget, financing, and timing to see which option fits best." },
+        { title: "Compare scenarios", text: "We compare properties and projects, financing options, and timing to define the alternative that best fits your goals." },
         { title: "Coordinate the next step", text: "If you decide to move forward, I help coordinate the search, offer, and next stages of the process." },
       ],
       cta: "Meet Jacquie",
@@ -251,10 +251,10 @@ export const HOME_CONTENT: Record<HomeLocale, HomeContent> = {
   },
   fr: {
     hero: {
-      eyebrow: "IMMOBILIER À MIAMI · ACHAT ET INVESTISSEMENT",
-      title: "Achetez ou investissez à Miami avec une perspective financière et un accompagnement local.",
+      eyebrow: "IMMOBILIER À MIAMI · ACHETER · VENDRE · INVESTIR",
+      title: "Achetez, vendez ou investissez à Miami avec une perspective financière et un accompagnement local.",
       intro:
-        "Je suis Jacquie Zárate, courtière immobilière à Miami. Je vous aide à comparer des propriétés, des projets en préconstruction et des options de financement selon vos objectifs, votre budget et l’usage prévu de la propriété.",
+        "Je suis Jacquie Zárate, courtière immobilière en Floride. Je vous aide à acheter, vendre ou investir dans des propriétés, à évaluer des projets en préconstruction et à comprendre les options de financement selon vos objectifs, votre budget et l’usage prévu de la propriété.",
       primaryCta: "Écrire sur WhatsApp",
       secondaryCta: "Explorer les options",
       portraitAlt: "Jacquie Zárate, courtière immobilière à Miami",
@@ -263,9 +263,9 @@ export const HOME_CONTENT: Record<HomeLocale, HomeContent> = {
     credibility: {
       label: "Expérience professionnelle de Jacquie Zárate",
       items: [
+        "Immobilier à Miami depuis 2023",
         "Plus de 15 ans en finances",
         "Expérience au sein d’entreprises du S&P 500",
-        "Immobilier à Miami depuis 2023",
         "Affiliée à Miami Life Realty",
       ],
     },
@@ -313,7 +313,7 @@ export const HOME_CONTENT: Record<HomeLocale, HomeContent> = {
       intro: "Mon expérience en finances et mon travail en immobilier à Miami aident à structurer la conversation, de votre objectif jusqu’à la prochaine étape.",
       items: [
         { title: "Définir l’objectif", text: "Je cherche à comprendre ce que vous souhaitez acheter, pourquoi et quelles conditions comptent pour vous." },
-        { title: "Comparer les scénarios", text: "Nous organisons la propriété, le budget, le financement et l’échéancier afin de déterminer quelle option convient le mieux." },
+        { title: "Comparer les scénarios", text: "Nous comparons les propriétés et les projets pertinents, les options de financement et les échéanciers afin de déterminer l’option qui correspond le mieux à vos objectifs." },
         { title: "Coordonner la prochaine étape", text: "Si vous avancez, je vous accompagne dans la recherche, l’offre et la coordination du processus." },
       ],
       cta: "Découvrir Jacquie",
