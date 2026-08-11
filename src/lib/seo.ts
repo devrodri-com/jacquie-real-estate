@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const SITE_URL = "https://jacquiezarate.com";
-export const DEFAULT_SOCIAL_IMAGE = `${SITE_URL}/og-image.jpg`;
+export const DEFAULT_SOCIAL_IMAGE = `${SITE_URL}/jacquie-zarate-og-2026.jpg`;
 
 export const SITE_LOCALES = ["es", "en", "fr"] as const;
 export type SiteLocale = (typeof SITE_LOCALES)[number];
@@ -83,7 +83,15 @@ export function createPageMetadata({
       url: canonical,
       locale: openGraphLocale(locale),
       alternateLocale: openGraphAlternateLocales(locale),
-      images: [{ url: socialImage }],
+      images: [
+        {
+          url: socialImage,
+          alt: title,
+          ...(socialImage === DEFAULT_SOCIAL_IMAGE
+            ? { width: 1200, height: 630, type: "image/jpeg" }
+            : {}),
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",

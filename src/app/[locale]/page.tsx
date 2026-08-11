@@ -68,19 +68,19 @@ function HeroBackgroundImage() {
 
 const HOME_META: Record<HomeLocale, { title: string; description: string }> = {
   es: {
-    title: "Jacquie Zárate | Inversión inmobiliaria en Miami",
+    title: "Jacquie Zárate | Comprar, vender e invertir en Miami",
     description:
-      "Asesoría personalizada para comprar o invertir en propiedades y proyectos de preconstrucción en Miami, con opciones de financiación sujetas a evaluación.",
+      "Realtor en la Florida para comprar, vender o invertir en Miami, evaluar proyectos de preconstrucción y entender opciones de financiación.",
   },
   en: {
-    title: "Jacquie Zárate | Miami Real Estate & Investment",
+    title: "Jacquie Zárate | Buy, Sell & Invest in Miami",
     description:
-      "Personal guidance for buying, selling, or investing in Miami properties and pre-construction projects, with financing options subject to review.",
+      "Florida Realtor helping you buy, sell, or invest in Miami real estate, evaluate pre-construction projects, and understand financing options.",
   },
   fr: {
-    title: "Jacquie Zárate | Immobilier et investissement à Miami",
+    title: "Jacquie Zárate | Acheter, vendre et investir à Miami",
     description:
-      "Accompagnement personnalisé pour acheter, vendre ou investir dans des propriétés et des projets en préconstruction à Miami, avec des options de financement sous réserve d’évaluation.",
+      "Realtor en Floride pour acheter, vendre ou investir à Miami, évaluer des projets en préconstruction et comprendre les options de financement.",
   },
 };
 

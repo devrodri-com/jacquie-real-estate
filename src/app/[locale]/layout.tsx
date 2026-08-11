@@ -40,9 +40,12 @@ export const metadata: Metadata = {
   description:
     "Personalized guidance for buying, selling, and investing in Miami real estate with Jacquie Zárate.",
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
-    shortcut: "/favicon.ico",
+    icon: [
+      { url: "/favicon.ico", sizes: "16x16 32x32 48x48", type: "image/x-icon" },
+      { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+    shortcut: [{ url: "/favicon.ico", sizes: "16x16 32x32 48x48", type: "image/x-icon" }],
   },
   manifest: "/manifest.webmanifest",
   metadataBase: new URL(SITE_URL),
