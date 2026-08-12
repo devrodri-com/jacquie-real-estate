@@ -507,6 +507,7 @@ export default async function Proyecto({ params }: Params) {
                   href={whatsappHref}
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-analytics="project:opening:whatsapp"
                   className={PRIMARY_CTA}
                 >
                   {copy.opening.primaryCta}
@@ -889,6 +890,7 @@ export default async function Proyecto({ params }: Params) {
               href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
+              data-analytics="project:closing:whatsapp"
               className="inline-flex min-h-11 items-center justify-center border border-primary-foreground bg-primary-foreground px-6 py-3 text-sm font-semibold text-primary no-underline transition-colors hover:bg-primary-foreground/90 motion-reduce:transition-none"
             >
               {copy.close.primaryCta}

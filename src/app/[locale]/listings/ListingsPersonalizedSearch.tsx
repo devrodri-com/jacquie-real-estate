@@ -42,6 +42,7 @@ export function ListingsPersonalizedSearch({
               href={whatsAppHref}
               target="_blank"
               rel="noopener noreferrer"
+              data-analytics="listings:search:whatsapp"
               className="inline-flex min-h-11 w-full items-center justify-center rounded-[4px] bg-primary px-5 py-3 text-center text-[14px] font-semibold text-primary-foreground no-underline transition-colors hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focus sm:w-auto"
             >
               {copy.primaryCta}

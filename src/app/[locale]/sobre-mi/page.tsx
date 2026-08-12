@@ -66,6 +66,7 @@ export default async function SobreMi({
                 href={whatsAppHref}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-analytics="about:hero:whatsapp"
                 className={PRIMARY_CTA}
               >
                 {content.hero.primaryCta}
@@ -261,6 +262,7 @@ export default async function SobreMi({
                   href={whatsAppHref}
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-analytics="about:closing:whatsapp"
                   className={PRIMARY_CTA + " w-full sm:w-auto"}
                 >
                   {content.close.primaryCta}

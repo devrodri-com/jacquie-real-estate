@@ -26,6 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "lets-go-miami",
     "sobre-mi",
     "contacto",
+    "privacidad",
   ];
 
   const projectEntries = ALL_PROJECTS.flatMap((project) =>

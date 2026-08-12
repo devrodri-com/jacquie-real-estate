@@ -106,6 +106,7 @@ export default function SectionPropertyManagementHome({ locale }: Props) {
           href={whatsAppHref}
           target="_blank"
           rel="noopener noreferrer"
+          data-analytics="home:property-management:whatsapp"
           className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-5 text-sm font-medium text-primary-foreground no-underline hover:opacity-95 focus-visible:ring-2 focus-visible:ring-focus"
         >
           {isEN ? "Talk on WhatsApp" : isFR ? "Parler sur WhatsApp" : "Hablar por WhatsApp"}

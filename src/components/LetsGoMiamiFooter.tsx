@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Mail, Phone } from "lucide-react";
+import PrivacySettingsButton from "@/components/PrivacySettingsButton";
 import {
   buildLetsGoMiamiEmailHref,
   buildLetsGoMiamiWhatsAppHref,
@@ -91,6 +92,7 @@ export default function LetsGoMiamiFooter({ locale }: LetsGoMiamiFooterProps) {
                 href={whatsappHref}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-analytics="lets-go-footer:whatsapp"
                 aria-label={copy.whatsappLabel}
                 className="flex min-h-12 items-center gap-3 py-2 text-sm text-white/84 no-underline transition-colors hover:text-white motion-reduce:transition-none"
               >
@@ -105,14 +107,26 @@ export default function LetsGoMiamiFooter({ locale }: LetsGoMiamiFooterProps) {
       <div className="border-t border-white/14">
         <div className="mx-auto flex max-w-[1240px] flex-col gap-2 px-5 py-4 text-xs text-white/58 sm:flex-row sm:items-center sm:justify-between sm:px-8">
           <p>© 2026 Let’s Go Miami by Jacna Services LLC. {copy.rights}</p>
-          <a
-            href="https://www.devrodri.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex min-h-6 w-fit items-center text-white/58 underline decoration-white/30 underline-offset-4 transition-colors hover:text-white motion-reduce:transition-none"
-          >
-            {copy.madeBy}
-          </a>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <Link
+              href={`/${locale}/privacidad`}
+              className="inline-flex min-h-11 items-center text-white/58 underline decoration-white/30 underline-offset-4 transition-colors hover:text-white motion-reduce:transition-none"
+            >
+              {copy.privacy}
+            </Link>
+            <PrivacySettingsButton
+              locale={locale}
+              className="text-white/58 decoration-white/30 hover:text-white focus-visible:ring-white motion-reduce:transition-none"
+            />
+            <a
+              href="https://www.devrodri.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center text-white/58 underline decoration-white/30 underline-offset-4 transition-colors hover:text-white motion-reduce:transition-none"
+            >
+              {copy.madeBy}
+            </a>
+          </div>
         </div>
       </div>
     </footer>

@@ -11,7 +11,6 @@ import {
 } from "@/lib/whatsapp";
 import {
   CONTACT_SUCCESS_STORAGE_KEY,
-  CONTACT_THANK_YOU_TRACKED_KEY,
   parseContactSuccessRecord,
 } from "@/lib/contactSession";
 
@@ -42,33 +41,6 @@ export default function GraciasPage() {
     }
 
     setConfirmationState("confirmed");
-    const trackingKey = String(record.submittedAt);
-
-    try {
-      if (
-        sessionStorage.getItem(CONTACT_THANK_YOU_TRACKED_KEY) !==
-        trackingKey
-      ) {
-        window.gtag?.("event", "lead_thankyou", {
-          locale,
-          ...(record.utms.utm_source && {
-            utm_source: record.utms.utm_source,
-          }),
-          ...(record.utms.utm_medium && {
-            utm_medium: record.utms.utm_medium,
-          }),
-          ...(record.utms.utm_campaign && {
-            utm_campaign: record.utms.utm_campaign,
-          }),
-        });
-        sessionStorage.setItem(
-          CONTACT_THANK_YOU_TRACKED_KEY,
-          trackingKey
-        );
-      }
-    } catch {
-      // Analytics and storage must not affect the confirmation page.
-    }
   }, [locale]);
 
   const confirmed = confirmationState === "confirmed";
@@ -83,19 +55,6 @@ export default function GraciasPage() {
       ? t("confirmedWhatsappMessage")
       : t("directWhatsappMessage")
   );
-
-  const trackWhatsApp = () => {
-    try {
-      window.gtag?.("event", "click_whatsapp", {
-        event_category: "engagement",
-        event_label: confirmed
-          ? "thankyou_whatsapp_confirmed"
-          : "thankyou_whatsapp_direct",
-      });
-    } catch {
-      // Tracking must not block WhatsApp.
-    }
-  };
 
   if (confirmationState === "checking") {
     return (
@@ -152,7 +111,7 @@ export default function GraciasPage() {
               href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={trackWhatsApp}
+              data-analytics="thankyou:whatsapp"
               className="inline-flex min-h-12 items-center justify-center rounded-lg bg-primary px-5 text-sm font-semibold text-white no-underline transition-colors hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 motion-reduce:transition-none"
             >
               {t("whatsappCta")}

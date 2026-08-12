@@ -21,12 +21,6 @@ import {
   type ContactSuccessRecord,
 } from "@/lib/contactSession";
 
-declare global {
-  interface Window {
-    gtag?: (...args: unknown[]) => void;
-  }
-}
-
 const NAME_MAX_LENGTH = 100;
 const EMAIL_MAX_LENGTH = 254;
 const PHONE_MAX_LENGTH = 32;
@@ -420,28 +414,6 @@ function ConfiguredContactForm({ locale }: { locale: ContactLocale }) {
       setSelectedCountry(undefined);
       setCompanyHoneypot("");
       setFieldErrors({});
-
-      try {
-        window.gtag?.("event", "generate_lead", {
-          event_category: "form",
-          event_label:
-            locale === "es"
-              ? "contacto"
-              : locale === "fr"
-                ? "contact_fr"
-                : "contact",
-          locale,
-          has_phone: "true",
-          phone_country: form.country || "INTL",
-          ...(utms.utm_source && { utm_source: utms.utm_source }),
-          ...(utms.utm_medium && { utm_medium: utms.utm_medium }),
-          ...(utms.utm_campaign && {
-            utm_campaign: utms.utm_campaign,
-          }),
-        });
-      } catch {
-        // Analytics must never turn a delivered lead into a visible failure.
-      }
 
       if (confirmationStored) {
         setRedirecting(true);

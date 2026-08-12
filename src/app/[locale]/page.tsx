@@ -148,7 +148,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               {content.hero.intro}
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <a href={whatsAppHref} target="_blank" rel="noopener noreferrer" className={PRIMARY_CTA}>
+              <a href={whatsAppHref} target="_blank" rel="noopener noreferrer" data-analytics="hero:whatsapp" className={PRIMARY_CTA}>
                 {content.hero.primaryCta}
               </a>
               <a href="#formas-de-comprar" className={SECONDARY_CTA}>
@@ -371,7 +371,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <div className="w-full max-w-[560px] lg:justify-self-end lg:pt-8">
               <p className={`${BODY} max-w-[52ch]`}>{content.close.text}</p>
               <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <a href={whatsAppHref} target="_blank" rel="noopener noreferrer" className={PRIMARY_CTA}>
+                <a href={whatsAppHref} target="_blank" rel="noopener noreferrer" data-analytics="home:closing:whatsapp" className={PRIMARY_CTA}>
                   {content.close.primaryCta}
                 </a>
                 <Link href={contactHref} className={SECONDARY_CTA}>

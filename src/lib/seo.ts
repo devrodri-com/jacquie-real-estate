@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { isValidMeasurementId } from "@/lib/analytics";
 
 export const SITE_URL = "https://jacquiezarate.com";
 export const DEFAULT_SOCIAL_IMAGE = `${SITE_URL}/jacquie-zarate-og-2026.jpg`;
@@ -105,5 +106,5 @@ export function createPageMetadata({
 export function getGaMeasurementId(): string | null {
   const value = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim();
   if (!value || value === "undefined" || value === "null") return null;
-  return /^G-[A-Z0-9]{6,}$/i.test(value) ? value : null;
+  return isValidMeasurementId(value) ? value : null;
 }

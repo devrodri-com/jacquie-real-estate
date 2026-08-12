@@ -392,6 +392,7 @@ export default async function ListingDetailPage({
                 href={whatsappHref}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-analytics="listing:opening:whatsapp"
                 className="inline-flex min-h-12 items-center justify-center rounded-[6px] bg-primary px-5 py-3 text-center text-sm font-semibold text-primary-foreground no-underline transition hover:bg-brand-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-focus motion-reduce:transition-none"
               >
                 {copy.whatsapp}
@@ -635,6 +636,7 @@ export default async function ListingDetailPage({
               href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
+              data-analytics="listing:closing:whatsapp"
               className="inline-flex min-h-12 items-center justify-center rounded-[6px] bg-primary px-5 py-3 text-center text-sm font-semibold text-primary-foreground no-underline transition hover:bg-brand-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-focus motion-reduce:transition-none"
             >
               {copy.whatsapp}

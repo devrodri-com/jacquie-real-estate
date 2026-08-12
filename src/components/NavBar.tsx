@@ -153,12 +153,6 @@ export default function NavBar() {
   }, [open]);
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
-  const trackWhatsApp = (placement: "desktop" | "mobile") => {
-    window.gtag?.("event", "click_whatsapp", {
-      event_category: "engagement",
-      event_label: `navigation_whatsapp_${placement}_${locale}`,
-    });
-  };
 
   if (isLetsGoMiami) {
     return <LetsGoMiamiHeader locale={locale} pathWithoutLocale={pathWithoutLocale} />;
@@ -227,7 +221,6 @@ export default function NavBar() {
             href={whatsappHref}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => trackWhatsApp("desktop")}
             data-analytics="navigation:whatsapp"
             className="inline-flex min-h-9 items-center justify-center whitespace-nowrap rounded-full bg-paper px-4 text-sm font-semibold text-brand no-underline transition-colors hover:bg-brand-subtle"
           >
@@ -321,7 +314,6 @@ export default function NavBar() {
                 href={whatsappHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => trackWhatsApp("mobile")}
                 data-analytics="navigation:whatsapp"
                 className="mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-lg bg-paper px-5 text-base font-semibold text-brand no-underline transition-colors hover:bg-brand-subtle"
               >

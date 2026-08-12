@@ -182,6 +182,7 @@ export const LETS_GO_MIAMI_COPY = {
       rights: "Todos los derechos reservados.",
       madeBy: "Diseño y desarrollo por Rodrigo Opalo",
       logoAlt: "Logo de Let’s Go Miami",
+      privacy: "Política de privacidad",
     },
   },
   en: {
@@ -272,6 +273,7 @@ export const LETS_GO_MIAMI_COPY = {
       rights: "All rights reserved.",
       madeBy: "Designed and developed by Rodrigo Opalo",
       logoAlt: "Let’s Go Miami logo",
+      privacy: "Privacy policy",
     },
   },
   fr: {
@@ -364,6 +366,7 @@ export const LETS_GO_MIAMI_COPY = {
       rights: "Tous droits réservés.",
       madeBy: "Conception et développement par Rodrigo Opalo",
       logoAlt: "Logo de Let’s Go Miami",
+      privacy: "Politique de confidentialité",
     },
   },
 } as const satisfies Record<SiteLocale, object>;
