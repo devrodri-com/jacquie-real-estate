@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import LocalePreferenceLink from "@/components/LocalePreferenceLink";
 import {
   buildLetsGoMiamiWhatsAppHref,
   LETS_GO_MIAMI_COPY,
@@ -96,9 +97,11 @@ export default function LetsGoMiamiHeader({
                     {label}
                   </span>
                 ) : (
-                  // Plain anchor: see LocaleSwitcher in NavBar.
-                  <a
+                  // Plain anchor that records the choice: see LocaleSwitcher
+                  // in NavBar.
+                  <LocalePreferenceLink
                     key={code}
+                    locale={code}
                     href={`/${code}${pathWithoutLocale}`}
                     aria-label={aria}
                     hrefLang={code === "fr" ? "fr-CA" : code}
@@ -106,7 +109,7 @@ export default function LetsGoMiamiHeader({
                     className="inline-flex h-11 min-w-11 items-center justify-center text-xs font-semibold text-[var(--lgm-muted)] no-underline hover:text-[var(--lgm-ink)]"
                   >
                     {label}
-                  </a>
+                  </LocalePreferenceLink>
                 ),
               )}
             </span>
@@ -145,9 +148,11 @@ export default function LetsGoMiamiHeader({
                   {label}
                 </span>
               ) : (
-                // Plain anchor: see LocaleSwitcher in NavBar.
-                <a
+                // Plain anchor that records the choice: see LocaleSwitcher in
+                // NavBar.
+                <LocalePreferenceLink
                   key={code}
+                  locale={code}
                   href={`/${code}${pathWithoutLocale}`}
                   aria-label={aria}
                   hrefLang={code === "fr" ? "fr-CA" : code}
@@ -155,7 +160,7 @@ export default function LetsGoMiamiHeader({
                   className="inline-flex h-11 min-w-11 items-center justify-center text-xs font-semibold text-[var(--lgm-muted)] no-underline"
                 >
                   {label}
-                </a>
+                </LocalePreferenceLink>
               ),
             )}
           </span>
