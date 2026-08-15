@@ -421,7 +421,10 @@ function LocaleSwitcher({
             {label}
           </span>
         ) : (
-          <Link
+          // Plain anchor on purpose: switching locale must be a top-level
+          // navigation so the middleware can persist the choice, and so Next
+          // never prefetches the other locales and overwrites NEXT_LOCALE.
+          <a
             key={code}
             href={`/${code}${pathWithoutLocale}`}
             onClick={onNavigate}
@@ -430,7 +433,7 @@ function LocaleSwitcher({
             className={`inline-flex items-center justify-center rounded-full border text-xs font-semibold no-underline ${sizeClass} ${colorClass}`}
           >
             {label}
-          </Link>
+          </a>
         );
       })}
     </span>
