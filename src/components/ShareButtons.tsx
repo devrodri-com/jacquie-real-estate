@@ -78,6 +78,7 @@ export default function ShareButtons({
           target="_blank"
           rel="noopener noreferrer"
           aria-label={title}
+          data-analytics="share:whatsapp"
           className={btnClassName}
         >
           {

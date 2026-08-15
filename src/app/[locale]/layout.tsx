@@ -1,13 +1,13 @@
 // src/app/[locale]/layout.tsx
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import Script from "next/script";
 import { Inter, Newsreader } from "next/font/google";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
+import { AnalyticsConsentProvider } from "@/components/AnalyticsConsentProvider";
 import { getGaMeasurementId, SITE_URL } from "@/lib/seo";
 import "../globals.css";
 
@@ -70,26 +70,15 @@ export default async function LocaleLayout({
   return (
     <html lang={htmlLang} className={`${inter.variable} ${newsreader.variable}`}>
       <body className="min-h-dvh bg-paper text-ink font-sans antialiased">
-        {gaMeasurementId ? (
-          <>
-            <Script
-              async
-              src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
-            />
-            <Script id="google-analytics" strategy="afterInteractive">
-              {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${gaMeasurementId}', { anonymize_ip: true });
-              `}
-            </Script>
-          </>
-        ) : null}
         <NextIntlClientProvider messages={messages} locale={locale}>
-          <NavBar />
-          <main className="mx-auto max-w-6xl px-4 pt-0 pb-8">{children}</main>
-          <Footer />
+          <AnalyticsConsentProvider
+            measurementId={gaMeasurementId}
+            locale={locale}
+          >
+            <NavBar />
+            <main className="mx-auto max-w-6xl px-4 pt-0 pb-8">{children}</main>
+            <Footer />
+          </AnalyticsConsentProvider>
         </NextIntlClientProvider>
       </body>
     </html>

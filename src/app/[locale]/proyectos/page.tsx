@@ -211,6 +211,7 @@ export default async function ProyectosPage({
               href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
+              data-analytics="projects:closing:whatsapp"
               className="mt-6 inline-flex min-h-11 w-full items-center justify-center border border-primary bg-primary px-5 text-sm font-semibold text-primary-foreground no-underline outline-none transition-colors hover:bg-brand-dark focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 sm:w-auto"
             >
               {copy.close.cta}

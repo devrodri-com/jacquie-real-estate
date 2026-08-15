@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Instagram, Mail, Phone } from "lucide-react";
 import { usePathname } from "next/navigation";
+import PrivacySettingsButton from "@/components/PrivacySettingsButton";
 import {
   buildJacquieWhatsAppHref,
   normalizeSiteLocale,
@@ -39,6 +40,7 @@ const FOOTER_COPY: Record<
     madeBy: string;
     photoAlt: string;
     instagram: string;
+    privacy: string;
   }
 > = {
   es: {
@@ -60,6 +62,7 @@ const FOOTER_COPY: Record<
     madeBy: "Diseño y desarrollo por",
     photoAlt: "Retrato de Jacquie Zárate",
     instagram: "Instagram de Jacquie",
+    privacy: "Política de privacidad",
   },
   en: {
     role: "Miami Realtor for buyers, sellers, and investors seeking clarity, sound criteria, and personal follow-through.",
@@ -80,6 +83,7 @@ const FOOTER_COPY: Record<
     madeBy: "Designed and developed by",
     photoAlt: "Portrait of Jacquie Zárate",
     instagram: "Jacquie’s Instagram",
+    privacy: "Privacy policy",
   },
   fr: {
     role: "Courtière immobilière à Miami auprès d’acheteurs, de vendeurs et d’investisseurs qui recherchent clarté, rigueur et suivi personnalisé.",
@@ -100,6 +104,7 @@ const FOOTER_COPY: Record<
     madeBy: "Conception et développement par",
     photoAlt: "Portrait de Jacquie Zárate",
     instagram: "Instagram de Jacquie",
+    privacy: "Politique de confidentialité",
   },
 };
 
@@ -254,17 +259,31 @@ export default function Footer() {
           <p>
             © {year} Jacquie Zárate. {copy.rights}
           </p>
-          <p>
-            {copy.madeBy}{" "}
-            <a
-              href="https://www.devrodri.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-on-brand underline decoration-on-brand/45 underline-offset-2 hover:text-on-brand"
-            >
-              Rodrigo Opalo
-            </a>
-          </p>
+          <div className="flex flex-col items-center gap-2 sm:items-end">
+            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 sm:justify-end">
+              <Link
+                href={`/${locale}/privacidad`}
+                className="text-on-brand underline decoration-on-brand/35 underline-offset-2 hover:text-on-brand"
+              >
+                {copy.privacy}
+              </Link>
+              <PrivacySettingsButton
+                locale={locale}
+                className="text-on-brand decoration-on-brand/35 hover:text-on-brand"
+              />
+            </div>
+            <p>
+              {copy.madeBy}{" "}
+              <a
+                href="https://www.devrodri.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-on-brand underline decoration-on-brand/45 underline-offset-2 hover:text-on-brand"
+              >
+                Rodrigo Opalo
+              </a>
+            </p>
+          </div>
         </div>
       </div>
       <div className="h-[3px] bg-brand-dark" />

@@ -67,6 +67,7 @@ export default function SectionAccommodationHome({ locale }: Props) {
           href="https://wa.me/17864072591"
           target="_blank"
           rel="noopener noreferrer"
+          data-analytics="home:accommodation:whatsapp"
           className="inline-flex h-10 items-center justify-center rounded-md border border-primary/25 px-5 text-sm font-medium text-primary no-underline hover:bg-brand-subtle focus-visible:ring-2 focus-visible:ring-focus"
         >
           {isEN ? "Talk on WhatsApp" : isFR ? "Parler sur WhatsApp" : "Hablar por WhatsApp"}

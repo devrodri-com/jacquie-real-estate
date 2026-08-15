@@ -303,6 +303,7 @@ export default async function FinancingPage({
                   href={whatsAppHref}
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-analytics="financing:hero:whatsapp"
                   className={PRIMARY_CTA}
                 >
                   {copy.primaryCta}
@@ -455,6 +456,7 @@ export default async function FinancingPage({
                     href={whatsAppHref}
                     target="_blank"
                     rel="noopener noreferrer"
+                    data-analytics="financing:closing:whatsapp"
                     className={PRIMARY_CTA}
                   >
                     {copy.primaryCta}

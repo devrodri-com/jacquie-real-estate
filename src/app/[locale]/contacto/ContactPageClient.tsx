@@ -41,17 +41,6 @@ export default function ContactPageClient({
     t("whatsappMessage")
   );
 
-  const trackWhatsApp = () => {
-    try {
-      window.gtag?.("event", "click_whatsapp", {
-        event_category: "engagement",
-        event_label: "contact_whatsapp_direct_" + locale,
-      });
-    } catch {
-      // Tracking must not block the real contact channel.
-    }
-  };
-
   return (
     <div className="w-full py-10 sm:py-14 lg:py-16">
       <section
@@ -105,7 +94,6 @@ export default function ContactPageClient({
             href={whatsappHref}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={trackWhatsApp}
             data-analytics="contact:whatsapp"
             className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2.5 rounded-lg bg-primary px-5 text-sm font-semibold text-white no-underline transition-colors hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 sm:w-auto motion-reduce:transition-none"
           >

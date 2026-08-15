@@ -120,6 +120,7 @@ export default function SectionWhyStorages({ locale = "es" }: Props) {
             )}`}
             target="_blank"
             rel="noopener noreferrer"
+            data-analytics="home:storages:whatsapp"
             className="inline-flex h-10 items-center justify-center rounded-md border border-white/25 px-4 text-sm font-medium text-white hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-[#D4AF37]/40"
           >
             {t.ctaSecondary}
