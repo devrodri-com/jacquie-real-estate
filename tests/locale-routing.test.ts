@@ -1,16 +1,19 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import createMiddleware from "next-intl/middleware";
 import { NextRequest } from "next/server";
+import middleware from "../middleware";
 import { routing } from "../src/i18n/routing";
-
-const intlMiddleware = createMiddleware(routing);
 
 const ORIGIN = "https://jacquiezarate.com";
 
 type ProbeOptions = {
   acceptLanguage?: string;
   cookie?: string;
+  /**
+   * Set to the route the request was issued from to simulate a client-router
+   * request (a prefetch or a soft navigation), which is how Next.js marks them.
+   */
+  fromRoute?: string;
 };
 
 /**
@@ -24,8 +27,11 @@ function probe(pathname: string, options: ProbeOptions = {}) {
   if (options.cookie !== undefined) {
     headers.set("cookie", `NEXT_LOCALE=${options.cookie}`);
   }
+  if (options.fromRoute !== undefined) {
+    headers.set("next-url", options.fromRoute);
+  }
 
-  const response = intlMiddleware(new NextRequest(`${ORIGIN}${pathname}`, { headers }));
+  const response = middleware(new NextRequest(`${ORIGIN}${pathname}`, { headers }));
   const location = response.headers.get("location");
 
   return {
@@ -149,6 +155,63 @@ test("re-requesting a page that already matches the preference writes no duplica
       `${locale} is already stored, so no cookie should be rewritten`,
     );
   }
+});
+
+test("a prefetch of another locale never overwrites the stored preference", () => {
+  // Sitting on /fr, Next prefetches the switcher's /es and /en links.
+  for (const prefetched of ["/es", "/en"]) {
+    assert.equal(
+      probe(prefetched, { cookie: "fr", acceptLanguage: "fr-CA,fr;q=0.9", fromRoute: "/fr" })
+        .setCookie,
+      null,
+      `prefetching ${prefetched} from /fr must not touch the cookie`,
+    );
+  }
+
+  // Same with no preference yet: a prefetch must not invent one.
+  assert.equal(
+    probe("/en", { acceptLanguage: "fr-CA,fr;q=0.9", fromRoute: "/fr" }).setCookie,
+    null,
+    "a prefetch must not store a preference the visitor never made",
+  );
+});
+
+test("a soft navigation does not persist a locale, a real one does", () => {
+  // Client-router request: speculative or router-driven, never a deliberate act.
+  assert.equal(
+    probe("/en", { cookie: "fr", acceptLanguage: "es-AR,es;q=0.9", fromRoute: "/fr" }).setCookie,
+    null,
+  );
+
+  // Top-level navigation: this is the visitor actually landing on the locale.
+  assert.ok(
+    probe("/en", { cookie: "fr", acceptLanguage: "es-AR,es;q=0.9" }).setCookie?.includes(
+      "NEXT_LOCALE=en",
+    ),
+    "a top-level navigation must persist the locale",
+  );
+});
+
+test("prefetching does not change where / sends the visitor", () => {
+  // The visitor chose FR; prefetches of /es and /en happen in the background.
+  for (const prefetched of ["/es", "/en"]) {
+    probe(prefetched, { cookie: "fr", acceptLanguage: "en-US,en;q=0.9", fromRoute: "/fr" });
+  }
+
+  assert.equal(
+    probe("/", { cookie: "fr", acceptLanguage: "en-US,en;q=0.9" }).redirectedTo,
+    "/fr",
+    "the root must still honour the chosen locale",
+  );
+});
+
+test("locale detection still applies to client-router requests to /", () => {
+  // Only persistence is suppressed; resolution itself must not change.
+  assert.equal(probe("/", { cookie: "fr", fromRoute: "/fr" }).redirectedTo, "/fr");
+  assert.equal(
+    probe("/", { acceptLanguage: "en-US,en;q=0.9", fromRoute: "/es" }).redirectedTo,
+    "/en",
+  );
 });
 
 test("routing config declares the approved locale rule", () => {
