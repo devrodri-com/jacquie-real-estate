@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useLocale } from "next-intl";
 import LetsGoMiamiHeader from "@/components/LetsGoMiamiHeader";
+import LocalePreferenceLink from "@/components/LocalePreferenceLink";
 import {
   buildJacquieWhatsAppHref,
   normalizeSiteLocale,
@@ -413,16 +414,21 @@ function LocaleSwitcher({
             {label}
           </span>
         ) : (
-          <Link
+          // Renders a plain anchor: switching locale must be a top-level
+          // navigation so Next never prefetches the other locales and
+          // overwrites NEXT_LOCALE. The click records the choice, so it holds
+          // even when the destination answers 304 without `Set-Cookie`.
+          <LocalePreferenceLink
             key={code}
+            locale={code}
             href={`/${code}${pathWithoutLocale}`}
-            onClick={onNavigate}
+            onNavigate={onNavigate}
             title={title}
             aria-label={aria}
             className={`inline-flex items-center justify-center rounded-full border text-xs font-semibold no-underline ${sizeClass} ${colorClass}`}
           >
             {label}
-          </Link>
+          </LocalePreferenceLink>
         );
       })}
     </span>
