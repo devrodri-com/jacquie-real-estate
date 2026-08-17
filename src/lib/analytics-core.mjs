@@ -89,8 +89,8 @@ export function loadGoogleAnalytics(measurementId, runtime) {
     ? runtimeWindow.dataLayer
     : [];
   if (typeof runtimeWindow.gtag !== "function") {
-    runtimeWindow.gtag = (...args) => {
-      runtimeWindow.dataLayer.push(args);
+    runtimeWindow.gtag = function gtag() {
+      runtimeWindow.dataLayer.push(arguments);
     };
   }
 
